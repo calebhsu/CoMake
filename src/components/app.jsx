@@ -23,6 +23,10 @@ const muiTheme = getMuiTheme({
   },
 });
 
+/**
+ * Assembles and returns the HTML for the App.
+ * @return {HTML}   The HTML of the application.
+ */
 function App() {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
