@@ -5,11 +5,12 @@
                 {
                     "content":"<content or path to file in Firebase Storage>",
                     "contentInStorage":true,
-                    "xcoord":42,
-                    "ycoord":42,
+                    "x-coord":42,
+                    "y-coord":42,
                     "locked":true
                 }
             ],
+            "name":"<board name>",
             "owner":"<user ID>",
             "teacher":"<teacher ID>",
             "users":{
@@ -27,11 +28,13 @@
                 "<board2 ID>":"<board2 title>",
                 "<more>":"<more>"
             },
-            "email":"test@test.com",
-            "teacher":false
+            "email":"<user email>",
+            "teacher":false,
+            "username":"<username>"
         }
     ],
     "sysConfig":{
-        "boardUserLimit":10
+        "boardUserLimit":10,
+        "userBoardLimit":10
     }
 }
