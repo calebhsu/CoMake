@@ -1,0 +1,37 @@
+{
+    "boards":[
+        {
+            "items":[
+                {
+                    "content":"<content or path to file in Firebase Storage>",
+                    "contentInStorage":true,
+                    "xcoord":42,
+                    "ycoord":42,
+                    "locked":true
+                }
+            ],
+            "owner":"<user ID>",
+            "teacher":"<teacher ID>",
+            "users":{
+                "<user1 ID":"<user1 name>",
+                "<user2 ID":"<user2 name>",
+                "<more>":"<more>"
+            }
+        }
+    ],
+    "users":[
+        {
+            "admin":true,
+            "boards":{
+                "<board1 ID>":"<board1 title>",
+                "<board2 ID>":"<board2 title>",
+                "<more>":"<more>"
+            },
+            "email":"test@test.com",
+            "teacher":false
+        }
+    ],
+    "sysConfig":{
+        "boardUserLimit":10
+    }
+}
