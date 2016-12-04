@@ -34,7 +34,7 @@
         }
     ],
     "sysConfig":{
-        "boardUserLimit":10,
-        "userBoardLimit":10
+        "board-userLimit":10,
+        "user-boardLimit":10
     }
 }
