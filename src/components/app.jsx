@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import NavBar from './NavBar.jsx';
-
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import {green100, green500, green700} from 'material-ui/styles/colors';
+import { green100, green500, green700 } from 'material-ui/styles/colors';
+
+import React from 'react';
+import NavBar from './NavBar';
 
 import '../scss/main.scss';
 
 const styles = {
   container: {
     marginTop: '15px',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };
 
 const muiTheme = getMuiTheme({
@@ -23,23 +23,23 @@ const muiTheme = getMuiTheme({
   },
 });
 
-export default class App extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          <NavBar />
-          <div style={styles.container}>
-            <h1>It Works!</h1>
-            <p>This React project works including local CSS styles.</p>
-            <RaisedButton label="Enjoy"/>
-          </div>
+/**
+ * Assembles and returns the HTML for the App.
+ * @return {HTML}   The HTML of the application.
+ */
+function App() {
+  return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <div>
+        <NavBar />
+        <div style={styles.container}>
+          <h1>It Works!</h1>
+          <p>This React project works including local CSS styles.</p>
+          <RaisedButton label="Enjoy" />
         </div>
-      </MuiThemeProvider>
-    )
-  }
+      </div>
+    </MuiThemeProvider>
+  );
 }
+
+export default App;
