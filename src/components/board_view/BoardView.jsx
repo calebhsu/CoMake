@@ -1,17 +1,12 @@
 import React from 'react';
-import BoardElement from './BoardElement';
+import Board from './Board';
 
-export default class BoardView extends React.Component {
-  render() {
-    return (
-      <div
-        style={{ outline: 'black solid 1px',
-          height: '100px',
-          width: '80%',
-          marginLeft: '10%' }}
-      >
-        <BoardElement />
-      </div>
-    );
-  }
+/**
+ * Returns the HTML for the page with the board.
+ * @return {HTML}   The HTML of the navigation bar.
+ */
+function NavBar() {
+  return <Board />;
 }
+
+export default NavBar;

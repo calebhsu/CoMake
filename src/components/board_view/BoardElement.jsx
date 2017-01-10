@@ -1,5 +1,8 @@
 import React from 'react';
 
+/*
+ * Component for an element on the board.
+ */
 export default class BoardElement extends React.Component {
   render() {
     return (
