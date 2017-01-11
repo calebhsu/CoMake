@@ -5,6 +5,7 @@ import { green100, green500, green700 } from 'material-ui/styles/colors';
 
 import React from 'react';
 import NavBar from './NavBar';
+import BoardView from './board_view/BoardView';
 
 import '../scss/main.scss';
 
@@ -37,6 +38,7 @@ function App() {
           <p>This React project works including local CSS styles.</p>
           <RaisedButton label="Enjoy" />
         </div>
+        <BoardView />
       </div>
     </MuiThemeProvider>
   );

@@ -1,11 +1,16 @@
+/* Component where elements can be positioned on. */
+
 import React from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 import BoardElement from './BoardElement';
 
 
 /*
  * Component for the board for users to arrange elements on.
  */
-export default class Board extends React.Component {
+class Board extends React.Component {
   render() {
     return (
       <div
@@ -19,3 +24,5 @@ export default class Board extends React.Component {
     );
   }
 }
+
+export default DragDropContext(HTML5Backend)(Board);
