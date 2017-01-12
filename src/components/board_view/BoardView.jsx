@@ -1,6 +1,9 @@
 /* Component encapsulting all components having to do with Board page. */
 
 import React from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 import Board from './Board';
 
 /**
@@ -11,4 +14,4 @@ function BoardView() {
   return <Board />;
 }
 
-export default BoardView;
+export default DragDropContext(HTML5Backend)(BoardView);
