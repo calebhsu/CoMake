@@ -10,7 +10,7 @@ const boardElementSource = {
   // beginDrag is a function returning id so we know what element we are
   // currently dragging.
   beginDrag(props) {
-    return { elementId: props.id };
+    return { elementId: props.elementId };
   },
 };
 
@@ -38,7 +38,7 @@ class BoardElement extends React.Component {
           height: '25px',
           width: '25px',
           backgroundColor: isDragging ? 'blue' : 'green' }}
-      />
+      />,
     );
   }
 }
