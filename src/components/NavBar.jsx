@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import AppBar from 'material-ui/AppBar';
 
-export default class NavBar extends Component {
-	render() {
-		return (
-			<AppBar title="CoMake" />
-		);
-	}
+/**
+ * Gives HTML for the NavBar.
+ * @return {HTML}   The HTML of the navigation bar.
+ */
+function NavBar() {
+  return <AppBar title="CoMake" />;
 }
+
+export default NavBar;
