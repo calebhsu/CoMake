@@ -5,6 +5,7 @@ import { green100, green500, green700 } from 'material-ui/styles/colors';
 
 import React from 'react';
 import NavBar from './NavBar';
+import {manageLogin} from '../util/login.js'
 
 import '../scss/main.scss';
 
@@ -28,6 +29,8 @@ const muiTheme = getMuiTheme({
  * @return {HTML}   The HTML of the application.
  */
 function App() {
+
+manageLogin(this.getAvailableGrids);
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <div>
