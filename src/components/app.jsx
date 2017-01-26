@@ -1,25 +1,18 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import { green100, green500, green700 } from 'material-ui/styles/colors';
+
+import { orange100, orange700, orange800 } from 'material-ui/styles/colors';
 
 import React from 'react';
-import NavBar from './NavBar';
+import Landing from './Landing';
 
 import '../scss/main.scss';
 
-const styles = {
-  container: {
-    marginTop: '15px',
-    textAlign: 'center',
-  },
-};
-
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: green500,
-    primary2Color: green700,
-    primary3Color: green100,
+    primary1Color: orange800,
+    primary2Color: orange700,
+    primary3Color: orange100,
   },
 });
 
@@ -31,12 +24,7 @@ function App() {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-        <NavBar />
-        <div style={styles.container}>
-          <h1>It Works!</h1>
-          <p>This React project works including local CSS styles.</p>
-          <RaisedButton label="Enjoy" />
-        </div>
+        <Landing />
       </div>
     </MuiThemeProvider>
   );

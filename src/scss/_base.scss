@@ -1,5 +1,12 @@
 @import 'reset';
 
-h1, h2, h3, p {
+h1, h2, h3, p, span {
 	font-family: 'Open Sans', Helvetica, sans-serif;
+}
+h1 {
+	font-size: 4.5em;
+  font-weight: 700;
+}
+h2 {
+	font-weight: 300;
 }
