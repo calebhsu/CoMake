@@ -8,21 +8,26 @@ import { ItemTypes } from './../../Constants';
 
 // BoardElement represents a draggable element
 
+let oldLocation = {};
+
 // Source for the DnD API.
 const boardElementSource = {
   // beginDrag is a function returning id so we know what element we are
   // currently dragging.
   beginDrag(props) {
+    firebase.database().ref(`/test/${props.elementId}/position`)
+      .once('value').then((elemPositionSnap) => {
+        oldLocation = elemPositionSnap.val();
+      });
     return { elementId: props.elementId };
   },
   endDrag(props, monitor) {
     const dragDiff = monitor.getDifferenceFromInitialOffset();
 
-    firebase.database().ref(`/test/${props.elementId}/position`)
-      .transaction(oldPosition => ({
-        x: oldPosition.x + dragDiff.x,
-        y: oldPosition.y + dragDiff.y,
-      }));
+    firebase.database().ref(`/test/${props.elementId}/position`).set({
+      x: oldLocation.x + dragDiff.x,
+      y: oldLocation.y + dragDiff.y,
+    });
   },
 };
 
