@@ -7,3 +7,6 @@ public
 
 # Dependencies
 node_modules
+
+#Mac OS directory files
+*.DS_Store
