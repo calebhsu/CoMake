@@ -2,8 +2,11 @@
 
 import React, { PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
+import * as firebase from 'firebase';
 
 import { ItemTypes } from './../../Constants';
+
+// BoardElement represents a draggable element
 
 // Source for the DnD API.
 const boardElementSource = {
@@ -11,6 +14,15 @@ const boardElementSource = {
   // currently dragging.
   beginDrag(props) {
     return { elementId: props.elementId };
+  },
+  endDrag(props, monitor) {
+    const dragDiff = monitor.getDifferenceFromInitialOffset();
+
+    firebase.database().ref(`/test/${props.elementId}/position`)
+      .transaction(oldPosition => ({
+        x: oldPosition.x + dragDiff.x,
+        y: oldPosition.y + dragDiff.y,
+      }));
   },
 };
 
