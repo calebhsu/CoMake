@@ -1,7 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
+import { white } from 'material-ui/styles/colors';
+
+const styles = {
+  btnLabel: {
+    color: white,
+  }
+}
 
 /**
  * Gives HTML for the NavBar.
@@ -11,7 +19,14 @@ function NavBar() {
   return (
     <AppBar
       title="CoMake"
-      iconElementRight={<FlatButton label="Login" />}
+      iconElementRight={
+        <Link to="/">
+          <FlatButton
+            label="Log Out"
+            labelStyle={styles.btnLabel}
+          />
+        </Link>
+      }
       showMenuIconButton={false}
     />
   );
