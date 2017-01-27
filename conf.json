@@ -1,0 +1,11 @@
+{
+    "source": {
+        "include": [ "{project_directory}" ],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "encoding": "utf8",
+        "recurse": true
+    }
+}
