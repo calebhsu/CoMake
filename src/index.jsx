@@ -1,10 +1,12 @@
+import * as firebase from 'firebase';
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import * as firebase from 'firebase';
+import { createStore, Provider } from 'redux';
 
 import App from './components/app';
+import reducers from './components/redux/reducers';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -21,13 +23,23 @@ const config = {
 firebase.initializeApp(config);
 // end sourced code
 
-render(<AppContainer><App /></AppContainer>, document.querySelector('#app'));
+
+console.log(reducers);
+const store = createStore(reducers);
+
+render(<AppContainer>
+  <Provider store={store}>
+    <App />
+  </Provider>
+</AppContainer>, document.querySelector('#app'));
 
 if (module.hot) {
   module.hot.accept('./components/app.jsx', () => {
     render(
       <AppContainer>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </AppContainer>,
       document.querySelector('#app'),
     );

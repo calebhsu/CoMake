@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
+import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import { ItemTypes } from './../../Constants';
@@ -24,6 +25,8 @@ const boardElementSource = {
   endDrag(props, monitor) {
     const dragDiff = monitor.getDifferenceFromInitialOffset();
 
+    this.props.dispatch();
+
     firebase.database().ref(`/test/${props.elementId}/position`).set({
       x: oldLocation.x + dragDiff.x,
       y: oldLocation.y + dragDiff.y,
@@ -36,9 +39,9 @@ const boardElementSource = {
  * @param {Monitor} DnD Monitor.
  * @returns {Object} Object informing DnD on dragging.
  */
-function boardElementCollect(connect, monitor) {
+function boardElementCollect(connector, monitor) {
   return {
-    connectDragSource: connect.dragSource(),
+    connectDragSource: connector.dragSource(),
     isDragging: monitor.isDragging(),
   };
 }
@@ -65,5 +68,7 @@ BoardElement.propTypes = {
   isDragging: PropTypes.bool.isRequired,
 };
 
+const connectedBoardElement = connect()(BoardElement);
+
 export default DragSource(ItemTypes.BOARD_ELEMENT, boardElementSource,
-    boardElementCollect)(BoardElement);
+    boardElementCollect)(connectedBoardElement);
