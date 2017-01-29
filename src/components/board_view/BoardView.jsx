@@ -11,7 +11,7 @@ import Board from './Board';
  * @return {HTML}   The HTML of the navigation bar.
  */
 function BoardView() {
-  return <Board />;
+  return <Board elements={{}} />;
 }
 
 export default DragDropContext(HTML5Backend)(BoardView);

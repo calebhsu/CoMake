@@ -6,31 +6,27 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import { ItemTypes } from './../../Constants';
+import { updatePosition } from '../redux/actions';
 
 // BoardElement represents a draggable element
-
-let oldLocation = {};
 
 // Source for the DnD API.
 const boardElementSource = {
   // beginDrag is a function returning id so we know what element we are
   // currently dragging.
   beginDrag(props) {
-    firebase.database().ref(`/test/${props.elementId}/position`)
-      .once('value').then((elemPositionSnap) => {
-        oldLocation = elemPositionSnap.val();
-      });
     return { elementId: props.elementId };
   },
   endDrag(props, monitor) {
     const dragDiff = monitor.getDifferenceFromInitialOffset();
+    const updatedLoc = {
+      x: props.initLoc.x + dragDiff.x,
+      y: props.initLoc.y + dragDiff.y,
+    };
 
-    this.props.dispatch();
+    props.dispatch(updatePosition(props.elementId, updatedLoc, true));
 
-    firebase.database().ref(`/test/${props.elementId}/position`).set({
-      x: oldLocation.x + dragDiff.x,
-      y: oldLocation.y + dragDiff.y,
-    });
+    firebase.database().ref(`/test/${props.elementId}/position`).set(updatedLoc);
   },
 };
 
@@ -68,7 +64,5 @@ BoardElement.propTypes = {
   isDragging: PropTypes.bool.isRequired,
 };
 
-const connectedBoardElement = connect()(BoardElement);
-
-export default DragSource(ItemTypes.BOARD_ELEMENT, boardElementSource,
-    boardElementCollect)(connectedBoardElement);
+export default connect()(DragSource(ItemTypes.BOARD_ELEMENT, boardElementSource,
+    boardElementCollect)(BoardElement));

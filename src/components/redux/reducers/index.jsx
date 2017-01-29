@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import dragDrop from './updatePosition';
+import positions from './positions';
 
-const reducers = combineReducers(
-  dragDrop,
-);
+const reducers = combineReducers({
+  positions,
+});
 
 export default reducers;
