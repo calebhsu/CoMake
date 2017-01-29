@@ -1,12 +1,11 @@
+import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-import React from 'react';
 import { Link } from 'react-router';
-import FlatButton from 'material-ui/FlatButton';
 import { Flex, Box } from 'reflexbox';
 
 import Brush from 'material-ui/svg-icons/image/brush';
+import FlatButton from 'material-ui/FlatButton';
 import Group from 'material-ui/svg-icons/social/group';
 import Share from 'material-ui/svg-icons/editor/highlight';
 import { white } from 'material-ui/styles/colors';

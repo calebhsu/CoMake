@@ -8,8 +8,8 @@ import { white } from 'material-ui/styles/colors';
 const styles = {
   btnLabel: {
     color: white,
-  }
-}
+  },
+};
 
 /**
  * Gives HTML for the NavBar.
