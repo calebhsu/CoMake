@@ -4,21 +4,28 @@ import { HELLO_SERVICE } from './Endpoints';
 
 const HelloRequest = () => {
   console.log('Sending hello!');
-  http.request({
+  const request = http.request({
     host: HELLO_SERVICE.host,
     port: HELLO_SERVICE.port,
     method: 'POST',
+    withCredentials: false,
   }, (resp) => {
     let respMsg;
 
     resp.on('data', (dataChunk) => {
-      respMsg += dataChunk;
+      if (respMsg === undefined || respMsg === null) {
+        respMsg = dataChunk;
+      } else {
+        respMsg += dataChunk;
+      }
     });
 
     resp.on('end', () => {
-      console.log(JSON.parse(respMsg));
+      console.log(JSON.parse(respMsg).data[0]);
     });
   });
+
+  request.end();
 };
 
 export const HelloService = {

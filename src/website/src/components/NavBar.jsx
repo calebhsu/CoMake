@@ -8,6 +8,7 @@ import { HelloService } from '../services/HelloService';
  * @return {HTML}   The HTML of the navigation bar.
  */
 function NavBar() {
+  console.log(HelloService);
   HelloService.request();
   return <AppBar title="CoMake" />;
 }
