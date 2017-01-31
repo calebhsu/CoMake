@@ -4,7 +4,9 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+
 
 import App from './components/app';
 import reducers from './components/redux/reducers';
@@ -24,7 +26,11 @@ const config = {
 firebase.initializeApp(config);
 // end sourced code
 
-const store = createStore(reducers);
+const store = createStore(reducers,
+  applyMiddleware(
+    thunkMiddleware,
+  ),
+);
 
 render(<AppContainer>
   <Provider store={store}>

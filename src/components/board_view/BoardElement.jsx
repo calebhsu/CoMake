@@ -3,10 +3,9 @@
 import React, { PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
 import { connect } from 'react-redux';
-import * as firebase from 'firebase';
 
 import { ItemTypes } from './../../Constants';
-import { updatePosition } from '../redux/actions';
+import { updatePositionAndPersist } from '../redux/actions';
 
 // BoardElement represents a draggable element
 
@@ -24,9 +23,7 @@ const boardElementSource = {
       y: props.initLoc.y + dragDiff.y,
     };
 
-    props.dispatch(updatePosition(props.elementId, updatedLoc, true));
-
-    firebase.database().ref(`/test/${props.elementId}/position`).set(updatedLoc);
+    props.dispatch(updatePositionAndPersist(props.elementId, updatedLoc, true));
   },
 };
 

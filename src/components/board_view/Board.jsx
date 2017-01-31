@@ -49,13 +49,14 @@ class Board extends React.Component {
       const elemDetails = elements[id];
       elemDivs.push(
         <div
+          key={`dev-${id}`}
           style={{
             position: 'absolute',
             left: elemDetails.position.x,
             top: elemDetails.position.y,
           }}
         >
-          <BoardElement elementId={id} />
+          <BoardElement elementId={id} initLoc={elemDetails.position} />
         </div>,
       );
     });

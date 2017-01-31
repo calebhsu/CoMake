@@ -1,13 +1,20 @@
-import * as firebase from 'firebase';
+import { setItemLocation } from '../../firebase-utils';
 
 export const initPositions = elemList => ({
   type: 'initPositions',
   elements: elemList,
 });
 
-export const updatePosition = (elemId, updatedLoc, saveToFirebase) => ({
+export const updatePosition = (elemId, updatedLoc) => ({
   type: 'updatePosition',
   elementId: elemId,
   updatedLocation: updatedLoc,
-  persist: saveToFirebase,
 });
+
+export const updatePositionAndPersist = (elemId, updatedLoc) => (
+  (dispatch) => {
+    dispatch(updatePosition(elemId, updatedLoc));
+
+    return setItemLocation(elemId, updatedLoc);
+  }
+);
