@@ -7,3 +7,7 @@ public
 
 # Dependencies
 node_modules
+
+#Server files (Private Key/Certificate for HTTPS setup on backend)
+*.pem
+backend/serverFiles

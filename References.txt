@@ -2,6 +2,11 @@
 -firebase documentation/developer information
 -https://davidwalsh.name/nodejs-http-request
 -https://nodejs.org/api/http.html
+-https://devcenter.heroku.com/articles/ssl-certificate-self
+-expressjs documentation
+-firebase documentation
+-nodejs documentation
+-MDN js documentation
 
 
 Stack Overflow posts:
@@ -9,3 +14,5 @@ Stack Overflow posts:
 -http://stackoverflow.com/questions/21022705/how-to-get-synchonous-data-in-firebase
 -http://stackoverflow.com/questions/30626030/can-you-force-a-react-component-to-rerender-without-calling-setstate
 -http://stackoverflow.com/questions/24433099/how-to-disable-withcredentials-in-http-header-with-node-js-and-request-package
+-http://stackoverflow.com/questions/11744975/enabling-https-on-express-js
+-http://stackoverflow.com/questions/10175812/how-to-create-a-self-signed-certificate-with-openssl

@@ -21,7 +21,7 @@ const HelloRequest = () => {
     });
 
     resp.on('end', () => {
-      console.log(JSON.parse(respMsg).data[0]);
+      console.log(respMsg);
     });
   });
 

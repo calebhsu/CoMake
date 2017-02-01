@@ -1,6 +1,6 @@
 export const HELLO_SERVICE = {
   host: 'localhost',
-  port: 3000,
+  port: 8443,
 };
 
 export const Endpoints = {
