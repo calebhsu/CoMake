@@ -1,0 +1,8 @@
+-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+-firebase documentation/developer information
+
+
+Stack Overflow posts:
+-http://stackoverflow.com/questions/38816519/how-to-retrieve-desired-json-object-from-firebase-database-in-json-formate-using
+-http://stackoverflow.com/questions/21022705/how-to-get-synchonous-data-in-firebase
+-http://stackoverflow.com/questions/30626030/can-you-force-a-react-component-to-rerender-without-calling-setstate
