@@ -1,12 +1,10 @@
-import http from 'http';
+const http = require('http');
 
-import { HELLO_SERVICE } from './Endpoints';
-
-const HelloRequest = () => {
+const sayHello = (endpoint) => {
   console.log('Sending hello!');
   const request = http.request({
-    host: HELLO_SERVICE.host,
-    port: HELLO_SERVICE.port,
+    host: endpoint.host,
+    port: endpoint.port,
     method: 'POST',
     withCredentials: false,
   }, (resp) => {
@@ -28,8 +26,6 @@ const HelloRequest = () => {
   request.end();
 };
 
-export const HelloService = {
-  request: HelloRequest,
+module.exports = {
+  sayHello,
 };
-
-export default HelloService;

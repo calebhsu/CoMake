@@ -3,10 +3,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import { green100, green500, green700 } from 'material-ui/styles/colors';
 import * as firebase from 'firebase';
+import Services from 'comake-services';
 
 import React from 'react';
 import NavBar from './NavBar';
-import { HelloService } from '../services/HelloService';
+import ServiceEndpoints from '../ServiceEndpoints';
 
 import '../scss/main.scss';
 
@@ -39,6 +40,7 @@ function App() {
           <p>This React project works including local CSS styles.</p>
           <h5 id="output_saving_hello_service"></h5>
           <h5 id="output_saving_hello"></h5>
+          <h5 id="server_response"></h5>
           <h5 id="hello_service"></h5>
           <RaisedButton
             label="Enjoy"
@@ -46,7 +48,7 @@ function App() {
               document.getElementById('output_saving_hello_service').textContent = '';
               document.getElementById('output_saving_hello').textContent = '';
 
-              HelloService.request();
+              Services.HelloService.sayHello(ServiceEndpoints.HELLO_SERVICE);
 
               firebase.database().ref('/hello_service').once('value', (dataSnap) => {
                 document.getElementById('hello_service').textContent = dataSnap.val();
