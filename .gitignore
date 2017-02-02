@@ -9,4 +9,4 @@ public
 node_modules
 
 #Security files (Private Key,Certificate, etc for backend)
-backend/security
+backend/server/security
