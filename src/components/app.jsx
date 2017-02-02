@@ -2,8 +2,6 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import React from 'react';
-import NavBar from './NavBar';
 import BoardView from './board_view/BoardView';
 import Home from './Home';
 
@@ -23,8 +21,8 @@ function App() {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-        <BoardView />
         <Home />
+        <BoardView />
       </div>
     </MuiThemeProvider>
   );

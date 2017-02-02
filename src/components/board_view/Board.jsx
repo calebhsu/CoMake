@@ -2,9 +2,11 @@
 
 import React, { PropTypes } from 'react';
 import { DragLayer } from 'react-dnd';
+import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import BoardElement from './BoardElement';
+import { initPositions, updatePosition } from '../redux/actions';
 
 /* Collect function for DnD API, specifies props to be injected
  * @param {Monitor} DnD Monitor.
@@ -18,35 +20,24 @@ function collect() {
  * Component for the board for users to arrange elements on.
  */
 class Board extends React.Component {
-
   constructor(props) {
     super(props);
-
-    this.elements = {};
   }
 
   componentDidMount() {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
-      this.elements = elemListSnap.val();
-      this.forceUpdate();
+      this.props.dispatch(initPositions(elemListSnap.val()));
     });
 
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
-      this.elements[elemSnap.key] = {
-        position: elemSnap.child('/position').val(),
-        size: null,
-        picId: null,
-      };
-
-      this.forceUpdate();
+      this.props.dispatch(updatePosition(elemSnap.val()));
     });
   }
 
   render() {
-    const elements = this.elements;
     const elemDivs = [];
-    Object.keys(elements).forEach((id) => {
-      const elemDetails = elements[id];
+    Object.keys(this.props.elements).forEach((id) => {
+      const elemDetails = this.props.elements[id];
       elemDivs.push(
         <div
           key={`dev-${id}`}
@@ -57,7 +48,7 @@ class Board extends React.Component {
           }}
         >
           <BoardElement elementId={id} initLoc={elemDetails.position} />
-        </div>,
+        </div>
       );
     });
     return (
@@ -73,5 +64,14 @@ class Board extends React.Component {
   }
 }
 
-export default DragLayer(collect)(Board);
+Board.propTypes = {
+  dispatch: PropTypes.func,
+  elements: PropTypes.object,
+}
+
+const mapStateToProps = state => ({
+  elements: state.positions.elements,
+});
+
+export default connect(mapStateToProps)(DragLayer(collect)(Board));
 

@@ -19,9 +19,6 @@ const updatePosition = (state = { elements: {} }, action) => {
         elements: updatedElements,
       });
 
-    case 'firebaseUpdate':
-      // TODO: this part
-
     default:
       return state
   }
