@@ -5,11 +5,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import App from './components/app';
 import * as firebase from 'firebase';
+import Routes from './routes'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
-
 
 // Initialize Firebase
 const config = {
@@ -21,15 +21,10 @@ const config = {
 };
 firebase.initializeApp(config);
 
-render(<AppContainer><App /></AppContainer>, document.querySelector('#app'));
+render(<AppContainer><Routes /></AppContainer>, document.querySelector('#app'));
 
 if (module.hot) {
   module.hot.accept('./components/app.jsx', () => {
-    render(
-      <AppContainer>
-        <App />
-      </AppContainer>,
-      document.querySelector('#app'),
-    );
+    render(<AppContainer><Routes /></AppContainer>, document.querySelector('#app'));
   });
 }
