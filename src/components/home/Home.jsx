@@ -17,8 +17,6 @@ const styles = {
     padding: '15px 10px',
     textTransform: 'uppercase',
   },
-  newCanvas: {
-  },
   paper: {
     display: 'inline-block',
     height: '85vh',
