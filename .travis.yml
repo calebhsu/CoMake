@@ -4,3 +4,5 @@ node_js:
   - "5"
   - "4"
   - "node"
+before_script:
+  - cd website
