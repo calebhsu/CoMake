@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router, Route, hashHistory } from 'react-router';
 
-import App from './components/app';
-import Landing from './components/Landing';
+import Landing from './components/landing/Landing';
+import MainLayout from './components/MainLayout';
 
 /**
  * Defines routes for all application components.
@@ -12,7 +12,9 @@ function Routes() {
   return (
     <Router history={hashHistory}>
       <Route path="/" component={Landing} />
-      <Route path="/home" component={App} />
+      <Route path="/home" component={MainLayout}>
+        
+      </Route>
     </Router>
   );
 }
