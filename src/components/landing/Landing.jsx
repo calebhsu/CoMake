@@ -1,8 +1,8 @@
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Box, Flex } from 'reflexbox';
 import { Link } from 'react-router';
-import { Flex, Box } from 'reflexbox';
 
 import Brush from 'material-ui/svg-icons/image/brush';
 import FlatButton from 'material-ui/FlatButton';
@@ -12,13 +12,13 @@ import { white } from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: 'rgb(80, 17, 61)',
+    primary1Color: '#1f786a',
   },
 });
 
 const styles = {
   about: {
-    backgroundColor: 'rgb(80, 17, 61)',
+    backgroundColor: '#1f786a',
     color: white,
     textAlign: 'center',
   },

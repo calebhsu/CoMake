@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, hashHistory } from 'react-router';
 
+import Home from './components/home/Home';
 import Landing from './components/landing/Landing';
 import MainLayout from './components/MainLayout';
 
@@ -11,9 +12,9 @@ import MainLayout from './components/MainLayout';
 function Routes() {
   return (
     <Router history={hashHistory}>
-      <Route path="/" component={Landing} />
-      <Route path="/home" component={MainLayout}>
-        
+      <Route path="/login" component={Landing} />
+      <Route path="/" component={MainLayout}>
+        <Route path="/home" component={Home} />
       </Route>
     </Router>
   );

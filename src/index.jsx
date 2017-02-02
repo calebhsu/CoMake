@@ -12,7 +12,7 @@ injectTapEventPlugin();
 render(<AppContainer><Routes /></AppContainer>, document.querySelector('#app'));
 
 if (module.hot) {
-  module.hot.accept('./components/app.jsx', () => {
+  module.hot.accept('./components/MainLayout.jsx', () => {
     render(<AppContainer><Routes /></AppContainer>, document.querySelector('#app'));
   });
 }
