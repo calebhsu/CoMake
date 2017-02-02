@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex } from 'reflexbox';
+import { Box } from 'reflexbox';
 
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
@@ -38,19 +38,19 @@ const styles = {
 function Canvas() {
   return (
     <div>
-        <Box col={9} sm={12} md={9}>
-          <Paper style={styles.paper} zDepth={1}>
-            <h3 style={styles.modelName}>Racecar Model</h3>
-            <span style={styles.optionBtnGroup}>
-              <FlatButton label="File Options" style={styles.optionBtn} />
-              <FlatButton label="View" style={styles.optionBtn} />
-              <FlatButton label="Print" style={styles.optionBtn} />
-              <FlatButton label="Share" style={styles.optionBtn} />
-              <FlatButton label="Resources" style={styles.optionBtn} />
-            </span>
-          </Paper>
-        </Box>
-        {/* Insert sidebar here */}
+      <Box col={9} sm={12} md={9}>
+        <Paper style={styles.paper} zDepth={1}>
+          <h3 style={styles.modelName}>Racecar Model</h3>
+          <span style={styles.optionBtnGroup}>
+            <FlatButton label="File Options" style={styles.optionBtn} />
+            <FlatButton label="View" style={styles.optionBtn} />
+            <FlatButton label="Print" style={styles.optionBtn} />
+            <FlatButton label="Share" style={styles.optionBtn} />
+            <FlatButton label="Resources" style={styles.optionBtn} />
+          </span>
+        </Paper>
+      </Box>
+      {/* Insert sidebar here */}
     </div>
   )
 }

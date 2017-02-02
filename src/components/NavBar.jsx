@@ -37,7 +37,7 @@ function NavBar() {
     <AppBar
       title="CoMake"
       iconElementRight={
-        <Link to="/">
+        <Link to="/profile">
           <FlatButton
             secondary={true}
             style={styles.btn}

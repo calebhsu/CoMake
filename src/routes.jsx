@@ -4,6 +4,7 @@ import { Router, Route, hashHistory } from 'react-router';
 import Canvas from './components/canvas/Canvas';
 import Home from './components/home/Home';
 import Landing from './components/landing/Landing';
+import Profile from './components/profile/Profile';
 import MainLayout from './components/MainLayout';
 
 /**
@@ -17,6 +18,7 @@ function Routes() {
       <Route path="/" component={MainLayout}>
         <Route path="/home" component={Home} />
         <Route path="/canvas" component={Canvas} />
+        <Route path="/profile" component={Profile} />
       </Route>
     </Router>
   );
