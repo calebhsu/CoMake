@@ -2,12 +2,29 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
+import Avatar from 'material-ui/Avatar';
+import Down from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import FlatButton from 'material-ui/FlatButton';
+import ListItem from 'material-ui/List/ListItem';
 import { white } from 'material-ui/styles/colors';
 
 const styles = {
-  btnLabel: {
+  btn: {
+    height: 64,
+  },
+  dropdownIcon: {
+    verticalAlign: 'middle',
+  },
+  user: {
     color: white,
+    fontSize: 14,
+    height: 50,
+    letterSpacing: 1,
+    marginTop: 5,
+    textTransform: 'uppercase',
+  },
+  userElement: {
+    margin: 0,
   },
 };
 
@@ -22,11 +39,24 @@ function NavBar() {
       iconElementRight={
         <Link to="/">
           <FlatButton
-            label="Log Out"
-            labelStyle={styles.btnLabel}
-          />
+            secondary={true}
+            style={styles.btn}
+          >
+            <ListItem
+              disabled={true}
+              leftAvatar={
+                <Avatar src="http://placekitten.com/95/95" />
+              }
+              style={styles.user}
+            >
+              <span>
+                Vin Diesel <Down color={white} style={styles.dropdownIcon} />
+              </span>
+            </ListItem>
+          </FlatButton>
         </Link>
       }
+      iconStyleRight={styles.userElement}
       showMenuIconButton={false}
     />
   );

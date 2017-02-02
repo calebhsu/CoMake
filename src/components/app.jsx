@@ -8,7 +8,8 @@ import '../scss/main.scss';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: 'rgb(80, 17, 61)',
+    primary1Color: '#50113d',
+    secondaryTextColor: '#FFFFFF',
   },
 });
 
