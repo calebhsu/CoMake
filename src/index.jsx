@@ -8,13 +8,18 @@ import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 
+<<<<<<< HEAD
 import App from './components/app';
 import reducers from './components/redux/reducers';
+=======
+import Routes from './routes'
+>>>>>>> dev
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+<<<<<<< HEAD
 // start code from console.firebase.google.com
 const config = {
   apiKey: 'AIzaSyBouGOzw_GYXTl9_hkHhL2WZYvh1NHoQM0',
@@ -48,5 +53,12 @@ if (module.hot) {
       </AppContainer>,
       document.querySelector('#app'),
     );
+=======
+render(<AppContainer><Routes /></AppContainer>, document.querySelector('#app'));
+
+if (module.hot) {
+  module.hot.accept('./components/app.jsx', () => {
+    render(<AppContainer><Routes /></AppContainer>, document.querySelector('#app'));
+>>>>>>> dev
   });
 }
