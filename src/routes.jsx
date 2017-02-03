@@ -1,8 +1,11 @@
 import React from 'react';
 import { Router, Route, hashHistory } from 'react-router';
 
-import App from './components/app';
-import Landing from './components/Landing';
+import Canvas from './components/canvas/Canvas';
+import Home from './components/home/Home';
+import Landing from './components/landing/Landing';
+import Profile from './components/profile/Profile';
+import MainLayout from './components/MainLayout';
 
 /**
  * Defines routes for all application components.
@@ -11,8 +14,12 @@ import Landing from './components/Landing';
 function Routes() {
   return (
     <Router history={hashHistory}>
-      <Route path="/" component={Landing} />
-      <Route path="/home" component={App} />
+      <Route path="/login" component={Landing} />
+      <Route path="/" component={MainLayout}>
+        <Route path="/home" component={Home} />
+        <Route path="/canvas" component={Canvas} />
+        <Route path="/profile" component={Profile} />
+      </Route>
     </Router>
   );
 }
