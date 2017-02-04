@@ -12,10 +12,15 @@ import { initPositions, updatePosition } from '../redux/actions';
  * Component for the board for users to arrange elements on.
  */
 class Board extends React.Component {
+
+  /* Constructor for BoardElement
+   * @param {Object} The props for the BoardElement.
+   */
   constructor(props) {
     super(props);
   }
 
+  /* Function to automatically be performed once the component mounts. */
   componentDidMount() {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
       this.props.dispatch(initPositions(elemListSnap.val()));
@@ -26,25 +31,15 @@ class Board extends React.Component {
     });
   }
 
+  /* Renders the element for display.
+   * @return {HTML} The rendered HTML.
+   */
   render() {
     const elemDivs = [];
     Object.keys(this.props.elements).forEach((id) => {
       const elemDetails = this.props.elements[id];
       elemDivs.push(
-        /* TODO: Change so init location is correct */
-        // <div
-        //   key={`dev-${id}`}
-        //   style={{
-        //     position: 'absolute',
-        //     left: elemDetails.position.x,
-        //     top: elemDetails.position.y,
-        //     width: '1000px',
-        //     height: '100px',
-        //     border: 'solid',
-        //   }}
-        // >
-        <BoardElement elementId={id} initLoc={elemDetails.position} />
-        // </div>,
+        <BoardElement key={id} elementId={id} initLoc={elemDetails.position} />
       );
     });
     return (

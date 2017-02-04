@@ -3,51 +3,59 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
-// import Draggable from 'react-draggable';
-// import { ResizableBox } from 'react-resizable';
 
 import { updatePositionAndPersist } from '../redux/actions';
-
-// BoardElement represents a draggable element
-
-
-/* Collect function used for the DnD API.
- * @param {Connector} DnD Connector.
- * @param {Monitor} DnD Monitor.
- * @returns {Object} Object informing DnD on dragging.
- */
 
 /*
  * Component for an element on the board.
  */
-export default class BoardElement extends React.Component {
+class BoardElement extends React.Component {
 
+  /* Constructor for BoardElement
+   * @param {Object} The props for the BoardElement.
+   */
   constructor(props) {
     super(props);
     this.endDrag = this.endDrag.bind(this);
     this.endResize = this.endResize.bind(this);
   }
 
+  /* Handler for the end drag event.
+   * @param {Event} The event of the drag ending.
+   * @param {Object} Object of the data corresponding to the end drag.
+   */
   endDrag(e, data) {
     const updatedLoc = {
-      x: this.props.initLoc.x + data.deltaX,
-      y: this.props.initLoc.y + data.deltaY,
+      x: data.position.left,
+      y: data.position.top,
     };
-    console.log("Here is the new location:");
-    console.log(updatedLoc);
-    /* TODO: Not sure what to do here, ask Seth */
-    // updatePositionAndPersist(this.props.elementId, updatedLoc, true);
+    this.props.dispatch(updatePositionAndPersist(this.props.elementId,
+      updatedLoc, true));
   }
 
-  endResize(direction, styleSize, clientSize, delta) {
-    console.log("Here is the new size:");
-    console.log(clientSize);
+  /* Handler for the end resize event.
+   * @param {Event} The event of the drag ending.
+   * @param {Object} Object of the data corresponding to the end drag.
+   */
+  endResize(direction, styleSize, clientSize) {
+    /* TODO: Dispatch event for resizing the object. */
+    return
   }
 
+  /* Renders the element for display.
+   * @return {HTML} The rendered HTML.
+   */
   render() {
-    const dragHandlers = { onDragStop: this.endDrag, onResizeStop: this.endResize };
+    const elemProps = { onDragStop: this.endDrag,
+      onResizeStop: this.endResize,
+      initial: { x: this.props.initLoc.x,
+        y: this.props.initLoc.y,
+        width: 100,
+        height: 100,
+      },
+    };
     return (
-      <Rnd bounds={'parent'} {...dragHandlers}>
+      <Rnd bounds={'parent'} {...elemProps}>
         <div
           style={{
             height: '100%',
@@ -59,3 +67,12 @@ export default class BoardElement extends React.Component {
     );
   }
 }
+
+BoardElement.propTypes = {
+  dispatch: PropTypes.func,
+  initLoc: PropTypes.object,
+  initSize: PropTypes.object,
+  elementId: PropTypes.string,
+}
+
+export default connect()(BoardElement);

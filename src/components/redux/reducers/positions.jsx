@@ -1,3 +1,10 @@
+/* Reducers having to do with the position of elements. */
+
+/* Update the position in firebase.
+ * @param {Object} The state of the store.
+ * @param {Object} The action to be performed.
+ * @return {Object} The new state object.
+ */
 const updatePosition = (state = { elements: {} }, action) => {
   switch (action.type) {
     case 'initPositions':
@@ -6,6 +13,9 @@ const updatePosition = (state = { elements: {} }, action) => {
       });
 
     case 'updatePosition':
+      if (!action.updatedLocation) {
+        return state;
+      }
       const elemToUpdate = {};
       elemToUpdate[action.elementId] = {
         position: {
