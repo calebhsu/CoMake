@@ -1,46 +1,62 @@
 {
-    "boards":[
+    "canvases":[
         {
             "items":[
                 {
-                    "content":"<content or path to file in Firebase Storage>",
+                    "content":"these are not the droids you're looking for",
                     "position": {
                       "x-coord":42,
                       "y-coord":42
                     },
-                    "size": {
+                    "size":{
                       "width": 42,
                       "height": 42
                     },
                     "rotation":42,
-                    "locked":true
+                    "locked":false
                 }
             ],
-            "name":"<board name>",
-            "owner":"<user ID>",
-            "teacher":"<teacher ID>",
+            "name":"canvas-name",
+            "owner":"abc123",
+            "teacher":"abc123",
             "users":{
-                "<user1 ID":"<user1 name>",
-                "<user2 ID":"<user2 name>",
-                "<more>":"<more>"
+                "def456":"HanSolo",
+                "ghi789":"KyloRen",
+                "jkl123":"A really uncomfortable person"
             }
         }
     ],
     "users":[
         {
-            "admin":true,
-            "boards":{
-                "<board1 ID>":"<board1 title>",
-                "<board2 ID>":"<board2 title>",
-                "<more>":"<more>"
+            "admin":false,
+            "canvases":{
+                "canvas-ID":"canvas-name"
             },
-            "email":"<user email>",
+            "email":"smuggler4lyfe@milfalc.com",
             "teacher":false,
-            "username":"<username>"
+            "username":"HanSolo"
+        },
+        {
+            "admin":false,
+            "canvases":{
+                "canvas-ID":"canvas-name"
+            },
+            "email":"ih4t3myp4r3nts@angstyteen.com",
+            "teacher":false,
+            "username":"KyloRen"
+        },
+        {
+          "admin":false,
+          "canvases":{
+              "canvas-ID":"canvas-name"
+          },
+          "email":"thisisawkward@iwanttoleave.com",
+          "teacher":false,
+          "username":"A really uncomfortable person"
         }
     ],
     "sysConfig":{
-        "board-userLimit":10,
-        "user-boardLimit":10
+        "canvas-userLimit":10,
+        "user-canvasLimit":10
     }
 }
