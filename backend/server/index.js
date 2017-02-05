@@ -1,9 +1,10 @@
+/**
+ * @file Starts up an http server and listens for requests.
+ */
+
 const express = require('express');
-const fs = require('file-system');
 const http = require('http');
 const admin = require('firebase-admin');
-
-const HelloService = require('./services/HelloService');
 
 const app = express();
 
@@ -14,13 +15,11 @@ const certificate = fs.readFileSync('./security/comakeCert.pem', 'utf8');
 const creds = { key: privKey, passphrase: privKeyPassphrase, cert: certificate };
 */
 
+// initialize firebase
 admin.initializeApp({
   credential: admin.credential.cert('./security/comake-95cb7-firebase-adminsdk-rx9ym-ab77d95612.json'),
   databaseURL: 'https://comake-95cb7.firebaseio.com',
 });
 
-app.post('/', HelloService.handle);
-
-const server = http.createServer(app);
-
-server.listen(8443);
+// create server and listen on port
+http.createServer(app).listen(8443);

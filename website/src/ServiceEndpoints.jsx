@@ -1,8 +1,6 @@
-const HELLO_SERVICE = {
-  host: 'localhost',
-  port: 8443,
-};
+/**
+ * @file Defines all the endpoints to send service requests to.
+ */
 
 export default {
-  HELLO_SERVICE,
 };

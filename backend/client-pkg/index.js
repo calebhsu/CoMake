@@ -1,5 +1,6 @@
-const HelloService = require('./services/HelloService');
+/**
+ * @file Exports all of the services for the client package.
+ */
 
 module.exports = {
-  HelloService,
 };
