@@ -27,7 +27,9 @@ class Board extends React.Component {
     });
 
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
-      this.props.dispatch(updatePosition(elemSnap.val()));
+      this.props.dispatch(
+        updatePosition(elemSnap.key, elemSnap.child('position').val())
+      );
     });
   }
 
