@@ -16,8 +16,18 @@ class BoardElement extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.elemRef;
     this.endDrag = this.endDrag.bind(this);
     this.endResize = this.endResize.bind(this);
+  }
+
+  /* Updates the component's position when new props are fed in.
+   * @param {Object} The new props being passed in.
+   */
+  componentWillUpdate(nextProps) {
+    if (this.elemRef) {
+      this.elemRef.updatePosition(nextProps.initLoc);
+    }
   }
 
   /* Handler for the end drag event.
@@ -55,7 +65,9 @@ class BoardElement extends React.Component {
       },
     };
     return (
-      <Rnd bounds={'parent'} {...elemProps}>
+      <Rnd bounds={'parent'} ref={ elem => { this.elemRef = elem; } }
+        {...elemProps}
+      >
         <div
           style={{
             height: '100%',
