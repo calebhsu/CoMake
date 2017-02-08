@@ -9,7 +9,7 @@ function promptForLogin() {
     var user_displayName = user.displayName;
     var user_emailVerified = user.emailVerified;
     var user_isAnonymous = user.isAnonymous;
-    var user_providerData = user.providerData;
+    var user_providerData = user.providerData[0];
     var user_providerId = user.providerId;
 
     // check if account already exists, if not add an entry.
