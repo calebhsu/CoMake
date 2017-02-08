@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from 'reflexbox';
-
+import Sidebar from '../sidebar/sidebar.jsx'
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
@@ -28,6 +28,11 @@ const styles = {
     height: 50,
     textAlign: 'center',
     width: '100%',
+  },
+  sidebarBtn:
+  {
+    marginTop: 10,
+    float: 'right',
   }
 };
 
@@ -47,10 +52,10 @@ function Canvas() {
             <FlatButton label="Print" style={styles.optionBtn} />
             <FlatButton label="Share" style={styles.optionBtn} />
             <FlatButton label="Resources" style={styles.optionBtn} />
+            <span style={styles.sidebarBtn}> <Sidebar /></span>
           </span>
         </Paper>
       </Box>
-      {/* Insert sidebar here */}
     </div>
   )
 }
