@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from 'reflexbox';
-import Sidebar from '../sidebar/sidebar.jsx'
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import Sidebar from './Sidebar'
 
 const styles = {
   header: {
