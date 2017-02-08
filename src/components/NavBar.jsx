@@ -5,6 +5,8 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import { white } from 'material-ui/styles/colors';
 
+import { signOut } from '../util/login.js'
+
 const styles = {
   btnLabel: {
     color: white,
@@ -20,12 +22,11 @@ function NavBar() {
     <AppBar
       title="CoMake"
       iconElementRight={
-        <Link to="/">
-          <FlatButton
-            label="Log Out"
-            labelStyle={styles.btnLabel}
-          />
-        </Link>
+        <FlatButton
+          label="Log Out"
+          labelStyle={styles.btnLabel}
+          onClick={() => signOut()}
+        />
       }
       showMenuIconButton={false}
     />

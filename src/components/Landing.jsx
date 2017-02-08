@@ -66,14 +66,12 @@ function Landing() {
       >
         <Box col={12} sm={12} mt={5} mb={5}>
           <h1 style={styles.header}>CoMake</h1>
-          <Link to="/home">
-            <FlatButton
-              label="Login"
-              labelStyle={styles.loginLabel}
-              style={styles.loginBtn}
-              onClick={manageLogin()}
-            />
-          </Link>
+          <FlatButton
+            label="Login"
+            labelStyle={styles.loginLabel}
+            style={styles.loginBtn}
+            onClick={() => manageLogin()}
+          />
         </Box>
         <Box col={3} sm={3}>
           <Brush style={styles.icon} color={white} />

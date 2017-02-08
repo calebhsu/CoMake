@@ -26,6 +26,7 @@ function promptForLogin() {
         });
       }
     });
+    document.location = "/#/home";
   }).catch(function(error) {
     console.log(error);
   });
@@ -45,4 +46,10 @@ export function manageLogin() {
       promptForLogin();
     }
   });
+}
+
+
+export function signOut() {
+  firebase.auth().signOut();
+  document.location = "/";
 }
