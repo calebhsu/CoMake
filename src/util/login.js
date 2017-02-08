@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 
+/** Opens login prompt for user and redirects them to the home page if successful. */
 function promptForLogin() {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(result => {
@@ -32,12 +33,7 @@ function promptForLogin() {
   });
 }
 
-/* Manages the login for a user, if they are not logged in prompt for a log
- * in.
- *
- * Args:
- *  uidCallback: Callback to be executed with parameter of user id.
- */
+/** Manages the login for a user, if they are not logged in prompt for a log in. */
 export function manageLogin() {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
@@ -48,7 +44,7 @@ export function manageLogin() {
   });
 }
 
-
+/** Signs the user out and redirects them to the landing page */
 export function signOut() {
   firebase.auth().signOut();
   document.location = "/";
