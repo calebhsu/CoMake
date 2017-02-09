@@ -11,8 +11,6 @@ import Group from 'material-ui/svg-icons/social/group';
 import Share from 'material-ui/svg-icons/editor/highlight';
 import { white } from 'material-ui/styles/colors';
 
-import { manageLogin } from '../util/login.js'
-
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#1f786a',
