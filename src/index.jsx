@@ -1,35 +1,21 @@
-import * as firebase from 'firebase';
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { applyMiddleware, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 
-import reducers from './components/redux/reducers';
 import Routes from './routes'
+
+import { initFirebase } from './components/firebase-utils';
+import storeHelper from './components/redux/storeHelper'
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-// start code from console.firebase.google.com
-const config = {
-  apiKey: 'AIzaSyBouGOzw_GYXTl9_hkHhL2WZYvh1NHoQM0',
-  authDomain: 'comake-95cb7.firebaseapp.com',
-  databaseURL: 'https://comake-95cb7.firebaseio.com',
-  storageBucket: 'comake-95cb7.appspot.com',
-  messagingSenderId: '578562241026',
-};
-firebase.initializeApp(config);
-// end sourced code
+initFirebase();
 
-const store = createStore(reducers,
-  applyMiddleware(
-    thunkMiddleware
-  )
-);
+const store = storeHelper.constructStore();
 
 render(<AppContainer>
   <Provider store={store}>

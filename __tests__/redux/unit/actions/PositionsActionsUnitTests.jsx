@@ -2,9 +2,9 @@
  * @file Automated tests for the Redux positions actions (redux/actions/positionsActions).
  */
 
-import { initPositions, updatePosition, updatePositionAndPersist } from '../../../src/components/redux/actions/positionsActions';
+import { initPositions, updatePosition, updatePositionAndPersist } from '../../../../src/components/redux/actions/positionsActions';
 
-describe('PositionsActionsUnitTests', () => {
+describe('PositionsActionsUnitTests.', () => {
   test('initPositionsTest_ElemListEmpty', () => {
     const elemList = {};
 
@@ -18,10 +18,10 @@ describe('PositionsActionsUnitTests', () => {
 
   test('initPositionsTest_ElemListNonEmpty', () => {
     const elemList = {
-      "testItem": {
-        "position": {
-          "x": 42,
-          "y": 43
+      testItem: {
+        position: {
+          x: 42,
+          y: 43
         }
       }
     };
@@ -38,8 +38,8 @@ describe('PositionsActionsUnitTests', () => {
     const elemId = "test";
 
     const updatedLoc = {
-      "x": 42,
-      "y": 43
+      x: 42,
+      y: 43
     };
 
     const expectedActionResult = {

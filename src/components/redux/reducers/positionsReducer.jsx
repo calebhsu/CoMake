@@ -1,8 +1,11 @@
-/* Reducers having to do with the position of elements. */
+/**
+ * @file Reducers having to do with the position of elements.
+ */
 
-/* Update the position in firebase.
- * @param {Object} The state of the store.
- * @param {Object} The action to be performed.
+/**
+ * Update the position in firebase.
+ * @param {Object} state The state of the store.
+ * @param {Object} action action to be performed.
  * @return {Object} The new state object.
  */
 const reducePosition = (state = { elements: {} }, action) => {
