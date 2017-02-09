@@ -34,7 +34,7 @@ Note that if you are using Atom, a good tool to help you write these docstrings 
  * Illustrates line wrapping for long param/return descriptions.
  * @param {string} foo This is a param with a description too long to fit in
  *     one line.
- * @return {number} This returns something that has a description too long to
+ * @returns {number} This returns something that has a description too long to
  *     fit in one line.
  */
 project.MyClass.prototype.method = function(foo) {

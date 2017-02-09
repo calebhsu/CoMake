@@ -4,6 +4,8 @@ import { Box } from 'reflexbox';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
+import CanvasView from './CanvasView';
+
 const styles = {
   header: {
     backgroundColor: '#49937f',
@@ -33,7 +35,7 @@ const styles = {
 
 /**
  * Gives HTML for a new canvas on canvas creation.
- * @return {HTML}   The HTML of a new canvas.
+ * @returns {HTML}   The HTML of a new canvas.
  */
 function Canvas() {
   return (
@@ -51,6 +53,7 @@ function Canvas() {
         </Paper>
       </Box>
       {/* Insert sidebar here */}
+      <CanvasView />
     </div>
   )
 }

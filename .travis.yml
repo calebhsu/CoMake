@@ -4,5 +4,7 @@ node_js:
   - "5"
   - "4"
   - "node"
-before_install:
-  - cd website
+env:
+  - DIR=website
+  - DIR=backend/server
+script: cd $DIR && npm install && npm test
