@@ -1,7 +1,18 @@
+/**
+ * @file File to contain commonly used firebase functions/utilities
+ */
+
 import * as firebase from 'firebase';
 
+/**
+ * A string to provide the firebase boards path
+ */
 export const BOARDS_PATH = '/test';
 
+/**
+ * Initializes the firebase app
+ * @returns {FirebaseApp} A firebase app object initialized with the CoMake project
+ */
 export const initFirebase = () => {
   // start code from console.firebase.google.com
   const config = {
@@ -19,7 +30,7 @@ export const initFirebase = () => {
  *  Sets the items location on Firebase.
  * @param {String} elemId The ID of the element.
  * @param {Object} newLocation The new location to be updated.
- * @return {Promise} The promise associated with the set action on firebase.
+ * @returns {Promise} The promise associated with the set action on firebase.
  */
 export const setItemLocation = (elemId, newLocation) => {
   return firebase.database().ref(`${BOARDS_PATH}/${elemId}/position`).set(newLocation);

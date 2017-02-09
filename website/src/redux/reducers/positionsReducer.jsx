@@ -6,7 +6,7 @@
  * Update the position in firebase.
  * @param {Object} state The state of the store.
  * @param {Object} action action to be performed.
- * @return {Object} The new state object.
+ * @returns {Object} The new state object.
  */
 const reducePosition = (state = { elements: {} }, action) => {
   switch (action.type) {

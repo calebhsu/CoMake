@@ -34,7 +34,7 @@ const styles = {
 
 /**
  * Gives HTML of a user's profile page.
- * @return {HTML}   The HTML of a profile page.
+ * @returns {HTML}   The HTML of a profile page.
  */
 export default class Profile extends Component {
   constructor() {

@@ -1,26 +1,32 @@
-/* Component where elements can be positioned on. */
+/**
+ * @file Component on which elements can be positioned.
+ */
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
-import BoardElement from './BoardElement';
+import CanvasElement from './CanvasElement';
 import { initPositions, updatePosition } from '../../redux/actions/positionsActions';
 
 
-/*
- * Component for the board for users to arrange elements on.
+/**
+ * Component for the CanvasView for users to arrange elements on.
  */
-class Board extends React.Component {
+class CanvasView extends React.Component {
 
-  /* Constructor for BoardElement
-   * @param {Object} The props for the BoardElement.
+  /**
+   *  Constructor for CanvasElement
+   * @param {Object} props The props for the CanvasElement.
    */
   constructor(props) {
     super(props);
   }
 
-  /* Function to automatically be performed once the component mounts. */
+  /**
+   * Function to automatically be performed once the component mounts.
+   * @returns {void}
+   */
   componentDidMount() {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
       this.props.dispatch(initPositions(elemListSnap.val()));
@@ -33,15 +39,16 @@ class Board extends React.Component {
     });
   }
 
-  /* Renders the element for display.
-   * @return {HTML} The rendered HTML.
+  /**
+   * Renders the element for display.
+   * @returns {HTML} The rendered HTML.
    */
   render() {
     const elemDivs = [];
     Object.keys(this.props.elements).forEach((id) => {
       const elemDetails = this.props.elements[id];
       elemDivs.push(
-        <BoardElement key={id} elementId={id} initLoc={elemDetails.position} />
+        <CanvasElement key={id} elementId={id} initLoc={elemDetails.position} />
       );
     });
     return (
@@ -58,7 +65,7 @@ class Board extends React.Component {
   }
 }
 
-Board.propTypes = {
+CanvasView.propTypes = {
   dispatch: PropTypes.func,
   elements: PropTypes.object,
 }
@@ -67,4 +74,4 @@ const mapStateToProps = state => ({
   elements: state.positions.elements,
 });
 
-export default connect(mapStateToProps)(Board);
+export default connect(mapStateToProps)(CanvasView);

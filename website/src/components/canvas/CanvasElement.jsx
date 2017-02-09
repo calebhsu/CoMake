@@ -1,4 +1,6 @@
-/* Component representing a draggable, resizable element on the Board. */
+/**
+ * @file Component representing a draggable, resizable element on the Canvas.
+ */
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -6,13 +8,14 @@ import Rnd from 'react-rnd';
 
 import { updatePositionAndPersist } from '../../redux/actions/positionsActions';
 
-/*
- * Component for an element on the board.
+/**
+ * Component for an element on the canvas.
  */
-class BoardElement extends React.Component {
+class CanvasElement extends React.Component {
 
-  /* Constructor for BoardElement
-   * @param {Object} The props for the BoardElement.
+  /**
+   * Constructor for CanvasElement
+   * @param {Object} props The props for the CanvasElement.
    */
   constructor(props) {
     super(props);
@@ -21,8 +24,10 @@ class BoardElement extends React.Component {
     this.endResize = this.endResize.bind(this);
   }
 
-  /* Updates the component's position when new props are fed in.
-   * @param {Object} The new props being passed in.
+  /**
+   * Updates the component's position when new props are fed in.
+   * @param {Object} nextProps The new props being passed in.
+   * @returns {void}
    */
   componentWillUpdate(nextProps) {
     if (this.elemRef) {
@@ -30,9 +35,11 @@ class BoardElement extends React.Component {
     }
   }
 
-  /* Handler for the end drag event.
-   * @param {Event} The event of the drag ending.
-   * @param {Object} Object of the data corresponding to the end drag.
+  /**
+   * Handler for the end drag event.
+   * @param {Event} e The event of the drag ending.
+   * @param {Object} data Object of the data corresponding to the end drag.
+   * @returns {void}
    */
   endDrag(e, data) {
     const updatedLoc = {
@@ -43,17 +50,21 @@ class BoardElement extends React.Component {
       updatedLoc, true));
   }
 
-  /* Handler for the end resize event.
-   * @param {Event} The event of the drag ending.
-   * @param {Object} Object of the data corresponding to the end drag.
+  /**
+   * Handler for the end resize event.
+   * @param {unknown} direction unknown
+   * @param {unknown} styleSize unknown
+   * @param {unknown} clientSize unknown
+   * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
     /* TODO: Dispatch event for resizing the object. */
     return
   }
 
-  /* Renders the element for display.
-   * @return {HTML} The rendered HTML.
+  /**
+   * Renders the element for display.
+   * @returns {HTML} The rendered HTML.
    */
   render() {
     const elemProps = { onDragStop: this.endDrag,
@@ -80,11 +91,11 @@ class BoardElement extends React.Component {
   }
 }
 
-BoardElement.propTypes = {
+CanvasElement.propTypes = {
   dispatch: PropTypes.func,
   initLoc: PropTypes.object,
   initSize: PropTypes.object,
   elementId: PropTypes.string,
 }
 
-export default connect()(BoardElement);
+export default connect()(CanvasElement);

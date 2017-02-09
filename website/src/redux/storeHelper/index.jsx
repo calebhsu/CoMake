@@ -9,8 +9,7 @@ import reducers from '../reducers';
 
 /**
  * Constructs
- * @return {Store} A redux store with the reducers from the reducers folder
- * and the thunk middleware applied to it.
+ * @returns {Store} A redux store with the reducers from the reducers folder and the thunk middleware applied to it.
  */
 const storeConstructor = () => {
   return createStore(reducers,
