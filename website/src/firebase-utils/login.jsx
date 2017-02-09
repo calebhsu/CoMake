@@ -59,5 +59,5 @@ export function manageLogin() {
  */
 export function signOut() {
   firebase.auth().signOut();
-  document.location = "/";
+  document.location = "/#/login";
 }

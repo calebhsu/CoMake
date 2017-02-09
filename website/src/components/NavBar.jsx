@@ -40,24 +40,32 @@ function NavBar() {
     <AppBar
       title="CoMake"
       iconElementRight={
-        <Link to="/profile">
-          <FlatButton
-            secondary={true}
-            style={styles.btn}
-          >
-            <ListItem
-              disabled={true}
-              leftAvatar={
-                <Avatar src="http://placekitten.com/95/95" />
-              }
-              style={styles.user}
+        <div>
+          <Link to="/profile">
+            <FlatButton
+              secondary={true}
+              style={styles.btn}
             >
-              <span>
-                Vin Diesel <Down color={white} style={styles.dropdownIcon} />
-              </span>
-            </ListItem>
-          </FlatButton>
-        </Link>
+              <ListItem
+                disabled={true}
+                leftAvatar={
+                  <Avatar src="http://placekitten.com/95/95" />
+                }
+                style={styles.user}
+              >
+                <span>
+                  Vin Diesel <Down color={white} style={styles.dropdownIcon} />
+                </span>
+              </ListItem>
+            </FlatButton>
+          </Link>
+          <FlatButton
+            label={"Log Out"}
+            secondary={true}
+            style={[styles.btn,styles.user]}
+            onClick={() => signOut()}
+          />
+        </div>
       }
       iconStyleRight={styles.userElement}
       iconElementLeft={
