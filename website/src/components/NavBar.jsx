@@ -61,8 +61,8 @@ function NavBar() {
           </Link>
           <FlatButton
             label={"Log Out"}
-            secondary={true}
-            style={[styles.btn,styles.user]}
+            labelStyle={styles.user}
+            style={[styles.user,styles.btn]}
             onClick={() => signOut()}
           />
         </div>
