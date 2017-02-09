@@ -1,46 +1,44 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
+
+const styles = {
+  sidebar: {
+    marginTop: 114,
+    width: '10%',
+    backgroundColor: "rgba(1, 1, 1, .06)",
+  },
+  listItems: {
+    marginTop: 20,
+    }
+};
 
 export default class Sidebar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {open: false};
-    this.setOpen = this.setOpen.bind(this);
-    this.setClose = this.setClose.bind(this);
-    this.listObject = ['Add New Object',
+    this.listObject = ['Create New',
+                       'Add New Object',
                        'Options',
                        'User List',
                        'Resize',
                        'Select Color',
                        'Sign Out'];
-    this.key;
     this.listItems = this.listObject.map((item)=><MenuItem key={item.toString()} onTouchTap = {this.setClose}>{item}</MenuItem>);
-  }
-
-  setOpen() {
-    this.setState({open: !this.state.open});
-  }
-
-  setClose(){
-    this.setState({open: false});
   }
 
   render() {
     return (
       <div>
-        <FlatButton
-          label="Sidebar"
-          onTouchTap={this.setOpen}
-        />
-        <Drawer open={this.state.open}
-                docked={false}
-                onRequestChange={(open) => this.setState({open})}
-                openSecondary={true}
+        <Drawer containerStyle={styles.sidebar}
+                open= {true}
+                docked={true}
+                openSecondary={false}
+         
         >
+        <div style={styles.listItems}>
         {this.listItems}
+        </div>
         </Drawer>
       </div>
     );
