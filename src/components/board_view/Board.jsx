@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import BoardElement from './BoardElement';
-import { initPositions, updatePosition } from '../redux/actions';
+import { initPositions, updatePosition } from '../redux/actions/positionsActions';
 
 
 /*

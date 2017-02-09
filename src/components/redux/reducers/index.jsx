@@ -2,7 +2,7 @@
 
 import { combineReducers } from 'redux';
 
-import positions from './positions';
+import positions from './positionsReducer';
 
 const reducers = combineReducers({
   positions,

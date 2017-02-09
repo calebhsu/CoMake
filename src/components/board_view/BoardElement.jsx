@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
 
-import { updatePositionAndPersist } from '../redux/actions';
+import { updatePositionAndPersist } from '../redux/actions/positionsActions';
 
 /*
  * Component for an element on the board.

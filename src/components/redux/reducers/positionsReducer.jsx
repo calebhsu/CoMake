@@ -5,7 +5,7 @@
  * @param {Object} The action to be performed.
  * @return {Object} The new state object.
  */
-const updatePosition = (state = { elements: {} }, action) => {
+const reducePosition = (state = { elements: {} }, action) => {
   switch (action.type) {
     case 'initPositions':
       return Object.assign({}, state, {
@@ -34,4 +34,4 @@ const updatePosition = (state = { elements: {} }, action) => {
   }
 };
 
-export default updatePosition;
+export default reducePosition;
