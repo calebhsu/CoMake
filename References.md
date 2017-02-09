@@ -8,6 +8,7 @@
 -nodejs documentation
 -MDN js documentation
 -npm documentation
+-https://lord.io/blog/2014/travis-multiple-subdirs/
 
 
 Stack Overflow posts:
