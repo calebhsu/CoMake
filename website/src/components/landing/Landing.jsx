@@ -3,6 +3,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Box, Flex } from 'reflexbox';
 import { Link } from 'react-router';
+import { manageLogin } from '../../firebase-utils/login.jsx'
 
 import Brush from 'material-ui/svg-icons/image/brush';
 import FlatButton from 'material-ui/FlatButton';
@@ -64,13 +65,12 @@ function Landing() {
       >
         <Box col={12} sm={12} mt={5} mb={5}>
           <h1 style={styles.header}>CoMake</h1>
-          <Link to="/home">
-            <FlatButton
-              label="Login"
-              labelStyle={styles.loginLabel}
-              style={styles.loginBtn}
-            />
-          </Link>
+          <FlatButton
+            label="Login"
+            labelStyle={styles.loginLabel}
+            style={styles.loginBtn}
+            onClick={() => manageLogin()}
+          />
         </Box>
         <Box col={3} sm={3}>
           <Brush style={styles.icon} color={white} />

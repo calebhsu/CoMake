@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { signOut } from '../firebase-utils/login.jsx'
 
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
