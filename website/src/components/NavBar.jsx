@@ -32,7 +32,7 @@ const styles = {
 
 /**
  * Gives HTML for the NavBar.
- * @return {HTML}   The HTML of the navigation bar.
+ * @returns {HTML}   The HTML of the navigation bar.
  */
 function NavBar() {
   return (

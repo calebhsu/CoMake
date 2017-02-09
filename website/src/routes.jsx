@@ -9,7 +9,7 @@ import MainLayout from './components/MainLayout';
 
 /**
  * Defines routes for all application components.
- * @return {HTML} The application components and corresponding paths.
+ * @returns {HTML} The application components and corresponding paths.
  */
 function Routes() {
   return (

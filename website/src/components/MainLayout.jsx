@@ -21,7 +21,7 @@ const muiTheme = getMuiTheme({
 class MainLayout extends Component {
   /**
    * @method MainLayout#render
-   * @return {HTML} Rendered layout
+   * @returns {HTML} Rendered layout
    */
   render() {
     return (
