@@ -10,3 +10,6 @@ node_modules
 
 #Mac OS directory files
 *.DS_Store
+
+#Security files (Private Key,Certificate, etc for backend)
+backend/server/security

@@ -17,8 +17,9 @@
   "license": "MIT",
   "homepage": "https://github.com/calebhsu/CoMake#readme",
   "dependencies": {
-    "firebase": "^3.6.6",
     "material-ui": "^0.16.7",
+    "comake-services": "^1.0.3",
+    "firebase": "^3.6.8",
     "node-sass": "^3.10.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
