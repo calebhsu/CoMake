@@ -29,7 +29,7 @@ const styles = {
 
 /**
  * Gives HTML for the home page after login.
- * @return {HTML}   The HTML of the home page.
+ * @returns {HTML}   The HTML of the home page.
  */
 function Home() {
   return (

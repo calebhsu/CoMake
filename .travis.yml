@@ -4,3 +4,7 @@ node_js:
   - "5"
   - "4"
   - "node"
+env:
+  - DIR=website
+  - DIR=backend/server
+script: cd $DIR && npm install && npm test

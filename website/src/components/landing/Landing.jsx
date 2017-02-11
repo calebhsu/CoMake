@@ -49,7 +49,7 @@ const styles = {
 
 /**
  * Gives HTML for the Landing.
- * @return {HTML}   The HTML of the landing page.
+ * @returns {HTML}   The HTML of the landing page.
  */
 function Landing() {
   return (
