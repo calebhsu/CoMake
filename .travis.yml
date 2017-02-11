@@ -3,5 +3,6 @@ node_js:
   - "node"
 env:
   - DIR=website
+  - DIR=backend/client-pkg
   - DIR=backend/server
 script: cd $DIR && npm install && npm test
