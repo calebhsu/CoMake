@@ -10,7 +10,7 @@
         "items": {
           "$item": {
             // users can write to items on canvases they are assigned to that aren't locked
-            ".write": "auth !== null && && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked') !== null"
+            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked').val() !== null"
           }
         },
         "users": {
