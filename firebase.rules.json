@@ -1,6 +1,61 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    // only admin users can read/write to the whole database
+    ".read": "auth !== null && data.child('users').child(auth.uid).child('admin').val() === true",
+    ".write": "auth !== null && data.child('users').child(auth.uid).child('admin').val() === true",
+    "canvases": {
+      "$canvas": {
+        // users can read all info on canvases they are assigned to
+        ".read": "auth !== null && data.child('users').child(auth.uid).exists()",
+        "items": {
+          "$item": {
+            // users can write to items on canvases they are assigned to that aren't locked
+            ".write": "auth !== null && && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked') !== null"
+          }
+        },
+        "users": {
+          // users cannot modify a canvas's user list
+          ".write": false
+        },
+        "owner": {
+          // users cannot modify a canvas's owner
+          ".write": false
+        },
+        "teacher": {
+          // users cannot modify a canvas's teacher
+          ".write": false
+        },
+        "$canvasItem": {
+          // users can write any of the other fields on the canvas if they are in the users list
+          ".write": "auth !== null && data.parent().child('users').child(auth.uid).exists()",
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        // users can only read their own user data
+        ".read": "auth !== null && $uid === auth.uid",
+        "admin": {
+          // users cannot modify the admin flag on their account
+          ".write": false
+        },
+        "canvases": {
+          // users cannot modify their canvases list
+          ".write": false
+        },
+        "providerData": {
+          // users cannot modify the data provided by their Auth provider
+          ".write": false
+        },
+        "teacher": {
+          // users cannot modify the teacher flag on their account
+          ".write": false
+        },
+        "$userItem": {
+          // users can write any of the other fields on their user item
+          ".write": "auth !== null && $uid === auth.uid"
+        }
+      }
+    }
   }
 }
