@@ -1,6 +1,6 @@
 {
   "rules": {
-    // only admin users can read/write to the whole database
+    // only admin users can read/write to the whole database. Most creation attempts will be evaluated here
     ".read": "auth !== null && data.child('users').child(auth.uid).child('admin').val() === true",
     ".write": "auth !== null && data.child('users').child(auth.uid).child('admin').val() === true",
     "canvases": {
@@ -10,7 +10,7 @@
         "items": {
           "$item": {
             // users can write to items on canvases they are assigned to that aren't locked
-            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked').val() !== true"
+            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked').val() !== true && data.exists() && newData.exists()"
           }
         },
         "users": {
@@ -27,7 +27,7 @@
         },
         "$canvasItem": {
           // users can write any of the other fields on the canvas if they are in the users list
-          ".write": "auth !== null && data.parent().child('users').child(auth.uid).exists()",
+          ".write": "auth !== null && data.parent().child('users').child(auth.uid).exists() && data.exists() && newData.exists()",
         }
       }
     },
@@ -53,7 +53,7 @@
         },
         "$userItem": {
           // users can write any of the other fields on their user item
-          ".write": "auth !== null && $uid === auth.uid"
+          ".write": "auth !== null && $uid === auth.uid && data.exists() && newData.exists()"
         }
       }
     }
