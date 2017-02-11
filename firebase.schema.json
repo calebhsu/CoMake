@@ -3,7 +3,7 @@
         {
             "items":[
                 {
-                    "content":"these are not the droids you're looking for",
+                    "content":"these are not the droids youre looking for",
                     "position": {
                       "x-coord":42,
                       "y-coord":42
@@ -17,8 +17,8 @@
                 }
             ],
             "name":"canvas-name",
-            "owner":"abc123",
-            "teacher":"abc123",
+            "owner":"def456",
+            "teacher":"def456",
             "users":{
                 "def456":"HanSolo",
                 "ghi789":"KyloRen",
@@ -33,7 +33,17 @@
                 "canvas-ID":"canvas-name"
             },
             "email":"smuggler4lyfe@milfalc.com",
-            "teacher":false,
+            "emailVerified": true,
+            "isAnonymous": false,
+            "providerData": {
+              "displayName": "HanSolo",
+              "email": "smuggler4lyfe@milfalc.com",
+              "photoUrl": "https://myspace.kesselrunnr.com/image.jpg",
+              "providerId": "google.com",
+              "uid": "123456789"
+            },
+            "providerID": "firebase",
+            "teacher": false,
             "username":"HanSolo"
         },
         {
@@ -42,6 +52,16 @@
                 "canvas-ID":"canvas-name"
             },
             "email":"ih4t3myp4r3nts@angstyteen.com",
+            "emailVerified": true,
+            "isAnonymous": false,
+            "providerData": {
+              "displayName": "KyloRen",
+              "email": "ih4t3myp4r3nts@angstyteen.com",
+              "photoUrl": "https://myspace.fine-whine.com/image.jpg",
+              "providerId": "google.com",
+              "uid": "123456789"
+            },
+            "providerID": "firebase",
             "teacher":false,
             "username":"KyloRen"
         },
@@ -51,6 +71,16 @@
               "canvas-ID":"canvas-name"
           },
           "email":"thisisawkward@iwanttoleave.com",
+          "emailVerified": true,
+          "isAnonymous": false,
+          "providerData": {
+            "displayName": "A really uncomfortable person",
+            "email": "thisisawkward@iwanttoleave.com",
+            "photoUrl": "https://myspace.getmeoutofhere.com/image.jpg",
+            "providerId": "google.com",
+            "uid": "123456789"
+          },
+          "providerID": "firebase",
           "teacher":false,
           "username":"A really uncomfortable person"
         }
