@@ -1,57 +1,76 @@
 /**
- * @file Defines the Canvas Creation Service
+ * @file Defines the CanvasCreationService
  */
 
-// TODO: User list
+const admin = require('firebase-admin');
+const winston = require('winston');
 
- const admin = require('firebase-admin');
- const winston = require('winston');
+const userHelper = require('../helpers/userHelper');
 
- const handleRequest = (request, response) => {
-   winston.info('CanvasCreationService - handling a new request: %j', request.body);
+/**
+ * Creates a new canvas based on a CanvasCreationService request
+ * @param {ExpressRequest} request An express request object representing the request
+ * @param {ExpressResponse} response An express response object representing the response
+ * @returns {void}
+ */
+const handleRequest = (request, response) => {
+ winston.info('CanvasCreationService.handleRequest - handling a new request: %j', request.body);
 
+ let newCanvasId = null;
+
+ try {
    const newCanvasRef = admin.database().ref('/canvases').push();
-   const canvasId = newCanvasRef.key;
+   newCanvasId = newCanvasRef.key;
 
-   const userList = {};
-   userList[request.body.creatingUser] = 'test';
+   winston.info('CanvasCreationService.handleRequest - creating a new canvas with id %s', newCanvasId);
 
-   winston.info('CanvasCreationService - creating a new canvas with id %s', canvasId);
+   newCanvasRef.set({
+       items: [],
+       name: request.body.name,
+       owner: request.body.creatingUser,
+       teacher: request.body.teacher,
+   }).then(() => {
+     winston.info('CanvasCreationService.handleRequest - adding users to new canvas %s', newCanvasId);
 
-   try {
-     newCanvasRef.set({
-         items: [],
-         name: request.body.name,
-         owner: request.body.creatingUser,
-         teacher: request.body.teacher,
-         users: userList
-     }).then(() => {
-       winston.info('CanvasCreationService - responding to request to create canvas %s', canvasId);
+     // add the creating user to the canvas
+     userHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
 
-       response.send({
-         canvasId,
-       });
-     }).catch((error) => {
-       winston.error('CanvasCreationService - error creating canvas %s: %s', canvasId, error.message);
+     // add the teacher to the canvas (if specified)
+     if(request.body.teacher)
+       userHelper.addUserToCanvasByUid(request.body.teacher, newCanvasId);
 
-       response.status(500).send('Error creating canvas.');
+     // add the users in the user list to the canvas
+     request.body.userList.forEach((userEmail) => {
+       userHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
      });
-   } catch (error) {
-     winston.error('CanvasCreationService - error creating canvas %s: %s', canvasId, error.message);
+
+     winston.info('CanvasCreationService.handleRequest - successfully created canvas %s, sending response to client', newCanvasId);
+
+     // send the new canvas id to the requesting user
+     response.send({ newCanvasId });
+
+   }).catch((error) => {
+     winston.error('CanvasCreationService.handleRequest - error creating canvas %s: %s', newCanvasId, error.message);
 
      response.status(500).send('Error creating canvas.');
-   }
- };
+   });
+ } catch (error) {
+   winston.error('CanvasCreationService.handleRequest - error creating canvas %s: %s', newCanvasId, error.message);
+
+   response.status(500).send('Error creating canvas.');
+ }
+};
 
 module.exports = {
-  handleRequest,
+handleRequest,
 };
 
 /*
-Example Request:
+Example CanvasCreationService Request:
 {
   name: <canvas-name>,
   creatingUser: <uid>,
-  teacher: <null or uid>
+  teacher: <null or uid>,
+  userList: <object containing a list of emails>
 }
 */

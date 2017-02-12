@@ -10,6 +10,7 @@ const winston = require('winston');
 
 const CanvasCreationService = require('./services/CanvasCreationService');
 
+// TODO: daily log
 winston.configure({
   transports: [
     new (winston.transports.File)({ filename: 'comake-backend.log' })
