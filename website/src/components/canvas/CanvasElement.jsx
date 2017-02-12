@@ -6,7 +6,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
 
-import { updatePositionAndPersist } from '../../redux/actions/positionsActions';
+import { updateAndPersist, updatePosition } from '../../redux/actions/ElementActions';
 
 /**
  * Component for an element on the canvas.
@@ -46,7 +46,7 @@ class CanvasElement extends React.Component {
       x: data.position.left,
       y: data.position.top,
     };
-    this.props.dispatch(updatePositionAndPersist(this.props.elementId,
+    this.props.dispatch(updateAndPersist(updatePosition, this.props.elementId,
       updatedLoc, true));
   }
 

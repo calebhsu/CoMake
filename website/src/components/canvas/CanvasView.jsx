@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
-import { initPositions, updatePosition } from '../../redux/actions/positionsActions';
+import { initElements, updatePosition } from '../../redux/actions/ElementActions';
 
 
 /**
@@ -29,7 +29,7 @@ class CanvasView extends React.Component {
    */
   componentDidMount() {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
-      this.props.dispatch(initPositions(elemListSnap.val()));
+      this.props.dispatch(initElements(elemListSnap.val()));
     });
 
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
@@ -71,7 +71,7 @@ CanvasView.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  elements: state.positions.elements,
+  elements: state.reduceElement.elements,
 });
 
 export default connect(mapStateToProps)(CanvasView);
