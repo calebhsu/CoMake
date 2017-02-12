@@ -6,7 +6,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
 
-import { updateAndPersist, updatePosition } from '../../redux/actions/ElementActions';
+import { updateAndPersist, updatePosition, updateSize } from '../../redux/actions/ElementActions';
 
 /**
  * Component for an element on the canvas.
@@ -19,7 +19,7 @@ class CanvasElement extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.elemRef;
+    this.elementRef;
     this.endDrag = this.endDrag.bind(this);
     this.endResize = this.endResize.bind(this);
   }
@@ -30,8 +30,9 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   componentWillUpdate(nextProps) {
-    if (this.elemRef) {
-      this.elemRef.updatePosition(nextProps.initLoc);
+    if (this.elementRef) {
+      this.elementRef.updatePosition(nextProps.initLoc);
+      this.elementRef.updateSize(nextProps.initSize);
     }
   }
 
@@ -59,7 +60,8 @@ class CanvasElement extends React.Component {
    */
   endResize(direction, styleSize, clientSize) {
     /* TODO: Dispatch event for resizing the object. */
-    return
+    this.props.dispatch(updateAndPersist(updateSize, this.props.elementId,
+      clientSize, true));
   }
 
   /**
@@ -67,17 +69,17 @@ class CanvasElement extends React.Component {
    * @returns {HTML} The rendered HTML.
    */
   render() {
-    const elemProps = { onDragStop: this.endDrag,
+    const elementProps = { onDragStop: this.endDrag,
       onResizeStop: this.endResize,
       initial: { x: this.props.initLoc.x,
         y: this.props.initLoc.y,
-        width: 100,
-        height: 100,
+        width: this.props.initSize.width,
+        height: this.props.initSize.height,
       },
     };
     return (
-      <Rnd bounds={'parent'} ref={ elem => { this.elemRef = elem; } }
-        {...elemProps}
+      <Rnd bounds={'parent'} ref={ elem => { this.elementRef = elem; } }
+        {...elementProps}
       >
         <div
           style={{

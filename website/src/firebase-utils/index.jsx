@@ -28,10 +28,20 @@ export const initFirebase = () => {
 
 /**
  *  Sets the items location on Firebase.
- * @param {String} elemId The ID of the element.
+ * @param {String} elementId The ID of the element.
  * @param {Object} newLocation The new location to be updated.
  * @returns {Promise} The promise associated with the set action on firebase.
  */
-export const setItemLocation = (elemId, newLocation) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elemId}/position`).set(newLocation);
+export const setElementLocation = (elementId, newLocation) => {
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/position`).set(newLocation);
+};
+
+/**
+ *  Sets the items location on Firebase.
+ * @param {String} elementId The ID of the element.
+ * @param {Object} newSize The new size to be updated.
+ * @returns {Promise} The promise associated with the set action on firebase.
+ */
+export const setElementSize = (elementId, newSize) => {
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/size`).set(newSize);
 };
