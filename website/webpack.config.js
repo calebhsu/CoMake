@@ -54,6 +54,9 @@ module.exports = {
 		filename: 'index.js'
 	},
 	resolve: {
+		alias: {
+			'react': path.join(__dirname, 'node_modules', 'react')
+		},
 		extensions: ['', '.js', '.jsx']
 	},
 	module: {
