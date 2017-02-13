@@ -8,24 +8,19 @@ function promptForLogin() {
   firebase.auth().signInWithPopup(provider).then(result => {
     const user = result.user;
     const uid = user.uid;
-    const user_email = user.email;
     const user_displayName = user.displayName;
-    const user_emailVerified = user.emailVerified;
-    const user_isAnonymous = user.isAnonymous;
-    const user_providerData = user.providerData[0];
-    const user_providerId = user.providerId;
 
     // check if account already exists, if not add an entry.
     const accountCheck = firebase.database().ref('users/' + uid);
-    accountCheck.once("value", snapshot => {
+    accountCheck.once("value").then(snapshot => {
       if (snapshot.val() === null) {
         accountCheck.set({
-          admin: 'false',
-          email: user_email,
-          emailVerified: user_emailVerified,
-          isAnonymous: user_isAnonymous,
-          providerData: user_providerData,
-          providerID: user_providerId
+          admin: false,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          isAnonymous: user.isAnonymous,
+          providerData: user.providerData[0],
+          providerID: user.providerId
         });
       }
     });
