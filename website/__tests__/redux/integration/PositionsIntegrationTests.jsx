@@ -87,7 +87,7 @@ describe('PositionsIntegrationTests.', () => {
     testStore.dispatch(updatePosition(elemId, updatedLoc));
   });
 
-  test('updatePositionAndPersist_Dispatch', () => {
+  test('updatePositionAndPersist_Dispatch', (done) => {
 
     const elemList = {
       testingANewItem: {
@@ -135,6 +135,7 @@ describe('PositionsIntegrationTests.', () => {
         testRef.remove().then(() => {
           // after all firebase checks are done, shutdown firebase
           firebaseApp.delete();
+          done();
         });
       });
     });

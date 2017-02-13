@@ -10,6 +10,8 @@ const winston = require('winston');
 
 const CanvasCreationService = require('./services/CanvasCreationService');
 
+const CNVS_CRTN_SVC_ROUTE = '/CreateCanvasService';
+
 // TODO: daily log
 winston.configure({
   transports: [
@@ -30,7 +32,7 @@ const app = express();
 app.use(bodyParser.json());
 
 winston.info('started assigning routes to services');
-app.post('/CreateCanvas', CanvasCreationService.handleRequest);
+app.post(CNVS_CRTN_SVC_ROUTE, CanvasCreationService.handleRequest);
 
 winston.info('finished assigning routes to services');
 
