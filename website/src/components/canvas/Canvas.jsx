@@ -45,7 +45,7 @@ function Canvas() {
   return (
     <div>
       <Sidebar />
-      <Box style={styles.box}col={9} sm={12} md={9}>
+      <Box style={styles.box} col={9} sm={12} md={9}>
         <Paper style={styles.paper} zDepth={1}>
           <h3 style={styles.modelName}>Racecar Model</h3>
           <span style={styles.optionBtnGroup}>
