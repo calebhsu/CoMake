@@ -13,6 +13,11 @@ const styles = {
     }
 };
 
+/**
+  * Gives HTML for a new sidebar creation.
+  * @returns {HTML}   The HTML of a new sidebar.
+  */
+
 export default class Sidebar extends React.Component {
 
   constructor(props) {
