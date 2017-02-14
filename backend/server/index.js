@@ -12,11 +12,15 @@ const CanvasCreationService = require('./services/CanvasCreationService');
 
 const CNVS_CRTN_SVC_ROUTE = '/CreateCanvasService';
 
-// TODO: daily log
+const date = new Date();
+const month = date.getUTCMonth() + 1;
+const day = date.getUTCDate();
+const year = date.getUTCFullYear();
 winston.configure({
-  transports: [
-    new (winston.transports.File)({ filename: 'comake-backend.log' })
-  ]
+  transports: [new (winston.transports.File)(
+    { filename: 'comake-backend_' + month + '_' + day + '_' +
+       year + '.log' }
+  )]
 });
 
 // initialize firebase

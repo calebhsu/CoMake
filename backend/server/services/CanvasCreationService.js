@@ -24,6 +24,7 @@ const handleRequest = (request, response) => {
 
    winston.info('CanvasCreationService.handleRequest - creating a new canvas with id %s', newCanvasId);
 
+   //configure the relevant fields on the new canvas
    newCanvasRef.set({
        items: [],
        name: request.body.name,

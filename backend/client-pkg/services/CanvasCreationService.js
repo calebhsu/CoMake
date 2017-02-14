@@ -38,7 +38,7 @@
        'Content-Type': 'application/json'
      }
    }, (res) => {
-     let responseObject;
+     let responseObject = null;
 
      res.setEncoding('utf8');
      res.on('data', (bodyChunk) => {

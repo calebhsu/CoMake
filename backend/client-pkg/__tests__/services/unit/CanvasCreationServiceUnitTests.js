@@ -3,6 +3,8 @@
  */
 const CanvasCreationService = require('../../../services/CanvasCreationService');
 
-describe('CanvasCreationServiceIntegrationTests.', () => {
-  test('sendRequest_successfulRequest', () => {});
+describe('CanvasCreationServiceUnitTests.', () => {
+  test('formRequest_success', () => {
+    //test to show that formRequest gives proper output
+  });
 });
