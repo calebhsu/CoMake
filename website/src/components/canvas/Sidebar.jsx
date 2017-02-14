@@ -19,7 +19,6 @@ const styles = {
   */
 
 export default class Sidebar extends React.Component {
-
   constructor(props) {
     super(props);
     this.listObject = ['Create New',
@@ -31,7 +30,7 @@ export default class Sidebar extends React.Component {
                        'Sign Out'];
     this.listItems = this.listObject.map((item)=><MenuItem key={item.toString()} onTouchTap = {this.setClose}>{item}</MenuItem>);
   }
-
+                                         
   render() {
     return (
       <div>
