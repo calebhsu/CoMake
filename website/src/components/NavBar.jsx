@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { signOut } from '../firebase-utils/login'
 
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
@@ -32,31 +33,39 @@ const styles = {
 
 /**
  * Gives HTML for the NavBar.
- * @return {HTML}   The HTML of the navigation bar.
+ * @returns {HTML}   The HTML of the navigation bar.
  */
 function NavBar() {
   return (
     <AppBar
       title="CoMake"
       iconElementRight={
-        <Link to="/profile">
-          <FlatButton
-            secondary={true}
-            style={styles.btn}
-          >
-            <ListItem
-              disabled={true}
-              leftAvatar={
-                <Avatar src="http://placekitten.com/95/95" />
-              }
-              style={styles.user}
+        <div>
+          <Link to="/profile">
+            <FlatButton
+              secondary={true}
+              style={styles.btn}
             >
-              <span>
-                Vin Diesel <Down color={white} style={styles.dropdownIcon} />
-              </span>
-            </ListItem>
-          </FlatButton>
-        </Link>
+              <ListItem
+                disabled={true}
+                leftAvatar={
+                  <Avatar src="http://placekitten.com/95/95" />
+                }
+                style={styles.user}
+              >
+                <span>
+                  Vin Diesel <Down color={white} style={styles.dropdownIcon} />
+                </span>
+              </ListItem>
+            </FlatButton>
+          </Link>
+          <FlatButton
+            label={"Log Out"}
+            labelStyle={styles.user}
+            style={[styles.user,styles.btn]}
+            onClick={() => signOut()}
+          />
+        </div>
       }
       iconStyleRight={styles.userElement}
       iconElementLeft={

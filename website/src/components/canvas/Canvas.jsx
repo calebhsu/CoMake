@@ -4,6 +4,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Sidebar from './Sidebar';
 
+import CanvasView from './CanvasView';
+
 const styles = {
   box: {
     width: '100%'
@@ -37,7 +39,7 @@ const styles = {
 
 /**
  * Gives HTML for a new canvas on canvas creation.
- * @return {HTML}   The HTML of a new canvas.
+ * @returns {HTML}   The HTML of a new canvas.
  */
 function Canvas() {
   return (
