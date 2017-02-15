@@ -2,7 +2,9 @@
  * @file Reducers having to do with the position of elements.
  */
 
-import { INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE } from './../actions/ActionConstants';
+import {
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, TARGET_ELEMENT,
+} from './../actions/ActionConstants';
 
 /**
  * Inserts payload information into state, making a new object.
@@ -36,11 +38,13 @@ function copyPayloadInfo(state, elementId, objectField, payload) {
  * @param {Object} action action to be performed.
  * @returns {Object} The new state object.
  */
-const reducerElement = (state = { elements: {} }, action) => {
+export const updateElementReducer = (state = { elements: {} }, action) => {
   switch (action.type) {
     case INIT_ELEMENTS:
       return Object.assign({}, state, {
         elements: action.elements,
+      }, {
+        targeted: null,
       });
 
     case UPDATE_POSITION:
@@ -54,4 +58,19 @@ const reducerElement = (state = { elements: {} }, action) => {
   }
 };
 
-export default reducerElement;
+/**
+ * Reduces the action for when a new element is targeted.
+ * @param  {Object} state The state of the store.
+ * @param  {Object} action The action to reduce.
+ * @return {Object} The new state of the store.
+ */
+export const targetElementReducer = (state = { elements: {} }, action ) => {
+  switch (action.type) {
+    case TARGET_ELEMENT:
+      return Object.assign({}, state, {
+        targeted: action.elementId,
+      });
+    default:
+      return state;
+  }
+}

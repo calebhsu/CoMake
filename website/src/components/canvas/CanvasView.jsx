@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
-import { initElements, updatePosition, updateSize } from '../../redux/actions/ElementActions';
+import {
+  initElements, updatePosition, updateSize
+} from '../../redux/actions/ElementActions';
 
 
 /**
@@ -77,7 +79,7 @@ CanvasView.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  elements: state.reduceElement.elements,
+  elements: state.updateElementReducer.elements,
 });
 
 export default connect(mapStateToProps)(CanvasView);

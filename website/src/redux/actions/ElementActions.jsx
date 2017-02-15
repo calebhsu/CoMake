@@ -3,7 +3,10 @@
  */
 
 import { setElementLocation, setElementSize } from '../../firebase-utils';
-import { INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION } from './ActionConstants';
+import {
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION,
+  TARGET_ELEMENT
+} from './ActionConstants';
 
 
 /**
@@ -74,3 +77,13 @@ export const updateAndPersist = (action, elementId, updatedVal) => (
     }
   }
 );
+
+/**
+ * Change the currently targeted element.
+ * @param {String} elementId String of the element ID.
+ * @returns {Object} The object detailing the action details.
+ */
+export const targetElement = (elementId) => ({
+  type: TARGET_ELEMENT,
+  elementId: elementId,
+})

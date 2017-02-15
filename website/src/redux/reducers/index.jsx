@@ -4,13 +4,14 @@
 
 import { combineReducers } from 'redux';
 
-import reduceElement from './ElementReducer';
+import { updateElementReducer, targetElementReducer } from './ElementReducer';
 
 /**
  * An object with all the specified reducers combined
  */
 const reducers = combineReducers({
-  reduceElement,
+  updateElementReducer,
+  targetElementReducer,
 });
 
 export default reducers;

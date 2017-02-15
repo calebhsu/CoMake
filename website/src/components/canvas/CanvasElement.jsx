@@ -48,7 +48,7 @@ class CanvasElement extends React.Component {
       y: data.position.top,
     };
     this.props.dispatch(updateAndPersist(updatePosition, this.props.elementId,
-      updatedLoc, true));
+      updatedLoc));
   }
 
   /**
@@ -61,7 +61,7 @@ class CanvasElement extends React.Component {
   endResize(direction, styleSize, clientSize) {
     /* TODO: Dispatch event for resizing the object. */
     this.props.dispatch(updateAndPersist(updateSize, this.props.elementId,
-      clientSize, true));
+      clientSize));
   }
 
   /**
