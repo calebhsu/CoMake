@@ -89,6 +89,7 @@ class CanvasElement extends React.Component {
         height: this.props.initSize.height,
       },
     };
+    const rotationTransform = 'rotate(' + String(this.props.rotation) + 'deg)';
     return (
       <Rnd bounds={'parent'} ref={ elem => { this.elementRef = elem; } }
         {...elementProps}
@@ -98,7 +99,8 @@ class CanvasElement extends React.Component {
             height: '100%',
             width: '100%',
             backgroundImage: 'url(http://marcoortiztorres.me/images/craftml.png)',
-            backgroundSize: 'cover' }}
+            backgroundSize: 'cover',
+            transform: rotationTransform }}
         />
       </Rnd>
     );
@@ -109,6 +111,7 @@ CanvasElement.propTypes = {
   dispatch: PropTypes.func,
   initLoc: PropTypes.object,
   initSize: PropTypes.object,
+  rotation: PropTypes.number,
   elementId: PropTypes.string,
 }
 

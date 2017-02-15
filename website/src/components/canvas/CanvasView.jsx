@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
 import {
-  initElements, updatePosition, updateSize
+  initElements, updatePosition, updateSize, updateRotation
 } from '../../redux/actions/ElementActions';
 
 
@@ -41,6 +41,11 @@ class CanvasView extends React.Component {
       this.props.dispatch(
         updateSize(elemSnap.key, elemSnap.child('size').val())
       );
+      this.props.dispatch(
+        updateRotation(elemSnap.key, {
+          rotation: elemSnap.child('rotation').val()
+        })
+      );
     });
   }
 
@@ -56,6 +61,7 @@ class CanvasView extends React.Component {
         <CanvasElement key={id} elementId={id}
           initLoc={elemDetails.position}
           initSize={elemDetails.size}
+          rotation={elemDetails.rotation}
         />
       );
     });

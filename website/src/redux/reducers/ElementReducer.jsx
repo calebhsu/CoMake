@@ -3,24 +3,30 @@
  */
 
 import {
-  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, TARGET_ELEMENT,
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION, TARGET_ELEMENT,
 } from './../actions/ActionConstants';
 
 /**
  * Inserts payload information into state, making a new object.
  * @param {Object} state The state of the store.
  * @param {Object} elementId ID of the element affected.
- * @param {String} objectField The field of the element to update.
  * @param {Object} payload The updated information to insert.
+ * @param {String} objectField The field of the element to update. If left as
+ *                             null this indicates the payload already contains
+ *                             the field.
  * @returns {Object} The new state object.
  */
-function copyPayloadInfo(state, elementId, objectField, payload) {
+function copyPayloadInfo(state, elementId, payload, objectField = null) {
   if(!payload) {
     return state;
   }
-  // Copy the appropriate field.
-  const fieldToUpdate = {};
-  fieldToUpdate[objectField] = Object.assign({}, payload);
+  // Copy the appropriate field
+  let fieldToUpdate = {};
+  if (objectField === null) {
+    fieldToUpdate = payload;
+  } else {
+    fieldToUpdate[objectField] = Object.assign({}, payload);
+  }
   // Make copy of the element with new field.
   const elemToUpdate = {};
   elemToUpdate[elementId] = Object.assign({}, state.elements[elementId],
@@ -48,10 +54,14 @@ export const updateElementReducer = (state = { elements: {} }, action) => {
       });
 
     case UPDATE_POSITION:
-      return copyPayloadInfo(state, action.elementId, 'position', action.payload);
+      return copyPayloadInfo(state, action.elementId, action.payload,
+        'position');
 
     case UPDATE_SIZE:
-      return copyPayloadInfo(state, action.elementId, 'size', action.payload);
+      return copyPayloadInfo(state, action.elementId, action.payload, 'size');
+
+    case UPDATE_ROTATION:
+      return copyPayloadInfo(state, action.elementId, action.payload);
 
     default:
       return state
