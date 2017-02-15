@@ -6,7 +6,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
 
-import { updateAndPersist, updatePosition, updateSize } from '../../redux/actions/ElementActions';
+import {
+  updateAndPersist, updatePosition, updateSize, targetElement
+} from '../../redux/actions/ElementActions';
 
 /**
  * Component for an element on the canvas.
@@ -22,6 +24,7 @@ class CanvasElement extends React.Component {
     this.elementRef;
     this.endDrag = this.endDrag.bind(this);
     this.endResize = this.endResize.bind(this);
+    this.targetClicked = this.targetClicked.bind(this);
   }
 
   /**
@@ -59,9 +62,16 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
-    /* TODO: Dispatch event for resizing the object. */
     this.props.dispatch(updateAndPersist(updateSize, this.props.elementId,
       clientSize));
+  }
+
+  /**
+   * Handler for onClick that dispatches a targetElement event.
+   * @returns {void}
+   */
+  targetClicked() {
+    this.props.dispatch(targetElement(this.props.elementId));
   }
 
   /**
@@ -69,8 +79,10 @@ class CanvasElement extends React.Component {
    * @returns {HTML} The rendered HTML.
    */
   render() {
-    const elementProps = { onDragStop: this.endDrag,
+    const elementProps = {
+      onDragStop: this.endDrag,
       onResizeStop: this.endResize,
+      onClick: this.targetClicked,
       initial: { x: this.props.initLoc.x,
         y: this.props.initLoc.y,
         width: this.props.initSize.width,

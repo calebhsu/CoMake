@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
 import CanvasView from './CanvasView';
+import RotationSlider from './RotationSlider';
 
 const styles = {
   header: {
@@ -54,6 +55,8 @@ function Canvas() {
       </Box>
       {/* Insert sidebar here */}
       <CanvasView />
+      <RotationSlider />
+
     </div>
   )
 }
