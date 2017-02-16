@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { signOut } from '../firebase-utils/login'
+import { signOut } from '../firebase-utils/login';
+import { getUserName } from '../firebase-utils/login';
 
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
@@ -54,7 +55,7 @@ function NavBar() {
                 style={styles.user}
               >
                 <span>
-                  Vin Diesel <Down color={white} style={styles.dropdownIcon} />
+                  {getUserName()} <Down color={white} style={styles.dropdownIcon} />
                 </span>
               </ListItem>
             </FlatButton>

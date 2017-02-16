@@ -48,3 +48,23 @@ export function signOut() {
   firebase.auth().signOut();
   document.location = "/#/login";
 }
+
+/** 
+ * Gets a user's Google profile name
+ * @returns username
+ */
+export function getUserName() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      const userName = firebase.auth().currentUser.displayName;
+      if (userName === null) {
+        return "NO USERNAME";
+      } else {
+        console.log(userName);
+        return userName;
+      }
+    } else {
+      promptForLogin();
+    }
+  });
+}
