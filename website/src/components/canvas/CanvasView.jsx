@@ -15,9 +15,9 @@ const styles = {
     backgroundImage: 'linear-gradient(to right, #dddddd 1px, transparent 1px), linear-gradient(to bottom, #dddddd 1px, transparent 1px)',
     border: '2px dashed #7e7e7e',
     height: '77.2vh',
-    width: '85vw',
     margin: '1vw 0 1vw 13.5vw',
-    position: 'absolute'
+    position: 'absolute',
+    width: '85vw',
   }
 };
 
