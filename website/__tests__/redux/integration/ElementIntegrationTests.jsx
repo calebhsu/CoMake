@@ -29,19 +29,22 @@ describe('ElementIntegrationTests.', () => {
   test('initElements_Dispatch', () => {
     const elemList = {
       testingANewItem: {
-        position: { x: 1000, y: 33 }
+        position: { x: 1000, y: 33 },
+        size: {width: 100, height: 100 },
+        rotation: 0,
       },
       testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
+        position: { x: 1, y: 2 },
+        size: { width: 50, height: 75 },
+        rotation: 45,
       }
     };
 
     testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
     });
 
@@ -51,10 +54,14 @@ describe('ElementIntegrationTests.', () => {
   test('updatePosition_Dispatch', () => {
     const elemList = {
       testingANewItem: {
-        position: { x: 1000, y: 33 }
+        position: { x: 1000, y: 33 },
+        size: {width: 100, height: 100 },
+        rotation: 0,
       },
       testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
+        position: { x: 1, y: 2 },
+        size: { width: 50, height: 75 },
+        rotation: 45,
       }
     };
 
@@ -65,9 +72,8 @@ describe('ElementIntegrationTests.', () => {
     const unsubscribe = testStore.subscribe(() => {
       expect(testStore.getState())
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
     });
 
@@ -80,9 +86,8 @@ describe('ElementIntegrationTests.', () => {
     testStore.subscribe(() => {
       expect(testStore.getState())
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
     });
 
@@ -93,10 +98,14 @@ describe('ElementIntegrationTests.', () => {
 
     const elemList = {
       testingANewItem: {
-        position: { x: 1000, y: 33 }
+        position: { x: 1000, y: 33 },
+        size: {width: 100, height: 100 },
+        rotation: 0,
       },
       testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
+        position: { x: 1, y: 2 },
+        size: { width: 50, height: 75 },
+        rotation: 45,
       }
     };
 
@@ -110,9 +119,8 @@ describe('ElementIntegrationTests.', () => {
     testStore.subscribe(() => {
       expect(testStore.getState())
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
     });
 

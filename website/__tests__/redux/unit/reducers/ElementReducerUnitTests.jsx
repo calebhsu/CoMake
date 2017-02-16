@@ -28,7 +28,7 @@ describe('PositionsReducerUnitTests.', () => {
     }
   };
 
-  const initPositionsAction = {
+  const initElementAction = {
     type: 'initElements',
     elements: testElementsList
   };
@@ -38,20 +38,20 @@ describe('PositionsReducerUnitTests.', () => {
   });
 
   test('ReducePosition_InitPositions_NoPreviousState', () => {
-    expect(updateElementReducer(undefined, initPositionsAction))
-      .toEqual({ elements: testElementsList });
+    expect(updateElementReducer(undefined, initElementAction))
+      .toEqual({ elements: testElementsList, targeted: null });
   });
 
   test('ReducePosition_InitPositions_PreviousState', () => {
-    expect(updateElementReducer(prevState, initPositionsAction))
-      .toEqual({ elements: testElementsList });
+    expect(updateElementReducer(prevState, initElementAction))
+      .toEqual({ elements: testElementsList, targeted: null });
   });
 
   test('ReducePosition_UpdatePosition_InvalidUpdatedLocation_NoStateChange', () => {
     const updatePositionActionNullUpdateLocation = {
       type: 'updatePosition',
       elementId: "testItem",
-      updatedLocation: null
+      payload: null
     };
 
     expect(updateElementReducer(prevState, updatePositionActionNullUpdateLocation))
@@ -63,7 +63,7 @@ describe('PositionsReducerUnitTests.', () => {
     const updatePositionAction = {
       type: 'updatePosition',
       elementId: 'testItem',
-      updatedLocation: { x: 100, y: 200 }
+      payload: { x: 100, y: 200 }
     };
 
     const expectedStateAfterUpdatePositon = {
@@ -82,7 +82,7 @@ describe('PositionsReducerUnitTests.', () => {
     const updatePositionAction = {
       type: 'updatePosition',
       elementId: 'testItem',
-      updatedLocation: { x: 100, y: 200 }
+      payload: { x: 100, y: 200 }
     };
 
     const expectedStateAfterUpdatePositon = {
