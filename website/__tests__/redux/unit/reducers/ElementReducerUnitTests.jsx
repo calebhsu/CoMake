@@ -6,6 +6,10 @@ import {
   updateElementReducer
 } from '../../../../src/redux/reducers/ElementReducer';
 
+import {
+  INIT_ELEMENTS, UPDATE_POSITION
+} from '../../../../src/redux/actions/ActionConstants';
+
 describe('PositionsReducerUnitTests.', () => {
 
   const testElementsList = {
@@ -29,7 +33,7 @@ describe('PositionsReducerUnitTests.', () => {
   };
 
   const initElementAction = {
-    type: 'initElements',
+    type: INIT_ELEMENTS,
     elements: testElementsList
   };
 
@@ -49,7 +53,7 @@ describe('PositionsReducerUnitTests.', () => {
 
   test('ReducePosition_UpdatePosition_InvalidUpdatedLocation_NoStateChange', () => {
     const updatePositionActionNullUpdateLocation = {
-      type: 'updatePosition',
+      type: UPDATE_POSITION,
       elementId: "testItem",
       payload: null
     };
@@ -61,7 +65,7 @@ describe('PositionsReducerUnitTests.', () => {
   test('ReducePosition_UpdatePosition_ValidUpdatedLocation_NoPreviousState_StateChange', () => {
 
     const updatePositionAction = {
-      type: 'updatePosition',
+      type: UPDATE_POSITION,
       elementId: 'testItem',
       payload: { x: 100, y: 200 }
     };
@@ -80,7 +84,7 @@ describe('PositionsReducerUnitTests.', () => {
   test('ReducePosition_UpdatePosition_ValidUpdatedLocation_PreviousState_StateChange', () => {
 
     const updatePositionAction = {
-      type: 'updatePosition',
+      type: UPDATE_POSITION,
       elementId: 'testItem',
       payload: { x: 100, y: 200 }
     };

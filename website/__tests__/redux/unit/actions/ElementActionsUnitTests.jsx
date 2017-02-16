@@ -6,12 +6,17 @@ import {
   initElements, updatePosition
 } from '../../../../src/redux/actions/ElementActions';
 
+import {
+  INIT_ELEMENTS, UPDATE_POSITION
+} from '../../../../src/redux/actions/ActionConstants';
+
+
 describe('PositionsActionsUnitTests.', () => {
   test('initElementsTest_ElemListEmpty', () => {
     const elemList = {};
 
     const expectedActionResult = {
-      type: 'initElements',
+      type: INIT_ELEMENTS,
       elements: elemList,
     };
 
@@ -29,7 +34,7 @@ describe('PositionsActionsUnitTests.', () => {
     };
 
     const expectedActionResult = {
-      type: 'initElements',
+      type: INIT_ELEMENTS,
       elements: elemList,
     };
 
@@ -45,9 +50,9 @@ describe('PositionsActionsUnitTests.', () => {
     };
 
     const expectedActionResult = {
-      type: 'updatePosition',
+      type: UPDATE_POSITION,
       elementId: elemId,
-      updatedLocation: updatedLoc,
+      payload: updatedLoc,
     };
 
     expect(updatePosition(elemId, updatedLoc)).toEqual(expectedActionResult);

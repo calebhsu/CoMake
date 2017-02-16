@@ -70,7 +70,7 @@ describe('ElementIntegrationTests.', () => {
     const updatedLoc = { x: 33, y: 88 };
 
     const unsubscribe = testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
           elements: elemList,
           targeted: null,
@@ -84,7 +84,7 @@ describe('ElementIntegrationTests.', () => {
     elemList[elemId].position = updatedLoc;
 
     testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
           elements: elemList,
           targeted: null,
@@ -117,7 +117,7 @@ describe('ElementIntegrationTests.', () => {
     // of elemList. This will get called once for each dispatch and will
     // validate the current elemList value (this value changes between dispatches)
     testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
           elements: elemList,
           targeted: null,
