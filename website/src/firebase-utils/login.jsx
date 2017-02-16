@@ -73,7 +73,7 @@ export function getUserName() {
  * Gets a user's Google profile picture
  * @returns link
  */
-export function getUserName() {
+export function getUserPhoto() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       return firebase.auth().currentUser.photoURL;
