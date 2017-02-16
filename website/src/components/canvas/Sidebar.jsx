@@ -3,21 +3,20 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
-  sidebar: {
-    marginTop: 114,
-    width: '10%',
-    backgroundColor: "rgba(1, 1, 1, .06)",
-  },
   listItems: {
     marginTop: 20,
-    }
+  },
+  sidebar: {
+    backgroundColor: 'rgba(1, 1, 1, .06)',
+    marginTop: 114,
+    width: '12vw',
+  },
 };
 
 /**
-  * Gives HTML for a new sidebar creation.
-  * @returns {HTML}   The HTML of a new sidebar.
+  * Gives HTML for options sidebar.
+  * @returns {HTML}   The HTML of a sidebar on the canvas page
   */
-
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +29,7 @@ export default class Sidebar extends React.Component {
                        'Sign Out'];
     this.listItems = this.listObject.map((item)=><MenuItem key={item.toString()} onTouchTap = {this.setClose}>{item}</MenuItem>);
   }
-                                         
+
   render() {
     return (
       <div>
@@ -38,10 +37,9 @@ export default class Sidebar extends React.Component {
                 open= {true}
                 docked={true}
                 openSecondary={false}
-         
         >
         <div style={styles.listItems}>
-        {this.listItems}
+          {this.listItems}
         </div>
         </Drawer>
       </div>

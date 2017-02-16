@@ -76,15 +76,18 @@ class CanvasElement extends React.Component {
       },
     };
     return (
-      <Rnd bounds={'parent'} ref={ elem => { this.elemRef = elem; } }
+      <Rnd
+        bounds={'parent'}
+        ref={ elem => { this.elemRef = elem; } }
         {...elemProps}
       >
         <div
           style={{
-            height: '100%',
-            width: '100%',
             backgroundImage: 'url(http://marcoortiztorres.me/images/craftml.png)',
-            backgroundSize: 'cover' }}
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+            height: '100%'
+          }}
         />
       </Rnd>
     );

@@ -9,6 +9,17 @@ import * as firebase from 'firebase';
 import CanvasElement from './CanvasElement';
 import { initPositions, updatePosition } from '../../redux/actions/positionsActions';
 
+const styles = {
+  canvas: {
+    backgroundSize: '25px 25px',
+    backgroundImage: 'linear-gradient(to right, #dddddd 1px, transparent 1px), linear-gradient(to bottom, #dddddd 1px, transparent 1px)',
+    border: '2px dashed #7e7e7e',
+    height: '77.2vh',
+    margin: '1vw 0 1vw 13.5vw',
+    position: 'absolute',
+    width: '85vw',
+  }
+};
 
 /**
  * Component for the CanvasView for users to arrange elements on.
@@ -52,13 +63,7 @@ class CanvasView extends React.Component {
       );
     });
     return (
-      <div
-        style={{ border: 'solid',
-          height: '70%',
-          width: '80%',
-          marginLeft: '10%',
-          position: 'absolute' }}
-      >
+      <div style={styles.canvas}>
         { elemDivs }
       </div>
     );
