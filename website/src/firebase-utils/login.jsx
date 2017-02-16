@@ -68,3 +68,17 @@ export function getUserName() {
     }
   });
 }
+
+/** 
+ * Gets a user's Google profile picture
+ * @returns link
+ */
+export function getUserName() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      return firebase.auth().currentUser.photoURL;
+    } else {
+      promptForLogin();
+    }
+  });
+}
