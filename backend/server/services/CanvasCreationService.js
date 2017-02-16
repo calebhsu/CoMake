@@ -16,6 +16,26 @@ const userHelper = require('../helpers/userHelper');
 const handleRequest = (request, response) => {
  winston.info('CanvasCreationService.handleRequest - handling a new request: %j', request.body);
 
+ if(request.body.name.constructor !== String)
+ {
+    winston.error('CanvasCreationService.handleRequest - invalid name param, must be a String');
+ }
+
+ if(request.body.creatingUser.constructor !== String)
+ {
+   winston.error('CanvasCreationService.handleRequest - invalid creatingUser param, must be a String');
+ }
+
+ if(request.body.teacher && request.body.teacher.constructor !== String)
+ {
+   winston.error('CanvasCreationService.handleRequest - invalid teacher param, must be null or a String');
+ }
+
+ if(!(request.body.userList instanceof Array))
+ {
+   winston.error('CanvasCreationService.handleRequest - invalid userList param, must be an Array');
+ }
+
  let newCanvasId = null;
 
  try {

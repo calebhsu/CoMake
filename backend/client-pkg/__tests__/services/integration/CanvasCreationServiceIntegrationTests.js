@@ -1,12 +1,13 @@
 /**
  * @file Integration tests for the CanvasCreationService client package
  */
-const firebase = require('firebase');
 
-const firebaseUtils = require('../../../firebase-utils');
+ const firebase = require('firebase');
+
 const CanvasCreationService = require('../../../services/CanvasCreationService');
+const firebaseUtils = require('../../../firebase-utils');
 
-describe('CanvasCreationServiceIntegrationTests.', () => {
+describe('CanvasCreationServiceIntegrationTests', () => {
 
   const test_user = {
     email: 'test@test.com',
@@ -14,15 +15,8 @@ describe('CanvasCreationServiceIntegrationTests.', () => {
   }
 
   const test_endpoint = {
-    host: 'localhost',
-    port: 8443
+    host: 'comakeserver.herokuapp.com'
   };
-
-  // TODO: fix this test so it works
-
-  function verifyNewCanvas(newCanvasBody, requestBody) {
-    expect(newCanvasBody.teacher).toEqual(requestBody.teacher);
-  }
 
   let firebaseApp = null;
 
@@ -30,34 +24,22 @@ describe('CanvasCreationServiceIntegrationTests.', () => {
     firebaseApp = firebaseUtils.initFirebase();
   });
 
-  test('sendRequest_successfulRequest', (done) => {
+  test('sendRequest_requestReturns', (done) => {
 
     const requestBody = CanvasCreationService.formRequestBody('hello', "0", "1", ["chhs9974@colorado.edu", "chialo.hsu@gmail.com"]);
 
-    /*CanvasCreationService.sendRequest(requestBody, test_endpoint, () => {
-      done();
-    });*/
-
-    firebase.auth().signInWithEmailAndPassword(test_user.email, test_user.password)
-      .then((fbUser) => {
-        console.log('here');
-        const requestBody = CanvasCreationService.formRequestBody('hello', fbUser.uid, fbUser.uid, []);
-
-        CanvasCreationService.sendRequest(requestBody, test_endpoint, (responseObject) => {
-          firebase.database().ref('/canvases/' + responseObject.newCanvasId).once('value')
-            .then((newCanvasSnap) => {
-              verifyNewCanvas(newCanvasSnap.val(), requestBody);
-            });
-          done();
-        });
+    CanvasCreationService.sendRequest(requestBody, test_endpoint, (resObj) => {
+      firebase.database().ref('/canvases/' + resObj.newCanvasId).once('value')
+      .then((newCanvasSnap) => {
+        expect(newCanvasSnap.val()).toBeTruthy();
+        done();
       }).catch((err) => {
-        console.log(err.message);
+        throw err;
       });
+    });
   });
 
   afterAll(() => {
-    firebase.auth().signOut();
-    if(!firebaseApp)
-      firebaseApp.delete()
+    firebaseApp.delete();
   });
 });

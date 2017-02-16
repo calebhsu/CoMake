@@ -53,7 +53,6 @@
 
       // add canvas to the user's canvas list
       canvasRef.child('name').once('value').then((canvasNameSnap) => {
-        console.log(canvasNameSnap.val());
         admin.database().ref('/users/' + userSnap.key + '/canvases').transaction((oldValue) => {
           winston.info('userHelper.addUserToCanvasByEmail - writing canvas %s to user %s', canvasId, email);
 
