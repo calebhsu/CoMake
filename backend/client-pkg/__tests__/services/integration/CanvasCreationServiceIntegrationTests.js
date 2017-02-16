@@ -34,11 +34,11 @@ describe('CanvasCreationServiceIntegrationTests.', () => {
 
     const requestBody = CanvasCreationService.formRequestBody('hello', "0", "1", ["chhs9974@colorado.edu", "chialo.hsu@gmail.com"]);
 
-    CanvasCreationService.sendRequest(requestBody, test_endpoint, () => {
+    /*CanvasCreationService.sendRequest(requestBody, test_endpoint, () => {
       done();
-    });
+    });*/
 
-    /*firebase.auth().signInWithEmailAndPassword(test_user.email, test_user.password)
+    firebase.auth().signInWithEmailAndPassword(test_user.email, test_user.password)
       .then((fbUser) => {
         console.log('here');
         const requestBody = CanvasCreationService.formRequestBody('hello', fbUser.uid, fbUser.uid, []);
@@ -52,7 +52,7 @@ describe('CanvasCreationServiceIntegrationTests.', () => {
         });
       }).catch((err) => {
         console.log(err.message);
-      });*/
+      });
   });
 
   afterAll(() => {

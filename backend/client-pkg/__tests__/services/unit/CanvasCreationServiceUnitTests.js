@@ -5,6 +5,20 @@ const CanvasCreationService = require('../../../services/CanvasCreationService')
 
 describe('CanvasCreationServiceUnitTests.', () => {
   test('formRequest_success', () => {
-    //test to show that formRequest gives proper output
+    const name = 'canvas-name';
+    const creatingUser = 'creating-user';
+    const teacher = 'canvas-teacher';
+    const userList = ['testing', 'testing2']
+
+    const expectedRequest = {
+       name,
+       creatingUser,
+       teacher,
+       userList,
+    }
+
+    const actualRequest = CanvasCreationService.formRequestBody(name, creatingUser, teacher, userList);
+
+    expect(actualRequest).toEqual(expectedRequest);
   });
 });
