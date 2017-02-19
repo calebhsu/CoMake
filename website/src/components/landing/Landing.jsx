@@ -2,8 +2,7 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Box, Flex } from 'reflexbox';
-import { Link } from 'react-router';
-import { manageLogin } from '../../firebase-utils/login'
+import { promptForLogin } from '../../firebase-utils/login'
 
 import Brush from 'material-ui/svg-icons/image/brush';
 import FlatButton from 'material-ui/FlatButton';
@@ -69,7 +68,7 @@ function Landing() {
             label="Login"
             labelStyle={styles.loginLabel}
             style={styles.loginBtn}
-            onClick={() => manageLogin()}
+            onClick={() => promptForLogin()}
           />
         </Box>
         <Box col={3} sm={3}>
