@@ -2,7 +2,9 @@
  * @file File of all the possible actions we can take on the Redux store.
  */
 
-import { setElementLocation, setElementSize } from '../../firebase-utils';
+import {
+  setElementLocation, setElementSize, setElementRotation
+} from '../../firebase-utils';
 import {
   INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION,
   TARGET_ELEMENT
@@ -22,37 +24,37 @@ export const initElements = elemList => ({
 /**
  * Gives the action for updating a position.
  * @param {String} elementId String of the elment ID.
- * @param {Object} updatedSize Object detailing the updated location.
+ * @param {Object} updatedPosition Object detailing the updated location.
  * @returns {Object} The object detailing the action details.
  */
-export const updatePosition = (elementId, updatedSize) => ({
+export const updatePosition = (elementId, updatedPosition) => ({
   type: UPDATE_POSITION,
   elementId: elementId,
-  payload: updatedSize,
+  payload: updatedPosition,
 });
 
 /**
  * Gives the action for updating the size.
  * @param {String} elementId String of the elment ID.
- * @param {Object} updatedRotation Object detailing the updated location.
+ * @param {Object} updatedSize Object detailing the updated location.
  * @returns {Object} The object detailing the action details.
  */
-export const updateSize = (elementId, updatedRotation) => ({
+export const updateSize = (elementId, updatedSize) => ({
   type: UPDATE_SIZE,
   elementId: elementId,
-  payload: updatedRotation,
+  payload: updatedSize,
 });
 
 /**
  * Gives the action for updating the rotation.
  * @param {String} elementId String of the elment ID.
- * @param {Object} updatedLoc Object detailing the updated location.
+ * @param {Object} updatedRotation Object detailing the updated location.
  * @returns {Object} The object detailing the action details.
  */
-export const updateRotation = (elementId, updatedLoc) => ({
+export const updateRotation = (elementId, updatedRotation) => ({
   type: UPDATE_ROTATION,
   elementId: elementId,
-  payload: updatedLoc,
+  payload: updatedRotation,
 });
 
 /**
@@ -64,14 +66,15 @@ export const updateRotation = (elementId, updatedLoc) => ({
  */
 export const updateAndPersist = (action, elementId, updatedVal) => (
   (dispatch) => {
-    dispatch(action(elementId, updatedVal));
-    switch (action.type) {
+    const actionObject = action(elementId, updatedVal);
+    dispatch(actionObject);
+    switch (actionObject.type) {
       case UPDATE_POSITION:
         return setElementLocation(elementId, updatedVal);
       case UPDATE_SIZE:
         return setElementSize(elementId, updatedVal);
       case UPDATE_ROTATION:
-        return;
+        return setElementRotation(elementId, Object.values(updatedVal)[0]);
       default:
         return;
     }

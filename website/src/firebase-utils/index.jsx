@@ -33,7 +33,8 @@ export const initFirebase = () => {
  * @returns {Promise} The promise associated with the set action on firebase.
  */
 export const setElementLocation = (elementId, newLocation) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/position`).set(newLocation);
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/position`)
+    .set(newLocation);
 };
 
 /**
@@ -43,5 +44,17 @@ export const setElementLocation = (elementId, newLocation) => {
  * @returns {Promise} The promise associated with the set action on firebase.
  */
 export const setElementSize = (elementId, newSize) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/size`).set(newSize);
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/size`)
+    .set(newSize);
+};
+
+/**
+ *  Sets the items location on Firebase.
+ * @param {String} elementId The ID of the element.
+ * @param {Number} newRotation The new rotation to be updated.
+ * @returns {Promise} The promise associated with the set action on firebase.
+ */
+export const setElementRotation = (elementId, newRotation) => {
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/rotation`)
+    .set(newRotation);
 };
