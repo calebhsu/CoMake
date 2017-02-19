@@ -91,16 +91,19 @@ class CanvasElement extends React.Component {
     };
     const rotationTransform = 'rotate(' + String(this.props.rotation) + 'deg)';
     return (
-      <Rnd bounds={'parent'} ref={ elem => { this.elementRef = elem; } }
+      <Rnd
+        bounds={'parent'}
+        ref={ elem => { this.elemRef = elem; } }
         {...elementProps}
       >
         <div
           style={{
-            height: '100%',
-            width: '100%',
             backgroundImage: 'url(http://marcoortiztorres.me/images/craftml.png)',
-            backgroundSize: 'cover',
-            transform: rotationTransform }}
+            transform: rotationTransform,
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+            height: '100%'
+          }}
         />
       </Rnd>
     );
