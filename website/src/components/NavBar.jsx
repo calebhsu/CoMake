@@ -64,7 +64,6 @@ class NavBar extends React.Component {
       photoURL = this.props.userInfo.photo;
       username = this.props.userInfo.name;
     }
-    console.log(username);
     return (
       <AppBar
         title="CoMake"
