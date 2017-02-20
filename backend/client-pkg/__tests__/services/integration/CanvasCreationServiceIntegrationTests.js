@@ -2,7 +2,7 @@
  * @file Integration tests for the CanvasCreationService client package
  */
 
- const firebase = require('firebase');
+const firebase = require('firebase');
 
 const CanvasCreationService = require('../../../services/CanvasCreationService');
 const firebaseUtils = require('../../../firebase-utils');

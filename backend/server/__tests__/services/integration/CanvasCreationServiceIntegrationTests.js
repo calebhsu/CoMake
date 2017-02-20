@@ -1,1 +1,0 @@
-// show that handling a request results in the proper info getting into firebase
