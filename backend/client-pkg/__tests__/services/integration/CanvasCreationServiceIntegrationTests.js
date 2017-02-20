@@ -9,13 +9,9 @@ const firebaseUtils = require('../../../firebase-utils');
 
 describe('CanvasCreationServiceIntegrationTests', () => {
 
-  const test_user = {
-    email: 'test@test.com',
-    password: 'testing123'
-  }
-
   const test_endpoint = {
-    host: 'comakeserver.herokuapp.com'
+    host: 'localhost',
+    port: 8080
   };
 
   let firebaseApp = null;
@@ -27,13 +23,17 @@ describe('CanvasCreationServiceIntegrationTests', () => {
 
   test('sendRequest_requestReturns', (done) => {
 
-    const requestBody = CanvasCreationService.formRequestBody('hello', "0", "1", ["chhs9974@colorado.edu", "chialo.hsu@gmail.com"]);
+    const requestBody = CanvasCreationService.formRequestBody('hello', '0', '1', ['chhs9974@colorado.edu', 'chialo.hsu@gmail.com']);
 
     CanvasCreationService.sendRequest(requestBody, test_endpoint, (resObj) => {
-      firebase.database().ref('/canvases/' + resObj.newCanvasId).once('value')
-      .then((newCanvasSnap) => {
+      const canvasRef = firebase.database().ref('/canvases/' + resObj.newCanvasId);
+      canvasRef.once('value').then((newCanvasSnap) => {
         expect(newCanvasSnap.val()).toBeTruthy();
-        done();
+        canvasRef.set(null).then(() => {
+          done();
+        }).catch((error) => {
+          throw error
+        });
       }).catch((err) => {
         throw err;
       });

@@ -3,7 +3,9 @@
  */
 
 const CanvasCreationService = require('./services/CanvasCreationService');
+const CanvasSharingService = require('./services/CanvasSharingService');
 
 module.exports = {
   CanvasCreationService,
+  CanvasSharingService
 };

@@ -69,13 +69,15 @@ const sendRequest = (requestBody, endpoint, responseCallback) => {
       try {
         responseCallback(JSON.parse(responseObject));
       } catch (error) {
-        console.log('CanvasCreationService.sendRequest - error handling CanvasCreationService response: ' + error.message)
+        console.log('CanvasCreationService.sendRequest - error handling CanvasCreationService response: ' + error.message);
+        throw error;
       }
     });
   });
 
   request.on('error', (error) => {
-    console.log('CanvasCreationService.sendRequest - error sending CanvasCreationService request: ' + error.message)
+    console.log('CanvasCreationService.sendRequest - error sending CanvasCreationService request: ' + error.message);
+    throw error;
   });
 
   request.write(JSON.stringify(requestBody));
