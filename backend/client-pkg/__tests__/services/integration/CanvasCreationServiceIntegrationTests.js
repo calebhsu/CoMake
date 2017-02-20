@@ -22,6 +22,7 @@ describe('CanvasCreationServiceIntegrationTests', () => {
 
   beforeAll(() => {
     firebaseApp = firebaseUtils.initFirebase();
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   });
 
   test('sendRequest_requestReturns', (done) => {
