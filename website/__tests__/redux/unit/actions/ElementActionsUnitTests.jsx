@@ -2,21 +2,28 @@
  * @file Automated tests for the Redux positions actions (redux/actions/positionsActions).
  */
 
-import { initPositions, updatePosition } from '../../../../src/redux/actions/positionsActions';
+import {
+  initElements, updateElement
+} from '../../../../src/redux/actions/ElementActions';
 
-describe('PositionsActionsUnitTests.', () => {
-  test('initPositionsTest_ElemListEmpty', () => {
+import {
+  INIT_ELEMENTS, UPDATE_POSITION
+} from '../../../../src/redux/actions/ActionConstants';
+
+
+describe('PositionsActionsUnitTests', () => {
+  test('initElementsTest_ElemListEmpty', () => {
     const elemList = {};
 
     const expectedActionResult = {
-      type: 'initPositions',
+      type: INIT_ELEMENTS,
       elements: elemList,
     };
 
-    expect(initPositions(elemList)).toEqual(expectedActionResult);
+    expect(initElements(elemList)).toEqual(expectedActionResult);
   });
 
-  test('initPositionsTest_ElemListNonEmpty', () => {
+  test('initElementsTest_ElemListNotEmpty', () => {
     const elemList = {
       testItem: {
         position: {
@@ -27,11 +34,11 @@ describe('PositionsActionsUnitTests.', () => {
     };
 
     const expectedActionResult = {
-      type: 'initPositions',
+      type: INIT_ELEMENTS,
       elements: elemList,
     };
 
-    expect(initPositions(elemList)).toEqual(expectedActionResult);
+    expect(initElements(elemList)).toEqual(expectedActionResult);
   });
 
   test('updatePositionTest_ElemIdAndUpdatedLocValid', () => {
@@ -43,12 +50,13 @@ describe('PositionsActionsUnitTests.', () => {
     };
 
     const expectedActionResult = {
-      type: 'updatePosition',
+      type: UPDATE_POSITION,
       elementId: elemId,
-      updatedLocation: updatedLoc,
+      payload: updatedLoc,
     };
 
-    expect(updatePosition(elemId, updatedLoc)).toEqual(expectedActionResult);
+    expect(updateElement(UPDATE_POSITION, elemId, updatedLoc))
+      .toEqual(expectedActionResult);
   });
 
   test('updatePositionAndPersistTest', () => {
