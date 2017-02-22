@@ -1,0 +1,1 @@
+export const DEFAULT_SLIDER_POSITION = 0.5;
