@@ -5,7 +5,7 @@
 const firebase = require('firebase');
 
 const CanvasCreationService = require('../../../services/CanvasCreationService');
-const firebaseUtils = require('../../../firebase-utils');
+const firebaseUtils = require('../../../firebaseUtils');
 
 describe('CanvasCreationServiceIntegrationTests', () => {
 
@@ -22,10 +22,18 @@ describe('CanvasCreationServiceIntegrationTests', () => {
 
   test('sendRequest_requestReturns', (done) => {
 
-    const requestBody = CanvasCreationService.formRequestBody('hello', '0', '1', ['chhs9974@colorado.edu', 'chialo.hsu@gmail.com']);
+    const requestBody = CanvasCreationService.formRequestBody(
+      'hello',
+      '0',
+      [
+        'ih4t3myp4r3nts@angstyteen.com',
+        'thisisawkward@iwanttoleave.com'
+      ]
+    );
 
     CanvasCreationService.sendRequest(requestBody, test_endpoint, (resObj) => {
-      const canvasRef = firebase.database().ref('/canvases/' + resObj.newCanvasId);
+      const canvasRef = firebase.database()
+        .ref('/canvases/' + resObj.newCanvasId);
       canvasRef.once('value').then((newCanvasSnap) => {
         expect(newCanvasSnap.val()).toBeTruthy();
         canvasRef.set(null).then(() => {

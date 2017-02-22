@@ -3,5 +3,5 @@
  */
 
 export default {
-  
+  host: 'comakeserver.herokuapp.com'
 };

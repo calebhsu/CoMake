@@ -4,7 +4,7 @@
 
 const http = require('http');
 
-const CNVS_SHARE_SVC_ROUTE = '/ShareCanvasService';
+const CNVS_SHARE_SVC_ROUTE = require('../Constants.js').CNVS_SHARE_SVC_ROUTE;
 
 /**
 * Forms the body of a proper request  to the CanvasSharingService
@@ -64,14 +64,20 @@ const sendRequest = (requestBody, endpoint, responseCallback) => {
       try {
         responseCallback(JSON.parse(responseObject));
       } catch (error) {
-        console.log('CanvasSharingService.sendRequest - error handling CanvasSharingService response: ' + error.message);
+        console.log(
+          'CanvasSharingService.sendRequest - error handling CanvasSharingService response: '
+            + error.message
+        );
         throw error;
       }
     });
   });
 
   request.on('error', (error) => {
-    console.log('CanvasSharingService.sendRequest - error sending CanvasSharingService request: ' + error.message);
+    console.log(
+      'CanvasSharingService.sendRequest - error sending CanvasSharingService request: '
+        + error.message
+    );
     throw error;
   });
 

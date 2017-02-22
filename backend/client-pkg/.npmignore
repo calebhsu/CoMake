@@ -2,4 +2,4 @@
 __tests__
 
 # Ignore firebase utils (only used in tests)
-firebase-utils/
+firebaseUtils.js

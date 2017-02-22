@@ -8,6 +8,8 @@ import Paper from 'material-ui/Paper';
 
 import CoMakeServices from 'comake-services';
 
+import ServiceEndpoint from '../../ServiceEndpoint'
+
 const CanvasCreationService = CoMakeServices.CanvasCreationService;
 
 const styles = {
@@ -32,13 +34,14 @@ const styles = {
 };
 
 function createNewCanvas(){
-  const reqBody = CanvasCreationService.formRequestBody('new canvas', '0', '1', ['0']);
+  const reqBody = CanvasCreationService.formRequestBody(
+    'new canvas',
+    '0',
+    '1',
+    ['0']
+  );
 
-  const endpoint = {
-    host: 'comakeserver.herokuapp.com'
-  };
-
-  CanvasCreationService.sendRequest(reqBody, endpoint, () => {});
+  CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
 }
 
 /**
