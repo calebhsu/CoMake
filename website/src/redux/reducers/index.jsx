@@ -4,15 +4,16 @@
 
 import { combineReducers } from 'redux';
 
-import positions from './positionsReducer';
 import { userInfoReducer } from './LoginReducer';
+import { updateElementReducer, targetElementReducer } from './ElementReducer';
 
 /**
  * An object with all the specified reducers combined
  */
 const reducers = combineReducers({
-  positions,
   userInfoReducer,
+  updateElementReducer,
+  targetElementReducer,
 });
 
 export default reducers;

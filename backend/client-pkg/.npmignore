@@ -1,0 +1,5 @@
+# Ignore tests
+__tests__
+
+# Ignore firebase utils (only used in tests)
+firebaseUtils.js

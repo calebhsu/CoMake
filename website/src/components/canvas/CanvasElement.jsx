@@ -6,7 +6,12 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
 
-import { updatePositionAndPersist } from '../../redux/actions/positionsActions';
+import {
+  UPDATE_POSITION, UPDATE_SIZE
+} from '../../redux/actions/ActionConstants';
+import {
+  updateAndPersist, targetElement
+} from '../../redux/actions/ElementActions';
 
 /**
  * Component for an element on the canvas.
@@ -19,19 +24,21 @@ class CanvasElement extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.elemRef;
+    this.elementRef;
     this.endDrag = this.endDrag.bind(this);
     this.endResize = this.endResize.bind(this);
+    this.targetClicked = this.targetClicked.bind(this);
   }
 
   /**
-   * Updates the component's position when new props are fed in.
+   * Updates the component's position and size when new props are fed in.
    * @param {Object} nextProps The new props being passed in.
    * @returns {void}
    */
   componentWillUpdate(nextProps) {
-    if (this.elemRef) {
-      this.elemRef.updatePosition(nextProps.initLoc);
+    if (this.elementRef) {
+      this.elementRef.updatePosition(nextProps.initLoc);
+      this.elementRef.updateSize(nextProps.initSize);
     }
   }
 
@@ -46,8 +53,8 @@ class CanvasElement extends React.Component {
       x: data.position.left,
       y: data.position.top,
     };
-    this.props.dispatch(updatePositionAndPersist(this.props.elementId,
-      updatedLoc, true));
+    this.props.dispatch(updateAndPersist(UPDATE_POSITION, this.props.elementId,
+      updatedLoc));
   }
 
   /**
@@ -58,8 +65,16 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
-    /* TODO: Dispatch event for resizing the object. */
-    return
+    this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
+      clientSize));
+  }
+
+  /**
+   * Handler for onClick that dispatches a targetElement event.
+   * @returns {void}
+   */
+  targetClicked() {
+    this.props.dispatch(targetElement(this.props.elementId));
   }
 
   /**
@@ -67,23 +82,27 @@ class CanvasElement extends React.Component {
    * @returns {HTML} The rendered HTML.
    */
   render() {
-    const elemProps = { onDragStop: this.endDrag,
+    const elementProps = {
+      onDragStop: this.endDrag,
       onResizeStop: this.endResize,
+      onClick: this.targetClicked,
       initial: { x: this.props.initLoc.x,
         y: this.props.initLoc.y,
-        width: 100,
-        height: 100,
+        width: this.props.initSize.width,
+        height: this.props.initSize.height,
       },
     };
+    const rotationTransform = 'rotate(' + String(this.props.rotation) + 'deg)';
     return (
       <Rnd
         bounds={'parent'}
         ref={ elem => { this.elemRef = elem; } }
-        {...elemProps}
+        {...elementProps}
       >
         <div
           style={{
             backgroundImage: 'url(http://marcoortiztorres.me/images/craftml.png)',
+            transform: rotationTransform,
             backgroundSize: '100% 100%',
             backgroundRepeat: 'no-repeat',
             height: '100%'
@@ -98,6 +117,7 @@ CanvasElement.propTypes = {
   dispatch: PropTypes.func,
   initLoc: PropTypes.object,
   initSize: PropTypes.object,
+  rotation: PropTypes.number,
   elementId: PropTypes.string,
 }
 
