@@ -1,12 +1,15 @@
 import React from 'react';
 import { Box } from 'reflexbox';
-
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import Sidebar from './Sidebar';
 
 import CanvasView from './CanvasView';
 
 const styles = {
+  box: {
+    width: '100%'
+  },
   header: {
     backgroundColor: '#49937f',
     color: '#FFFFFF',
@@ -22,7 +25,8 @@ const styles = {
     marginTop: 10,
   },
   optionBtnGroup: {
-    float: 'right',
+    float: 'left',
+    marginLeft: 20,
     marginRight: 10,
   },
   paper: {
@@ -40,7 +44,8 @@ const styles = {
 function Canvas() {
   return (
     <div>
-      <Box col={9} sm={12} md={9}>
+      <Sidebar />
+      <Box style={styles.box} col={9} sm={12} md={9}>
         <Paper style={styles.paper} zDepth={1}>
           <h3 style={styles.modelName}>Racecar Model</h3>
           <span style={styles.optionBtnGroup}>
@@ -52,8 +57,6 @@ function Canvas() {
           </span>
         </Paper>
       </Box>
-      {/* Insert sidebar here */}
-      <CanvasView />
     </div>
   )
 }
