@@ -153,6 +153,7 @@ describe('ElementIntegrationTests', () => {
         testRef.remove().then(() => {
           // after all firebase checks are done, shutdown firebase
           firebaseApp.delete();
+          done();
         });
       });
     });
