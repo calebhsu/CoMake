@@ -1,5 +1,5 @@
 /**
- * @file Defines a helper for common user actions
+ * @file A helper for common user actions
  */
 
  const admin = require('firebase-admin');
