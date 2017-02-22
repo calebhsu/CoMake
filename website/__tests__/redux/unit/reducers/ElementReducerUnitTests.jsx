@@ -10,7 +10,7 @@ import {
   INIT_ELEMENTS, UPDATE_POSITION
 } from '../../../../src/redux/actions/ActionConstants';
 
-describe('PositionsReducerUnitTests.', () => {
+describe('PositionsReducerUnitTests', () => {
 
   const testElementsList = {
     testItem: {
@@ -29,7 +29,8 @@ describe('PositionsReducerUnitTests.', () => {
       testItem: {
         position: { x: 42, y: 43 }
       }
-    }
+    },
+    targeted: null,
   };
 
   const initElementAction = {
@@ -38,7 +39,8 @@ describe('PositionsReducerUnitTests.', () => {
   };
 
   test('ReducePosition_EmptyAction_InitialState', () => {
-    expect(updateElementReducer(undefined, {})).toEqual({ elements: {} });
+    expect(updateElementReducer(undefined, {}))
+      .toEqual({ elements: {}, targeted: null });
   });
 
   test('ReducePosition_InitPositions_NoPreviousState', () => {
@@ -75,7 +77,8 @@ describe('PositionsReducerUnitTests.', () => {
         testItem: {
           position: { x: 100, y: 200 }
         }
-      }
+      },
+      targeted: null,
     };
     expect(updateElementReducer(undefined, updatePositionAction))
       .toEqual(expectedStateAfterUpdatePositon);
@@ -100,7 +103,8 @@ describe('PositionsReducerUnitTests.', () => {
         testItem: {
           position: { x: 100, y: 200 }
         }
-      }
+      },
+      targeted: null,
     };
     expect(updateElementReducer(prevState, updatePositionAction))
       .toEqual(expectedStateAfterUpdatePositon);

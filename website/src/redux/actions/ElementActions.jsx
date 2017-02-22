@@ -12,7 +12,7 @@ import {
 
 
 /**
- * Gives the action for initializing positions.
+ * Gives the action for initializing the canvas elements.
  * @param {Object} elemList Object of the element details.
  * @returns {Object} The object detailing the action details.
  */
@@ -23,52 +23,29 @@ export const initElements = elemList => ({
 
 /**
  * Gives the action for updating a position.
+ * @param {String} updateType Type of update to be performed.
  * @param {String} elementId String of the elment ID.
  * @param {Object} updatedPosition Object detailing the updated location.
  * @returns {Object} The object detailing the action details.
  */
-export const updatePosition = (elementId, updatedPosition) => ({
-  type: UPDATE_POSITION,
+export const updateElement = (updateType, elementId, updatedPosition) => ({
+  type: updateType,
   elementId: elementId,
   payload: updatedPosition,
 });
 
 /**
- * Gives the action for updating the size.
- * @param {String} elementId String of the elment ID.
- * @param {Object} updatedSize Object detailing the updated location.
- * @returns {Object} The object detailing the action details.
- */
-export const updateSize = (elementId, updatedSize) => ({
-  type: UPDATE_SIZE,
-  elementId: elementId,
-  payload: updatedSize,
-});
-
-/**
- * Gives the action for updating the rotation.
- * @param {String} elementId String of the elment ID.
- * @param {Object} updatedRotation Object detailing the updated location.
- * @returns {Object} The object detailing the action details.
- */
-export const updateRotation = (elementId, updatedRotation) => ({
-  type: UPDATE_ROTATION,
-  elementId: elementId,
-  payload: updatedRotation,
-});
-
-/**
  * Update the location and update on fireabse.
- * @param {Function} action The update action to be performed.
+ * @param {String} updateType The type of update to be performed.
  * @param {String} elementId String of the elment ID.
  * @param {Object} updatedVal Object detailing the updated location.
  * @returns {Promise} A promise on the firebase set call
  */
-export const updateAndPersist = (action, elementId, updatedVal) => (
+export const updateAndPersist = (updateType, elementId, updatedVal) => (
   (dispatch) => {
-    const actionObject = action(elementId, updatedVal);
+    const actionObject = updateElement(updateType, elementId, updatedVal);
     dispatch(actionObject);
-    switch (actionObject.type) {
+    switch (updateType) {
       case UPDATE_POSITION:
         return setElementLocation(elementId, updatedVal);
       case UPDATE_SIZE:

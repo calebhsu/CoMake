@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 import Rnd from 'react-rnd';
 
 import {
-  updateAndPersist, updatePosition, updateSize, targetElement
+  UPDATE_POSITION, UPDATE_SIZE
+} from '../../redux/actions/ActionConstants';
+import {
+  updateAndPersist, targetElement
 } from '../../redux/actions/ElementActions';
 
 /**
@@ -28,7 +31,7 @@ class CanvasElement extends React.Component {
   }
 
   /**
-   * Updates the component's position when new props are fed in.
+   * Updates the component's position and size when new props are fed in.
    * @param {Object} nextProps The new props being passed in.
    * @returns {void}
    */
@@ -50,7 +53,7 @@ class CanvasElement extends React.Component {
       x: data.position.left,
       y: data.position.top,
     };
-    this.props.dispatch(updateAndPersist(updatePosition, this.props.elementId,
+    this.props.dispatch(updateAndPersist(UPDATE_POSITION, this.props.elementId,
       updatedLoc));
   }
 
@@ -62,7 +65,7 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
-    this.props.dispatch(updateAndPersist(updateSize, this.props.elementId,
+    this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
       clientSize));
   }
 

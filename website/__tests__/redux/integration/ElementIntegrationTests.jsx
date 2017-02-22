@@ -7,12 +7,15 @@ import * as firebase from 'firebase';
 import { BOARDS_PATH, initFirebase } from '../../../src/firebase-utils'
 import storeHelper from '../../../src/redux/storeHelper';
 import {
-  initElements, updatePosition, updateAndPersist
+  UPDATE_POSITION
+} from '../../../src/redux/actions/ActionConstants';
+import {
+  initElements, updateElement, updateAndPersist
 } from '../../../src/redux/actions/ElementActions';
 
 const maxWaitFirebase = 30000;
 
-describe('ElementIntegrationTests.', () => {
+describe('ElementIntegrationTests', () => {
 
   let testStore = null;
 
@@ -26,11 +29,11 @@ describe('ElementIntegrationTests.', () => {
     testStore = null;
   });
 
-  test('initElements_Dispatch', () => {
+  test('initElements_Dispatch', (done) => {
     const elemList = {
       testingANewItem: {
         position: { x: 1000, y: 33 },
-        size: {width: 100, height: 100 },
+        size: { width: 100, height: 100 },
         rotation: 0,
       },
       testingAnotherNewItem: {
@@ -46,16 +49,17 @@ describe('ElementIntegrationTests.', () => {
           elements: elemList,
           targeted: null,
         });
+      done();
     });
 
     testStore.dispatch(initElements(elemList));
   });
 
-  test('updatePosition_Dispatch', () => {
+  test('updatePosition_Dispatch', (done) => {
     const elemList = {
       testingANewItem: {
         position: { x: 1000, y: 33 },
-        size: {width: 100, height: 100 },
+        size: { width: 100, height: 100 },
         rotation: 0,
       },
       testingAnotherNewItem: {
@@ -89,12 +93,13 @@ describe('ElementIntegrationTests.', () => {
           elements: elemList,
           targeted: null,
         });
+      done();
     });
 
-    testStore.dispatch(updatePosition(elemId, updatedLoc));
+    testStore.dispatch(updateElement(UPDATE_POSITION, elemId, updatedLoc));
   });
 
-  test('updatePositionAndPersist_Dispatch', () => {
+  test('updatePositionAndPersist_Dispatch', (done) => {
 
     const elemList = {
       testingANewItem: {
@@ -122,6 +127,7 @@ describe('ElementIntegrationTests.', () => {
           elements: elemList,
           targeted: null,
         });
+      done();
     });
 
     // call the initElements dispatch to create an initial state
@@ -135,13 +141,13 @@ describe('ElementIntegrationTests.', () => {
     const firebaseApp = initFirebase();
 
     // dispatch and persist the changes to firebase
-    testStore.dispatch(updateAndPersist(updatePosition, elemId, updatedLoc))
+    testStore.dispatch(updateAndPersist(UPDATE_POSITION, elemId, updatedLoc))
         .then(() => {
       /* TODO: Firebase should be mocked! Not a real call to Firebase! */
       const testRef = firebase.database().ref(`${BOARDS_PATH}/${elemId}`);
 
       // confirm the value in firebase after the dispatch completes
-      testRef.once('value').then((testPositionSnap) => {
+      return testRef.once('value').then((testPositionSnap) => {
         expect(testPositionSnap.child('position').val()).toEqual(updatedLoc);
         // remove the testRef value from the database
         testRef.remove().then(() => {

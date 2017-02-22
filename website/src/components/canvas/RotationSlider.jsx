@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
 
 import {
-  updateAndPersist, updateRotation,
+  UPDATE_ROTATION
+} from '../../redux/actions/ActionConstants';
+import {
+  updateAndPersist
 } from '../../redux/actions/ElementActions';
 import { DEFAULT_SLIDER_POSITION } from './CanvasConstants';
 
@@ -35,7 +38,7 @@ class RotationSlider extends React.Component {
     const updatedRotation = {
       rotation: (sliderVal - 0.5) * 720,
     }
-    this.props.dispatch(updateAndPersist(updateRotation, this.props.targetedId,
+    this.props.dispatch(updateAndPersist(UPDATE_ROTATION, this.props.targetedId,
       updatedRotation))
   }
 

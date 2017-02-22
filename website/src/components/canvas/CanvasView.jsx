@@ -8,7 +8,10 @@ import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
 import {
-  initElements, updatePosition, updateSize, updateRotation
+  UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
+} from '../../redux/actions/ElementActions';
+import {
+  initElements, updateElement
 } from '../../redux/actions/ElementActions';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
@@ -49,17 +52,13 @@ class CanvasView extends React.Component {
     });
 
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
-      this.props.dispatch(
-        updatePosition(elemSnap.key, elemSnap.child('position').val())
-      );
-      this.props.dispatch(
-        updateSize(elemSnap.key, elemSnap.child('size').val())
-      );
-      this.props.dispatch(
-        updateRotation(elemSnap.key, {
+      this.props.dispatch(updateElement(UPDATE_POSITION, elemSnap.key,
+        elemSnap.child('position').val()));
+      this.props.dispatch(updateElement(UPDATE_SIZE, elemSnap.key,
+        elemSnap.child('size').val()));
+      this.props.dispatch(updateElement(UPDATE_ROTATION, elemSnap.key, {
           rotation: elemSnap.child('rotation').val()
-        })
-      );
+        }));
     });
   }
 

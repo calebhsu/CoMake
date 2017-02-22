@@ -3,7 +3,7 @@
  */
 
 import {
-  initElements, updatePosition
+  initElements, updateElement
 } from '../../../../src/redux/actions/ElementActions';
 
 import {
@@ -11,7 +11,7 @@ import {
 } from '../../../../src/redux/actions/ActionConstants';
 
 
-describe('PositionsActionsUnitTests.', () => {
+describe('PositionsActionsUnitTests', () => {
   test('initElementsTest_ElemListEmpty', () => {
     const elemList = {};
 
@@ -23,7 +23,7 @@ describe('PositionsActionsUnitTests.', () => {
     expect(initElements(elemList)).toEqual(expectedActionResult);
   });
 
-  test('initElementsTest_ElemListNonEmpty', () => {
+  test('initElementsTest_ElemListNotEmpty', () => {
     const elemList = {
       testItem: {
         position: {
@@ -55,7 +55,8 @@ describe('PositionsActionsUnitTests.', () => {
       payload: updatedLoc,
     };
 
-    expect(updatePosition(elemId, updatedLoc)).toEqual(expectedActionResult);
+    expect(updateElement(UPDATE_POSITION, elemId, updatedLoc))
+      .toEqual(expectedActionResult);
   });
 
   test('updatePositionAndPersistTest', () => {
