@@ -10,8 +10,7 @@ const firebaseUtils = require('../../../firebase-utils');
 describe('CanvasCreationServiceIntegrationTests', () => {
 
   const test_endpoint = {
-    host: 'localhost',
-    port: 8080
+    host: 'comakeserver.herokuapp.com'
   };
 
   let firebaseApp = null;
