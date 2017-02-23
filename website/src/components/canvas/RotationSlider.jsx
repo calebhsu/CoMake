@@ -18,6 +18,8 @@ const styles = {
   slider: {
     width: '10vw',
     marginLeft: 10,
+    visibility: typeof this.props.targetedId === "undefined"
+      ? "hidden" : "visible",
   },
 };
 /**
@@ -56,10 +58,7 @@ class RotationSlider extends React.Component {
     return <Slider
       defaultValue={DEFAULT_SLIDER_POSITION}
       onChange={this.handleSliderChange}
-      style={{
-        visibility: typeof this.props.targetedId === "undefined"
-          ? "hidden" : "visible", width: '10vw', marginLeft: 10,
-      }} />
+      style={styles.slider} />
   }
 }
 
