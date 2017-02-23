@@ -7,3 +7,5 @@ export const UPDATE_POSITION = 'updatePosition';
 export const UPDATE_SIZE = 'updateSize';
 export const UPDATE_ROTATION = 'updateRotation';
 export const TARGET_ELEMENT = 'targetElement';
+
+export const UPDATE_USER_INFO = 'updateUserInfo';
