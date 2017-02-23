@@ -3,6 +3,11 @@ import { Box } from 'reflexbox';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Sidebar from './Sidebar';
+import TextField from 'material-ui/TextField';
+// import {List, ListItem} from 'material-ui/List/';
+import Avatar from 'material-ui/Avatar';
+// import Share from 'material-ui/svg-icons/social/share';
+import IconButton from 'material-ui/IconButton';
 
 import CanvasView from './CanvasView';
 
@@ -34,8 +39,19 @@ const styles = {
     height: 50,
     textAlign: 'center',
     width: '100%',
-  }
+  },
+  avatar: {
+    marginLeft: 5,
+    marginRight: 5,
+  },
 };
+import {
+  white,
+  purple500,
+  blue500,
+  green400,
+  orange500,
+} from 'material-ui/styles/colors';
 
 /**
  * Gives HTML for a new canvas on canvas creation.
@@ -47,13 +63,33 @@ function Canvas() {
       <Sidebar />
       <Box style={styles.box} col={9} sm={12} md={9}>
         <Paper style={styles.paper} zDepth={1}>
-          <h3 style={styles.modelName}>Racecar Model</h3>
+        <TextField style={styles.modelName} id="text-field-default" defaultValue="Model Racecar"/>
           <span style={styles.optionBtnGroup}>
             <FlatButton label="File Options" style={styles.optionBtn} />
             <FlatButton label="View" style={styles.optionBtn} />
             <FlatButton label="Print" style={styles.optionBtn} />
             <FlatButton label="Share" style={styles.optionBtn} />
             <FlatButton label="Resources" style={styles.optionBtn} />
+            <IconButton tooltip="Shaggy" touch={true} tooltipPosition="bottom-center">
+              <Avatar color={white} backgroundColor={green400} style={styles.avatar} size={30}>
+                S
+              </Avatar>
+            </IconButton>
+            <IconButton tooltip="Velma" touch={true} tooltipPosition="bottom-center">
+              <Avatar color={white} backgroundColor={orange500} style={styles.avatar} size={30}>
+                V
+              </Avatar>
+            </IconButton>
+            <IconButton tooltip="Fred" touch={true} tooltipPosition="bottom-center">
+              <Avatar color={white} backgroundColor={blue500} style={styles.avatar} size={30}>
+                F
+              </Avatar>
+            </IconButton>
+            <IconButton tooltip="Daphne" touch={true} tooltipPosition="bottom-center">
+              <Avatar color={white} backgroundColor={purple500} style={styles.avatar} size={30}>
+                D
+              </Avatar>
+            </IconButton>
           </span>
         </Paper>
       </Box>

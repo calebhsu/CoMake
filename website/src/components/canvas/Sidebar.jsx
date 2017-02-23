@@ -1,6 +1,7 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import Slider from 'material-ui/Slider';
+import TextField from 'material-ui/TextField';
 
 const styles = {
   listItems: {
@@ -11,7 +12,12 @@ const styles = {
     marginTop: 114,
     width: '12vw',
   },
+  slider: {
+    width: '10vw',
+    marginLeft: 10,
+  },
 };
+
 
 /**
   * Gives HTML for options sidebar.
@@ -20,14 +26,6 @@ const styles = {
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.listObject = ['Create New',
-                       'Add New Object',
-                       'Options',
-                       'User List',
-                       'Resize',
-                       'Select Color',
-                       'Sign Out'];
-    this.listItems = this.listObject.map((item)=><MenuItem key={item.toString()} onTouchTap = {this.setClose}>{item}</MenuItem>);
   }
 
   render() {
@@ -38,9 +36,20 @@ export default class Sidebar extends React.Component {
                 docked={true}
                 openSecondary={false}
         >
-        <div style={styles.listItems}>
-          {this.listItems}
+        <div>
+          <h3>Rotate</h3>
+          <Slider defaultValue={0.5} style={styles.slider}/>
+          <h3>Resize</h3>
+          <TextField
+            hintText="Enter new height"
+            floatingLabelText="Height: 64px"
+          /><br />
+          <TextField
+            hintText="Enter new width"
+            floatingLabelText="Width: 64px"
+          /><br />
         </div>
+
         </Drawer>
       </div>
     );
