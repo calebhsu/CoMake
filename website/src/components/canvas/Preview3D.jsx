@@ -1,11 +1,22 @@
 import React from 'react';
-import GridTile from 'material-ui/GridList';
+import Paper from 'material-ui/Paper';
 
 const styles = {
+  img: {
+    padding: '5px 5px 1px',
+    width: 95,
+  },
+  paper: {
+    display: 'inline-block',
+    height: 90,
+    textAlign: 'center',
+    width: 100,
+  },
   preview3d: {
-    bottom: 15,
-    position: 'absolute',
-    right: 15,
+    bottom: 28,
+    opacity: 0.9,
+    position: 'fixed',
+    right: 20,
     zIndex: 100,
   },
 };
@@ -17,9 +28,9 @@ const styles = {
 function Preview3D() {
   return (
     <div style={styles.preview3d}>
-      <GridTile>
-        <img src="http://placekitten.com/95/95" />
-      </GridTile>
+      <Paper zDepth={1}>
+        <img src="http://placekitten.com/121/121" style={styles.img} />
+      </Paper>
     </div>
   );
 }
