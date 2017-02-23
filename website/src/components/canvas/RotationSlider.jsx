@@ -14,14 +14,6 @@ import {
 } from '../../redux/actions/ElementActions';
 import { DEFAULT_SLIDER_POSITION } from './CanvasConstants';
 
-const styles = {
-  slider: {
-    width: '10vw',
-    marginLeft: 10,
-    visibility: typeof this.props.targetedId === "undefined"
-      ? "hidden" : "visible",
-  },
-};
 /**
  * Component of slider for rotating canvas elements.
  */
@@ -58,7 +50,12 @@ class RotationSlider extends React.Component {
     return <Slider
       defaultValue={DEFAULT_SLIDER_POSITION}
       onChange={this.handleSliderChange}
-      style={styles.slider} />
+      style={{
+      visibility: typeof this.props.targetedId === "undefined"
+        ? "hidden" : "visible",
+        width: '10vw',
+        marginLeft: 10,
+      }}/>
   }
 }
 

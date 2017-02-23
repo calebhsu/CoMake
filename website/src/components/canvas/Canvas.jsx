@@ -4,14 +4,24 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Sidebar from './Sidebar';
 import TextField from 'material-ui/TextField';
-// import {List, ListItem} from 'material-ui/List/';
 import Avatar from 'material-ui/Avatar';
-// import Share from 'material-ui/svg-icons/social/share';
 import IconButton from 'material-ui/IconButton';
+
+import {
+  white,
+  purple500,
+  blue500,
+  green400,
+  orange500,
+} from 'material-ui/styles/colors';
 
 import CanvasView from './CanvasView';
 
 const styles = {
+  avatar: {
+    marginLeft: 5,
+    marginRight: 5,
+  },
   box: {
     width: '100%'
   },
@@ -40,18 +50,8 @@ const styles = {
     textAlign: 'center',
     width: '100%',
   },
-  avatar: {
-    marginLeft: 5,
-    marginRight: 5,
-  },
+
 };
-import {
-  white,
-  purple500,
-  blue500,
-  green400,
-  orange500,
-} from 'material-ui/styles/colors';
 
 /**
  * Gives HTML for a new canvas on canvas creation.

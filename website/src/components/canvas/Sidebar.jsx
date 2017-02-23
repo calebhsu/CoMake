@@ -5,13 +5,17 @@ import TextField from 'material-ui/TextField';
 import RotationSlider from './RotationSlider';
 
 const styles = {
+  featureSpacing: {
+    marginLeft: 10,
+    marginRight: 20,
+  },
   listItems: {
     marginTop: 20,
   },
   sidebar: {
-    backgroundColor: 'rgba(1, 1, 1, .06)',
     marginTop: 114,
     width: '12vw',
+    xOverflow: 'hidden',
   },
 };
 
@@ -38,18 +42,21 @@ export default class Sidebar extends React.Component {
                 open= {true}
                 docked={true}
                 openSecondary={false}
+                zDepth={2}
         >
-        <div>
+        <div style={styles.featureSpacing}>
           <h3>Rotate</h3>
-          <RotationSlider style={styles.slider}/>
+          <RotationSlider/>
           <h3>Resize</h3>
           <TextField
-            hintText="Enter new height"
-            floatingLabelText="Height: 64px"
+            hintText="Enter new height: 64px"
+            floatingLabelText="Height"
+            fullWidth="true"
           /><br />
           <TextField
-            hintText="Enter new width"
-            floatingLabelText="Width: 64px"
+            hintText="Enter new width: 64px"
+            floatingLabelText="Width"
+            fullWidth="true"
           /><br />
         </div>
         </Drawer>
