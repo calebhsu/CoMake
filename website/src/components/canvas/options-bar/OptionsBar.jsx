@@ -4,6 +4,7 @@ import { Box } from 'reflexbox';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
+import ExportModal from './ExportModal';
 import ShareCanvasModal from './ShareCanvasModal';
 
 const styles = {
@@ -49,7 +50,7 @@ function OptionsBar() {
         <span style={styles.optionBtnGroup}>
           <FlatButton label="File Options" style={styles.optionBtn} />
           <FlatButton label="Import" style={styles.optionBtn} />
-          <FlatButton label="Export" style={styles.optionBtn} />
+          <ExportModal />
           <ShareCanvasModal />
         </span>
       </Paper>

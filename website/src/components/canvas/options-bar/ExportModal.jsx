@@ -1,5 +1,5 @@
 /**
- * @file Modal component for sharing canvas with users.
+ * @file Modal component for displaying exported code.
  */
 
 import React, { Component } from 'react';
@@ -9,18 +9,11 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 const styles = {
-  actionBtn: {
-    marginLeft: 6,
-  },
   dialogActions: {
     padding: '8px 15px 15px',
   },
   dialogBody: {
     padding: '0 32px 24px',
-  },
-  shareBtn: {
-    color: '#FFFFFF',
-    fontWeight: 700,
   },
   wrapper: {
     display: 'inline-block',
@@ -28,14 +21,14 @@ const styles = {
 };
 
 /**
- * Gives HTML for share canvas modal.
- * @returns {HTML}   The HTML of the share canvas modal.
+ * Gives HTML for code export modal.
+ * @returns {HTML}   The HTML of the export modal.
  */
-class ShareCanvasModal extends Component {
+class ExportModal extends Component {
 
   /**
-   * Constructor for ShareCanvasModal
-   * @param {Object} props The props for the ShareCanvasModal.
+   * Constructor for ExportModal
+   * @param {Object} props The props for the ExportModal.
    */
   constructor(props) {
     super(props);
@@ -63,33 +56,27 @@ class ShareCanvasModal extends Component {
   }
 
   /**
-   * Renders the share canvas modal for display.
+   * Renders the exported code modal for display.
    * @returns {HTML} The rendered HTML of the modal.
    */
   render() {
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="Close"
         primary={true}
         onTouchTap={this.handleClose}
       />,
       <FlatButton
-        backgroundColor="#229bc8"
-        hoverColor="#0d7faa"
-        label="Share"
-        labelStyle={styles.shareBtn}
+        label="Copy"
+        primary={true}
         onTouchTap={this.handleClose}
-        style={styles.actionBtn}
-      />,
+      />
     ];
 
     return (
       <div style={styles.wrapper}>
         <FlatButton
-          backgroundColor="#229bc8"
-          hoverColor="#0d7faa"
-          label="Share"
-          labelStyle={styles.shareBtn}
+          label="Export"
           onTouchTap={this.handleOpen}
         />
         <Dialog
@@ -99,14 +86,12 @@ class ShareCanvasModal extends Component {
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
-          title="Share Canvas with Others"
+          title="Generated CraftML Code"
         >
-          <p>Separate multiple emails with a comma.</p>
           <TextField
-            floatingLabelText="People"
-            floatingLabelFixed={true}
             fullWidth={true}
-            hintText="abc123@email.com"
+            multiLine={true}
+            rows={5}
           />
         </Dialog>
       </div>
@@ -114,4 +99,4 @@ class ShareCanvasModal extends Component {
   }
 }
 
-export default ShareCanvasModal;
+export default ExportModal;
