@@ -18,24 +18,30 @@ const handleRequest = (request, response) => {
     'CanvasSharingService.handleRequest - handling a new request: %j',
     request.body);
 
-  if(request.body.canvasId.constructor !== String) {
+  if(!request.body.canvasId || typeof request.body.canvasId !== "string") {
     winston.error(
       'CanvasSharingService.handleRequest - invalid canvasId param, must be a String'
     );
+    response.status(500)
+      .send('Invalid canvasId param.');
     return;
   }
 
-  if(request.body.sharingUser.constructor !== String) {
+  if(!request.body.sharingUser || typeof request.body.sharingUser !== "string") {
     winston.error(
       'CanvasSharingService.handleRequest - invalid sharingUser param, must be a String'
     );
+    response.status(500)
+      .send('Invalid sharingUser param.');
     return;
   }
 
-  if(!(request.body.userList instanceof Array)) {
+  if(!request.body.userList || !(request.body.userList instanceof Array)) {
     winston.error(
       'CanvasSharingService.handleRequest - invalid userList param, must be an Array'
     );
+    response.status(500)
+      .send('Invalid userList param.');
     return;
   }
 

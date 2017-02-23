@@ -10,9 +10,11 @@ const winston = require('winston');
 
 const CanvasCreationService = require('./services/CanvasCreationService');
 const CanvasSharingService = require('./services/CanvasSharingService');
+const LoginService = require('./services/LoginService');
 
 const CNVS_CRTN_SVC_ROUTE = '/CreateCanvasService';
 const CNVS_SHARE_SVC_ROUTE = '/ShareCanvasService';
+const LOGIN_SVC_ROUTE = '/LoginService';
 
 const port = process.env.PORT || 8080;
 
@@ -52,6 +54,7 @@ app.use((req, res, next) => {
 winston.info('started assigning routes to services');
 app.post(CNVS_CRTN_SVC_ROUTE, CanvasCreationService.handleRequest);
 app.post(CNVS_SHARE_SVC_ROUTE, CanvasSharingService.handleRequest);
+app.post(LOGIN_SVC_ROUTE, LoginService.handleRequest);
 
 
 winston.info('finished assigning routes to services');
