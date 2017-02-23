@@ -52,16 +52,26 @@ const handleRequest = (request, response) => {
               request.body.uid
             );
 
+            let providerData = [];
+            userRecord.providerData.forEach((singleProvData) => {
+              providerData.push({
+                displayName: singleProvData.displayName ? singleProvData.displayName : null,
+                email: singleProvData.email ? singleProvData.email : null,
+                photoURL: singleProvData.photoURL ? singleProvData.photoURL : null,
+                providerId: singleProvData.providerId,
+              });
+            });
+
             return {
               admin: false,
               canvases: null,
               createdAt: userRecord.metadata.createdAt,
-              disabled: userRecord.disabled,
-              displayName: userRecord.displayName,
-              email: userRecord.email,
+              disabled: userRecord.disabled ? userRecord.disabled : null,
+              displayName: userRecord.displayName ? userRecord.displayName : null,
+              email: userRecord.email ? userRecord.email : null,
               emailVerified: userRecord.emailVerified,
-              photoURL: userRecord.photoURL,
-              providerData: userRecord.providerData
+              photoURL: userRecord.photoURL ? userRecord.photoURL : null,
+              providerData
             }
           }).then(() => {
             response.send({

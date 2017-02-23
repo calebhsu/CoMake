@@ -14,7 +14,7 @@ const LOGIN_SVC_ROUTE = require('../Constants.js').LOGIN_SVC_ROUTE;
 */
 const formRequestBody = (uid) => {
   if(typeof uid !== "string")
-    throw 'LoginService.formRequestBody - invalid name param, must be a String'
+    throw 'LoginService.formRequestBody - invalid uid param, must be a String'
 
   return {
     uid,
