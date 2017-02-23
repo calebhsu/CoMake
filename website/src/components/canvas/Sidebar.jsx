@@ -1,6 +1,5 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
-import Slider from 'material-ui/Slider';
 import TextField from 'material-ui/TextField';
 
 import RotationSlider from './RotationSlider';
@@ -13,10 +12,6 @@ const styles = {
     backgroundColor: 'rgba(1, 1, 1, .06)',
     marginTop: 114,
     width: '12vw',
-  },
-  slider: {
-    width: '10vw',
-    marginLeft: 10,
   },
 };
 
@@ -46,8 +41,7 @@ export default class Sidebar extends React.Component {
         >
         <div>
           <h3>Rotate</h3>
-          <RotationSlider />
-          <Slider defaultValue={0.5} style={styles.slider}/>
+          <RotationSlider style={styles.slider}/>
           <h3>Resize</h3>
           <TextField
             hintText="Enter new height"
