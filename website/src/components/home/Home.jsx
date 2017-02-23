@@ -6,6 +6,12 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Paper from 'material-ui/Paper';
 
+import CoMakeServices from 'comake-services';
+
+import ServiceEndpoint from '../../ServiceEndpoint'
+
+const CanvasCreationService = CoMakeServices.CanvasCreationService;
+
 const styles = {
   container: {
     marginTop: 15,
@@ -27,6 +33,17 @@ const styles = {
   }
 };
 
+function createNewCanvas(){
+  const reqBody = CanvasCreationService.formRequestBody(
+    'new canvas',
+    '0',
+    '1',
+    ['0']
+  );
+
+  CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
+}
+
 /**
  * Gives HTML for the home page after login.
  * @returns {HTML}   The HTML of the home page.
@@ -47,6 +64,7 @@ function Home() {
               <FloatingActionButton
                 secondary={true}
                 style={styles.newCanvas}
+                onClick={createNewCanvas}
               >
                 <ContentAdd />
               </FloatingActionButton>

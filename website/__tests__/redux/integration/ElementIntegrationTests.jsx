@@ -6,11 +6,16 @@ import * as firebase from 'firebase';
 
 import { BOARDS_PATH, initFirebase } from '../../../src/firebase-utils'
 import storeHelper from '../../../src/redux/storeHelper';
-import { initPositions, updatePosition, updatePositionAndPersist } from '../../../src/redux/actions/positionsActions';
+import {
+  UPDATE_POSITION
+} from '../../../src/redux/actions/ActionConstants';
+import {
+  initElements, updateElement, updateAndPersist
+} from '../../../src/redux/actions/ElementActions';
 
 const maxWaitFirebase = 30000;
 
-describe('PositionsIntegrationTests.', () => {
+describe('ElementIntegrationTests', () => {
 
   let testStore = null;
 
@@ -24,35 +29,43 @@ describe('PositionsIntegrationTests.', () => {
     testStore = null;
   });
 
-  test('initPositions_Dispatch', () => {
+  test('initElements_Dispatch', (done) => {
     const elemList = {
       testingANewItem: {
-        position: { x: 1000, y: 33 }
+        position: { x: 1000, y: 33 },
+        size: { width: 100, height: 100 },
+        rotation: 0,
       },
       testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
+        position: { x: 1, y: 2 },
+        size: { width: 50, height: 75 },
+        rotation: 45,
       }
     };
 
     testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
+      done();
     });
 
-    testStore.dispatch(initPositions(elemList));
+    testStore.dispatch(initElements(elemList));
   });
 
-  test('updatePosition_Dispatch', () => {
+  test('updatePosition_Dispatch', (done) => {
     const elemList = {
       testingANewItem: {
-        position: { x: 1000, y: 33 }
+        position: { x: 1000, y: 33 },
+        size: { width: 100, height: 100 },
+        rotation: 0,
       },
       testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
+        position: { x: 1, y: 2 },
+        size: { width: 50, height: 75 },
+        rotation: 45,
       }
     };
 
@@ -61,40 +74,43 @@ describe('PositionsIntegrationTests.', () => {
     const updatedLoc = { x: 33, y: 88 };
 
     const unsubscribe = testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
     });
 
-    testStore.dispatch(initPositions(elemList));
+    testStore.dispatch(initElements(elemList));
 
     unsubscribe();
 
     elemList[elemId].position = updatedLoc;
 
     testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
+      done();
     });
 
-    testStore.dispatch(updatePosition(elemId, updatedLoc));
+    testStore.dispatch(updateElement(UPDATE_POSITION, elemId, updatedLoc));
   });
 
-  test('updatePositionAndPersist_Dispatch', () => {
+  test('updatePositionAndPersist_Dispatch', (done) => {
 
     const elemList = {
       testingANewItem: {
-        position: { x: 1000, y: 33 }
+        position: { x: 1000, y: 33 },
+        size: {width: 100, height: 100 },
+        rotation: 0,
       },
       testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
+        position: { x: 1, y: 2 },
+        size: { width: 50, height: 75 },
+        rotation: 45,
       }
     };
 
@@ -106,16 +122,16 @@ describe('PositionsIntegrationTests.', () => {
     // of elemList. This will get called once for each dispatch and will
     // validate the current elemList value (this value changes between dispatches)
     testStore.subscribe(() => {
-      expect(testStore.getState())
+      expect(testStore.getState().updateElementReducer)
         .toEqual({
-          positions: {
-            elements: elemList
-          }
+          elements: elemList,
+          targeted: null,
         });
+      done();
     });
 
-    // call the initPositions dispatch to create an initial state
-    testStore.dispatch(initPositions(elemList));
+    // call the initElements dispatch to create an initial state
+    testStore.dispatch(initElements(elemList));
 
     // update the value of elemList to represent the updatedLocation for the
     // item represented by elemId
@@ -125,16 +141,19 @@ describe('PositionsIntegrationTests.', () => {
     const firebaseApp = initFirebase();
 
     // dispatch and persist the changes to firebase
-    testStore.dispatch(updatePositionAndPersist(elemId, updatedLoc)).then(() => {
+    testStore.dispatch(updateAndPersist(UPDATE_POSITION, elemId, updatedLoc))
+        .then(() => {
+      /* TODO: Firebase should be mocked! Not a real call to Firebase! */
       const testRef = firebase.database().ref(`${BOARDS_PATH}/${elemId}`);
 
       // confirm the value in firebase after the dispatch completes
-      testRef.once('value').then((testPositionSnap) => {
+      return testRef.once('value').then((testPositionSnap) => {
         expect(testPositionSnap.child('position').val()).toEqual(updatedLoc);
         // remove the testRef value from the database
         testRef.remove().then(() => {
           // after all firebase checks are done, shutdown firebase
           firebaseApp.delete();
+          done();
         });
       });
     });

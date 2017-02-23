@@ -7,12 +7,20 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
-import { initPositions, updatePosition } from '../../redux/actions/positionsActions';
+import {
+  UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
+} from '../../redux/actions/ElementActions';
+import {
+  initElements, updateElement
+} from '../../redux/actions/ElementActions';
 
+const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
+  + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
+  + 'transparent 1px)');
 const styles = {
   canvas: {
     backgroundSize: '25px 25px',
-    backgroundImage: 'linear-gradient(to right, #dddddd 1px, transparent 1px), linear-gradient(to bottom, #dddddd 1px, transparent 1px)',
+    backgroundImage: backgroundImageString,
     border: '2px dashed #7e7e7e',
     height: '77.2vh',
     margin: '1vw 0 1vw 13.5vw',
@@ -40,13 +48,17 @@ class CanvasView extends React.Component {
    */
   componentDidMount() {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
-      this.props.dispatch(initPositions(elemListSnap.val()));
+      this.props.dispatch(initElements(elemListSnap.val()));
     });
 
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
-      this.props.dispatch(
-        updatePosition(elemSnap.key, elemSnap.child('position').val())
-      );
+      this.props.dispatch(updateElement(UPDATE_POSITION, elemSnap.key,
+        elemSnap.child('position').val()));
+      this.props.dispatch(updateElement(UPDATE_SIZE, elemSnap.key,
+        elemSnap.child('size').val()));
+      this.props.dispatch(updateElement(UPDATE_ROTATION, elemSnap.key, {
+          rotation: elemSnap.child('rotation').val()
+        }));
     });
   }
 
@@ -59,7 +71,11 @@ class CanvasView extends React.Component {
     Object.keys(this.props.elements).forEach((id) => {
       const elemDetails = this.props.elements[id];
       elemDivs.push(
-        <CanvasElement key={id} elementId={id} initLoc={elemDetails.position} />
+        <CanvasElement key={id} elementId={id}
+          initLoc={elemDetails.position}
+          initSize={elemDetails.size}
+          rotation={elemDetails.rotation}
+        />
       );
     });
     return (
@@ -76,7 +92,7 @@ CanvasView.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  elements: state.positions.elements,
+  elements: state.updateElementReducer.elements,
 });
 
 export default connect(mapStateToProps)(CanvasView);

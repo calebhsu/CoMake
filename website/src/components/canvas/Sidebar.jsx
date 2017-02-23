@@ -3,6 +3,8 @@ import Drawer from 'material-ui/Drawer';
 import Slider from 'material-ui/Slider';
 import TextField from 'material-ui/TextField';
 
+import RotationSlider from './RotationSlider';
+
 const styles = {
   listItems: {
     marginTop: 20,
@@ -18,16 +20,22 @@ const styles = {
   },
 };
 
-
 /**
-  * Gives HTML for options sidebar.
-  * @returns {HTML}   The HTML of a sidebar on the canvas page
+ * @classdesc Sidebar for the canvas page.
   */
 export default class Sidebar extends React.Component {
+  /**
+   * constructor for the Sidebar.
+   * @param {Object} props The props to be passed in.
+   */
   constructor(props) {
     super(props);
   }
 
+  /**
+   * Renders the HTML for the sidebar.
+   * @returns {HTML} The html for the Sidebar.
+   */
   render() {
     return (
       <div>
@@ -38,6 +46,7 @@ export default class Sidebar extends React.Component {
         >
         <div>
           <h3>Rotate</h3>
+          <RotationSlider />
           <Slider defaultValue={0.5} style={styles.slider}/>
           <h3>Resize</h3>
           <TextField
@@ -49,7 +58,6 @@ export default class Sidebar extends React.Component {
             floatingLabelText="Width: 64px"
           /><br />
         </div>
-
         </Drawer>
       </div>
     );
