@@ -1,13 +1,13 @@
 /**
- * @file Integration tests for the LoginService client package
+ * @file Integration tests for the UserInfoService client package
  */
 
 const firebase = require('firebase');
 
-const LoginService = require('../../../services/LoginService');
+const UserInfoService = require('../../../services/UserInfoService');
 const firebaseUtils = require('../../../firebaseUtils');
 
-describe('LoginServiceIntegrationTests', () => {
+describe('UserInfoServiceIntegrationTests', () => {
 
   const test_endpoint = {
     host: 'comakeserver.herokuapp.com',
@@ -22,11 +22,11 @@ describe('LoginServiceIntegrationTests', () => {
 
   test('sendRequest_requestReturns', (done) => {
 
-    const requestBody = LoginService.formRequestBody(
+    const requestBody = UserInfoService.formRequestBody(
       'EvdmVcxJ84Px0ZBAS7SQAUAlTFn1'
     );
 
-    LoginService.sendRequest(requestBody, test_endpoint, () => {
+    UserInfoService.sendRequest(requestBody, test_endpoint, () => {
       const userRef = firebase.database()
         .ref('/users/EvdmVcxJ84Px0ZBAS7SQAUAlTFn1');
       userRef.once('value').then((userSnap) => {

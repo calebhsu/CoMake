@@ -2,13 +2,14 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Box, Flex } from 'reflexbox';
-import { promptForLogin } from '../../firebase-utils/login'
 
 import Brush from 'material-ui/svg-icons/image/brush';
 import FlatButton from 'material-ui/FlatButton';
 import Group from 'material-ui/svg-icons/social/group';
 import Share from 'material-ui/svg-icons/editor/highlight';
 import { white } from 'material-ui/styles/colors';
+
+import { promptForLogin } from '../../helpers/LoginHelper'
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -68,7 +69,7 @@ function Landing() {
             label="Login"
             labelStyle={styles.loginLabel}
             style={styles.loginBtn}
-            onClick={() => promptForLogin()}
+            onClick={promptForLogin}
           />
         </Box>
         <Box col={3} sm={3}>

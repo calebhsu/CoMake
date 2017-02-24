@@ -4,10 +4,10 @@
 
 const CanvasCreationService = require('./services/CanvasCreationService');
 const CanvasSharingService = require('./services/CanvasSharingService');
-const LoginService = require('./services/LoginService');
+const UserInfoService = require('./services/UserInfoService');
 
 module.exports = {
   CanvasCreationService,
   CanvasSharingService,
-  LoginService
+  UserInfoService
 };

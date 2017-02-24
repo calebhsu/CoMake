@@ -1,20 +1,20 @@
 /**
-* @file Defines a function that creates and sends a request to the LoginService
+* @file Defines a function that creates and sends a request to the UserInfoService
 */
 
 const http = require('http');
 
-const LOGIN_SVC_ROUTE = require('../Constants.js').LOGIN_SVC_ROUTE;
+const USR_INFO_SVC_ROUTE = require('../Constants.js').USR_INFO_SVC_ROUTE;
 
 /**
-* Forms the body of a proper request  to the LoginService
+* Forms the body of a proper request  to the UserInfoService
 * @param {string} uid The uid of the user to add
 * @throws Exceptions on invalid parameter types
-* @returns {object} An object that can be sent as the body of a request to the LoginService
+* @returns {object} An object that can be sent as the body of a request to the UserInfoService
 */
 const formRequestBody = (uid) => {
   if(typeof uid !== "string")
-    throw 'LoginService.formRequestBody - invalid uid param, must be a String'
+    throw 'UserInfoService.formRequestBody - invalid uid param, must be a String'
 
   return {
     uid,
@@ -22,8 +22,8 @@ const formRequestBody = (uid) => {
 };
 
 /**
-* Constructs and sends a request to the LoginService
-* @param {object} requestBody An object containing a properly formatted request for the LoginService (see formRequestBody)
+* Constructs and sends a request to the UserInfoService
+* @param {object} requestBody An object containing a properly formatted request for the UserInfoService (see formRequestBody)
 * @param {object} endpoint An object containing information about the endpoint to send the request to
 * @param {function} responseCallback A function that will be passed the JSON object of the server's response
 * @returns {void}
@@ -34,7 +34,7 @@ const sendRequest = (requestBody, endpoint, responseCallback) => {
   const request = http.request({
     host: endpoint.host,
     port: endpoint.port || 80,
-    path: LOGIN_SVC_ROUTE,
+    path: USR_INFO_SVC_ROUTE,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const sendRequest = (requestBody, endpoint, responseCallback) => {
         responseCallback(JSON.parse(responseObject));
       } catch (error) {
         console.log(
-          'LoginService.sendRequest - error handling LoginService response: '
+          'UserInfoService.sendRequest - error handling UserInfoService response: '
             + error.message
         );
         throw error;
@@ -65,7 +65,7 @@ const sendRequest = (requestBody, endpoint, responseCallback) => {
 
   request.on('error', (error) => {
     console.log(
-      'LoginService.sendRequest - error sending LoginService request: '
+      'UserInfoService.sendRequest - error sending UserInfoService request: '
         + error.message
     );
     throw error;

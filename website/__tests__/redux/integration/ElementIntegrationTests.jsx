@@ -4,7 +4,7 @@
 
 import * as firebase from 'firebase';
 
-import { BOARDS_PATH, initFirebase } from '../../../src/firebase-utils'
+import { BOARDS_PATH, initFirebase } from '../../../src/helpers/FirebaseHelper'
 import storeHelper from '../../../src/redux/storeHelper';
 import {
   UPDATE_POSITION

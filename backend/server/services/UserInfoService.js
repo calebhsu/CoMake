@@ -1,24 +1,24 @@
 /**
- * @file Defines the LoginService
+ * @file Defines the UserInfoService
  */
 
 const admin = require('firebase-admin');
 const winston = require('winston');
 
 /**
- * Creates a new canvas based on a LoginService request
+ * Creates a new canvas based on a UserInfoService request
  * @param {ExpressRequest} request An express request object representing the request
  * @param {ExpressResponse} response An express response object representing the response
  * @returns {void}
  */
 const handleRequest = (request, response) => {
   winston.info(
-    'LoginService.handleRequest - handling a new request: %j',
+    'UserInfoService.handleRequest - handling a new request: %j',
     request.body
   );
 
   if(typeof request.body.uid !== "string") {
-    winston.error('LoginService.handleRequest - invalid uid param, must be a String');
+    winston.error('UserInfoService.handleRequest - invalid uid param, must be a String');
     response.status(500)
       .send('Invalid uid param.');
     return;
@@ -33,14 +33,14 @@ const handleRequest = (request, response) => {
             if(oldValue)
             {
               winston.info(
-                'LoginService.handleRequest - user info for user %s already saved',
+                'UserInfoService.handleRequest - user info for user %s already saved',
                 request.body.uid
               );
 
               message = "user info already existed, overwriting"
             } else {
               winston.info(
-                'LoginService.handleRequest - user info for user %s not saved, overwriting',
+                'UserInfoService.handleRequest - user info for user %s not saved, overwriting',
                 request.body.uid
               );
 
@@ -48,7 +48,7 @@ const handleRequest = (request, response) => {
             }
 
             winston.info(
-              'LoginService.handleRequest - saving user info for user %s',
+              'UserInfoService.handleRequest - saving user info for user %s',
               request.body.uid
             );
 
@@ -81,7 +81,7 @@ const handleRequest = (request, response) => {
           });
       }).catch((error) => {
         winston.error(
-          'LoginService.handleRequest - error adding user info for user %s: %s',
+          'UserInfoService.handleRequest - error adding user info for user %s: %s',
           request.body.uid,
           error.message
         );
@@ -90,7 +90,7 @@ const handleRequest = (request, response) => {
       });
   } catch (error) {
     winston.error(
-      'LoginService.handleRequest - error adding user info for user %s: %s',
+      'UserInfoService.handleRequest - error adding user info for user %s: %s',
       request.body.uid,
       error.message
     );
@@ -104,7 +104,7 @@ handleRequest,
 };
 
 /*
-Example LoginService Request:
+Example UserInfoService Request:
 {
   uid: <uid>
 }

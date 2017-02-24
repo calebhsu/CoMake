@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { signOut } from '../firebase-utils/login';
-import { getUserInfo } from '../firebase-utils/login';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
@@ -12,6 +10,8 @@ import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 import { white } from 'material-ui/styles/colors';
+
+import { getUserInfo, signOut } from '../helpers/LoginHelper';
 
 const styles = {
   btn: {
@@ -92,7 +92,7 @@ class NavBar extends React.Component {
               label={"Log Out"}
               labelStyle={styles.user}
               style={[styles.user, styles.btn]}
-              onClick={() => signOut()}
+              onClick={signOut}
             />
           </div>
         }
