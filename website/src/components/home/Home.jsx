@@ -2,9 +2,8 @@ import React from 'react';
 import { Box, Flex } from 'reflexbox';
 import { Link } from 'react-router';
 
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import Paper from 'material-ui/Paper';
+import { Card, CardHeader, CardMedia } from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import CoMakeServices from 'comake-services';
 
@@ -13,24 +12,24 @@ import ServiceEndpoint from '../../ServiceEndpoint'
 const CanvasCreationService = CoMakeServices.CanvasCreationService;
 
 const styles = {
-  container: {
-    marginTop: 15,
+  body: {
+    textAlign: 'center',
+  },
+  img: {
+    height: 'auto',
+    width: 100,
   },
   header: {
-    backgroundColor: '#49937f',
-    color: '#FFFFFF',
-    marginTop: 0,
-    padding: '15px 10px',
-    textTransform: 'uppercase',
-  },
-  paper: {
-    display: 'inline-block',
-    height: '85vh',
-    margin: 30,
-    minHeight: 500,
     textAlign: 'center',
-    width: '90%',
-  }
+  },
+  overlay: {
+    padding: 0,
+  },
+  welcome: {
+    fontSize: '3.5em',
+    fontWeight: 500,
+    marginBottom: 20,
+  },
 };
 
 function createNewCanvas(){
@@ -49,35 +48,53 @@ function createNewCanvas(){
  * @returns {HTML}   The HTML of the home page.
  */
 function Home() {
+  let models = [];
+  for( let i = 0; i < 5; i++ ){
+    models.push(
+      <Box col={2} sm={4} md={2} key={i}>
+        <Link to="/canvas">
+          <Card>
+            <CardMedia
+              overlay={<CardHeader title="Racecar" />}
+              overlayContentStyle={styles.overlay}
+            >
+              <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" style={styles.img} />
+            </CardMedia>
+          </Card>
+        </Link>
+      </Box>
+    )
+  }
   return (
-    <div>
-      <Flex
-        align="stretch"
-        justify="space-around"
-        style={styles.container}
-        wrap
-      >
-        <Box col={12} sm={12} md={6}>
-          <Paper style={styles.paper} zDepth={2}>
-            <h2 style={styles.header}>Your Work</h2>
+    <Flex
+      align="center"
+      mt={3}
+      mb={2}
+      mx={6}
+      justify="space-around"
+      style={styles.body}
+      wrap
+    >
+      <Box col={12} sm={12} mb={4}>
+        <header style={styles.header}>
+          <h1 style={styles.welcome}>Welcome to Comake</h1>
+          <span>
+            First time user? &nbsp;&nbsp;
             <Link to="/canvas">
-              <FloatingActionButton
-                secondary={true}
-                style={styles.newCanvas}
+              <RaisedButton
+                label="Create New Model"
                 onClick={createNewCanvas}
-              >
-                <ContentAdd />
-              </FloatingActionButton>
+                secondary={true}
+              />
             </Link>
-          </Paper>
-        </Box>
-        <Box col={12} sm={12} md={6}>
-          <Paper style={styles.paper} zDepth={2}>
-            <h2 style={styles.header}>Group Work</h2>
-          </Paper>
-        </Box>
-      </Flex>
-    </div>
+          </span>
+        </header>
+      </Box>
+      <Box col={12} sm={12}>
+        <p>Pick up where you left off.</p>
+      </Box>
+      {models}
+    </Flex>
   )
 }
 
