@@ -25,13 +25,13 @@ export const initElements = elemList => ({
  * Gives the action for updating a position.
  * @param {String} updateType Type of update to be performed.
  * @param {String} elementId String of the elment ID.
- * @param {Object} updatedPosition Object detailing the updated location.
+ * @param {Object} updatedVal Object detailing the updated location.
  * @returns {Object} The object detailing the action details.
  */
-export const updateElement = (updateType, elementId, updatedPosition) => ({
+export const updateElement = (updateType, elementId, updatedVal) => ({
   type: updateType,
   elementId: elementId,
-  payload: updatedPosition,
+  payload: updatedVal,
 });
 
 /**
