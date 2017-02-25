@@ -4,14 +4,15 @@
 
 import { combineReducers } from 'redux';
 
-import { updateElementReducer, targetElementReducer } from './ElementReducer';
+import { updateElementReducer } from './ElementReducer';
+import { currentCanvasReducer } from './CurrentCanvasReducer';
 
 /**
  * An object with all the specified reducers combined
  */
 const reducers = combineReducers({
   updateElementReducer,
-  targetElementReducer,
+  currentCanvasReducer,
 });
 
 export default reducers;

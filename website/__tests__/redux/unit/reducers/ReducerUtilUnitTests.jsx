@@ -55,16 +55,4 @@ describe('ReducerUtilUnitTests', () => {
       .toEqual({});
   });
 
-  test('formPathToElementAttr_InvalidAttr', () => {
-    expect(() => {
-      formPathToElementAttr('test', 'blablabla');
-    }).toThrow();
-  })
-
-  test('formPathToElementAttr_ValidAttr', () => {
-    const expected = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
-      RC.ELEMENT_SIZE];
-    expect(formPathToElementAttr('test', RC.ELEMENT_SIZE)).toEqual(expected);
-  })
-
 });

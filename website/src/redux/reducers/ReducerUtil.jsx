@@ -31,18 +31,3 @@ export const insertIntoState = (state, toInsert, pathToField) => {
     return copy;
   }
 }
-
-/**
- * Returns a path for a specific element's attribute.
- * @param  {String} elementId   The id for the element in question.
- * @param  {String} elementAttr The attribute for the element.
- * @return {List}             List representing the desired path.
- * @throws {Error}              Error thrown if elementAttr is not valid.
- */
-export const formPathToElementAttr = (elementId, elementAttr) => {
-  if (RC.ELEMENT_ATTRS.indexOf(elementAttr) === -1) {
-    throw new Error('Invalid Element Attribute.');
-  }
-  return [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elementId,
-    elementAttr];
-}

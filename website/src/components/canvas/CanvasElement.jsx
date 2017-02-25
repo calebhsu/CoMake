@@ -9,10 +9,8 @@ import Rnd from 'react-rnd';
 import {
   UPDATE_POSITION, UPDATE_SIZE
 } from '../../redux/actions/ActionConstants';
-import {
-  updateAndPersist, targetElement
-} from '../../redux/actions/ElementActions';
-
+import { updateAndPersist } from '../../redux/actions/ElementActions';
+import { targetElement } from '../../redux/actions/CurrentCanvasActions';
 /**
  * Component for an element on the canvas.
  */

@@ -1,13 +1,12 @@
 /**
- * @file File of all the possible actions we can take on the Redux store.
+ * @file Possible actions we can take on the elements state branch.
  */
 
 import {
   setElementLocation, setElementSize, setElementRotation
 } from '../../firebase-utils';
 import {
-  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION,
-  TARGET_ELEMENT
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
 } from './ActionConstants';
 
 
@@ -18,14 +17,14 @@ import {
  */
 export const initElements = elemList => ({
   type: INIT_ELEMENTS,
-  elements: elemList,
+  payload: elemList,
 });
 
 /**
  * Gives the action for updating a position.
  * @param {String} updateType Type of update to be performed.
  * @param {String} elementId String of the elment ID.
- * @param {Object} updatedVal Object detailing the updated location.
+ * @param {Any} updatedVal The new updated value.
  * @returns {Object} The object detailing the action details.
  */
 export const updateElement = (updateType, elementId, updatedVal) => ({
@@ -38,7 +37,7 @@ export const updateElement = (updateType, elementId, updatedVal) => ({
  * Update the location and update on fireabse.
  * @param {String} updateType The type of update to be performed.
  * @param {String} elementId String of the elment ID.
- * @param {Object} updatedVal Object detailing the updated location.
+ * @param {Any} updatedVal The new updated value..
  * @returns {Promise} A promise on the firebase set call
  */
 export const updateAndPersist = (updateType, elementId, updatedVal) => (
@@ -51,19 +50,9 @@ export const updateAndPersist = (updateType, elementId, updatedVal) => (
       case UPDATE_SIZE:
         return setElementSize(elementId, updatedVal);
       case UPDATE_ROTATION:
-        return setElementRotation(elementId, Object.values(updatedVal)[0]);
+        return setElementRotation(elementId, updatedVal);
       default:
         return;
     }
   }
 );
-
-/**
- * Change the currently targeted element.
- * @param {String} elementId String of the element ID.
- * @returns {Object} The object detailing the action details.
- */
-export const targetElement = (elementId) => ({
-  type: TARGET_ELEMENT,
-  elementId: elementId,
-})

@@ -17,7 +17,7 @@ describe('PositionsActionsUnitTests', () => {
 
     const expectedActionResult = {
       type: INIT_ELEMENTS,
-      elements: elemList,
+      payload: elemList,
     };
 
     expect(initElements(elemList)).toEqual(expectedActionResult);
@@ -35,7 +35,7 @@ describe('PositionsActionsUnitTests', () => {
 
     const expectedActionResult = {
       type: INIT_ELEMENTS,
-      elements: elemList,
+      payload: elemList,
     };
 
     expect(initElements(elemList)).toEqual(expectedActionResult);
