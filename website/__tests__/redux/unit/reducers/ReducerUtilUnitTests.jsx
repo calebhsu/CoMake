@@ -2,9 +2,7 @@
  * @file Unit tests for ReducerUtil.jsx
  */
 
-import {
-  insertIntoState, formPathToElementAttr
-} from '../../../../src/redux/reducers/ReducerUtil';
+import { insertIntoState } from '../../../../src/redux/reducers/ReducerUtil';
 
 import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 
@@ -33,10 +31,8 @@ describe('ReducerUtilUnitTests', () => {
     expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_ADMIN]).toEqual(null);
   });
 
-  test('insertIntoState_CreateFieldObject', () => {
-    const testElement = {};
-    testElement[RC.ELEMENT_POSITION] = { 'x': 100 };
-    const elementField = { 'test': testElement };
+  test('insertIntoState_UpdateFieldObject', () => {
+    const elementField = { 'test': { 'x': 100 } };
     const updatedSubField = {};
     updatedSubField[RC.CANVAS_NAME] = null;
     updatedSubField[RC.CANVAS_ADMIN] = null;
@@ -46,13 +42,20 @@ describe('ReducerUtilUnitTests', () => {
     const updatedField = {};
     updatedField[RC.CURRENT_CANVAS] = updatedSubField;
     const expected = Object.assign({}, RC.BLANK_STATE, updatedField);
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
-      RC.ELEMENT_POSITION];
-    expect(insertIntoState(RC.BLANK_STATE, { 'x': 100 }, path))
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS];
+    expect(insertIntoState(RC.BLANK_STATE, elementField, path))
       .toEqual(expected);
     // Check to make sure a deep copy was made.
     expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS])
       .toEqual({});
+  });
+
+  test('insertIntoState_PathDoesNotExist', () => {
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
+      RC.ELEMENT_ROTATION];
+    expect(() => {
+      insertIntoState(RC.BLANK_STATE, 42, path);
+    }).toThrow();
   });
 
 });

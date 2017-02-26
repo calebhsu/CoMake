@@ -17,8 +17,12 @@ export const insertIntoState = (state, toInsert, pathToField) => {
   if (pathToField.length === 0) {
     return state;
   }
-  // Make deep copy of the current state if this part already exists.
-  const copy = typeof(state) === 'undefined' ? {} : Object.assign({}, state);
+  // Check if the currennt state exists, if not throw an error.
+  if (typeof(state) === 'undefined') {
+    throw new Error('Given path does currently exist in state tree.');
+  }
+  // Make deep copy of the current state.
+  const copy = Object.assign({}, state);
   if (pathToField.length === 1) {
     if (typeof(toInsert) === 'object') {
       toInsert = Object.assign({}, toInsert);
