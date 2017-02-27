@@ -2,7 +2,6 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Box, Flex } from 'reflexbox';
-import { Link } from 'react-router';
 import { manageLogin } from '../../firebase-utils/login'
 
 import Brush from 'material-ui/svg-icons/image/brush';
@@ -13,13 +12,13 @@ import { white } from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: '#1f786a',
+    primary1Color: '#2c9a8a',
   },
 });
 
 const styles = {
   about: {
-    backgroundColor: '#1f786a',
+    backgroundColor: '#2c9a8a',
     color: white,
     textAlign: 'center',
   },
