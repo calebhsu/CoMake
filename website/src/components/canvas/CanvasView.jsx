@@ -8,10 +8,7 @@ import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
 import {
-  UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
-} from '../../redux/actions/ActionConstants';
-import {
-  initElements, updateElement
+  initElements, addElement
 } from '../../redux/actions/ElementActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
 
@@ -51,14 +48,11 @@ class CanvasView extends React.Component {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
       this.props.dispatch(initElements(elemListSnap.val()));
     });
-
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
-      this.props.dispatch(updateElement(UPDATE_POSITION, elemSnap.key,
-        elemSnap.child('position').val()));
-      this.props.dispatch(updateElement(UPDATE_SIZE, elemSnap.key,
-        elemSnap.child('size').val()));
-      this.props.dispatch(updateElement(UPDATE_ROTATION, elemSnap.key,
-        Number(elemSnap.child('rotation').val())));
+      this.props.dispatch(addElement(elemSnap.key, elemSnap.val()));
+    });
+    firebase.database().ref('/test').on('child_added', (elemSnap) => {
+      this.props.dispatch(addElement(elemSnap.key, elemSnap.val()));
     });
   }
 
