@@ -9,7 +9,7 @@ import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
 import * as ReducerUtil from '../../../../src/redux/reducers/ReducerUtil';
 
-describe('ElementReducerUnitTests', () => {
+describe('CurrentCanvasReducerUnitTests', () => {
 
   beforeEach(() => {
     spyOn(ReducerUtil, 'insertIntoState');
