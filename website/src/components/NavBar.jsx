@@ -101,15 +101,22 @@ class NavBar extends React.Component {
           <Link to="/home">
             <IconButton><Home color={white} /></IconButton>
           </Link>
-        }
-      />
-    );
-  }
-}
-
-NavBar.propTypes = {
-  dispatch: PropTypes.func,
-  userInfo: PropTypes.object,
+          <FlatButton
+            label={"Log Out"}
+            labelStyle={styles.user}
+            style={styles.user, styles.btn}
+            onClick={() => signOut()}
+          />
+        </div>
+      }
+      iconStyleRight={styles.userElement}
+      iconElementLeft={
+        <Link to="/home">
+          <IconButton><Home color={white} /></IconButton>
+        </Link>
+      }
+    />
+  );
 }
 
 const mapStateToProps = state => ({

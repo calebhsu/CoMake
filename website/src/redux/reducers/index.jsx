@@ -5,7 +5,8 @@
 import { combineReducers } from 'redux';
 
 import { userInfoReducer } from './LoginReducer';
-import { updateElementReducer, targetElementReducer } from './ElementReducer';
+import { updateElementReducer } from './ElementReducer';
+import { currentCanvasReducer } from './CurrentCanvasReducer';
 
 /**
  * An object with all the specified reducers combined
@@ -13,7 +14,7 @@ import { updateElementReducer, targetElementReducer } from './ElementReducer';
 const reducers = combineReducers({
   userInfoReducer,
   updateElementReducer,
-  targetElementReducer,
+  currentCanvasReducer,
 });
 
 export default reducers;

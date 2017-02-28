@@ -1,23 +1,31 @@
 /**
- * @file Automated tests for the redux positions actions/reducer
+ * @file Integration test for Redux store for elements.
  */
 
-import * as firebase from 'firebase';
-
-import { BOARDS_PATH, initFirebase } from '../../../src/helpers/FirebaseHelper'
 import storeHelper from '../../../src/redux/storeHelper';
-import {
-  UPDATE_POSITION
-} from '../../../src/redux/actions/ActionConstants';
-import {
-  initElements, updateElement, updateAndPersist
-} from '../../../src/redux/actions/ElementActions';
-
-const maxWaitFirebase = 30000;
+import * as AC from '../../../src/redux/actions/ActionConstants';
+import * as ElementActions from '../../../src/redux/actions/ElementActions';
+import * as RC from '../../../src/redux/reducers/ReducerConstants';
 
 describe('ElementIntegrationTests', () => {
 
   let testStore = null;
+  const elemList = {
+    testingANewItem: {
+      position: { x: 1000, y: 33 },
+      size: { width: 100, height: 100 },
+      rotation: 0,
+      module: 'abcd',
+    },
+    testingAnotherNewItem: {
+      position: { x: 1, y: 2 },
+      size: { width: 50, height: 75 },
+      rotation: 45,
+      module: 'wxyz',
+    }
+  };
+  const filledState = Object.assign({}, RC.BLANK_STATE);
+  filledState[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS] = elemList;
 
   // create a new store before each test
   beforeEach(() => {
@@ -30,132 +38,72 @@ describe('ElementIntegrationTests', () => {
   });
 
   test('initElements_Dispatch', (done) => {
-    const elemList = {
-      testingANewItem: {
-        position: { x: 1000, y: 33 },
-        size: { width: 100, height: 100 },
-        rotation: 0,
-      },
-      testingAnotherNewItem: {
-        position: { x: 1, y: 2 },
-        size: { width: 50, height: 75 },
-        rotation: 45,
-      }
-    };
-
     testStore.subscribe(() => {
-      expect(testStore.getState().updateElementReducer)
-        .toEqual({
-          elements: elemList,
-          targeted: null,
-        });
+      expect(testStore.getState().updateElementReducer).toEqual(filledState);
       done();
     });
 
-    testStore.dispatch(initElements(elemList));
+    testStore.dispatch(ElementActions.initElements(elemList));
   });
 
   test('updatePosition_Dispatch', (done) => {
-    const elemList = {
-      testingANewItem: {
-        position: { x: 1000, y: 33 },
-        size: { width: 100, height: 100 },
-        rotation: 0,
-      },
-      testingAnotherNewItem: {
-        position: { x: 1, y: 2 },
-        size: { width: 50, height: 75 },
-        rotation: 45,
-      }
-    };
-
+    // Fill in the store so we have something to test.
+    testStore.dispatch(ElementActions.initElements(elemList));
+    // Assemble what is expected.
     const elemId = 'testingANewItem';
-
     const updatedLoc = { x: 33, y: 88 };
-
-    const unsubscribe = testStore.subscribe(() => {
-      expect(testStore.getState().updateElementReducer)
-        .toEqual({
-          elements: elemList,
-          targeted: null,
-        });
-    });
-
-    testStore.dispatch(initElements(elemList));
-
-    unsubscribe();
-
-    elemList[elemId].position = updatedLoc;
+    const expected = Object.assign({}, filledState);
+    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_POSITION]
+      = updatedLoc;
 
     testStore.subscribe(() => {
-      expect(testStore.getState().updateElementReducer)
-        .toEqual({
-          elements: elemList,
-          targeted: null,
-        });
+      expect(testStore.getState().updateElementReducer).toEqual(expected);
       done();
     });
 
-    testStore.dispatch(updateElement(UPDATE_POSITION, elemId, updatedLoc));
+    // Update the state again.
+    testStore.dispatch(ElementActions.updateElement(AC.UPDATE_POSITION, elemId,
+      updatedLoc));
   });
 
-  test('updatePositionAndPersist_Dispatch', (done) => {
-
-    const elemList = {
-      testingANewItem: {
-        position: { x: 1000, y: 33 },
-        size: {width: 100, height: 100 },
-        rotation: 0,
-      },
-      testingAnotherNewItem: {
-        position: { x: 1, y: 2 },
-        size: { width: 50, height: 75 },
-        rotation: 45,
-      }
-    };
-
+  test('updateSize_Dispatch', (done) => {
+    // Fill in the store so we have something to test.
+    testStore.dispatch(ElementActions.initElements(elemList));
+    // Assemble what is expected.
     const elemId = 'testingANewItem';
+    const updatedSize = { 'width': 25, 'height': 60 };
+    const expected = Object.assign({}, filledState);
+    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_SIZE]
+      = updatedSize;
 
-    const updatedLoc = { x: 33, y: 88 };
-
-    // subscribe and validate the store's state against the current value
-    // of elemList. This will get called once for each dispatch and will
-    // validate the current elemList value (this value changes between dispatches)
     testStore.subscribe(() => {
-      expect(testStore.getState().updateElementReducer)
-        .toEqual({
-          elements: elemList,
-          targeted: null,
-        });
+      expect(testStore.getState().updateElementReducer).toEqual(expected);
       done();
     });
 
-    // call the initElements dispatch to create an initial state
-    testStore.dispatch(initElements(elemList));
-
-    // update the value of elemList to represent the updatedLocation for the
-    // item represented by elemId
-    elemList[elemId].position = updatedLoc;
-
-    // initialize firebase for this test only
-    const firebaseApp = initFirebase();
-
-    // dispatch and persist the changes to firebase
-    testStore.dispatch(updateAndPersist(UPDATE_POSITION, elemId, updatedLoc))
-        .then(() => {
-      /* TODO: Firebase should be mocked! Not a real call to Firebase! */
-      const testRef = firebase.database().ref(`${BOARDS_PATH}/${elemId}`);
-
-      // confirm the value in firebase after the dispatch completes
-      return testRef.once('value').then((testPositionSnap) => {
-        expect(testPositionSnap.child('position').val()).toEqual(updatedLoc);
-        // remove the testRef value from the database
-        testRef.remove().then(() => {
-          // after all firebase checks are done, shutdown firebase
-          firebaseApp.delete();
-          done();
-        });
-      });
-    });
+    // Update the state again.
+    testStore.dispatch(ElementActions.updateElement(AC.UPDATE_SIZE, elemId,
+      updatedSize));
   });
+
+  test('updateRotation_Dispatch', (done) => {
+    // Fill in the store so we have something to test.
+    testStore.dispatch(ElementActions.initElements(elemList));
+    // Assemble what is expected.
+    const elemId = 'testingANewItem';
+    const updatedRotation = -26;
+    const expected = Object.assign({}, filledState);
+    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_ROTATION]
+      = updatedRotation;
+
+    testStore.subscribe(() => {
+      expect(testStore.getState().updateElementReducer).toEqual(expected);
+      done();
+    });
+
+    // Update the state again.
+    testStore.dispatch(ElementActions.updateElement(AC.UPDATE_ROTATION, elemId,
+      updatedRotation));
+  });
+  /* TODO: Find out how to do updateAndPersist once firebase is mocked. */
 });
