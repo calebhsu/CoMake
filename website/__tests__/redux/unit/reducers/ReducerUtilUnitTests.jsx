@@ -17,26 +17,26 @@ describe('ReducerUtilUnitTests', () => {
     const admin = 'Vin Diesel';
     const updatedSubField = {};
     updatedSubField[RC.CANVAS_NAME] = null;
-    updatedSubField[RC.CANVAS_ADMIN] = admin;
-    updatedSubField[RC.CANVAS_COLLABORATORS] = [];
+    updatedSubField[RC.CANVAS_OWNER] = admin;
+    updatedSubField[RC.CANVAS_USERS] = [];
     updatedSubField[RC.CANVAS_ELEMENTS] = {};
     updatedSubField[RC.CANVAS_ACTIVE_ELEMENT] = null;
     const updatedField = {};
     updatedField[RC.CURRENT_CANVAS] = updatedSubField;
     const expected = Object.assign({}, RC.BLANK_STATE, updatedField);
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ADMIN];
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_OWNER];
     // Check to make sure updated correctly.
     expect(insertIntoState(RC.BLANK_STATE, admin, path)).toEqual(expected);
     // Check to make sure a deep copy was made.
-    expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_ADMIN]).toEqual(null);
+    expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_OWNER]).toEqual(null);
   });
 
   test('insertIntoState_UpdateFieldObject', () => {
     const elementField = { 'test': { 'x': 100 } };
     const updatedSubField = {};
     updatedSubField[RC.CANVAS_NAME] = null;
-    updatedSubField[RC.CANVAS_ADMIN] = null;
-    updatedSubField[RC.CANVAS_COLLABORATORS] = [];
+    updatedSubField[RC.CANVAS_OWNER] = null;
+    updatedSubField[RC.CANVAS_USERS] = [];
     updatedSubField[RC.CANVAS_ELEMENTS] = elementField;
     updatedSubField[RC.CANVAS_ACTIVE_ELEMENT] = null;
     const updatedField = {};

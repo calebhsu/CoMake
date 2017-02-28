@@ -1,5 +1,5 @@
 /**
- * @file Integration test for
+ * @file Integration test for CurrentCanvas Redux work flow.
  */
 
 import storeHelper from '../../../src/redux/storeHelper';

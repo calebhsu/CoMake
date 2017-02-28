@@ -15,7 +15,7 @@ describe('ElementReducerUnitTests', () => {
     spyOn(ReducerUtil, 'insertIntoState');
   });
 
-  test('updateElementReducer_InitElements', () => {
+  test('currentCanvasReducer_TargetElement', () => {
     const testId = 'testId';
     const testAction = {
       type: AC.TARGET_ELEMENT,
@@ -26,7 +26,7 @@ describe('ElementReducerUnitTests', () => {
       testId, [RC.CURRENT_CANVAS, RC.CANVAS_ACTIVE_ELEMENT]);
   });
 
-  test('updateElementReducer_NotSupportedAction', () => {
+  test('currentCanvasReducer_NotSupportedAction', () => {
     const testAction = {
       type: 'NotSupported',
       payload: 'something',

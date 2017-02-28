@@ -9,9 +9,9 @@
  export const USER_EMAIL = 'email';
  export const CANVASES = 'canvases';
  export const CURRENT_CANVAS = 'currentCanvas';
- export const CANVAS_NAME = 'canvasName';
- export const CANVAS_ADMIN = 'admin';
- export const CANVAS_COLLABORATORS = 'collaborators';
+ export const CANVAS_NAME = 'name';
+ export const CANVAS_OWNER = 'owner';
+ export const CANVAS_USERS = 'users';
  export const CANVAS_ELEMENTS = 'elements';
  export const CANVAS_ACTIVE_ELEMENT = 'activeElement';
 
@@ -26,8 +26,8 @@
   CANVASES: {},
   CURRENT_CANVAS: {
     CANVAS_NAME: null,
-    CANVAS_ADMIN: null,
-    CANVAS_COLLABORATORS: [],
+    CANVAS_OWNER: null,
+    CANVAS_USERS: [],
     CANVAS_ELEMENTS: {},
     CANVAS_ACTIVE_ELEMENT: null,
   }
@@ -39,8 +39,8 @@ userInfoBranch[USER_PHOTO_URL] = null;
 userInfoBranch[USER_EMAIL] = null;
 const currCanvas = {};
 currCanvas[CANVAS_NAME] = null;
-currCanvas[CANVAS_ADMIN] = null;
-currCanvas[CANVAS_COLLABORATORS] = [];
+currCanvas[CANVAS_OWNER] = null;
+currCanvas[CANVAS_USERS] = [];
 currCanvas[CANVAS_ELEMENTS] = {};
 currCanvas[CANVAS_ACTIVE_ELEMENT] = null;
 const BLANK_STATE = {};
