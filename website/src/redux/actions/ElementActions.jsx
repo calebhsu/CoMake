@@ -6,7 +6,7 @@ import {
   setElementLocation, setElementSize, setElementRotation
 } from '../../firebase-utils';
 import {
-  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION, ADD_ELEMENT
 } from './ActionConstants';
 
 
@@ -31,6 +31,19 @@ export const updateElement = (updateType, elementId, updatedVal) => ({
   type: updateType,
   elementId: elementId,
   payload: updatedVal,
+});
+
+/**
+ * Adds an element to the current canvas.
+ * @param {String} elementId  The string for the element's ID.
+ * @param {Object} elementObj Object for an element with position, size,
+ *                            rotation, and module field.
+ * @returns {Object}          The object detailing the action details.
+ */
+export const addElement = (elementId, elementObj) => ({
+  type: ADD_ELEMENT,
+  elementId: elementId,
+  payload: elementObj,
 });
 
 /**

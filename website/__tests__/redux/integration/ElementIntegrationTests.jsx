@@ -105,5 +105,34 @@ describe('ElementIntegrationTests', () => {
     testStore.dispatch(ElementActions.updateElement(AC.UPDATE_ROTATION, elemId,
       updatedRotation));
   });
+
+  test('addElement_Dispatch', (done) => {
+    testStore.dispatch(ElementActions.initElements(elemList));
+    // Assemble what is to be expected.
+    const newElement = {
+      'position': {
+        'x': 100,
+        'y': 50,
+      },
+      'size': {
+        'width': 100,
+        'height': 20,
+      },
+      'rotation': 30,
+      'module': 'testModule',
+    };
+    const elemId = 'newElement';
+    const expected = Object.assign({}, filledState);
+    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId] = newElement;
+
+    testStore.subscribe(() => {
+      expect(testStore.getState().updateElementReducer).toEqual(expected);
+      done();
+    });
+
+    //Update the state again.
+    testStore.dispatch(ElementActions.addElement(elemId, newElement));
+  });
+
   /* TODO: Find out how to do updateAndPersist once firebase is mocked. */
 });

@@ -67,12 +67,36 @@ describe('ElementReducerUnitTests', () => {
       type: AC.UPDATE_ROTATION,
       payload: newRotation,
       elementId: elemId,
-    }
+    };
     updateElementReducer(loadedState, positionAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
       newRotation, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId,
       RC.ELEMENT_ROTATION]);
   });
+
+  test('updateElementReducer_AddElement', () => {
+    const newElement = {
+      'position': {
+        'x': 100,
+        'y': 50,
+      },
+      'size': {
+        'width': 100,
+        'height': 20,
+      },
+      'rotation': 30,
+      'module': 'testModule',
+    };
+    const elemId = 'newElement';
+    const newElemAction = {
+      type: AC.ADD_ELEMENT,
+      payload: newElement,
+      elementId: elemId,
+    };
+    updateElementReducer(loadedState, newElemAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
+      newElement, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId]);
+  })
 
   test('updateElementReducer_InvalidAction', () => {
     const nonAction = {

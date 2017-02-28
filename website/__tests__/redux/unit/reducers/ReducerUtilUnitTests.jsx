@@ -50,6 +50,24 @@ describe('ReducerUtilUnitTests', () => {
       .toEqual({});
   });
 
+  test('insertIntoState_AddNewElement', () => {
+    const elementField = { 'test': { 'x': 100 } };
+    const updatedSubField = {};
+    updatedSubField[RC.CANVAS_NAME] = null;
+    updatedSubField[RC.CANVAS_OWNER] = null;
+    updatedSubField[RC.CANVAS_USERS] = [];
+    updatedSubField[RC.CANVAS_ELEMENTS] = elementField;
+    updatedSubField[RC.CANVAS_ACTIVE_ELEMENT] = null;
+    const updatedField = {};
+    updatedField[RC.CURRENT_CANVAS] = updatedSubField;
+    const expected = Object.assign({}, RC.BLANK_STATE, updatedField);
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test'];
+    expect(insertIntoState(RC.BLANK_STATE, { 'x': 100}, path))
+      .toEqual(expected);
+    // Check to make sure a deep copy was made.
+    expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]).toEqual({});
+  })
+
   test('insertIntoState_PathDoesNotExist', () => {
     const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
       RC.ELEMENT_ROTATION];

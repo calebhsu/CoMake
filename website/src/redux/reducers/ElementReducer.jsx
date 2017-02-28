@@ -3,7 +3,7 @@
  */
 
 import {
-  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION, ADD_ELEMENT
 } from './../actions/ActionConstants';
 
 import * as RC from './ReducerConstants';
@@ -32,6 +32,9 @@ export const updateElementReducer = (state = RC.BLANK_STATE, action) => {
     case UPDATE_ROTATION:
       pathToChange.push(action.elementId);
       pathToChange.push(RC.ELEMENT_ROTATION);
+      break;
+    case ADD_ELEMENT:
+      pathToChange.push(action.elementId);
       break;
     default:
       // Reducer should not do anything otherwise so return.

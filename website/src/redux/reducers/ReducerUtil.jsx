@@ -2,8 +2,6 @@
  * @file Utility functions for Redux reducers.
  */
 
-import * as RC from './ReducerConstants';
-
 /**
  * Inserts/overwrites the given information into a deeep copy of the state.
  * @param  {Object} state       The current redux state.
