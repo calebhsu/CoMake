@@ -5,108 +5,79 @@
 import {
   updateElementReducer
 } from '../../../../src/redux/reducers/ElementReducer';
+import * as RC from '../../../../src/redux/reducers/ReducerConstants';
+import * as AC from '../../../../src/redux/actions/ActionConstants';
+import * as ReducerUtil from '../../../../src/redux/reducers/ReducerUtil';
 
-import {
-  INIT_ELEMENTS, UPDATE_POSITION
-} from '../../../../src/redux/actions/ActionConstants';
+describe('ElementReducerUnitTests', () => {
+  const testElement = {};
+  testElement[RC.ELEMENT_POSITION] = {'x': 1, 'y': 1};
+  testElement[RC.ELEMENT_SIZE] = {'height': 1, 'width': 1};
+  testElement[RC.ELEMENT_ROTATION] = 1;
+  testElement[RC.ELEMENT_MODULE] = 'one';
+  const elements = {'oneElem': testElement};
+  const loadedState = Object.assign({}, RC.BLANK_STATE);
+  loadedState[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS] = elements;
 
-describe('PositionsReducerUnitTests', () => {
+  beforeEach(() => {
+    spyOn(ReducerUtil, 'insertIntoState');
+  });
 
-  const testElementsList = {
-    testItem: {
-      position: { x: 42, y: 43 }
+  test('updateElementReducer_InitElements', () => {
+    const initAction = {
+      type: AC.INIT_ELEMENTS,
+      payload: elements,
     }
-  };
-
-  const prevState = {
-    elements: {
-      testingANewItem: {
-        position: { x: 1000, y: 33 }
-      },
-      testingAnotherNewItem: {
-        position: { x: 1, y: 2 }
-      },
-      testItem: {
-        position: { x: 42, y: 43 }
-      }
-    },
-    targeted: null,
-  };
-
-  const initElementAction = {
-    type: INIT_ELEMENTS,
-    elements: testElementsList
-  };
-
-  test('ReducePosition_EmptyAction_InitialState', () => {
-    expect(updateElementReducer(undefined, {}))
-      .toEqual({ elements: {}, targeted: null });
+    updateElementReducer(RC.BLANK_STATE, initAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      elements, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS]);
   });
 
-  test('ReducePosition_InitPositions_NoPreviousState', () => {
-    expect(updateElementReducer(undefined, initElementAction))
-      .toEqual({ elements: testElementsList, targeted: null });
+  test('updateElementReducer_UpdatePosition', () => {
+    const newPosition = { 'x': 10, 'y': 10 };
+    const elemId = 'oneElem';
+    const positionAction = {
+      type: AC.UPDATE_POSITION,
+      payload: newPosition,
+      elementId: elemId,
+    }
+    updateElementReducer(loadedState, positionAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
+      newPosition, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId,
+      RC.ELEMENT_POSITION]);
   });
 
-  test('ReducePosition_InitPositions_PreviousState', () => {
-    expect(updateElementReducer(prevState, initElementAction))
-      .toEqual({ elements: testElementsList, targeted: null });
+  test('updateElementReducer_UpdateSize', () => {
+    const newSize = { 'width': 10, 'height': 10 };
+    const elemId = 'oneElem';
+    const positionAction = {
+      type: AC.UPDATE_SIZE,
+      payload: newSize,
+      elementId: elemId,
+    }
+    updateElementReducer(loadedState, positionAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
+      newSize, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId, RC.ELEMENT_SIZE]);
   });
 
-  test('ReducePosition_UpdatePosition_InvalidUpdatedLocation_NoStateChange', () => {
-    const updatePositionActionNullUpdateLocation = {
-      type: UPDATE_POSITION,
-      elementId: "testItem",
-      payload: null
-    };
-
-    expect(updateElementReducer(prevState, updatePositionActionNullUpdateLocation))
-      .toEqual(prevState);
+  test('updateElementReducer_UpdateRotation', () => {
+    const newRotation = 10;
+    const elemId = 'oneElem';
+    const positionAction = {
+      type: AC.UPDATE_ROTATION,
+      payload: newRotation,
+      elementId: elemId,
+    }
+    updateElementReducer(loadedState, positionAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
+      newRotation, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId,
+      RC.ELEMENT_ROTATION]);
   });
 
-  test('ReducePosition_UpdatePosition_ValidUpdatedLocation_NoPreviousState_StateChange', () => {
-
-    const updatePositionAction = {
-      type: UPDATE_POSITION,
-      elementId: 'testItem',
-      payload: { x: 100, y: 200 }
-    };
-
-    const expectedStateAfterUpdatePositon = {
-      elements: {
-        testItem: {
-          position: { x: 100, y: 200 }
-        }
-      },
-      targeted: null,
-    };
-    expect(updateElementReducer(undefined, updatePositionAction))
-      .toEqual(expectedStateAfterUpdatePositon);
-  });
-
-  test('ReducePosition_UpdatePosition_ValidUpdatedLocation_PreviousState_StateChange', () => {
-
-    const updatePositionAction = {
-      type: UPDATE_POSITION,
-      elementId: 'testItem',
-      payload: { x: 100, y: 200 }
-    };
-
-    const expectedStateAfterUpdatePositon = {
-      elements: {
-        testingANewItem: {
-          position: { x: 1000, y: 33 }
-        },
-        testingAnotherNewItem: {
-          position: { x: 1, y: 2 }
-        },
-        testItem: {
-          position: { x: 100, y: 200 }
-        }
-      },
-      targeted: null,
-    };
-    expect(updateElementReducer(prevState, updatePositionAction))
-      .toEqual(expectedStateAfterUpdatePositon);
+  test('updateElementReducer_InvalidAction', () => {
+    const nonAction = {
+      type: 'NonAction',
+    }
+    expect(updateElementReducer(loadedState, nonAction)).toEqual(loadedState);
   });
 });
