@@ -6,7 +6,7 @@ import storeHelper from '../../../src/redux/storeHelper';
 import * as CanvasActions from '../../../src/redux/actions/CurrentCanvasActions';
 import * as RC from '../../../src/redux/reducers/ReducerConstants';
 
-describe('ElementIntegrationTests', () => {
+describe('CurrentCanvasIntegrationTests', () => {
 
   let testStore = null;
 
