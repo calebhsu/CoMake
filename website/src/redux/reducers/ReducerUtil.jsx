@@ -22,7 +22,7 @@ export const insertIntoState = (state, toInsert, pathToField) => {
   // Make deep copy of the current state.
   const copy = Object.assign({}, state);
   if (pathToField.length === 1) {
-    if (typeof(toInsert) === 'object') {
+    if (toInsert && typeof(toInsert) === 'object') {
       toInsert = Object.assign({}, toInsert);
     }
     copy[pathToField[0]] = toInsert;
