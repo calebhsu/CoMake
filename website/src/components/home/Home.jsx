@@ -4,14 +4,8 @@
 
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
 import CanvasList from '../canvas/CanvasList';
-import CoMakeServices from 'comake-services';
-
-import ServiceEndpoint from '../../ServiceEndpoint'
-
-const CanvasCreationService = CoMakeServices.CanvasCreationService;
+import CreateCanvas from '../canvas/CreateCanvas';
 
 const styles = {
   body: {
@@ -35,21 +29,6 @@ const styles = {
 };
 
 /**
- * Creates a request for a new canvas.
- * @returns {null} Returns nothing
- */
-function createNewCanvas(){
-  const reqBody = CanvasCreationService.formRequestBody(
-    'new canvas',
-    '0',
-    '1',
-    ['0']
-  );
-
-  CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
-}
-
-/**
  * Gives HTML for the home page after login.
  * @returns {HTML} The HTML of the home page.
  */
@@ -67,16 +46,8 @@ function Home() {
       <Box col={12} sm={12} mb={4}>
         <header style={styles.header}>
           <h1 style={styles.welcome}>Welcome to Comake</h1>
-          <span>
-            <Link to="/canvas">
-              <RaisedButton
-                label="Create New Model"
-                onClick={createNewCanvas}
-                secondary={true}
-              />
-            </Link>
-          </span>
-        </header>
+          <CreateCanvas />
+          </header>
       </Box>
       <Box col={12} sm={12}>
         <p>Pick up where you left off.</p>
