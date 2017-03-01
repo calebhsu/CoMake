@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
 import { Link } from 'react-router';
-
 import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -15,12 +14,12 @@ const styles = {
   body: {
     textAlign: 'center',
   },
-  img: {
-    height: 'auto',
-    width: 100,
-  },
   header: {
     textAlign: 'center',
+  },
+  models: {
+    display: 'inline-block',
+    margin: 15,
   },
   overlay: {
     padding: 0,
@@ -43,28 +42,39 @@ function createNewCanvas(){
   CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
 }
 
-/**
- * Gives HTML for the home page after login.
- * @returns {HTML}   The HTML of the home page.
- */
-function Home() {
+const ImageShapeInstance = (
+    <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
+  )
+
+
+
+function generateModels(){
   let models = [];
-  for( let i = 0; i < 5; i++ ){
+  let num_models = 3;
+  for (let i = 0; i < num_models; i++){
     models.push(
-      <Box col={2} sm={4} md={2} key={i}>
+      <Box col={2} sm={2} mb={4} style={styles.models} key={i}>
         <Link to="/canvas">
           <Card>
             <CardMedia
               overlay={<CardHeader title="Racecar" />}
               overlayContentStyle={styles.overlay}
             >
-              <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" style={styles.img} />
+              {ImageShapeInstance}
             </CardMedia>
           </Card>
         </Link>
       </Box>
-    )
+      )
   }
+  return models;
+}
+
+/**
+ * Gives HTML for the home page after login.
+ * @returns {HTML}   The HTML of the home page.
+ */
+function Home() {
   return (
     <Flex
       align="center"
@@ -93,7 +103,9 @@ function Home() {
       <Box col={12} sm={12}>
         <p>Pick up where you left off.</p>
       </Box>
-      {models}
+      <div className="container">
+          {generateModels()}
+      </div>
     </Flex>
   )
 }
