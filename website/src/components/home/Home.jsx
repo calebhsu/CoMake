@@ -58,13 +58,14 @@ function createNewCanvas(){
   CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
 }
 
-/**
- * Generates HTML for the home page after login.
- * @returns {canvases}  The array holding the canvas list HTML.
- */
- const generateCanvasCode = (
+const generateCanvasCode = (
     <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
  );
+
+/**
+ * Generates HTML for the user canvas list.
+ * @returns {canvasList}  The array holding the canvas list HTML.
+ */
 function generateCanvasList(){
   //TODO
   //Add firebase call to get canvas IDs and img src
