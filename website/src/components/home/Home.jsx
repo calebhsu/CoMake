@@ -5,9 +5,8 @@
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
 import { Link } from 'react-router';
-import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import CanvasList from '../canvas/CanvasList';
 import CoMakeServices from 'comake-services';
 
 import ServiceEndpoint from '../../ServiceEndpoint'
@@ -23,7 +22,7 @@ const styles = {
   },
   models: {
     display: 'inline-block',
-    margin: 10,
+    margin: 15,
   },
   overlay: {
     padding: 0,
@@ -34,14 +33,6 @@ const styles = {
     marginBottom: 20,
   },
 };
-/**
- * Creates unit tests for Home page.
- * @returns {string} Returns Unit test info
- */
-export function homeUnitTests(){
-  return true
-}
-
 
 /**
  * Creates a request for a new canvas.
@@ -56,47 +47,6 @@ function createNewCanvas(){
   );
 
   CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
-}
-
-const generateCanvasCode = (
-    <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
- );
-
-/**
- * Generates HTML for the user canvas list.
- * @returns {canvasList}  The array holding the canvas list HTML.
- */
-function generateCanvasList(){
-  //TODO
-  //Add firebase call to get canvas IDs and img src
-  let canvasList = [];
-  let numCanvases = 10;
-  let numCols = 3;
-  if (numCanvases > 5){
-    if(numCanvases > 10){
-      numCols = 1;
-    }
-    else{
-      numCols = 2;
-    }
-  }
-  for (let i = 0; i < numCanvases; i++){
-    canvasList.push(
-      <Box col={numCols} style={styles.models} key={i}>
-        <Link to="/canvas">
-          <Card>
-            <CardMedia
-              overlay={<CardHeader title="Racecar" />}
-              overlayContentStyle={styles.overlay}
-            >
-            {generateCanvasCode}
-            </CardMedia>
-          </Card>
-        </Link>
-      </Box>
-      )
-  }
-  return canvasList;
 }
 
 /**
@@ -132,7 +82,7 @@ function Home() {
         <p>Pick up where you left off.</p>
       </Box>
       <div className="container">
-          {generateCanvasList()}
+        <CanvasList />
       </div>
     </Flex>
   )
