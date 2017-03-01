@@ -23,7 +23,7 @@ const styles = {
   },
   models: {
     display: 'inline-block',
-    margin: 15,
+    margin: 10,
   },
   overlay: {
     padding: 0,
@@ -34,6 +34,14 @@ const styles = {
     marginBottom: 20,
   },
 };
+/**
+ * Creates unit tests for Home page.
+ * @returns {string} Returns Unit test info
+ */
+export function homeUnitTests(){
+  return true
+}
+
 
 /**
  * Creates a request for a new canvas.
@@ -54,21 +62,33 @@ function createNewCanvas(){
  * Generates HTML for the home page after login.
  * @returns {canvases}  The array holding the canvas list HTML.
  */
+ const generateCanvasCode = (
+    <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
+ );
 function generateCanvasList(){
   //TODO
   //Add firebase call to get canvas IDs and img src
   let canvasList = [];
-  let numCanvases = 3;
+  let numCanvases = 10;
+  let numCols = 3;
+  if (numCanvases > 5){
+    if(numCanvases > 10){
+      numCols = 1;
+    }
+    else{
+      numCols = 2;
+    }
+  }
   for (let i = 0; i < numCanvases; i++){
     canvasList.push(
-      <Box col={2} sm={2} mb={4} style={styles.models} key={i}>
+      <Box col={numCols} style={styles.models} key={i}>
         <Link to="/canvas">
           <Card>
             <CardMedia
               overlay={<CardHeader title="Racecar" />}
               overlayContentStyle={styles.overlay}
             >
-              <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
+            {generateCanvasCode}
             </CardMedia>
           </Card>
         </Link>
@@ -97,7 +117,6 @@ function Home() {
         <header style={styles.header}>
           <h1 style={styles.welcome}>Welcome to Comake</h1>
           <span>
-            First time user? &nbsp;&nbsp;
             <Link to="/canvas">
               <RaisedButton
                 label="Create New Model"
