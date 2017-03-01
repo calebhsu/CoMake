@@ -2,7 +2,6 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Box, Flex } from 'reflexbox';
-import { manageLogin } from '../../firebase-utils/login'
 
 import Brush from 'material-ui/svg-icons/image/brush';
 import FlatButton from 'material-ui/FlatButton';
