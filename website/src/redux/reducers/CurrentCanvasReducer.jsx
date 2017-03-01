@@ -25,8 +25,9 @@ export const currentCanvasReducer = (state = RC.BLANK_STATE, action) => {
         === action.elementId) {
         pathToChange.push(RC.CANVAS_ACTIVE_ELEMENT);
         return insertIntoState(state, null, pathToChange);
+      } else {
+        return state;
       }
-      break;
     default:
       // Any other action just return we do not want to handle.
       return state;

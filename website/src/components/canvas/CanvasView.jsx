@@ -7,9 +7,7 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
-import {
-  initElements, addElement
-} from '../../redux/actions/ElementActions';
+import * as ElementActions from '../../redux/actions/ElementActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
@@ -46,14 +44,19 @@ class CanvasView extends React.Component {
    */
   componentDidMount() {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
-      this.props.dispatch(initElements(elemListSnap.val()));
+      this.props.dispatch(ElementActions.initElements(elemListSnap.val()));
     });
     firebase.database().ref('/test').on('child_changed', (elemSnap) => {
-      this.props.dispatch(addElement(elemSnap.key, elemSnap.val()));
+      this.props.dispatch(ElementActions.addElement(elemSnap.key,
+        elemSnap.val()));
     });
     firebase.database().ref('/test').on('child_added', (elemSnap) => {
-      this.props.dispatch(addElement(elemSnap.key, elemSnap.val()));
+      this.props.dispatch(ElementActions.addElement(elemSnap.key,
+        elemSnap.val()));
     });
+    firebase.database().ref('/test').on('child_removed', (elemSnap) => {
+      this.props.dispatch(ElementActions.removeElement(elemSnap.key));
+    })
   }
 
   /**
