@@ -42,13 +42,9 @@ function createNewCanvas(){
   CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
 }
 
-const ImageShapeInstance = (
-    <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
-  )
-
-
-
-function generateModels(){
+function generateUserCanvasList(){
+  //TODO
+  //Add firebase call to get canvas IDs
   let models = [];
   let num_models = 3;
   for (let i = 0; i < num_models; i++){
@@ -60,7 +56,7 @@ function generateModels(){
               overlay={<CardHeader title="Racecar" />}
               overlayContentStyle={styles.overlay}
             >
-              {ImageShapeInstance}
+              <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
             </CardMedia>
           </Card>
         </Link>
@@ -104,7 +100,7 @@ function Home() {
         <p>Pick up where you left off.</p>
       </Box>
       <div className="container">
-          {generateModels()}
+          {generateUserCanvasList()}
       </div>
     </Flex>
   )
