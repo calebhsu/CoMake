@@ -51,7 +51,7 @@ function createNewCanvas(){
 
 /**
  * Gives HTML for the home page after login.
- * @returns {HTML}   The HTML of the home page.
+ * @returns {HTML} The HTML of the home page.
  */
 function Home() {
   return (

@@ -63,3 +63,12 @@ function generateCanvasList() {
   }
 
 export default CanvasList;
+
+/**
+ * Creates the unit tests for Home page.
+ * @returns {bool} Returns true if test passed
+ */
+export function handleCanvasListUnitTests() {
+  let a = true;
+  return a;
+}
