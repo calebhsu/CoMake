@@ -134,5 +134,20 @@ describe('ElementIntegrationTests', () => {
     testStore.dispatch(ElementActions.addElement(elemId, newElement));
   });
 
+  test('removeElement_Dispatch', (done) => {
+    testStore.dispatch(ElementActions.initElements(elemList));
+    const elemId = 'testingANewItem';
+    const expected = Object.assign({}, elemList);
+    delete expected[elemId];
+
+    testStore.subscribe(() => {
+      expect(testStore.getState()
+        .updateElementReducer[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS])
+        .toEqual(expected);
+      done();
+    });
+    testStore.dispatch(ElementActions.removeElement(elemId));
+  });
+
   /* TODO: Find out how to do updateAndPersist once firebase is mocked. */
 });

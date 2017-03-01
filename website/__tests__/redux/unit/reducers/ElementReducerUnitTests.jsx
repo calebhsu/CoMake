@@ -21,6 +21,7 @@ describe('ElementReducerUnitTests', () => {
 
   beforeEach(() => {
     spyOn(ReducerUtil, 'insertIntoState');
+    spyOn(ReducerUtil, 'removeField');
   });
 
   test('updateElementReducer_InitElements', () => {
@@ -96,7 +97,18 @@ describe('ElementReducerUnitTests', () => {
     updateElementReducer(loadedState, newElemAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
       newElement, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId]);
-  })
+  });
+
+  test('updateElementReducer_RemoveElement', () => {
+    const elemId = 'someElem';
+    const removeAction = {
+      type: AC.REMOVE_ELEMENT,
+      elementId: elemId,
+    };
+    updateElementReducer(loadedState, removeAction);
+    expect(ReducerUtil.removeField).toHaveBeenCalledWith(loadedState,
+      [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId]);
+  });
 
   test('updateElementReducer_InvalidAction', () => {
     const nonAction = {

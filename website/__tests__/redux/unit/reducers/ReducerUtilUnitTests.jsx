@@ -2,11 +2,23 @@
  * @file Unit tests for ReducerUtil.jsx
  */
 
-import { insertIntoState } from '../../../../src/redux/reducers/ReducerUtil';
+import {
+  insertIntoState, removeField
+} from '../../../../src/redux/reducers/ReducerUtil';
 
 import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 
 describe('ReducerUtilUnitTests', () => {
+
+  const currCanvasField = {};
+  currCanvasField[RC.CANVAS_NAME] = null;
+  currCanvasField[RC.CANVAS_OWNER] = null;
+  currCanvasField[RC.CANVAS_USERS] = [];
+  currCanvasField[RC.CANVAS_ELEMENTS] = { 'test': { 'x': 100 } };
+  currCanvasField[RC.CANVAS_ACTIVE_ELEMENT] = null;
+  const tempState = {};
+  tempState[RC.CURRENT_CANVAS] = currCanvasField;
+  const stateOneElem = Object.assign({}, RC.BLANK_STATE, tempState);
 
   test('insertIntoState_NoPath', () => {
     expect(insertIntoState(RC.BLANK_STATE, 5, [])).toEqual(RC.BLANK_STATE);
@@ -75,5 +87,25 @@ describe('ReducerUtilUnitTests', () => {
       insertIntoState(RC.BLANK_STATE, 42, path);
     }).toThrow();
   });
+
+  test('removeField_ValidElement', () => {
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test'];
+    expect(removeField(stateOneElem,
+      path)[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]).toEqual({});
+    expect(stateOneElem[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]).not.toEqual({});
+  });
+
+  test('removeField_InvalidElement', () => {
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'invalid'];
+    expect(removeField(stateOneElem, path)).toEqual(stateOneElem);
+  })
+
+  test('removeField_PathDoesNotExist', () => {
+    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
+      RC.ELEMENT_ROTATION];
+    expect(() => {
+      removeField(RC.BLANK_STATE, path);
+    }).toThrow();
+  })
 
 });

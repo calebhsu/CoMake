@@ -58,3 +58,7 @@ export const setElementRotation = (elementId, newRotation) => {
   return firebase.database().ref(`${BOARDS_PATH}/${elementId}/rotation`)
     .set(newRotation);
 };
+
+export const deleteElement = (elementId) => {
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}`).remove();
+}

@@ -3,11 +3,11 @@
  */
 
 import {
-  initElements, updateElement, addElement
+  initElements, updateElement, addElement, removeElement
 } from '../../../../src/redux/actions/ElementActions';
 
 import {
-  INIT_ELEMENTS, UPDATE_POSITION, ADD_ELEMENT
+  INIT_ELEMENTS, UPDATE_POSITION, ADD_ELEMENT, REMOVE_ELEMENT
 } from '../../../../src/redux/actions/ActionConstants';
 
 
@@ -74,6 +74,15 @@ describe('ElementActionsUnitTests', () => {
     };
     expect(addElement(elemId, testPayload)).toEqual(expected);
   });
+
+  test('removeElement', () => {
+    const elemId = 'someId';
+    const expected = {
+      type: REMOVE_ELEMENT,
+      elementId: elemId,
+    };
+    expect(removeElement(elemId)).toEqual(expected);
+  })
 
   /* TODO: Once firebase can be mocked spy on firebase-util function and
    * test logic for updateAnd Persist.
