@@ -10,5 +10,10 @@ export const UPDATE_ROTATION = 'updateRotation';
 export const ADD_ELEMENT = 'addElement';
 export const REMOVE_ELEMENT = 'removeElement';
 
-// Canvas Actions
+// Active Element Actions
 export const TARGET_ELEMENT = 'targetElement';
+
+// Canvas Actions
+export const ADD_CANVAS = 'addCanvas';
+export const REMOVE_CANVAS = 'removeCanvas';
+export const SET_CURRENT_CANVAS = 'setCurrentCanvas';
