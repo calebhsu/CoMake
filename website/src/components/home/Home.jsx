@@ -1,3 +1,7 @@
+/**
+ * @file HTML generation for the Home page
+ */
+
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
 import { Link } from 'react-router';
@@ -31,6 +35,10 @@ const styles = {
   },
 };
 
+/**
+ * Creates a request for a new canvas.
+ * @returns {null} Returns nothing
+ */
 function createNewCanvas(){
   const reqBody = CanvasCreationService.formRequestBody(
     'new canvas',
@@ -42,9 +50,13 @@ function createNewCanvas(){
   CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
 }
 
+/**
+ * Generates HTML for the home page after login.
+ * @returns {[]}  The array holding the canvas list HTML.
+ */
 function generateUserCanvasList(){
   //TODO
-  //Add firebase call to get canvas IDs
+  //Add firebase call to get canvas IDs and img src
   let models = [];
   let num_models = 3;
   for (let i = 0; i < num_models; i++){
