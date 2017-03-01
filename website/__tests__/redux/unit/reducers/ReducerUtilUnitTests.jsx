@@ -10,15 +10,9 @@ import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 
 describe('ReducerUtilUnitTests', () => {
 
-  const currCanvasField = {};
-  currCanvasField[RC.CANVAS_NAME] = null;
-  currCanvasField[RC.CANVAS_OWNER] = null;
-  currCanvasField[RC.CANVAS_USERS] = [];
-  currCanvasField[RC.CANVAS_ELEMENTS] = { 'test': { 'x': 100 } };
-  currCanvasField[RC.CANVAS_ACTIVE_ELEMENT] = null;
-  const tempState = {};
-  tempState[RC.CURRENT_CANVAS] = currCanvasField;
-  const stateOneElem = Object.assign({}, RC.BLANK_STATE, tempState);
+  const testElements = {};
+  testElements[RC.ELEMENTS] = {'test': { 'x': 100}};
+  const stateOneElem = Object.assign({}, RC.BLANK_STATE, testElements);
 
   test('insertIntoState_NoPath', () => {
     expect(insertIntoState(RC.BLANK_STATE, 5, [])).toEqual(RC.BLANK_STATE);
@@ -26,83 +20,58 @@ describe('ReducerUtilUnitTests', () => {
 
   test('insertIntoState_UpdateFieldString', () => {
     // Form expected.
-    const admin = 'Vin Diesel';
-    const updatedSubField = {};
-    updatedSubField[RC.CANVAS_NAME] = null;
-    updatedSubField[RC.CANVAS_OWNER] = admin;
-    updatedSubField[RC.CANVAS_USERS] = [];
-    updatedSubField[RC.CANVAS_ELEMENTS] = {};
-    updatedSubField[RC.CANVAS_ACTIVE_ELEMENT] = null;
-    const updatedField = {};
-    updatedField[RC.CURRENT_CANVAS] = updatedSubField;
-    const expected = Object.assign({}, RC.BLANK_STATE, updatedField);
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_OWNER];
+    const username = 'Vin Diesel';
+    const userInfo = {};
+    userInfo[RC.USERNAME] = username;
+    userInfo[RC.USER_PHOTO_URL] = null;
+    userInfo[RC.USER_EMAIL] = null;
+    const tempState = {};
+    tempState[RC.USER_INFO] = userInfo;
+    const expected = Object.assign({}, RC.BLANK_STATE, tempState);
+    const path = [RC.USER_INFO, RC.USERNAME];
     // Check to make sure updated correctly.
-    expect(insertIntoState(RC.BLANK_STATE, admin, path)).toEqual(expected);
+    expect(insertIntoState(RC.BLANK_STATE, username, path)).toEqual(expected);
     // Check to make sure a deep copy was made.
-    expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_OWNER]).toEqual(null);
+    expect(RC.BLANK_STATE[RC.USER_INFO][RC.USERNAME]).toEqual(null);
   });
 
   test('insertIntoState_UpdateFieldObject', () => {
-    const elementField = { 'test': { 'x': 100 } };
-    const updatedSubField = {};
-    updatedSubField[RC.CANVAS_NAME] = null;
-    updatedSubField[RC.CANVAS_OWNER] = null;
-    updatedSubField[RC.CANVAS_USERS] = [];
-    updatedSubField[RC.CANVAS_ELEMENTS] = elementField;
-    updatedSubField[RC.CANVAS_ACTIVE_ELEMENT] = null;
-    const updatedField = {};
-    updatedField[RC.CURRENT_CANVAS] = updatedSubField;
-    const expected = Object.assign({}, RC.BLANK_STATE, updatedField);
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS];
-    expect(insertIntoState(RC.BLANK_STATE, elementField, path))
+    const canvasId = 'testCanvas';
+    const testCanvas = {};
+    testCanvas[RC.CANVAS_NAME] = 'testName';
+    testCanvas[RC.CANVAS_OWNER] = 'Dwayne Johnson';
+    testCanvas[RC.CANVAS_USERS] = {};
+    const tempCanvases = {};
+    tempCanvases[RC.CANVASES] = {};
+    tempCanvases[RC.CANVASES][canvasId] = testCanvas;
+    const expected = Object.assign({}, RC.BLANK_STATE, tempCanvases);
+    const path = [RC.CANVASES, canvasId];
+    expect(insertIntoState(RC.BLANK_STATE, testCanvas, path))
       .toEqual(expected);
     // Check to make sure a deep copy was made.
-    expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS])
-      .toEqual({});
+    expect(RC.BLANK_STATE[RC.CANVASES]).toEqual({});
   });
 
-  test('insertIntoState_AddNewElement', () => {
-    const elementField = { 'test': { 'x': 100 } };
-    const updatedSubField = {};
-    updatedSubField[RC.CANVAS_NAME] = null;
-    updatedSubField[RC.CANVAS_OWNER] = null;
-    updatedSubField[RC.CANVAS_USERS] = [];
-    updatedSubField[RC.CANVAS_ELEMENTS] = elementField;
-    updatedSubField[RC.CANVAS_ACTIVE_ELEMENT] = null;
-    const updatedField = {};
-    updatedField[RC.CURRENT_CANVAS] = updatedSubField;
-    const expected = Object.assign({}, RC.BLANK_STATE, updatedField);
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test'];
-    expect(insertIntoState(RC.BLANK_STATE, { 'x': 100}, path))
-      .toEqual(expected);
-    // Check to make sure a deep copy was made.
-    expect(RC.BLANK_STATE[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]).toEqual({});
-  })
-
   test('insertIntoState_PathDoesNotExist', () => {
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
-      RC.ELEMENT_ROTATION];
+    const path = [RC.ELEMENTS, 'test', RC.ELEMENT_ROTATION];
     expect(() => {
       insertIntoState(RC.BLANK_STATE, 42, path);
     }).toThrow();
   });
 
   test('removeField_ValidElement', () => {
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test'];
-    expect(removeField(stateOneElem,
-      path)[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]).toEqual({});
-    expect(stateOneElem[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]).not.toEqual({});
+    const path = [RC.ELEMENTS, 'test'];
+    expect(removeField(stateOneElem, path)[RC.ELEMENTS]).toEqual({});
+    expect(stateOneElem[RC.ELEMENTS]).not.toEqual({});
   });
 
   test('removeField_InvalidElement', () => {
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'invalid'];
+    const path = [RC.ELEMENTS, 'invalid'];
     expect(removeField(stateOneElem, path)).toEqual(stateOneElem);
   })
 
   test('removeField_PathDoesNotExist', () => {
-    const path = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, 'test',
-      RC.ELEMENT_ROTATION];
+    const path = [RC.ELEMENTS, 'test', RC.ELEMENT_ROTATION];
     expect(() => {
       removeField(RC.BLANK_STATE, path);
     }).toThrow();

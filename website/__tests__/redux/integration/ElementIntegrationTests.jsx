@@ -25,7 +25,7 @@ describe('ElementIntegrationTests', () => {
     }
   };
   const filledState = Object.assign({}, RC.BLANK_STATE);
-  filledState[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS] = elemList;
+  filledState[RC.ELEMENTS] = elemList;
 
   // create a new store before each test
   beforeEach(() => {
@@ -53,8 +53,7 @@ describe('ElementIntegrationTests', () => {
     const elemId = 'testingANewItem';
     const updatedLoc = { x: 33, y: 88 };
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_POSITION]
-      = updatedLoc;
+    expected[RC.ELEMENTS][elemId][RC.ELEMENT_POSITION] = updatedLoc;
 
     testStore.subscribe(() => {
       expect(testStore.getState().updateElementReducer).toEqual(expected);
@@ -73,7 +72,7 @@ describe('ElementIntegrationTests', () => {
     const elemId = 'testingANewItem';
     const updatedSize = { 'width': 25, 'height': 60 };
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_SIZE]
+    expected[RC.ELEMENTS][elemId][RC.ELEMENT_SIZE]
       = updatedSize;
 
     testStore.subscribe(() => {
@@ -93,7 +92,7 @@ describe('ElementIntegrationTests', () => {
     const elemId = 'testingANewItem';
     const updatedRotation = -26;
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_ROTATION]
+    expected[RC.ELEMENTS][elemId][RC.ELEMENT_ROTATION]
       = updatedRotation;
 
     testStore.subscribe(() => {
@@ -123,7 +122,7 @@ describe('ElementIntegrationTests', () => {
     };
     const elemId = 'newElement';
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId] = newElement;
+    expected[RC.ELEMENTS][elemId] = newElement;
 
     testStore.subscribe(() => {
       expect(testStore.getState().updateElementReducer).toEqual(expected);
@@ -142,7 +141,7 @@ describe('ElementIntegrationTests', () => {
 
     testStore.subscribe(() => {
       expect(testStore.getState()
-        .updateElementReducer[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS])
+        .updateElementReducer[RC.ELEMENTS])
         .toEqual(expected);
       done();
     });

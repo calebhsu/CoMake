@@ -17,7 +17,7 @@ describe('ElementReducerUnitTests', () => {
   testElement[RC.ELEMENT_MODULE] = 'one';
   const elements = {'oneElem': testElement};
   const loadedState = Object.assign({}, RC.BLANK_STATE);
-  loadedState[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS] = elements;
+  loadedState[RC.ELEMENTS] = elements;
 
   beforeEach(() => {
     spyOn(ReducerUtil, 'insertIntoState');
@@ -31,7 +31,7 @@ describe('ElementReducerUnitTests', () => {
     }
     updateElementReducer(RC.BLANK_STATE, initAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      elements, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS]);
+      elements, [RC.ELEMENTS]);
   });
 
   test('updateElementReducer_UpdatePosition', () => {
@@ -44,8 +44,7 @@ describe('ElementReducerUnitTests', () => {
     }
     updateElementReducer(loadedState, positionAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
-      newPosition, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId,
-      RC.ELEMENT_POSITION]);
+      newPosition, [RC.ELEMENTS, elemId, RC.ELEMENT_POSITION]);
   });
 
   test('updateElementReducer_UpdateSize', () => {
@@ -58,7 +57,7 @@ describe('ElementReducerUnitTests', () => {
     }
     updateElementReducer(loadedState, positionAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
-      newSize, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId, RC.ELEMENT_SIZE]);
+      newSize, [RC.ELEMENTS, elemId, RC.ELEMENT_SIZE]);
   });
 
   test('updateElementReducer_UpdateRotation', () => {
@@ -71,8 +70,7 @@ describe('ElementReducerUnitTests', () => {
     };
     updateElementReducer(loadedState, positionAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
-      newRotation, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId,
-      RC.ELEMENT_ROTATION]);
+      newRotation, [RC.ELEMENTS, elemId, RC.ELEMENT_ROTATION]);
   });
 
   test('updateElementReducer_AddElement', () => {
@@ -96,7 +94,7 @@ describe('ElementReducerUnitTests', () => {
     };
     updateElementReducer(loadedState, newElemAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(loadedState,
-      newElement, [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId]);
+      newElement, [RC.ELEMENTS, elemId]);
   });
 
   test('updateElementReducer_RemoveElement', () => {
@@ -107,7 +105,7 @@ describe('ElementReducerUnitTests', () => {
     };
     updateElementReducer(loadedState, removeAction);
     expect(ReducerUtil.removeField).toHaveBeenCalledWith(loadedState,
-      [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS, elemId]);
+      [RC.ELEMENTS, elemId]);
   });
 
   test('updateElementReducer_InvalidAction', () => {

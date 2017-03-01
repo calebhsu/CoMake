@@ -63,7 +63,7 @@ RotationSlider.propTypes = {
 
 const mapStateToProps = state => ({
   targetedId: (state
-    .currentCanvasReducer[RC.CURRENT_CANVAS][RC.CANVAS_ACTIVE_ELEMENT]),
+    .activeElementReducer[RC.ACTIVE_ELEMENT]),
 });
 
 export default connect(mapStateToProps)(RotationSlider);

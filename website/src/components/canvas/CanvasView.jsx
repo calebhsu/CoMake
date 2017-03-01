@@ -90,7 +90,7 @@ CanvasView.propTypes = {
 
 const mapStateToProps = state => ({
   elements: (state
-    .updateElementReducer[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]),
+    .updateElementReducer[RC.ELEMENTS]),
 });
 
 export default connect(mapStateToProps)(CanvasView);

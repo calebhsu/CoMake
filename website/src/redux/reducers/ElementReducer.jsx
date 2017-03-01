@@ -14,7 +14,7 @@ import { insertIntoState, removeField } from './ReducerUtil';
  * @returns {Object} The new state object.
  */
 export const updateElementReducer = (state = RC.BLANK_STATE, action) => {
-  const pathToChange = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS];
+  const pathToChange = [RC.ELEMENTS];
   switch (action.type) {
     case AC.INIT_ELEMENTS:
       // Do nothing we already have the right path.

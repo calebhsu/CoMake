@@ -3,11 +3,13 @@
  */
 
 import storeHelper from '../../../src/redux/storeHelper';
-import * as CanvasActions from '../../../src/redux/actions/CurrentCanvasActions';
+import {
+  targetElement
+} from '../../../src/redux/actions/ActiveElementActions';
 import * as ElementActions from '../../../src/redux/actions/ElementActions';
 import * as RC from '../../../src/redux/reducers/ReducerConstants';
 
-describe('ElementIntegrationTests', () => {
+describe('ActiveElementIntegrationTests', () => {
 
   let testStore = null;
 
@@ -24,23 +26,23 @@ describe('ElementIntegrationTests', () => {
   test('targetElement_dispatch', (done) => {
     const testId = 'testId';
     const expected = Object.assign({}, RC.BLANK_STATE);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ACTIVE_ELEMENT] = testId;
+    expected[RC.ACTIVE_ELEMENT] = testId;
     testStore.subscribe(() => {
-      expect(testStore.getState().currentCanvasReducer).toEqual(expected);
+      expect(testStore.getState().activeElementReducer).toEqual(expected);
       done();
     });
 
-    testStore.dispatch(CanvasActions.targetElement(testId));
+    testStore.dispatch(targetElement(testId));
   });
 
   test('removeElement_dispatchMatch', (done) => {
     // Set the active element.
     const testId = 'testId';
-    testStore.dispatch(CanvasActions.targetElement(testId));
+    testStore.dispatch(targetElement(testId));
 
     testStore.subscribe(() => {
       expect(testStore.getState()
-        .currentCanvasReducer[RC.CURRENT_CANVAS][RC.CANVAS_ACTIVE_ELEMENT])
+        .activeElementReducer[RC.ACTIVE_ELEMENT])
         .toEqual(null);
       done();
     });
