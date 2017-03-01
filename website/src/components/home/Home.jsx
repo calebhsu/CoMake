@@ -52,15 +52,15 @@ function createNewCanvas(){
 
 /**
  * Generates HTML for the home page after login.
- * @returns {[]}  The array holding the canvas list HTML.
+ * @returns {canvases}  The array holding the canvas list HTML.
  */
-function generateUserCanvasList(){
+function generateCanvasList(){
   //TODO
   //Add firebase call to get canvas IDs and img src
-  let models = [];
-  let num_models = 3;
-  for (let i = 0; i < num_models; i++){
-    models.push(
+  let canvasList = [];
+  let numCanvases = 3;
+  for (let i = 0; i < numCanvases; i++){
+    canvasList.push(
       <Box col={2} sm={2} mb={4} style={styles.models} key={i}>
         <Link to="/canvas">
           <Card>
@@ -75,7 +75,7 @@ function generateUserCanvasList(){
       </Box>
       )
   }
-  return models;
+  return canvasList;
 }
 
 /**
@@ -112,7 +112,7 @@ function Home() {
         <p>Pick up where you left off.</p>
       </Box>
       <div className="container">
-          {generateUserCanvasList()}
+          {generateCanvasList()}
       </div>
     </Flex>
   )
