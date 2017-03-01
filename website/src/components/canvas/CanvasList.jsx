@@ -21,7 +21,7 @@ const generateCanvasCode = (
  * Generates HTML for the user canvas list.
  * @returns {canvasList}  The array holding the canvas list HTML.
  */
-function generateCanvasList() {
+function CanvasList() {
   //TODO
   //Add firebase call to get canvas IDs and img src
   let canvasList = [];
@@ -51,24 +51,7 @@ function generateCanvasList() {
       </Box>
       )
   }
-  return canvasList;
+  return (<div> {canvasList} </div>);
 }
-
-  function CanvasList () {
-    return (
-      <div>
-        {generateCanvasList()}
-      </div>
-    );
-  }
 
 export default CanvasList;
-
-/**
- * Creates the unit tests for Home page.
- * @returns {bool} Returns true if test passed
- */
-export function handleCanvasListUnitTests() {
-  let a = true;
-  return a;
-}
