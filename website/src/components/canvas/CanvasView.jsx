@@ -46,11 +46,11 @@ class CanvasView extends React.Component {
     firebase.database().ref('/test').once('value').then((elemListSnap) => {
       this.props.dispatch(ElementActions.initElements(elemListSnap.val()));
     });
-    firebase.database().ref('/test').on('child_changed', (elemSnap) => {
+    firebase.database().ref('/test').on('child_added', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('/test').on('child_added', (elemSnap) => {
+    firebase.database().ref('/test').on('child_changed', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });

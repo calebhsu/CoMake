@@ -7,6 +7,7 @@ import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
 import * as CC from './CanvasConstants';
 import * as RC from '../../redux/reducers/ReducerConstants';
+import * as FBUtil from '../../firebase-utils/index';
 
 const styles = {
   listItems: {
@@ -45,6 +46,11 @@ class Sidebar extends React.Component {
       this.props.targetedId));
   }
 
+  addElement() {
+    /* TODO: Make this take a specific module*/
+    FBUtil.addElement('abcd', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+  }
+
   /**
    * Maps list item to a div to put in the drawer.
    * @param {String} item The item name to encapsulate into a ManueItem.
@@ -55,6 +61,9 @@ class Sidebar extends React.Component {
     switch(item) {
       case CC.DELETE_ELEMENT_BUTTON:
         buttonAction = this.removeElement;
+        break;
+      case CC.ADD_ELEMENT_BUTTON:
+        buttonAction = this.addElement;
         break;
     }
     return (<MenuItem key={item.toString()} onClick={buttonAction}>
