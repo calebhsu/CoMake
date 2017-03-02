@@ -25,6 +25,7 @@ export const canvasReducer = (state = RC.BLANK_STATE, action) => {
       return removeField(state, pathToChange);
     case AC.SET_CURRENT_CANVAS:
       pathToChange.push(RC.CURRENT_CANVAS);
+      break;
     default:
       // Any other action just return we do not want to handle.
       return state;
