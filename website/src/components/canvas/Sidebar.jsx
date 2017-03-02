@@ -44,7 +44,7 @@ export default class Sidebar extends React.Component {
                 docked={true}
                 openSecondary={false}
         >
-          <div containerStyle={styles.propertiesSpacing}>
+          <div style={styles.propertiesSpacing}>
           <ul>
             <li>
               <h3>Rotate</h3>
