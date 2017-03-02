@@ -4,8 +4,8 @@
 
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
-import CanvasList from '../canvas/CanvasList';
-import CreateCanvas from '../canvas/CreateCanvas';
+import CanvasList from './CanvasList';
+import CreateCanvas from './CreateCanvas';
 
 const styles = {
   body: {
@@ -13,13 +13,6 @@ const styles = {
   },
   header: {
     textAlign: 'center',
-  },
-  models: {
-    display: 'inline-block',
-    margin: 15,
-  },
-  overlay: {
-    padding: 0,
   },
   welcome: {
     fontSize: '3.5em',
@@ -35,11 +28,11 @@ const styles = {
 function Home() {
   return (
     <Flex
-      align="center"
+      align='center'
       mt={3}
       mb={2}
       mx={6}
-      justify="space-around"
+      justify='space-around'
       style={styles.body}
       wrap
     >
@@ -52,7 +45,7 @@ function Home() {
       <Box col={12} sm={12}>
         <p>Pick up where you left off.</p>
       </Box>
-      <div className="container">
+      <div>
         <CanvasList />
       </div>
     </Flex>

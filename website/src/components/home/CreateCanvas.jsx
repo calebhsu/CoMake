@@ -32,14 +32,14 @@ function CreateNewCanvas(){
 function CreateCanvas() {
 	return(
 		<span>
-            <Link to="/canvas">
-              <RaisedButton
-                label="New Canvas"
-                onClick={CreateNewCanvas}
-                secondary={true}
-              />
-            </Link>
-        </span>
+      <Link to='/canvas'>
+        <RaisedButton
+            label="New Canvas"
+            onClick={CreateNewCanvas}
+            secondary={true}
+        />
+      </Link>
+    </span>
     )
 }
 

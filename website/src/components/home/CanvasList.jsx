@@ -2,14 +2,18 @@
  * @file HTML generation for the canvas list
  */
 import React from 'react';
-import { Box, Flex } from 'reflexbox';
+import Box from 'reflexbox';
 import { Card, CardHeader, CardMedia } from 'material-ui/Card';
-import { Link } from 'react-router';
+import Link from 'react-router';
 
 const styles = {
   models: {
     display: 'inline-block',
-    margin: 15,
+    margin: 10,
+  },
+  overlay: {
+    padding: 0,
+    margin: 'auto',
   },
 };
 
@@ -25,16 +29,15 @@ function CanvasList() {
   //TODO
   //Add firebase call to get canvas IDs and img src
   let canvasList = [];
-  let numCanvases = 10;
+  let numCanvases = 7;
   let numCols = 3;
-  if (numCanvases > 5){
-    if(numCanvases > 10){
+  if(numCanvases > 10)
       numCols = 1;
-    }
-    else{
+  else if (numCanvases > 5)
       numCols = 2;
-    }
-  }
+  else
+    numCols = 3;
+
   for (let i = 0; i < numCanvases; i++){
     canvasList.push(
       <Box col={numCols} style={styles.models} key={i}>

@@ -2,7 +2,7 @@
  * @file Unit tests for Home page
  */
 
-import { CanvasList } from '../../../src/components/canvas/CanvasList';
+import { CanvasList } from '../../../src/components/home/CanvasList';
 
 /**
  * Tests to see if store was called to generate the canvas list
@@ -12,4 +12,5 @@ describe('HomeTests', () => {
 	test('CanvasList should return a defined entity', () => {
   		expect({CanvasList}).toBeDefined();
 	});
+
 });
