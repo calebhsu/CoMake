@@ -3,13 +3,12 @@ import { Box } from 'reflexbox';
 
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-
-import ExportModal from './ExportModal';
-import ShareCanvasModal from './ShareCanvasModal';
-
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField'
+
+import ExportModal from './ExportModal';
+import ShareCanvasModal from './ShareCanvasModal';
 
 import {
   white,
