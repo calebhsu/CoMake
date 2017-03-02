@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, hashHistory } from 'react-router';
+import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 import Canvas from './components/canvas/Canvas';
 import Home from './components/home/Home';
@@ -16,7 +16,7 @@ function Routes() {
     <Router history={hashHistory}>
       <Route path="/login" component={Landing} />
       <Route path="/" component={MainLayout}>
-        <Route path="/home" component={Home} />
+        <IndexRoute path="/home" component={Home} />
         <Route path="/canvas" component={Canvas} />
         <Route path="/profile" component={Profile} />
       </Route>
