@@ -34,4 +34,18 @@ describe('ElementReducerUnitTests', () => {
     expect(currentCanvasReducer(RC.BLANK_STATE, testAction))
       .toEqual(RC.BLANK_STATE);
   });
+
+  test('currentCanvasReducer_DeletedTargetElement', () => {
+    const elemId = 'testId';
+    const dummyState = {}
+    dummyState[RC.CURRENT_CANVAS] = {};
+    dummyState[RC.CURRENT_CANVAS][RC.CANVAS_ACTIVE_ELEMENT] = elemId;
+    const testAction = {
+      type: AC.REMOVE_ELEMENT,
+      elementId: elemId,
+    };
+    currentCanvasReducer(dummyState, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(dummyState, null,
+      [RC.CURRENT_CANVAS, RC.CANVAS_ACTIVE_ELEMENT])
+  });
 });

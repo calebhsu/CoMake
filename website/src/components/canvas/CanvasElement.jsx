@@ -94,7 +94,7 @@ class CanvasElement extends React.Component {
     return (
       <Rnd
         bounds={'parent'}
-        ref={ elem => { this.elemRef = elem; } }
+        ref={ elem => { this.elementRef = elem; } }
         {...elementProps}
       >
         <div
