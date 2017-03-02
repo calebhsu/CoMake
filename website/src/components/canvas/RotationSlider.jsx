@@ -13,6 +13,7 @@ import {
   updateAndPersist
 } from '../../redux/actions/ElementActions';
 import { DEFAULT_SLIDER_POSITION } from './CanvasConstants';
+import * as RC from '../../redux/reducers/ReducerConstants';
 
 /**
  * Component of slider for rotating canvas elements.
@@ -35,9 +36,7 @@ class RotationSlider extends React.Component {
    * @return {void}
    */
   handleSliderChange(e, sliderVal) {
-    const updatedRotation = {
-      rotation: (sliderVal - 0.5) * 720,
-    }
+    const updatedRotation = (sliderVal - 0.5) * 720;
     this.props.dispatch(updateAndPersist(UPDATE_ROTATION, this.props.targetedId,
       updatedRotation))
   }
@@ -65,7 +64,8 @@ RotationSlider.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  targetedId: state.targetElementReducer.targeted,
+  targetedId: (state
+    .currentCanvasReducer[RC.CURRENT_CANVAS][RC.CANVAS_ACTIVE_ELEMENT]),
 });
 
 export default connect(mapStateToProps)(RotationSlider);

@@ -9,10 +9,11 @@ import * as firebase from 'firebase';
 import CanvasElement from './CanvasElement';
 import {
   UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
-} from '../../redux/actions/ElementActions';
+} from '../../redux/actions/ActionConstants';
 import {
   initElements, updateElement
 } from '../../redux/actions/ElementActions';
+import * as RC from '../../redux/reducers/ReducerConstants';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
   + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
@@ -56,9 +57,8 @@ class CanvasView extends React.Component {
         elemSnap.child('position').val()));
       this.props.dispatch(updateElement(UPDATE_SIZE, elemSnap.key,
         elemSnap.child('size').val()));
-      this.props.dispatch(updateElement(UPDATE_ROTATION, elemSnap.key, {
-          rotation: elemSnap.child('rotation').val()
-        }));
+      this.props.dispatch(updateElement(UPDATE_ROTATION, elemSnap.key,
+        Number(elemSnap.child('rotation').val())));
     });
   }
 
@@ -74,7 +74,7 @@ class CanvasView extends React.Component {
         <CanvasElement key={id} elementId={id}
           initLoc={elemDetails.position}
           initSize={elemDetails.size}
-          rotation={elemDetails.rotation}
+          rotation={Number(elemDetails.rotation)}
         />
       );
     });
@@ -92,7 +92,8 @@ CanvasView.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  elements: state.updateElementReducer.elements,
+  elements: (state
+    .updateElementReducer[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS]),
 });
 
 export default connect(mapStateToProps)(CanvasView);

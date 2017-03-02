@@ -3,49 +3,11 @@
  */
 
 import {
-  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION, TARGET_ELEMENT,
+  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
 } from './../actions/ActionConstants';
 
-const BLANK_STATE = {
-  elements: {},
-  targeted: null,
-};
-
-const POSITION = 'position';
-const SIZE = 'size';
-
-/**
- * Inserts payload information into state, making a new object.
- * @param {Object} state The state of the store.
- * @param {Object} elementId ID of the element affected.
- * @param {Object} payload The updated information to insert.
- * @param {String} objectField The field of the element to update. If left as
- *                             null this indicates that the payload should not
- *                             be nested in another field.
- *                             e.g. elem[objectField][payload] vs elem[payload].
- * @returns {Object} The new state object.
- */
-function copyPayloadInfo(state, elementId, payload, objectField = null) {
-  if(!payload) {
-    return state;
-  }
-  // Copy the appropriate field
-  let fieldToUpdate = {};
-  if (objectField === null) {
-    fieldToUpdate = payload;
-  } else {
-    fieldToUpdate[objectField] = Object.assign({}, payload);
-  }
-  // Make copy of the element with new field.
-  const updatedElement = {};
-  updatedElement[elementId] = Object.assign({}, state.elements[elementId],
-    fieldToUpdate);
-  // Make new state with new copy of element inserted
-  const updatedElements = Object.assign({}, state.elements, updatedElement);
-  return Object.assign({}, state, {
-    elements: updatedElements,
-  });
-}
+import * as RC from './ReducerConstants';
+import { insertIntoState } from './ReducerUtil';
 
 /**
  * Update the position in firebase.
@@ -53,41 +15,27 @@ function copyPayloadInfo(state, elementId, payload, objectField = null) {
  * @param {Object} action action to be performed.
  * @returns {Object} The new state object.
  */
-export const updateElementReducer = (state = BLANK_STATE, action) => {
+export const updateElementReducer = (state = RC.BLANK_STATE, action) => {
+  const pathToChange = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS];
   switch (action.type) {
     case INIT_ELEMENTS:
-      return Object.assign({}, state, {
-        elements: action.elements,
-      });
-
+      // Do nothing we already have the right path.
+      break;
     case UPDATE_POSITION:
-      return copyPayloadInfo(state, action.elementId, action.payload,
-        POSITION);
-
+      pathToChange.push(action.elementId);
+      pathToChange.push(RC.ELEMENT_POSITION);
+      break;
     case UPDATE_SIZE:
-      return copyPayloadInfo(state, action.elementId, action.payload, SIZE);
-
+      pathToChange.push(action.elementId);
+      pathToChange.push(RC.ELEMENT_SIZE);
+      break;
     case UPDATE_ROTATION:
-      return copyPayloadInfo(state, action.elementId, action.payload);
-
+      pathToChange.push(action.elementId);
+      pathToChange.push(RC.ELEMENT_ROTATION);
+      break;
     default:
+      // Reducer should not do anything otherwise so return.
       return state
   }
+  return insertIntoState(state, action.payload, pathToChange);
 };
-
-/**
- * Reduces the action for when a new element is targeted i.e. clicked by user.
- * @param  {Object} state The state of the store.
- * @param  {Object} action The action to reduce.
- * @return {Object} The new state of the store.
- */
-export const targetElementReducer = (state = BLANK_STATE, action ) => {
-  switch (action.type) {
-    case TARGET_ELEMENT:
-      return Object.assign({}, state, {
-        targeted: action.elementId,
-      });
-    default:
-      return state;
-  }
-}

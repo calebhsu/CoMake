@@ -1,83 +1,54 @@
+/**
+ * @file HTML generation for the Home page
+ */
+
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
-import { Link } from 'react-router';
-
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import Paper from 'material-ui/Paper';
-
-import CoMakeServices from 'comake-services';
-
-import ServiceEndpoint from '../../ServiceEndpoint'
-
-const CanvasCreationService = CoMakeServices.CanvasCreationService;
+import CanvasList from './CanvasList';
+import CreateCanvas from './CreateCanvas';
 
 const styles = {
-  container: {
-    marginTop: 15,
+  body: {
+    textAlign: 'center',
   },
   header: {
-    backgroundColor: '#49937f',
-    color: '#FFFFFF',
-    marginTop: 0,
-    padding: '15px 10px',
-    textTransform: 'uppercase',
-  },
-  paper: {
-    display: 'inline-block',
-    height: '85vh',
-    margin: 30,
-    minHeight: 500,
     textAlign: 'center',
-    width: '90%',
-  }
+  },
+  welcome: {
+    fontSize: '3.5em',
+    fontWeight: 500,
+    marginBottom: 20,
+  },
 };
-
-function createNewCanvas(){
-  const reqBody = CanvasCreationService.formRequestBody(
-    'new canvas',
-    '0',
-    '1',
-    ['0']
-  );
-
-  CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
-}
 
 /**
  * Gives HTML for the home page after login.
- * @returns {HTML}   The HTML of the home page.
+ * @returns {HTML} The HTML of the home page.
  */
 function Home() {
   return (
-    <div>
-      <Flex
-        align="stretch"
-        justify="space-around"
-        style={styles.container}
-        wrap
-      >
-        <Box col={12} sm={12} md={6}>
-          <Paper style={styles.paper} zDepth={2}>
-            <h2 style={styles.header}>Your Work</h2>
-            <Link to="/canvas">
-              <FloatingActionButton
-                secondary={true}
-                style={styles.newCanvas}
-                onClick={createNewCanvas}
-              >
-                <ContentAdd />
-              </FloatingActionButton>
-            </Link>
-          </Paper>
-        </Box>
-        <Box col={12} sm={12} md={6}>
-          <Paper style={styles.paper} zDepth={2}>
-            <h2 style={styles.header}>Group Work</h2>
-          </Paper>
-        </Box>
-      </Flex>
-    </div>
+    <Flex
+      align="center"
+      mt={3}
+      mb={2}
+      mx={6}
+      justify="space-around"
+      style={styles.body}
+      wrap
+    >
+      <Box col={12} sm={12} mb={4}>
+        <header style={styles.header}>
+          <h1 style={styles.welcome}>Welcome to Comake</h1>
+          <CreateCanvas />
+          </header>
+      </Box>
+      <Box col={12} sm={12}>
+        <p>Pick up where you left off.</p>
+      </Box>
+      <div>
+        <CanvasList />
+      </div>
+    </Flex>
   )
 }
 

@@ -1,5 +1,5 @@
 /**
- * @file Automated tests for the Redux positions actions (redux/actions/positionsActions).
+ * @file Automated tests for the Redux Element Actions.
  */
 
 import {
@@ -11,13 +11,13 @@ import {
 } from '../../../../src/redux/actions/ActionConstants';
 
 
-describe('PositionsActionsUnitTests', () => {
+describe('ElementActionsUnitTests', () => {
   test('initElementsTest_ElemListEmpty', () => {
     const elemList = {};
 
     const expectedActionResult = {
       type: INIT_ELEMENTS,
-      elements: elemList,
+      payload: elemList,
     };
 
     expect(initElements(elemList)).toEqual(expectedActionResult);
@@ -35,33 +35,25 @@ describe('PositionsActionsUnitTests', () => {
 
     const expectedActionResult = {
       type: INIT_ELEMENTS,
-      elements: elemList,
+      payload: elemList,
     };
 
     expect(initElements(elemList)).toEqual(expectedActionResult);
   });
 
-  test('updatePositionTest_ElemIdAndUpdatedLocValid', () => {
-    const elemId = "test";
-
-    const updatedLoc = {
-      x: 42,
-      y: 43
-    };
-
-    const expectedActionResult = {
+  test('updateElement', () => {
+    const testPayload = { 'somePayload': 'someInfo' };
+    const elemId = 'someId';
+    const expected = {
       type: UPDATE_POSITION,
       elementId: elemId,
-      payload: updatedLoc,
-    };
-
-    expect(updateElement(UPDATE_POSITION, elemId, updatedLoc))
-      .toEqual(expectedActionResult);
+      payload: testPayload,
+    }
+    expect(updateElement(UPDATE_POSITION, elemId, testPayload))
+      .toEqual(expected);
   });
 
-  test('updatePositionAndPersistTest', () => {
-    // TODO: do this
-  });
-
-  // TODO: more tests for action?
+  /* TODO: Once firebase can be mocked spy on firebase-util function and
+   * test logic for updateAnd Persist.
+   */
 });

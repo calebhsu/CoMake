@@ -1,7 +1,7 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import TextField from 'material-ui/TextField';
-
+import { Flex, Grid } from 'reflexbox'
 import RotationSlider from './RotationSlider';
 
 const styles = {
@@ -13,8 +13,7 @@ const styles = {
     marginTop: 20,
   },
   sidebar: {
-    marginTop: 114,
-    width: '12vw',
+    marginTop: 120,
     xOverflow: 'hidden',
   },
 };
@@ -31,6 +30,7 @@ export default class Sidebar extends React.Component {
     super(props);
   }
 
+
   /**
    * Renders the HTML for the sidebar.
    * @returns {HTML} The html for the Sidebar.
@@ -42,23 +42,32 @@ export default class Sidebar extends React.Component {
                 open= {true}
                 docked={true}
                 openSecondary={false}
-                zDepth={2}
         >
-        <div style={styles.featureSpacing}>
-          <h3>Rotate</h3>
-          <RotationSlider/>
-          <h3>Resize</h3>
-          <TextField
-            hintText="Enter new height: 64px"
-            floatingLabelText="Height"
-            fullWidth="true"
-          /><br />
-          <TextField
-            hintText="Enter new width: 64px"
-            floatingLabelText="Width"
-            fullWidth="true"
-          /><br />
-        </div>
+        <Flex column>
+          <Grid col={12} p={1}>
+            <h3>Rotate</h3>
+          </Grid>
+          <Grid col={12} p={1}>
+            <RotationSlider/>
+          </Grid>
+          <Grid col={12} p={1}>
+            <h3>Resize</h3>
+          </Grid>
+          <Grid lg={12} p={2}>
+            <TextField
+              hintText="Current: 64px"
+              floatingLabelText="Height"
+              fullWidth="true"
+            /><br />
+          </Grid>
+          <Grid lg={12} p={2}>
+            <TextField
+              hintText="Current: 64px"
+              floatingLabelText="Width"
+              fullWidth="true"
+            /><br />
+          </Grid>
+        </Flex>
         </Drawer>
       </div>
     );
