@@ -9,14 +9,16 @@ import * as AC from '../../../../src/redux/actions/ActionConstants';
 describe('LoginActionsUnitTests', () => {
   test('UpdateUserInfo', () => {
     const testName = 'First Last';
-    const testPhotoURL = "photoURL"
+    const testPhotoURL = "photoURL";
+    const testEmail = "email";
     const expected = {
       type: AC.UPDATE_USER_INFO,
       payload: {
       	name: testName,
       	photo: testPhotoURL,
+        email: testEmail,
       },
     }
-    expect(LoginActions.UpdateUserInfo(testName, testPhotoURL)).toEqual(expected);
+    expect(LoginActions.updateUserInfo(testName, testPhotoURL, testEmail)).toEqual(expected);
   });
 });

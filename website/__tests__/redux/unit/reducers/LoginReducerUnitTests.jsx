@@ -3,7 +3,7 @@
  */
 
 import {
-  LoginReducer
+  userInfoReducer
 } from '../../../../src/redux/reducers/LoginReducer';
 import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
@@ -18,18 +18,18 @@ describe('LoginReducerUnitTests', () => {
   test('userInfoReducer_UpdateUserInfo', () => {
     const testName = 'First Last';
     const testPhotoURL = 'photoURL';
+    const testEmail = 'email';
     const testAction = {
       type: AC.UPDATE_USER_INFO,
       payload: {
-        name: testName;
-        photo: testPhotoURL;
+        name: testName,
+        photo: testPhotoURL,
+        email: testEmail,
       },
     }
     userInfoReducer(RC.BLANK_STATE, testAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      testName, [RC.USER_INFO, RC.USERNAME]);
-    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      testPhotoURL, [RC.USER_INFO, RC.USER_PHOTO_URL]);
+      testAction.payload, [RC.USER_INFO]);
   });
 
   test('userInfoReducer_NotSupportedAction', () => {

@@ -51,7 +51,8 @@ export const getUserInfo = (dispatch) => {
   if(currentUser) {
     dispatch(updateUserInfo(
       currentUser.displayName,
-      currentUser.photoURL
+      currentUser.photoURL,
+      currentUser.email,
     ));
   }
 }
