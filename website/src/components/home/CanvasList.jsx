@@ -2,9 +2,9 @@
  * @file HTML generation for the canvas list
  */
 import React from 'react';
-import Box from 'reflexbox';
+import { Box } from 'reflexbox';
 import { Card, CardHeader, CardMedia } from 'material-ui/Card';
-import Link from 'react-router';
+import { Link } from 'react-router';
 
 const styles = {
   models: {
@@ -47,7 +47,7 @@ function CanvasList() {
               overlay={<CardHeader title="Racecar" />}
               overlayContentStyle={styles.overlay}
             >
-            {generateCanvasCode}
+              {generateCanvasCode}
             </CardMedia>
           </Card>
         </Link>

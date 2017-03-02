@@ -28,11 +28,11 @@ const styles = {
 function Home() {
   return (
     <Flex
-      align='center'
+      align="center"
       mt={3}
       mb={2}
       mx={6}
-      justify='space-around'
+      justify="space-around"
       style={styles.body}
       wrap
     >
