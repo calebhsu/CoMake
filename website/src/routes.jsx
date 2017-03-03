@@ -17,6 +17,7 @@ function Routes() {
       <Route path="/login" component={Landing} />
       <Route path="/" component={MainLayout}>
         <IndexRoute path="/home" component={Home} />
+        <Route path="/home" component={Home} />
         <Route path="/canvas" component={Canvas} />
         <Route path="/profile" component={Profile} />
       </Route>
