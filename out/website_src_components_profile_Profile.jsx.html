@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: website/src/components/profile/Profile.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: website/src/components/profile/Profile.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import { Box, Flex } from 'reflexbox';
+
+import Avatar from 'material-ui/Avatar';
+import MenuItem from 'material-ui/MenuItem';
+import Paper from 'material-ui/Paper';
+import SelectField from 'material-ui/SelectField';
+import TextField from 'material-ui/TextField';
+
+const styles = {
+  fields: {
+    marginLeft: 30,
+    textAlign: 'left',
+  },
+  container: {
+    marginTop: 15,
+  },
+  header: {
+    backgroundColor: '#49937f',
+    color: '#FFFFFF',
+    marginTop: 0,
+    padding: '15px 10px',
+    textTransform: 'uppercase',
+  },
+  paper: {
+    display: 'inline-block',
+    height: '85vh',
+    margin: 30,
+    minHeight: 500,
+    textAlign: 'center',
+    width: '90%',
+  },
+};
+
+/**
+ * Gives HTML of a user's profile page.
+ * @returns {HTML}   The HTML of a profile page.
+ */
+export default class Profile extends Component {
+  constructor() {
+      super();
+      this.state = {
+          value: 1,
+      }
+      this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event, index, value) {
+    this.setState({value});
+  }
+
+  render() {
+    return (
+      &lt;div>
+        &lt;Flex
+          align="stretch"
+          justify="space-around"
+          style={styles.container}
+          wrap
+        >
+          &lt;Box col={12} sm={12} md={6}>
+            &lt;Paper style={styles.paper} zDepth={2}>
+              &lt;h2 style={styles.header}>My Profile&lt;/h2>
+              &lt;Avatar src="http://placekitten.com/310/311" size="200"/>
+              &lt;div style={styles.fields}>
+                &lt;TextField
+                  hintText="Vin"
+                  floatingLabelText="First Name"
+                />
+                &lt;TextField
+                  hintText="Diesel"
+                  floatingLabelText="Last Name"
+                />&lt;br />
+                &lt;TextField
+                  hintText="vin.diesel@gmail.com"
+                  floatingLabelText="Email"
+                />&lt;br />
+                &lt;SelectField
+                  floatingLabelText="My Groups"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                >
+                  &lt;MenuItem value={1} primaryText="Class 1" />
+                  &lt;MenuItem value={2} primaryText="Class 2" />
+                  &lt;MenuItem value={3} primaryText="Class 3" />
+                &lt;/SelectField>
+              &lt;/div>
+            &lt;/Paper>
+          &lt;/Box>
+          &lt;Box col={12} sm={12} md={6}>
+            &lt;Paper style={styles.paper} zDepth={2}>
+              &lt;h2 style={styles.header}>Classroom Details&lt;/h2>
+              &lt;div style={styles.fields}>
+                &lt;TextField
+                  hintText="Fast &amp; Furious"
+                  floatingLabelText="Name"
+                />&lt;br />
+                &lt;TextField
+                  hintText="Names here"
+                  floatingLabelText="Members"
+                />&lt;br />
+                &lt;TextField
+                  hintText="Names here"
+                  floatingLabelText="Admins"
+                />&lt;br />
+                &lt;TextField
+                  hintText="Names here"
+                  floatingLabelText="Share"
+                />
+              &lt;/div>
+            &lt;/Paper>
+          &lt;/Box>
+        &lt;/Flex>
+      &lt;/div>
+    )
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CanvasElement.html">CanvasElement</a></li><li><a href="CanvasView.html">CanvasView</a></li><li><a href="ExportModal.html">ExportModal</a></li><li><a href="MainLayout.html">MainLayout</a></li><li><a href="module.exports.html">exports</a></li><li><a href="RotationSlider.html">RotationSlider</a></li><li><a href="ShareCanvasModal.html">ShareCanvasModal</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addUserToCanvasByEmail">addUserToCanvasByEmail</a></li><li><a href="global.html#addUserToCanvasByUid">addUserToCanvasByUid</a></li><li><a href="global.html#BOARDS_PATH">BOARDS_PATH</a></li><li><a href="global.html#Canvas">Canvas</a></li><li><a href="global.html#CanvasList">CanvasList</a></li><li><a href="global.html#CreateCanvas">CreateCanvas</a></li><li><a href="global.html#CreateNewCanvas">CreateNewCanvas</a></li><li><a href="global.html#currentCanvasReducer">currentCanvasReducer</a></li><li><a href="global.html#formRequestBody">formRequestBody</a></li><li><a href="global.html#generateScript">generateScript</a></li><li><a href="global.html#getFirebaseUserByEmail">getFirebaseUserByEmail</a></li><li><a href="global.html#handleRequest">handleRequest</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#initElements">initElements</a></li><li><a href="global.html#initFirebase">initFirebase</a></li><li><a href="global.html#insertIntoState">insertIntoState</a></li><li><a href="global.html#Landing">Landing</a></li><li><a href="global.html#manageLogin">manageLogin</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OptionsBar">OptionsBar</a></li><li><a href="global.html#Preview3D">Preview3D</a></li><li><a href="global.html#promptForLogin">promptForLogin</a></li><li><a href="global.html#reducers">reducers</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#sendRequest">sendRequest</a></li><li><a href="global.html#setElementLocation">setElementLocation</a></li><li><a href="global.html#setElementRotation">setElementRotation</a></li><li><a href="global.html#setElementSize">setElementSize</a></li><li><a href="global.html#signOut">signOut</a></li><li><a href="global.html#storeConstructor">storeConstructor</a></li><li><a href="global.html#targetElement">targetElement</a></li><li><a href="global.html#updateAndPersist">updateAndPersist</a></li><li><a href="global.html#updateElement">updateElement</a></li><li><a href="global.html#updateElementReducer">updateElementReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.0-dev</a> on Fri Mar 03 2017 18:57:53 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

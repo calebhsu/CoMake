@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: website/src/components/canvas/CanvasElement.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: website/src/components/canvas/CanvasElement.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Component representing a draggable, resizable element on the Canvas.
+ */
+
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import Rnd from 'react-rnd';
+
+import {
+  UPDATE_POSITION, UPDATE_SIZE
+} from '../../redux/actions/ActionConstants';
+import { updateAndPersist } from '../../redux/actions/ElementActions';
+import { targetElement } from '../../redux/actions/CurrentCanvasActions';
+/**
+ * Component for an element on the canvas.
+ */
+class CanvasElement extends React.Component {
+
+  /**
+   * Constructor for CanvasElement
+   * @param {Object} props The props for the CanvasElement.
+   */
+  constructor(props) {
+    super(props);
+    this.elementRef;
+    this.endDrag = this.endDrag.bind(this);
+    this.endResize = this.endResize.bind(this);
+    this.targetClicked = this.targetClicked.bind(this);
+  }
+
+  /**
+   * Updates the component's position and size when new props are fed in.
+   * @param {Object} nextProps The new props being passed in.
+   * @returns {void}
+   */
+  componentWillUpdate(nextProps) {
+    if (this.elementRef) {
+      this.elementRef.updatePosition(nextProps.initLoc);
+      this.elementRef.updateSize(nextProps.initSize);
+    }
+  }
+
+  /**
+   * Handler for the end drag event.
+   * @param {Event} e The event of the drag ending.
+   * @param {Object} data Object of the data corresponding to the end drag.
+   * @returns {void}
+   */
+  endDrag(e, data) {
+    const updatedLoc = {
+      x: data.position.left,
+      y: data.position.top,
+    };
+    this.props.dispatch(updateAndPersist(UPDATE_POSITION, this.props.elementId,
+      updatedLoc));
+  }
+
+  /**
+   * Handler for the end resize event.
+   * @param {unknown} direction unknown
+   * @param {unknown} styleSize unknown
+   * @param {unknown} clientSize unknown
+   * @returns {void}
+   */
+  endResize(direction, styleSize, clientSize) {
+    this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
+      clientSize));
+  }
+
+  /**
+   * Handler for onClick that dispatches a targetElement event.
+   * @returns {void}
+   */
+  targetClicked() {
+    this.props.dispatch(targetElement(this.props.elementId));
+  }
+
+  /**
+   * Renders the element for display.
+   * @returns {HTML} The rendered HTML.
+   */
+  render() {
+    const elementProps = {
+      onDragStop: this.endDrag,
+      onResizeStop: this.endResize,
+      onClick: this.targetClicked,
+      initial: { x: this.props.initLoc.x,
+        y: this.props.initLoc.y,
+        width: this.props.initSize.width,
+        height: this.props.initSize.height,
+      },
+    };
+    const rotationTransform = 'rotate(' + String(this.props.rotation) + 'deg)';
+    return (
+      &lt;Rnd
+        bounds={'parent'}
+        ref={ elem => { this.elemRef = elem; } }
+        {...elementProps}
+      >
+        &lt;div
+          style={{
+            backgroundImage: 'url(http://marcoortiztorres.me/images/craftml.png)',
+            transform: rotationTransform,
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+            height: '100%'
+          }}
+        />
+      &lt;/Rnd>
+    );
+  }
+}
+
+CanvasElement.propTypes = {
+  dispatch: PropTypes.func,
+  initLoc: PropTypes.object,
+  initSize: PropTypes.object,
+  rotation: PropTypes.number,
+  elementId: PropTypes.string,
+}
+
+export default connect()(CanvasElement);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CanvasElement.html">CanvasElement</a></li><li><a href="CanvasView.html">CanvasView</a></li><li><a href="ExportModal.html">ExportModal</a></li><li><a href="MainLayout.html">MainLayout</a></li><li><a href="module.exports.html">exports</a></li><li><a href="RotationSlider.html">RotationSlider</a></li><li><a href="ShareCanvasModal.html">ShareCanvasModal</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addUserToCanvasByEmail">addUserToCanvasByEmail</a></li><li><a href="global.html#addUserToCanvasByUid">addUserToCanvasByUid</a></li><li><a href="global.html#BOARDS_PATH">BOARDS_PATH</a></li><li><a href="global.html#Canvas">Canvas</a></li><li><a href="global.html#CanvasList">CanvasList</a></li><li><a href="global.html#CreateCanvas">CreateCanvas</a></li><li><a href="global.html#CreateNewCanvas">CreateNewCanvas</a></li><li><a href="global.html#currentCanvasReducer">currentCanvasReducer</a></li><li><a href="global.html#formRequestBody">formRequestBody</a></li><li><a href="global.html#generateScript">generateScript</a></li><li><a href="global.html#getFirebaseUserByEmail">getFirebaseUserByEmail</a></li><li><a href="global.html#handleRequest">handleRequest</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#initElements">initElements</a></li><li><a href="global.html#initFirebase">initFirebase</a></li><li><a href="global.html#insertIntoState">insertIntoState</a></li><li><a href="global.html#Landing">Landing</a></li><li><a href="global.html#manageLogin">manageLogin</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OptionsBar">OptionsBar</a></li><li><a href="global.html#Preview3D">Preview3D</a></li><li><a href="global.html#promptForLogin">promptForLogin</a></li><li><a href="global.html#reducers">reducers</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#sendRequest">sendRequest</a></li><li><a href="global.html#setElementLocation">setElementLocation</a></li><li><a href="global.html#setElementRotation">setElementRotation</a></li><li><a href="global.html#setElementSize">setElementSize</a></li><li><a href="global.html#signOut">signOut</a></li><li><a href="global.html#storeConstructor">storeConstructor</a></li><li><a href="global.html#targetElement">targetElement</a></li><li><a href="global.html#updateAndPersist">updateAndPersist</a></li><li><a href="global.html#updateElement">updateElement</a></li><li><a href="global.html#updateElementReducer">updateElementReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.0-dev</a> on Fri Mar 03 2017 18:57:53 GMT-0700 (Mountain Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

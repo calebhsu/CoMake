@@ -1,6 +1,10 @@
 {
     "source": {
-        "include": [ "{project_directory}" ],
+        "include": [ "." ],
+		"exclude": [ 
+			"./node_modules",
+			"./website/node_modules"
+		],
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
