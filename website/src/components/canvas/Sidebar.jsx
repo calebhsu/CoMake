@@ -1,6 +1,7 @@
 import React from 'react';
+
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 import RotationSlider from './RotationSlider';
 
@@ -8,20 +9,15 @@ const styles = {
   listItems: {
     marginTop: 20,
   },
+  propertiesSpacing: {
+    marginLeft: 10,
+    marginRight: 20,
+  },
   sidebar: {
-    backgroundColor: 'rgba(1, 1, 1, .06)',
-    marginTop: 114,
-    width: '12vw',
+    marginTop: 120,
+    overflowX: 'hidden',
   },
 };
-
-const LIST_OBJECTS = ['Create New',
-                      'Add New Object',
-                      'Options',
-                      'User List',
-                      'Resize',
-                      'Select Color',
-                      'Sign Out'];
 
 /**
  * @classdesc Sidebar for the canvas page.
@@ -33,19 +29,8 @@ export default class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.listItems = LIST_OBJECTS.map(this.mapOptionToDiv);
   }
 
-  /**
-   * Maps list item to a div to put in the drawer.
-   * @param {String} item The item name to encapsulate into a ManueItem.
-   * @returns {HTML} A MenuItem tag that holds the name of the item.
-   */
-  mapOptionToDiv(item) {
-    return (<MenuItem key={item.toString()}>
-      {item}
-    </MenuItem>);
-  }
 
   /**
    * Renders the HTML for the sidebar.
@@ -59,10 +44,31 @@ export default class Sidebar extends React.Component {
                 docked={true}
                 openSecondary={false}
         >
-        <div style={styles.listItems}>
-          {this.listItems}
-        </div>
-        <RotationSlider />
+          <div style={styles.propertiesSpacing}>
+          <ul>
+            <li>
+              <h3>Rotate</h3>
+            </li>
+              <RotationSlider/>
+            <li>
+              <h3>Resize</h3>
+            </li>
+            <li>
+              <TextField
+                hintText="Current: 64px"
+                floatingLabelText="Height"
+                fullWidth={true}
+              /><br />
+            </li>
+            <li>
+              <TextField
+                hintText="Current: 64px"
+                floatingLabelText="Width"
+                fullWidth={true}
+              /><br />
+            </li>
+          </ul>
+          </div>
         </Drawer>
       </div>
     );
