@@ -2,7 +2,7 @@
  * @file Possible actions we can take on the elements state branch.
  */
 
-import * as FBUtil from '../../firebase-utils';
+import * as FBHelper from '../../helpers/FirebaseHelper';
 import * as AC from './ActionConstants';
 
 
@@ -42,11 +42,11 @@ export const updateAndPersist = (updateType, elementId, updatedVal) => (
     dispatch(actionObject);
     switch (updateType) {
       case AC.UPDATE_POSITION:
-        return FBUtil.setElementLocation(elementId, updatedVal);
+        return FBHelper.setElementLocation(elementId, updatedVal);
       case AC.UPDATE_SIZE:
-        return FBUtil.setElementSize(elementId, updatedVal);
+        return FBHelper.setElementSize(elementId, updatedVal);
       case AC.UPDATE_ROTATION:
-        return FBUtil.setElementRotation(elementId, updatedVal);
+        return FBHelper.setElementRotation(elementId, updatedVal);
       default:
         return;
     }
@@ -84,6 +84,6 @@ export const removeElement = (elementId) => ({
 export const removeElementAndPersist = (elementId) => (
   (dispatch) => {
     dispatch(removeElement(elementId));
-    FBUtil.deleteElement(elementId);
+    FBHelper.deleteElement(elementId);
   }
 )

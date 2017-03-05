@@ -17,3 +17,6 @@ export const TARGET_ELEMENT = 'targetElement';
 export const ADD_CANVAS = 'addCanvas';
 export const REMOVE_CANVAS = 'removeCanvas';
 export const SET_CURRENT_CANVAS = 'setCurrentCanvas';
+
+// User Actions
+export const UPDATE_USER_INFO = 'updateUserInfo';
