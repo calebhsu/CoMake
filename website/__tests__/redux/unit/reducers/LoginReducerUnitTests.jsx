@@ -3,35 +3,41 @@
  */
 
 import {
-  currentCanvasReducer
-} from '../../../../src/redux/reducers/CurrentCanvasReducer';
+  userInfoReducer
+} from '../../../../src/redux/reducers/LoginReducer';
 import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
 import * as ReducerUtil from '../../../../src/redux/reducers/ReducerUtil';
 
-describe('CurrentCanvasReducerUnitTests', () => {
+describe('LoginReducerUnitTests', () => {
 
   beforeEach(() => {
     spyOn(ReducerUtil, 'insertIntoState');
   });
 
-  test('currentCanvasReducer_TargetElement', () => {
-    const testId = 'testId';
+  test('userInfoReducer_UpdateUserInfo', () => {
+    const testName = 'First Last';
+    const testPhotoURL = 'photoURL';
+    const testEmail = 'email';
     const testAction = {
-      type: AC.TARGET_ELEMENT,
-      payload: testId,
+      type: AC.UPDATE_USER_INFO,
+      payload: {
+        name: testName,
+        photo: testPhotoURL,
+        email: testEmail,
+      },
     }
-    currentCanvasReducer(RC.BLANK_STATE, testAction);
+    userInfoReducer(RC.BLANK_STATE, testAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      testId, [RC.CURRENT_CANVAS, RC.CANVAS_ACTIVE_ELEMENT]);
+      testAction.payload, [RC.USER_INFO]);
   });
 
-  test('currentCanvasReducer_NotSupportedAction', () => {
+  test('userInfoReducer_NotSupportedAction', () => {
     const testAction = {
       type: 'NotSupported',
       payload: 'something',
     }
-    expect(currentCanvasReducer(RC.BLANK_STATE, testAction))
+    expect(userInfoReducer(RC.BLANK_STATE, testAction))
       .toEqual(RC.BLANK_STATE);
   });
 });
