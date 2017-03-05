@@ -50,9 +50,11 @@ class RotationSlider extends React.Component {
       defaultValue={DEFAULT_SLIDER_POSITION}
       onChange={this.handleSliderChange}
       style={{
-        visibility: typeof this.props.targetedId === "undefined"
-          ? "hidden" : "visible",
-      }} />
+      visibility: typeof this.props.targetedId === "undefined"
+        ? "hidden" : "visible",
+        width: '10vw',
+        marginLeft: 10,
+      }}/>
   }
 }
 

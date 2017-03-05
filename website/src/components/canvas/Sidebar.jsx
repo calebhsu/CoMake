@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import Drawer from 'material-ui/Drawer';
+import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 
 import RotationSlider from './RotationSlider';
@@ -13,14 +15,15 @@ const styles = {
   listItems: {
     marginTop: 20,
   },
+  propertiesSpacing: {
+    marginLeft: 10,
+    marginRight: 20,
+  },
   sidebar: {
-    backgroundColor: 'rgba(1, 1, 1, .06)',
-    marginTop: 114,
-    width: '12vw',
+    marginTop: 120,
+    overflowX: 'hidden',
   },
 };
-
-
 
 /**
  * @classdesc Sidebar for the canvas page.
@@ -46,6 +49,10 @@ class Sidebar extends React.Component {
       this.props.targetedId));
   }
 
+  /**
+   * Handler for adding an element to firebase.
+   * @returns {void}
+   */
   addElement() {
     /* TODO: Make this take a specific module*/
     FBUtil.addElement('abcd', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
@@ -71,6 +78,7 @@ class Sidebar extends React.Component {
     </MenuItem>);
   }
 
+
   /**
    * Renders the HTML for the sidebar.
    * @returns {HTML} The html for the Sidebar.
@@ -83,10 +91,32 @@ class Sidebar extends React.Component {
                 docked={true}
                 openSecondary={false}
         >
-        <div style={styles.listItems}>
-          {this.listItems}
-        </div>
-        <RotationSlider />
+          <div style={styles.propertiesSpacing}>
+          <ul>
+            {this.listItems}
+            <li>
+              <h3>Rotate</h3>
+            </li>
+              <RotationSlider/>
+            <li>
+              <h3>Resize</h3>
+            </li>
+            <li>
+              <TextField
+                hintText="Current: 64px"
+                floatingLabelText="Height"
+                fullWidth={true}
+              /><br />
+            </li>
+            <li>
+              <TextField
+                hintText="Current: 64px"
+                floatingLabelText="Width"
+                fullWidth={true}
+              /><br />
+            </li>
+          </ul>
+          </div>
         </Drawer>
       </div>
     );
