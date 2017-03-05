@@ -15,6 +15,7 @@ import { insertIntoState } from './ReducerUtil';
   */
 export const userInfoReducer = (state = RC.BLANK_STATE, action) => {
   if(action.type === UPDATE_USER_INFO) {
-    return insertIntoState(state, action.payload, [RC.USER_INFO])
-  } else return state;
+    return insertIntoState(state, action.payload, [RC.USER_INFO]);
+  }
+  return state;
 };
