@@ -8,7 +8,7 @@
  * @return {String}          Script for CraftML to generate the canvas.
  */
 export function generateScript(elements) {
-  let script = '<g>\n';
+  let script = '';
   let elementId = 1;
 
   // Iterate over elements and add them to script.
@@ -28,7 +28,9 @@ export function generateScript(elements) {
     script += elementScript + '\n\n';
     elementId++;
   }
-  
-  script += '</g>';
+
+  if ( script !== '' ){
+    script = '<g>\n' + script + '</g>';
+  }
   return script;
 }
