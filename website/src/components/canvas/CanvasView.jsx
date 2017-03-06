@@ -64,7 +64,6 @@ class CanvasView extends React.Component {
    * @returns {HTML} The rendered HTML.
    */
   render() {
-    console.log(this.props.elements);
     const elemDivs = [];
     Object.keys(this.props.elements).forEach((id) => {
       const elemDetails = this.props.elements[id];

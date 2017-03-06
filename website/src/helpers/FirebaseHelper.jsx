@@ -4,6 +4,8 @@
 
 import * as firebase from 'firebase';
 
+import * as RC from '../redux/reducers/ReducerConstants';
+
 /**
  * Initializes the firebase app
  * @returns {FirebaseApp} A firebase app object initialized with the CoMake project
@@ -82,10 +84,10 @@ export const deleteElement = (canvasId, elementId) => {
  */
 export const addElement = (canvasId, module, initPosition, initSize, initRotation) => {
   const canvasPath = '/canvases/' + canvasId + '/elements';
-  return firebase.database().ref(`${canvasPath}`).push({
-    module: module,
-    position: initPosition,
-    size: initSize,
-    rotation: initRotation,
-  });
+  const toPush = {};
+  toPush[RC.ELEMENT_MODULE] = module;
+  toPush[RC.ELEMENT_POSITION] = initPosition;
+  toPush[RC.ELEMENT_SIZE] = initSize;
+  toPush[RC.ELEMENT_ROTATION] = initRotation;
+  return firebase.database().ref(`${canvasPath}`).push(toPush);
 }

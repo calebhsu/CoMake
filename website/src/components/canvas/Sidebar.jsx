@@ -46,7 +46,7 @@ class Sidebar extends React.Component {
    */
   removeElement() {
     this.props.dispatch(ElementActions.removeElementAndPersist(
-      this.props.targetedId));
+      this.props.targetedId, "-Kd6yNDP3HKNhaiD1BTu"));
   }
 
   /**
@@ -55,7 +55,7 @@ class Sidebar extends React.Component {
    */
   addElement() {
     /* TODO: Make this take a specific module*/
-    FBHelper.addElement('abcd', CC.INIT_POSITION, CC.INIT_SIZE,
+    FBHelper.addElement("-Kd6yNDP3HKNhaiD1BTu", 'abcd', CC.INIT_POSITION, CC.INIT_SIZE,
       CC.INIT_ROTATION);
   }
 
