@@ -8,7 +8,7 @@
  * @return {String}          Script for CraftML to generate the canvas.
  */
 export function generateScript(elements) {
-  let script = '';
+  let script = '<g>\n';
   let elementId = 1;
 
   // Iterate over elements and add them to script.
@@ -16,7 +16,7 @@ export function generateScript(elements) {
   for (let i = 0; i < elementList.length; i++) {
     let currElement = elementList[i];
 
-    let elementScript = '<element' + String(elementId) + '\n';
+    let elementScript = '\t<element' + String(elementId) + '\n';
     elementScript += '\tmodule="' + currElement.module + '"\n';
     // Add in transitions
     elementScript += '\tt="size x ' + String(currElement.size.width);
@@ -28,5 +28,7 @@ export function generateScript(elements) {
     script += elementScript + '\n\n';
     elementId++;
   }
+  
+  script += '</g>';
   return script;
 }
