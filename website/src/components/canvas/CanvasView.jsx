@@ -43,20 +43,20 @@ class CanvasView extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    firebase.database().ref('/canvases/Kd6yNDP3HKNhaiD1BTu/elements').once('value').then((elemListSnap) => {
+    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').once('value').then((elemListSnap) => {
       this.props.dispatch(ElementActions.initElements(elemListSnap.val()));
     });
-    firebase.database().ref('/canvases/Kd6yNDP3HKNhaiD1BTu/elements').on('child_added', (elemSnap) => {
+    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_added', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('/canvases/Kd6yNDP3HKNhaiD1BTu/elements').on('child_changed', (elemSnap) => {
+    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_changed', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('/canvases/Kd6yNDP3HKNhaiD1BTu/elements').on('child_removed', (elemSnap) => {
+    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_removed', (elemSnap) => {
       this.props.dispatch(ElementActions.removeElement(elemSnap.key));
-    })
+    });
   }
 
   /**
@@ -73,7 +73,7 @@ class CanvasView extends React.Component {
           initLoc={elemDetails.position}
           initSize={elemDetails.size}
           rotation={Number(elemDetails.rotation)}
-          canvasId={"Kd6yNDP3HKNhaiD1BTu"}
+          canvasId={"-Kd6yNDP3HKNhaiD1BTu"}
         />
       );
     });
