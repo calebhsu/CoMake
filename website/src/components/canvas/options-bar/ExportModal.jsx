@@ -3,9 +3,11 @@
  */
 
 import React, { Component } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 
 import { generateScript } from '../../../craftml/ScriptGenerator';
@@ -62,56 +64,86 @@ class ExportModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      craftScript: '',
+      copied: false,
+      dialogOpen: false,
+      snackbarOpen: false,
     };
+    this.copyCraftScript = this.copyCraftScript.bind(this);
     this.generateCraftScript = this.generateCraftScript.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
+    this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
 
   /**
-  * Generates CraftML script for element positions in top-down view.
+  * Handler for onCopy that sets copied & snackbar open state to true.
+  * @returns {void}
+  */
+  copyCraftScript() {
+    this.setState({
+      copied: true,
+      snackbarOpen: true
+    })
+  }
+
+  /**
+  * Generates CraftML script for element positions in top-down view &
+  * opens the modal to display script.
   * @returns {void}
   */
   generateCraftScript() {
     this.setState({
       craftScript: generateScript(TEST_ELEMENTS)
     });
-    this.handleOpen();
+    this.handleDialogOpen();
   }
 
   /**
-  * Handler for onTouchTap that sets modal's open state to false.
+  * Handler for onTouchTap that sets dialog's open state to false.
   * @returns {void}
   */
-  handleClose() {
-    this.setState({open: false});
+  handleDialogClose() {
+    this.setState({dialogOpen: false});
   }
 
   /**
-   * Handler for onTouchTap that sets modal's open state to true.
+   * Handler for onTouchTap that sets dialog's open state to true.
    * @returns {void}
    */
-  handleOpen() {
-    this.setState({open: true});
+  handleDialogOpen() {
+    this.setState({dialogOpen: true});
+  }
+
+  /**
+   * Handler for onRequestClose that sets snackbar's open state to false.
+   * @returns {void}
+   */
+  handleSnackbarRequestClose() {
+    this.setState({snackbarOpen: false});
   }
 
   /**
    * Renders the exported code modal for display.
-   * @returns {HTML} The rendered HTML of the modal.
+   * @returns {HTML} The rendered HTML of the trigger button and modal.
    */
   render() {
-    const actions = [
-      <FlatButton
-        label="Close"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Copy"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />
+  const actions = [
+    <FlatButton
+      label="Close"
+      onTouchTap={this.handleDialogClose}
+      primary={true}
+    />,
+    <CopyToClipboard
+      onCopy={this.copyCraftScript}
+      text={this.state.craftScript}
+      >
+        <FlatButton
+          label="Copy"
+          onTouchTap={this.handleDialogClose}
+          primary={true}
+        />
+      </CopyToClipboard>
     ];
 
     return (
@@ -125,17 +157,24 @@ class ExportModal extends Component {
           actionsContainerStyle={styles.dialogActions}
           bodyStyle={styles.dialogBody}
           modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
+          open={this.state.dialogOpen}
+          onRequestClose={this.handleDialogClose}
           title="Generated CraftML Code"
         >
           <TextField
             fullWidth={true}
+            hintText="<g></g>"
             multiLine={true}
             rows={5}
             value={this.state.craftScript}
           />
         </Dialog>
+        <Snackbar
+          autoHideDuration={4000}
+          message="Copied to your clipboard."
+          onRequestClose={this.handleSnackbarRequestClose}
+          open={this.state.snackbarOpen}
+        />
       </div>
     );
   }
