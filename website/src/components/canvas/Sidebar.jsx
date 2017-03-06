@@ -60,7 +60,6 @@ export default class Sidebar extends React.Component {
                 docked={true}
                 openSecondary={false}
                 style={{opacity: this.state.opacity}}
-                zDepth={3}
         >
           <div style={styles.propertiesSpacing}
           >
