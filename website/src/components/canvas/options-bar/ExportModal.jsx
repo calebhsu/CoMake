@@ -8,6 +8,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
+import { generateScript } from '../../../craftml/ScriptGenerator';
+
 const styles = {
   dialogActions: {
     padding: '8px 15px 15px',
@@ -17,6 +19,33 @@ const styles = {
   },
   wrapper: {
     display: 'inline-block',
+  },
+};
+
+const TEST_ELEMENTS = {
+  element1: {
+    position: {
+      x: 100,
+      y: 200,
+    },
+    size: {
+      width: 30,
+      height: 50,
+    },
+    rotation: 0,
+    module: 'AoN5x',
+  },
+  element2: {
+    position: {
+      x: 400,
+      y: 500,
+    },
+    size: {
+      width: 100,
+      height: 100,
+    },
+    rotation: 30,
+    module: 'Baxrz',
   },
 };
 
@@ -35,8 +64,20 @@ class ExportModal extends Component {
     this.state = {
       open: false,
     };
+    this.generateCraftScript = this.generateCraftScript.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
+  }
+
+  /**
+  * Generates CraftML script for element positions in top-down view.
+  * @returns {void}
+  */
+  generateCraftScript() {
+    this.setState({
+      craftScript: generateScript(TEST_ELEMENTS)
+    });
+    this.handleOpen();
   }
 
   /**
@@ -77,7 +118,7 @@ class ExportModal extends Component {
       <div style={styles.wrapper}>
         <FlatButton
           label="Export"
-          onTouchTap={this.handleOpen}
+          onTouchTap={this.generateCraftScript}
         />
         <Dialog
           actions={actions}
@@ -92,6 +133,7 @@ class ExportModal extends Component {
             fullWidth={true}
             multiLine={true}
             rows={5}
+            value={this.state.craftScript}
           />
         </Dialog>
       </div>
