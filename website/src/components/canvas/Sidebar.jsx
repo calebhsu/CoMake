@@ -29,8 +29,20 @@ export default class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      opacity: .7
+    }
+    this.mouseEnter = this.mouseEnter.bind(this);
+    this.mouseLeave = this.mouseLeave.bind(this);
   }
 
+  mouseEnter() {
+    this.setState({opacity: 1})
+  }
+
+  mouseLeave() {
+    this.setState({opacity: .7})
+  }
 
   /**
    * Renders the HTML for the sidebar.
@@ -39,12 +51,19 @@ export default class Sidebar extends React.Component {
   render() {
     return (
       <div>
+      <div
+      onMouseEnter={this.mouseEnter}
+      onMouseLeave={this.mouseLeave}
+      >
         <Drawer containerStyle={styles.sidebar}
                 open= {true}
                 docked={true}
                 openSecondary={false}
+                style={{opacity: this.state.opacity}}
+                zDepth={3}
         >
-          <div style={styles.propertiesSpacing}>
+          <div style={styles.propertiesSpacing}
+          >
           <ul>
             <li>
               <h3>Rotate</h3>
@@ -70,6 +89,7 @@ export default class Sidebar extends React.Component {
           </ul>
           </div>
         </Drawer>
+        </div>
       </div>
     );
   }
