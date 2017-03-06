@@ -16,16 +16,18 @@ describe('LoginReducerUnitTests', () => {
   });
 
   test('userInfoReducer_UpdateUserInfo', () => {
+    const testId = 'uid';
     const testName = 'First Last';
-    const testPhotoURL = 'photoURL';
-    const testEmail = 'email';
+    const testPhotoURL = "photoURL";
+    const testEmail = "email";
+    const testPayload = {};
+    testPayload[RC.USER_ID] = testId;
+    testPayload[RC.USERNAME] = testName;
+    testPayload[RC.USER_PHOTO_URL] = testPhotoURL;
+    testPayload[RC.USER_EMAIL] = testEmail;
     const testAction = {
       type: AC.UPDATE_USER_INFO,
-      payload: {
-        name: testName,
-        photo: testPhotoURL,
-        email: testEmail,
-      },
+      payload: testPayload,
     }
     userInfoReducer(RC.BLANK_STATE, testAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
