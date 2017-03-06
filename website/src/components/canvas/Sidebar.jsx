@@ -98,7 +98,7 @@ class Sidebar extends React.Component {
             <li>
               <h3>Rotate</h3>
             </li>
-              <RotationSlider/>
+              <RotationSlider canvasId={"Kd6yNDP3HKNhaiD1BTu"} />
             <li>
               <h3>Resize</h3>
             </li>
