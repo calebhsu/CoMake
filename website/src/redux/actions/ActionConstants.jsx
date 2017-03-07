@@ -15,8 +15,12 @@ export const TARGET_ELEMENT = 'targetElement';
 
 // Canvas Actions
 export const ADD_CANVAS = 'addCanvas';
+export const ADD_CANVAS_USER = 'addCanvasUser';
 export const REMOVE_CANVAS = 'removeCanvas';
+export const REMOVE_CANVAS_USER = 'removeCanvasUser';
 export const SET_CURRENT_CANVAS = 'setCurrentCanvas';
+export const SET_CANVAS_NAME = 'setCanvasName';
+export const SET_CANVAS_OWNER = 'setCanvasOwner';
 
 // User Actions
 export const UPDATE_USER_INFO = 'updateUserInfo';
