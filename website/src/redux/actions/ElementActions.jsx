@@ -4,7 +4,7 @@
 
 import {
   setElementLocation, setElementSize, setElementRotation
-} from '../../firebase-utils';
+} from '../../helpers/FirebaseHelper';
 import {
   INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
 } from './ActionConstants';

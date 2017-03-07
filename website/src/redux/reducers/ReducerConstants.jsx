@@ -4,8 +4,8 @@
 
  // Fields in the state tree..
  export const USER_INFO = 'userInfo';
- export const USERNAME = 'username';
- export const USER_PHOTO_URL = 'photoURL';
+ export const USERNAME = 'name';
+ export const USER_PHOTO_URL = 'photo';
  export const USER_EMAIL = 'email';
  export const CANVASES = 'canvases';
  export const CURRENT_CANVAS = 'currentCanvas';
