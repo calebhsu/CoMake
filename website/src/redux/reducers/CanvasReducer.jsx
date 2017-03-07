@@ -26,6 +26,11 @@ export const canvasReducer = (state = RC.BLANK_STATE, action) => {
     case AC.SET_CURRENT_CANVAS:
       pathToChange.push(RC.CURRENT_CANVAS);
       break;
+    case AC.SET_CANVAS_NAME:
+      pathToChange.push(RC.CANVASES);
+      pathToChange.push(action.canvasId);
+      pathToChange.push(RC.CANVAS_NAME);
+      break;
     default:
       // Any other action just return we do not want to handle.
       return state;
