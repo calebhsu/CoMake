@@ -20,7 +20,7 @@ const styles = {
     marginRight: 20,
   },
   sidebar: {
-    marginTop: 120,
+    marginTop: 110,
     overflowX: 'hidden',
     position: 'absolute',
     height: '89vh',
@@ -109,7 +109,8 @@ class Sidebar extends React.Component {
                 open= {true}
                 docked={true}
                 openSecondary={false}
-                style={{opacity: this.state.opacity}}>
+                style={{opacity: this.state.opacity}}
+                zDepth={0}>
           <div
           style={styles.propertiesSpacing}>
           <ul>
