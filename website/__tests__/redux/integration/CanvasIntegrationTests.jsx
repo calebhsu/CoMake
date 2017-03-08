@@ -4,7 +4,7 @@
 
 import storeHelper from '../../../src/redux/storeHelper';
 import {
-  addCanvas, removeCanvas, setCurrentCanvas,
+  addCanvas, addCanvasUser, removeCanvas, setCurrentCanvas, setCanvasName, setCanvasOwner
 } from '../../../src/redux/actions/CanvasActions';
 import * as RC from '../../../src/redux/reducers/ReducerConstants';
 
@@ -34,6 +34,21 @@ describe('CanvasIntegrationTests', () => {
     });
 
     testStore.dispatch(addCanvas(testId, testInfo));
+  });
+
+  test('addCanvasUser_dispatch', (done) => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const expected = Object.assign({}, RC.BLANK_STATE);
+    expected[RC.CANVASES][testId] = {}
+    expected[RC.CANVASES][testId][RC.CANVAS_USERS] = testUserId;
+
+    testStore.subscribe(() => {
+      expect(testStore.getState().canvasReducer).toEqual(expected);
+      done();
+    });
+
+    testStore.dispatch(addCanvasUser(testId, testUserId));
   });
 
   test('removeCanvas_dispatch', (done) => {
