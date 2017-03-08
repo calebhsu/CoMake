@@ -25,7 +25,7 @@ describe('ElementIntegrationTests', () => {
     }
   };
   const filledState = Object.assign({}, RC.BLANK_STATE);
-  filledState[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS] = elemList;
+  filledState[RC.ELEMENTS] = elemList;
 
   // create a new store before each test
   beforeEach(() => {
@@ -53,8 +53,7 @@ describe('ElementIntegrationTests', () => {
     const elemId = 'testingANewItem';
     const updatedLoc = { x: 33, y: 88 };
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_POSITION]
-      = updatedLoc;
+    expected[RC.ELEMENTS][elemId][RC.ELEMENT_POSITION] = updatedLoc;
 
     testStore.subscribe(() => {
       expect(testStore.getState().updateElementReducer).toEqual(expected);
@@ -73,7 +72,7 @@ describe('ElementIntegrationTests', () => {
     const elemId = 'testingANewItem';
     const updatedSize = { 'width': 25, 'height': 60 };
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_SIZE]
+    expected[RC.ELEMENTS][elemId][RC.ELEMENT_SIZE]
       = updatedSize;
 
     testStore.subscribe(() => {
@@ -93,7 +92,7 @@ describe('ElementIntegrationTests', () => {
     const elemId = 'testingANewItem';
     const updatedRotation = -26;
     const expected = Object.assign({}, filledState);
-    expected[RC.CURRENT_CANVAS][RC.CANVAS_ELEMENTS][elemId][RC.ELEMENT_ROTATION]
+    expected[RC.ELEMENTS][elemId][RC.ELEMENT_ROTATION]
       = updatedRotation;
 
     testStore.subscribe(() => {
@@ -105,5 +104,49 @@ describe('ElementIntegrationTests', () => {
     testStore.dispatch(ElementActions.updateElement(AC.UPDATE_ROTATION, elemId,
       updatedRotation));
   });
+
+  test('addElement_Dispatch', (done) => {
+    testStore.dispatch(ElementActions.initElements(elemList));
+    // Assemble what is to be expected.
+    const newElement = {
+      'position': {
+        'x': 100,
+        'y': 50,
+      },
+      'size': {
+        'width': 100,
+        'height': 20,
+      },
+      'rotation': 30,
+      'module': 'testModule',
+    };
+    const elemId = 'newElement';
+    const expected = Object.assign({}, filledState);
+    expected[RC.ELEMENTS][elemId] = newElement;
+
+    testStore.subscribe(() => {
+      expect(testStore.getState().updateElementReducer).toEqual(expected);
+      done();
+    });
+
+    //Update the state again.
+    testStore.dispatch(ElementActions.addElement(elemId, newElement));
+  });
+
+  test('removeElement_Dispatch', (done) => {
+    testStore.dispatch(ElementActions.initElements(elemList));
+    const elemId = 'testingANewItem';
+    const expected = Object.assign({}, elemList);
+    delete expected[elemId];
+
+    testStore.subscribe(() => {
+      expect(testStore.getState()
+        .updateElementReducer[RC.ELEMENTS])
+        .toEqual(expected);
+      done();
+    });
+    testStore.dispatch(ElementActions.removeElement(elemId));
+  });
+
   /* TODO: Find out how to do updateAndPersist once firebase is mocked. */
 });

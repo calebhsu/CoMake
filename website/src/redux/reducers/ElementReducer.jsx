@@ -2,12 +2,10 @@
  * @file Reducers having to do with the position of elements.
  */
 
-import {
-  INIT_ELEMENTS, UPDATE_POSITION, UPDATE_SIZE, UPDATE_ROTATION
-} from './../actions/ActionConstants';
+import * as AC from './../actions/ActionConstants';
 
 import * as RC from './ReducerConstants';
-import { insertIntoState } from './ReducerUtil';
+import { insertIntoState, removeField } from './ReducerUtil';
 
 /**
  * Update the position in firebase.
@@ -16,23 +14,29 @@ import { insertIntoState } from './ReducerUtil';
  * @returns {Object} The new state object.
  */
 export const updateElementReducer = (state = RC.BLANK_STATE, action) => {
-  const pathToChange = [RC.CURRENT_CANVAS, RC.CANVAS_ELEMENTS];
+  const pathToChange = [RC.ELEMENTS];
   switch (action.type) {
-    case INIT_ELEMENTS:
+    case AC.INIT_ELEMENTS:
       // Do nothing we already have the right path.
       break;
-    case UPDATE_POSITION:
+    case AC.UPDATE_POSITION:
       pathToChange.push(action.elementId);
       pathToChange.push(RC.ELEMENT_POSITION);
       break;
-    case UPDATE_SIZE:
+    case AC.UPDATE_SIZE:
       pathToChange.push(action.elementId);
       pathToChange.push(RC.ELEMENT_SIZE);
       break;
-    case UPDATE_ROTATION:
+    case AC.UPDATE_ROTATION:
       pathToChange.push(action.elementId);
       pathToChange.push(RC.ELEMENT_ROTATION);
       break;
+    case AC.ADD_ELEMENT:
+      pathToChange.push(action.elementId);
+      break;
+    case AC.REMOVE_ELEMENT:
+      pathToChange.push(action.elementId);
+      return removeField(state, pathToChange);
     default:
       // Reducer should not do anything otherwise so return.
       return state
