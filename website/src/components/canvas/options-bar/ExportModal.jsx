@@ -9,6 +9,9 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 const styles = {
+  copyBtn: {
+    color: '#FFFFFF',
+  },
   dialogActions: {
     padding: '8px 15px 15px',
   },
@@ -67,9 +70,12 @@ class ExportModal extends Component {
         onTouchTap={this.handleClose}
       />,
       <FlatButton
+        backgroundColor="#229bc8"
+        hoverColor="#0d7faa"
         label="Copy"
         primary={true}
         onTouchTap={this.handleClose}
+        style={styles.copyBtn}
       />
     ];
 

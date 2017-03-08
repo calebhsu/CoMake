@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField'
 
 import ExportModal from './ExportModal';
+import ImportModal from './ImportModal';
 import ShareCanvasModal from './ShareCanvasModal';
 
 import {
@@ -60,7 +61,7 @@ function OptionsBar() {
       <TextField style={styles.modelName} id="text-field-default" defaultValue="Model Racecar"/>
         <span style={styles.optionBtnGroup}>
           <FlatButton label="File Options" style={styles.optionBtn} />
-          <FlatButton label="Import" style={styles.optionBtn} />
+          <ImportModal />
           <ExportModal />
           <ShareCanvasModal />
           <IconButton tooltip="Shaggy" touch={true} tooltipPosition="bottom-center">
