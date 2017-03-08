@@ -7,8 +7,8 @@ export const SIDEBAR_BUTTONS = [ADD_ELEMENT_BUTTON, DELETE_ELEMENT_BUTTON];
 
 // Initial element conditions
 export const INIT_POSITION = {
-  'x': 100,
-  'y': 100,
+  'x': 300,
+  'y': 50,
 };
 export const INIT_SIZE = {
   'width': 100,
