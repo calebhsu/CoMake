@@ -16,6 +16,8 @@ const styles = {
   sidebar: {
     marginTop: 120,
     overflowX: 'hidden',
+    position: 'absolute',
+    height: '89vh',
   },
 };
 
@@ -53,16 +55,15 @@ export default class Sidebar extends React.Component {
       <div>
       <div
       onMouseEnter={this.mouseEnter}
-      onMouseLeave={this.mouseLeave}
-      >
+      onMouseLeave={this.mouseLeave}>
+
         <Drawer containerStyle={styles.sidebar}
                 open= {true}
                 docked={true}
                 openSecondary={false}
-                style={{opacity: this.state.opacity}}
-        >
-          <div style={styles.propertiesSpacing}
-          >
+                style={{opacity: this.state.opacity}}>
+          <div
+          style={styles.propertiesSpacing}>
           <ul>
             <li>
               <h3>Rotate</h3>
