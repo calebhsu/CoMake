@@ -4,7 +4,6 @@
 
  // Fields in the state tree..
  export const USER_INFO = 'userInfo';
- export const USER_ID = 'userId';
  export const USERNAME = 'name';
  export const USER_PHOTO_URL = 'photo';
  export const USER_EMAIL = 'email';
@@ -29,7 +28,6 @@
 }
 */
 const userInfoBranch = {};
-userInfoBranch[USER_ID] = {};
 userInfoBranch[USERNAME] = null;
 userInfoBranch[USER_PHOTO_URL] = null;
 userInfoBranch[USER_EMAIL] = null;
