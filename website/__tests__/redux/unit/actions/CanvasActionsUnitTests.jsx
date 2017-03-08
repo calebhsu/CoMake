@@ -3,7 +3,7 @@
  */
 
 import {
-	addCanvas, removeCanvas, setCurrentCanvas,
+	addCanvas, addCanvasUser, removeCanvas, setCurrentCanvas, setCanvasName,
 } from '../../../../src/redux/actions/CanvasActions';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
 
@@ -24,11 +24,11 @@ describe('CanvasActionsUnitTests', () => {
     const testId = 'testId';
     const testUserId = 'testUserId';
     const expected = {
-      type: AC.ADD_CANVAS,
+      type: AC.ADD_CANVAS_USER,
       canvasId: testId,
       payload: testUserId,
     }
-    expect(addCanvas(testId, testUserId)).toEqual(expected);
+    expect(addCanvasUser(testId, testUserId)).toEqual(expected);
   });
 
   test('removeCanvas', () => {
@@ -47,5 +47,16 @@ describe('CanvasActionsUnitTests', () => {
       payload: testId,
     }
     expect(setCurrentCanvas(testId)).toEqual(expected);
+  });
+
+  test('setCanvasName', () => {
+    const testId = 'testId';
+    const testName = 'testName';
+    const expected = {
+      type: AC.SET_CANVAS_NAME,
+      canvasId: testId,
+      payload: testName,
+    }
+    expect(setCanvasName(testId, testName)).toEqual(expected);
   });
 });
