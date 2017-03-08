@@ -18,10 +18,10 @@ const styles = {
     backgroundSize: '25px 25px',
     backgroundImage: backgroundImageString,
     border: '2px dashed #7e7e7e',
-    height: '77.2vh',
-    margin: '1vw 0 1vw 13.5vw',
+    height: '84vh',
+    margin: '1vw 0 1vw 0vw',
     position: 'absolute',
-    width: '85vw',
+    width: '99vw',
   }
 };
 

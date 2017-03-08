@@ -49,13 +49,13 @@ const styles = {
 function Canvas() {
   return (
     <div>
-      <Sidebar />
       <Box style={styles.box} col={9} sm={12} md={9}>
-        <Paper style={styles.paper} zDepth={1}>
+        <Paper style={styles.paper} zDepth={4}>
         <OptionsBar />
         </Paper>
       </Box>
       <CanvasView />
+      <Sidebar />
       <Preview3D />
     </div>
   )
