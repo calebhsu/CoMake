@@ -3,7 +3,7 @@
  */
 
 import {
-	addCanvas, addCanvasUser, removeCanvas, setCurrentCanvas, setCanvasName,
+	addCanvas, addCanvasUser, removeCanvas, setCurrentCanvas, setCanvasName, setCanvasOwner,
 } from '../../../../src/redux/actions/CanvasActions';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
 
@@ -58,5 +58,16 @@ describe('CanvasActionsUnitTests', () => {
       payload: testName,
     }
     expect(setCanvasName(testId, testName)).toEqual(expected);
+  });
+
+  test('setCanvasOwner', () => {
+    const testId = 'testId';
+    const testOwner = 'testOwner';
+    const expected = {
+      type: AC.SET_CANVAS_OWNER,
+      canvasId: testId,
+      payload: testOwner,
+    }
+    expect(setCanvasOwner(testId, testOwner)).toEqual(expected);
   });
 });
