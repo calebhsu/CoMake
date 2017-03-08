@@ -77,6 +77,19 @@ describe('CanvasReducerUnitTests', () => {
       testName, [RC.CANVASES, testId, RC.CANVAS_NAME]);
   });
 
+  test('canvasReducer_SetCanvasOwner', () => {
+    const testId = 'testId';
+    const testOwner = 'testOwner';
+    const testAction = {
+      type: AC.SET_CANVAS_OWNER,
+      canvasId: testId,
+      payload: testOwner,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testOwner, [RC.CANVASES, testId, RC.CANVAS_OWNER]);
+  });
+
   test('canvasReducer_NotSupportedAction', () => {
     const testAction = {
       type: 'NotSupported',
