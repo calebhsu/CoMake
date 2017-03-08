@@ -21,6 +21,8 @@ const handleRequest = (request, response) => {
 
  if(typeof request.body.name !== "string") {
     winston.error('CanvasCreationService.handleRequest - invalid name param, must be a String');
+    response.status(500)
+      .send('Invalid name param.');
     return;
  }
 
@@ -28,6 +30,8 @@ const handleRequest = (request, response) => {
    winston.error(
      'CanvasCreationService.handleRequest - invalid creatingUser param, must be a String'
    );
+   response.status(500)
+     .send('Invalid creatingUser param.');
    return;
  }
 
@@ -35,6 +39,8 @@ const handleRequest = (request, response) => {
    winston.error(
      'CanvasCreationService.handleRequest - invalid userList param, must be an Array'
    );
+   response.status(500)
+     .send('Invalid userList param.');
    return;
  }
 
