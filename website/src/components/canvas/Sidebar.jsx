@@ -20,8 +20,10 @@ const styles = {
     marginRight: 20,
   },
   sidebar: {
-    marginTop: 120,
+    marginTop: 110,
     overflowX: 'hidden',
+    position: 'absolute',
+    height: '89vh',
   },
 };
 
@@ -35,6 +37,11 @@ class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      opacity: .7
+    }
+    this.mouseEnter = this.mouseEnter.bind(this);
+    this.mouseLeave = this.mouseLeave.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
@@ -79,6 +86,13 @@ class Sidebar extends React.Component {
     </MenuItem>);
   }
 
+  mouseEnter() {
+    this.setState({opacity: 1})
+  }
+
+  mouseLeave() {
+    this.setState({opacity: .7})
+  }
 
   /**
    * Renders the HTML for the sidebar.
@@ -87,12 +101,18 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div>
+      <div
+      onMouseEnter={this.mouseEnter}
+      onMouseLeave={this.mouseLeave}>
+
         <Drawer containerStyle={styles.sidebar}
                 open= {true}
                 docked={true}
                 openSecondary={false}
-        >
-          <div style={styles.propertiesSpacing}>
+                style={{opacity: this.state.opacity}}
+                zDepth={0}>
+          <div
+          style={styles.propertiesSpacing}>
           <ul>
             {this.listItems}
             <li>
@@ -119,6 +139,7 @@ class Sidebar extends React.Component {
           </ul>
           </div>
         </Drawer>
+        </div>
       </div>
     );
   }
