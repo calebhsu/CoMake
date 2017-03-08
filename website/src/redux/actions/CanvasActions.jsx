@@ -52,10 +52,23 @@ export const setCurrentCanvas = (canvasId) => ({
 /**
  * Action for setting a canvas name.
  * @param {String} canvasId Id for the canvas to have its name changed.
+ * @param {String} canvasName Name that the canvas will be given from now on.
  * @returns {Object} The object detailing the action.
  */
 export const setCanvasName = (canvasId, canvasName) => ({
   type: AC.SET_CANVAS_NAME,
   canvasId: canvasId,
   payload: canvasName,
+});
+
+/**
+ * Action for setting a canvas owner.
+ * @param {String} canvasId Id for the canvas to have its name changed.
+ * @param {String} canvasOwner Owner that the canvas will be given from now on.
+ * @returns {Object} The object detailing the action.
+ */
+export const setCanvasOwner = (canvasId, canvasOwner) => ({
+  type: AC.SET_CANVAS_OWNER,
+  canvasId: canvasId,
+  payload: canvasOwner,
 });
