@@ -4,6 +4,7 @@
 
  // Fields in the state tree..
  export const USER_INFO = 'userInfo';
+ export const USER_ID = 'userId';
  export const USERNAME = 'name';
  export const USER_PHOTO_URL = 'photo';
  export const USER_EMAIL = 'email';
@@ -16,6 +17,7 @@
 /* Looks like...
 {
   USER_INFO: {
+    USER_ID: {};
     USERNAME: null,
     USER_PHOTO_URL: null,
     USER_EMAIL: null,
@@ -27,6 +29,7 @@
 }
 */
 const userInfoBranch = {};
+userInfoBranch[USER_ID] = {};
 userInfoBranch[USERNAME] = null;
 userInfoBranch[USER_PHOTO_URL] = null;
 userInfoBranch[USER_EMAIL] = null;
@@ -49,4 +52,4 @@ export const ELEMENT_ATTRS = [ELEMENT_POSITION, ELEMENT_SIZE, ELEMENT_ROTATION,
 // Fields for canvas.
 export const CANVAS_NAME = 'name';
 export const CANVAS_OWNER = 'owner';
-export const CANVAS_USERS = {};
+export const CANVAS_USERS = 'users';
