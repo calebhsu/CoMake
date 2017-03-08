@@ -57,6 +57,9 @@ class CanvasView extends React.Component {
     firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_removed', (elemSnap) => {
       this.props.dispatch(ElementActions.removeElement(elemSnap.key));
     });
+    firebase.database().ref('/test').on('child_removed', (elemSnap) => {
+      this.props.dispatch(ElementActions.removeElement(elemSnap.key));
+    })
   }
 
   /**
