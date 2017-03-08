@@ -92,4 +92,18 @@ describe('CanvasIntegrationTests', () => {
 
     testStore.dispatch(setCanvasName(testId, testName));
   });
+
+  test('setCanvasOwner_dispatch', (done) => {
+    const testId = 'testId';
+    const testOwner = 'testOwner';
+    const expected = Object.assign({}, RC.BLANK_STATE);
+    expected[RC.CANVASES][testId][RC.CANVAS_OWNER] = testOwner;
+    
+    testStore.subscribe(() => {
+      expect(testStore.getState().canvasReducer).toEqual(expected);
+      done();
+    });
+
+    testStore.dispatch(setCanvasOwner(testId, testOwner));
+  });
 });
