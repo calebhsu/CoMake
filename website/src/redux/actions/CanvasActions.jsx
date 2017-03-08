@@ -18,6 +18,18 @@ export const addCanvas = (canvasId, canvasInfo) => ({
 });
 
 /**
+ * Add a user to the canvas.
+ * @param {String} canvasId Id for the canvas.
+ * @param {String} userId Id for the user.
+ * @returns {Object} The object detailing the action.
+ */
+export const addCanvasUser = (canvasId, userId) => ({
+  type: AC.ADD_CANVAS_USER,
+  canvasId: canvasId,
+  payload: userId,
+});
+
+/**
  * Action for removing a canvas.
  * @param  {String} canvasId Id of the canvas to remove.
  * @return {Object}          Object detailing the action.

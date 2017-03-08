@@ -49,4 +49,4 @@ export const ELEMENT_ATTRS = [ELEMENT_POSITION, ELEMENT_SIZE, ELEMENT_ROTATION,
 // Fields for canvas.
 export const CANVAS_NAME = 'name';
 export const CANVAS_OWNER = 'owner';
-export const CANVAS_USERS = 'users';
+export const CANVAS_USERS = {};
