@@ -20,6 +20,17 @@ describe('CanvasActionsUnitTests', () => {
     expect(addCanvas(testId, testInfo)).toEqual(expected);
   });
 
+  test('addCanvasUser', () => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const expected = {
+      type: AC.ADD_CANVAS,
+      canvasId: testId,
+      payload: testUserId,
+    }
+    expect(addCanvas(testId, testUserId)).toEqual(expected);
+  });
+
   test('removeCanvas', () => {
     const testId = 'testId';
     const expected = {
