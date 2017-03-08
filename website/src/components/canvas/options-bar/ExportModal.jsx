@@ -2,8 +2,11 @@
  * @file Modal component for displaying exported code.
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
+
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -21,33 +24,6 @@ const styles = {
   },
   wrapper: {
     display: 'inline-block',
-  },
-};
-
-const TEST_ELEMENTS = {
-  element1: {
-    position: {
-      x: 100,
-      y: 200,
-    },
-    size: {
-      width: 30,
-      height: 50,
-    },
-    rotation: 0,
-    module: 'AoN5x',
-  },
-  element2: {
-    position: {
-      x: 400,
-      y: 500,
-    },
-    size: {
-      width: 100,
-      height: 100,
-    },
-    rotation: 30,
-    module: 'Baxrz',
   },
 };
 
@@ -94,7 +70,7 @@ class ExportModal extends Component {
   */
   generateCraftScript() {
     this.setState({
-      craftScript: generateScript(TEST_ELEMENTS)
+      craftScript: generateScript(this.props.elements)
     });
     this.handleDialogOpen();
   }
@@ -180,4 +156,13 @@ class ExportModal extends Component {
   }
 }
 
-export default ExportModal;
+ExportModal.propTypes = {
+  elements: PropTypes.object,
+}
+
+const mapStateToProps = state => ({
+  elements: (state
+    .updateElementReducer[RC.ELEMENTS]),
+});
+
+export default connect(mapStateToProps)(ExportModal);
