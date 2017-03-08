@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 
 import Routes from './routes'
 
-import { initFirebase } from './firebase-utils';
+import { initFirebase } from './helpers/FirebaseHelper';
 import storeHelper from './redux/storeHelper'
 
 // Needed for onTouchTap

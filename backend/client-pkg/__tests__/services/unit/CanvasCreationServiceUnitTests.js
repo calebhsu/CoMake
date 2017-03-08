@@ -26,12 +26,6 @@ describe('CanvasCreationServiceUnitTests', () => {
     const creatingUser = 'creating-user';
     const userList = ['testing', 'testing2']
 
-    const expectedRequest = {
-       name,
-       creatingUser,
-       userList,
-    }
-
     try {
       CanvasCreationService.formRequestBody(name, creatingUser, userList);
     } catch(err) {
@@ -43,12 +37,6 @@ describe('CanvasCreationServiceUnitTests', () => {
     const name = 'canvas-name';
     const creatingUser = true;
     const userList = ['testing', 'testing2']
-
-    const expectedRequest = {
-       name,
-       creatingUser,
-       userList,
-    }
 
     try {
       CanvasCreationService.formRequestBody(name, creatingUser, userList);
