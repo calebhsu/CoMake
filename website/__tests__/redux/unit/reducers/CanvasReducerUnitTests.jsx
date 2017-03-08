@@ -29,6 +29,19 @@ describe('CanvasReducerUnitTests', () => {
       testInfo, [RC.CANVASES, testId]);
   });
 
+  test('canvasReducer_AddCanvasUser', () => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const testAction = {
+      type: AC.ADD_CANVAS_USER,
+      canvasId: testId,
+      payload: testUserId,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testUserId, [RC.CANVASES, testId, RC.CANVAS_USERS]);
+  });
+
   test('canvasReducer_RemoveCanvas', () => {
     const testId = 'testId';
     const testAction = {
