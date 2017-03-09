@@ -9,7 +9,7 @@ import * as FBHelper from '../../helpers/FirebaseHelper';
 /**
  * Change the currently targeted element.
  * @param   {String}  canvasId   Id for the canvas.
- * @param   {Objeect} canvasInfo Information for the canvas.
+ * @param   {Object} canvasInfo Information for the canvas.
  * @returns {Object}  			 The object detailing the action.
  */
 export const addCanvas = (canvasId, canvasInfo) => ({

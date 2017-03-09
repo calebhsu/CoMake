@@ -62,6 +62,14 @@ class CanvasView extends React.Component {
   }
 
   /**
+   * After we unmount the canvas stop listening to the elements.
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    firebase.database().ref('/test').off();
+  }
+
+  /**
    * Renders the element for display.
    * @returns {HTML} The rendered HTML.
    */
