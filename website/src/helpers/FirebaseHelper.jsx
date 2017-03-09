@@ -91,3 +91,14 @@ export const addElement = (canvasId, module, initPosition, initSize, initRotatio
   toPush[RC.ELEMENT_ROTATION] = initRotation;
   return firebase.database().ref(`${canvasPath}`).push(toPush);
 }
+
+/**
+ * Sets a canvas' name.
+ * @param {String} canvasId      The canvas id.
+ * @param {String} newCanvasName The new canvas name to be set.
+ * @returns {Promise}            Promise associated with the firebase action.
+ */
+export const setCanvasName = (canvasId, newCanvasName) => {
+  const canvasPath = '/canvases/' + canvasId + RC.CANVAS_NAME;
+  return firebase.database().ref(`${canvasPath}`).set(newCanvasName);
+}

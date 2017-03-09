@@ -8,7 +8,6 @@ import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
 import * as ElementActions from '../../redux/actions/ElementActions';
-import * as RC from '../../redux/reducers/ReducerConstants';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
   + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
@@ -92,9 +91,6 @@ CanvasView.propTypes = {
   elements: PropTypes.object,
 }
 
-const mapStateToProps = state => ({
-  elements: (state
-    .updateElementReducer[RC.ELEMENTS]),
-});
 
-export default connect(mapStateToProps)(CanvasView);
+
+export default connect()(CanvasView);

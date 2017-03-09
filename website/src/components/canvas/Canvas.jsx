@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+
 import { Box } from 'reflexbox';
 import Paper from 'material-ui/Paper';
 import Sidebar from './Sidebar';
 import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';
+
+import * as RC from '../../redux/reducers/ReducerConstants';
+
 
 const styles = {
   avatar: {
@@ -43,22 +48,52 @@ const styles = {
 };
 
 /**
- * Gives HTML for a new canvas on canvas creation.
- * @returns {HTML}   The HTML of a new canvas.
+ * @classdesc The component encapsulating the whole Canvas page.
  */
-function Canvas() {
-  return (
-    <div>
-      <Box style={styles.box} col={9} sm={12} md={9}>
-        <Paper style={styles.paper} zDepth={4}>
-        <OptionsBar />
-        </Paper>
-      </Box>
-      <CanvasView />
-      <Sidebar />
-      <Preview3D />
-    </div>
-  )
+class Canvas extends React.Component {
+
+  /**
+   * Constructor for the class.
+   * @param {Object} props   Props for the component.
+   * @returns {void}
+   */
+  constructor(props) {
+    super(props);
+  }
+
+  /**
+   * Renders the component into HTML.
+   * @returns {HTML}    The rendered componenet.
+   */
+  render() {
+    const currentCanvasInfo = this.props.canvases[this.props.currentCanvas];
+    return (
+      <div>
+        <Box style={styles.box} col={9} sm={12} md={9}>
+          <Paper style={styles.paper} zDepth={4}>
+          <OptionsBar canvas={currentCanvasInfo} />
+          </Paper>
+        </Box>
+        <CanvasView elements={this.props.elements}/>
+        <Sidebar />
+        <Preview3D />
+      </div>
+    )
+  }
 }
 
-export default Canvas;
+const mapStateToProps = state => ({
+  elements: (state
+    .updateElementReducer[RC.ELEMENTS]),
+  currentCanvas: (state.canvasReducer[RC.CURRENT_CANVAS]),
+  canvases: (state.canvasReducer[RC.CANVASES]),
+});
+
+Canvas.propTypes = {
+  dispatch: PropTypes.func,
+  elements: PropTypes.object,
+  currentCanvas: PropTypes.string,
+  canvases: PropTypes.object,
+}
+
+export default connect(mapStateToProps)(Canvas);
