@@ -8,7 +8,6 @@ import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
 import * as ElementActions from '../../redux/actions/ElementActions';
-import * as RC from '../../redux/reducers/ReducerConstants';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
   + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
@@ -43,20 +42,26 @@ class CanvasView extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    firebase.database().ref('/test').once('value').then((elemListSnap) => {
-      this.props.dispatch(ElementActions.initElements(elemListSnap.val()));
+    const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
+    firebase.database().ref(elementPath).once('value').then((elemListSnap) => {
+      let firebaseElemList = elemListSnap.val();
+      if(!firebaseElemList) {
+        firebaseElemList = {};
+      }
+
+      this.props.dispatch(ElementActions.initElements(firebaseElemList));
     });
-    firebase.database().ref('/test').on('child_added', (elemSnap) => {
+    firebase.database().ref(elementPath).on('child_added', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('/test').on('child_changed', (elemSnap) => {
+    firebase.database().ref(elementPath).on('child_changed', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('/test').on('child_removed', (elemSnap) => {
+    firebase.database().ref(elementPath).on('child_removed', (elemSnap) => {
       this.props.dispatch(ElementActions.removeElement(elemSnap.key));
-    })
+    });
   }
 
   /**
@@ -64,7 +69,8 @@ class CanvasView extends React.Component {
    * @returns {void}
    */
   componentWillUnmount() {
-    firebase.database().ref('/test').off();
+    const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
+    firebase.database().ref(elementPath).off();
   }
 
   /**
@@ -73,16 +79,22 @@ class CanvasView extends React.Component {
    */
   render() {
     const elemDivs = [];
-    Object.keys(this.props.elements).forEach((id) => {
-      const elemDetails = this.props.elements[id];
-      elemDivs.push(
-        <CanvasElement key={id} elementId={id}
-          initLoc={elemDetails.position}
-          initSize={elemDetails.size}
-          rotation={Number(elemDetails.rotation)}
-        />
-      );
-    });
+    if (this.props.elements) {
+      const elemKeys = Object.keys(this.props.elements);
+      if (elemKeys.length > 0) {
+        elemKeys.forEach((id) => {
+          const elemDetails = this.props.elements[id];
+          elemDivs.push(
+            <CanvasElement key={id} elementId={id}
+              initLoc={elemDetails.position}
+              initSize={elemDetails.size}
+              rotation={Number(elemDetails.rotation)}
+              canvasId={this.props.currentCanvas}
+            />
+          );
+        });
+      }
+    }
     return (
       <div style={styles.canvas}>
         { elemDivs }
@@ -94,11 +106,9 @@ class CanvasView extends React.Component {
 CanvasView.propTypes = {
   dispatch: PropTypes.func,
   elements: PropTypes.object,
+  currentCanvas: PropTypes.string,
 }
 
-const mapStateToProps = state => ({
-  elements: (state
-    .updateElementReducer[RC.ELEMENTS]),
-});
 
-export default connect(mapStateToProps)(CanvasView);
+
+export default connect()(CanvasView);

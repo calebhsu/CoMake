@@ -22,9 +22,7 @@ export const promptForLogin = () => {
               .formRequestBody(result.user.uid);
 
             CoMakeServices.UserInfoService
-              .sendRequest(reqBody, ServiceEndpoint, () => {
-                console.log('made it fool');
-              });
+              .sendRequest(reqBody, ServiceEndpoint, () => {});
           }
         });
       document.location = "/#/home";

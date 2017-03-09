@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { persistStore } from 'redux-persist';
 import * as firebase from 'firebase';
 
 import Routes from './routes'
@@ -19,6 +20,10 @@ initFirebase();
 
 // construct redux store
 const store = storeHelper.constructStore();
+
+firebase.auth().onAuthStateChanged(() => {
+  persistStore(store);
+});
 
 render(
   <AppContainer>

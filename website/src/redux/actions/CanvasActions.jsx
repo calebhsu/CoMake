@@ -3,6 +3,7 @@
  */
 
 import * as AC from './ActionConstants';
+import * as FBHelper from '../../helpers/FirebaseHelper';
 
 
 /**
@@ -74,6 +75,19 @@ export const setCanvasName = (canvasId, canvasName) => ({
   canvasId: canvasId,
   payload: canvasName,
 });
+
+/**
+ * Action for setting canvas name and having it persist on firebase.
+ * @param {String} canvasId   ID for the canvas to change.
+ * @param {String} canvasName New name for the canvas.
+ * @returns {Promise}         A promise on the firebase set call
+ */
+export const setCanvasNameAndPersist = (canvasId, canvasName) => (
+  (dispatch) => {
+    dispatch(setCanvasName(canvasId, canvasName));
+    return FBHelper.setCanvasName(canvasId, canvasName);
+  }
+);
 
 /**
  * Action for setting a canvas owner.

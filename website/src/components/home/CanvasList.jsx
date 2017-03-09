@@ -93,7 +93,8 @@ class CanvasList extends React.Component {
       }
       // Otherwise dispatch action to add the canvas with just the name.
       const actionPayload = {};
-      actionPayload[RC.CANVAS_NAME] = canvasName
+      actionPayload[RC.CANVAS_NAME] = canvasName;
+      actionPayload[RC.CANVAS_USERS] = {};
       this.props.dispatch(CanvasActions.addCanvas(canvasId, actionPayload));
     }
 
@@ -126,7 +127,12 @@ class CanvasList extends React.Component {
           const canvasObj = {};
           canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
           canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
-          canvasObj[RC.CANVAS_USERS] = canvasSnap.child('users').val();
+
+          let canvasUsersObj = canvasSnap.child('users').val();
+          if(!canvasUsersObj) {
+            canvasUsersObj = {};
+          }
+          canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
 
           this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
         });

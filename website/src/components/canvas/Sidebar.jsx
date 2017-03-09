@@ -8,7 +8,6 @@ import MenuItem from 'material-ui/MenuItem';
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
 import * as CC from './CanvasConstants';
-import * as RC from '../../redux/reducers/ReducerConstants';
 import * as FBHelper from '../../helpers/FirebaseHelper';
 
 const styles = {
@@ -43,6 +42,7 @@ class Sidebar extends React.Component {
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
     this.removeElement = this.removeElement.bind(this);
+    this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
@@ -53,7 +53,7 @@ class Sidebar extends React.Component {
    */
   removeElement() {
     this.props.dispatch(ElementActions.removeElementAndPersist(
-      this.props.targetedId));
+      this.props.targetedId, this.props.currentCanvas));
   }
 
   /**
@@ -62,8 +62,8 @@ class Sidebar extends React.Component {
    */
   addElement() {
     /* TODO: Make this take a specific module*/
-    FBHelper.addElement('abcd', CC.INIT_POSITION, CC.INIT_SIZE,
-      CC.INIT_ROTATION);
+    FBHelper.addElement(this.props.currentCanvas, 'abcd',
+      CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 
   /**
@@ -118,7 +118,9 @@ class Sidebar extends React.Component {
             <li>
               <h3>Rotate</h3>
             </li>
-              <RotationSlider/>
+              <RotationSlider
+                currentCanvas={this.props.currentCanvas}
+              />
             <li>
               <h3>Resize</h3>
             </li>
@@ -148,11 +150,7 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,
+  currentCanvas: PropTypes.string,
 }
 
-const mapStateToProps = state => ({
-  targetedId: (state
-    .activeElementReducer[RC.ACTIVE_ELEMENT]),
-});
-
-export default connect(mapStateToProps)(Sidebar);
+export default connect()(Sidebar);

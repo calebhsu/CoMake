@@ -4,10 +4,7 @@
 
 import * as firebase from 'firebase';
 
-/**
- * A string to provide the firebase boards path
- */
-export const BOARDS_PATH = '/test';
+import * as RC from '../redux/reducers/ReducerConstants';
 
 /**
  * Initializes the firebase app
@@ -28,59 +25,80 @@ export const initFirebase = () => {
 
 /**
  *  Sets the items location on Firebase.
+ * @param {String} canvasId The ID of the canvas.
  * @param {String} elementId The ID of the element.
  * @param {Object} newLocation The new location to be updated.
  * @returns {Promise} The promise associated with the set action on firebase.
  */
-export const setElementLocation = (elementId, newLocation) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/position`)
+export const setElementLocation = (canvasId, elementId, newLocation) => {
+  const canvasPath = '/canvases/' + canvasId + '/elements';
+  return firebase.database().ref(`${canvasPath}/${elementId}/position`)
     .set(newLocation);
 };
 
 /**
  *  Sets the items location on Firebase.
+ * @param {String} canvasId The ID of the canvas.
  * @param {String} elementId The ID of the element.
  * @param {Object} newSize The new size to be updated.
  * @returns {Promise} The promise associated with the set action on firebase.
  */
-export const setElementSize = (elementId, newSize) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/size`)
+export const setElementSize = (canvasId, elementId, newSize) => {
+  const canvasPath = '/canvases/' + canvasId + '/elements';
+  return firebase.database().ref(`${canvasPath}/${elementId}/size`)
     .set(newSize);
 };
 
 /**
  *  Sets the items location on Firebase.
+ * @param {String} canvasId The ID of the canvas.
  * @param {String} elementId The ID of the element.
  * @param {Number} newRotation The new rotation to be updated.
  * @returns {Promise} The promise associated with the set action on firebase.
  */
-export const setElementRotation = (elementId, newRotation) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elementId}/rotation`)
+export const setElementRotation = (canvasId, elementId, newRotation) => {
+  const canvasPath = '/canvases/' + canvasId + '/elements';
+  return firebase.database().ref(`${canvasPath}/${elementId}/rotation`)
     .set(newRotation);
 };
 
 /**
  * Deletes an element from the canvas.
+ * @param {String} canvasId The ID of the canvas.
  * @param  {String} elementId Id of the element.
  * @return {Promise}           The promise associated with the firebase action.
  */
-export const deleteElement = (elementId) => {
-  return firebase.database().ref(`${BOARDS_PATH}/${elementId}`).remove();
+export const deleteElement = (canvasId, elementId) => {
+  const canvasPath = '/canvases/' + canvasId + '/elements';
+  return firebase.database().ref(`${canvasPath}/${elementId}`).remove();
 }
 
 /**
  * Adds an element to the canvas.
+ * @param {String} canvasId The ID of the canvas.
  * @param {String} module       String of the module associated with the element.
  * @param {Object} initPosition Initial position e.g. { x: 0, y: 0}
  * @param {Object} initSize     Initial size e.g. {width:0, height:0}
  * @param {Number} initRotation Initial rotation
  * @returns {Promise}           Promise associated with the firebase action.
  */
-export const addElement = (module, initPosition, initSize, initRotation) => {
-  return firebase.database().ref(`${BOARDS_PATH}`).push({
-    module: module,
-    position: initPosition,
-    size: initSize,
-    rotation: initRotation,
-  });
+export const addElement = (canvasId, module, initPosition, initSize, initRotation) => {
+  const canvasPath = '/canvases/' + canvasId + '/elements';
+  const toPush = {};
+  toPush[RC.ELEMENT_MODULE] = module;
+  toPush[RC.ELEMENT_POSITION] = initPosition;
+  toPush[RC.ELEMENT_SIZE] = initSize;
+  toPush[RC.ELEMENT_ROTATION] = initRotation;
+  return firebase.database().ref(`${canvasPath}`).push(toPush);
+}
+
+/**
+ * Sets a canvas' name.
+ * @param {String} canvasId      The canvas id.
+ * @param {String} newCanvasName The new canvas name to be set.
+ * @returns {Promise}            Promise associated with the firebase action.
+ */
+export const setCanvasName = (canvasId, newCanvasName) => {
+  const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_NAME;
+  return firebase.database().ref(`${canvasPath}`).set(newCanvasName);
 }
