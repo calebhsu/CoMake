@@ -47,7 +47,8 @@ export const removeField = (state, pathToField) => {
   }
   // Check if the currennt state exists, if not throw an error.
   if (!state) {
-    throw new Error('Given path does currently exist in state tree.');
+    throw new Error('Given path does currently exist in state tree:'
+      + pathToField.join());
   }
   // Make deep copy of the current state.
   const copy = Object.assign({}, state);

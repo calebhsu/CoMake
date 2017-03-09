@@ -10,7 +10,7 @@ import TextField from 'material-ui/TextField'
 
 import ExportModal from './ExportModal';
 import ShareCanvasModal from './ShareCanvasModal';
-import * as RC from '../../redux/reducers/ReducerConstants';
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
 
 import {
@@ -68,7 +68,10 @@ class OptionsBar extends React.Component {
    * @returns {HTML}   The HTML of the canvas options toolbar.
    */
   render() {
-    const canvasName = this.props.canvas[RC.CANVAS_NAME];
+    let canvasName = 'Canvas Name';
+    if (this.props.canvas) {
+      canvasName = this.props.canvas[RC.CANVAS_NAME];
+    }
     return (
       <Box style={styles.box} col={9} sm={12} md={9}>
         <Paper style={styles.paper} zDepth={1}>

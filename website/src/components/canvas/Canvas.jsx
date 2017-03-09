@@ -74,8 +74,13 @@ class Canvas extends React.Component {
           <OptionsBar canvas={currentCanvasInfo} />
           </Paper>
         </Box>
-        <CanvasView elements={this.props.elements}/>
-        <Sidebar />
+        <CanvasView
+          elements={this.props.elements}
+          currentCanvas={this.props.currentCanvas}
+        />
+        <Sidebar
+          targetedId={this.props.targetedId}
+          currentCanvas={this.props.currentCanvas} />
         <Preview3D />
       </div>
     )
@@ -87,6 +92,8 @@ const mapStateToProps = state => ({
     .updateElementReducer[RC.ELEMENTS]),
   currentCanvas: (state.canvasReducer[RC.CURRENT_CANVAS]),
   canvases: (state.canvasReducer[RC.CANVASES]),
+  targetedId: (state
+    .activeElementReducer[RC.ACTIVE_ELEMENT]),
 });
 
 Canvas.propTypes = {
@@ -94,6 +101,7 @@ Canvas.propTypes = {
   elements: PropTypes.object,
   currentCanvas: PropTypes.string,
   canvases: PropTypes.object,
+  targetedId: PropTypes.string,
 }
 
 export default connect(mapStateToProps)(Canvas);

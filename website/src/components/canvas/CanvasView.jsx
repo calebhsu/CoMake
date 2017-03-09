@@ -42,23 +42,21 @@ class CanvasView extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').once('value').then((elemListSnap) => {
+    const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
+    firebase.database().ref(elementPath).once('value').then((elemListSnap) => {
       this.props.dispatch(ElementActions.initElements(elemListSnap.val()));
     });
-    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_added', (elemSnap) => {
+    firebase.database().ref(elementPath).on('child_added', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_changed', (elemSnap) => {
+    firebase.database().ref(elementPath).on('child_changed', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,
         elemSnap.val()));
     });
-    firebase.database().ref('canvases/-Kd6yNDP3HKNhaiD1BTu/elements').on('child_removed', (elemSnap) => {
+    firebase.database().ref(elementPath).on('child_removed', (elemSnap) => {
       this.props.dispatch(ElementActions.removeElement(elemSnap.key));
     });
-    firebase.database().ref('/test').on('child_removed', (elemSnap) => {
-      this.props.dispatch(ElementActions.removeElement(elemSnap.key));
-    })
   }
 
   /**
@@ -75,17 +73,22 @@ class CanvasView extends React.Component {
    */
   render() {
     const elemDivs = [];
-    Object.keys(this.props.elements).forEach((id) => {
-      const elemDetails = this.props.elements[id];
-      elemDivs.push(
-        <CanvasElement key={id} elementId={id}
-          initLoc={elemDetails.position}
-          initSize={elemDetails.size}
-          rotation={Number(elemDetails.rotation)}
-          canvasId={"-Kd6yNDP3HKNhaiD1BTu"}
-        />
-      );
-    });
+    if (this.props.elements) {
+      const elemKeys = Object.keys(this.props.elements);
+      if (elemKeys.length > 0) {
+        elemKeys.forEach((id) => {
+          const elemDetails = this.props.elements[id];
+          elemDivs.push(
+            <CanvasElement key={id} elementId={id}
+              initLoc={elemDetails.position}
+              initSize={elemDetails.size}
+              rotation={Number(elemDetails.rotation)}
+              canvasId={this.props.currentCanvas}
+            />
+          );
+        });
+      }
+    }
     return (
       <div style={styles.canvas}>
         { elemDivs }
@@ -97,6 +100,7 @@ class CanvasView extends React.Component {
 CanvasView.propTypes = {
   dispatch: PropTypes.func,
   elements: PropTypes.object,
+  currentCanvas: PropTypes.string,
 }
 
 

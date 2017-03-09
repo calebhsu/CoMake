@@ -38,7 +38,7 @@ class RotationSlider extends React.Component {
   handleSliderChange(e, sliderVal) {
     const updatedRotation = (sliderVal - 0.5) * 720;
     this.props.dispatch(updateAndPersist(UPDATE_ROTATION, this.props.targetedId,
-      updatedRotation, this.props.canvasId));
+      updatedRotation, this.props.currentCanvas));
   }
 
   /**
@@ -61,7 +61,7 @@ class RotationSlider extends React.Component {
 RotationSlider.propTypes = {
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,
-  canvasId: PropTypes.string,
+  currentCanvas: PropTypes.string,
 }
 
 const mapStateToProps = state => ({
