@@ -71,7 +71,7 @@ const handleRequest = (request, response) => {
         );
 
         response.status(500)
-          .send('Users cannot change canvases they are not assigned to.');
+          .send({ message: 'Users cannot change canvases they are not assigned to.' });
       }
 
     }).catch((error) => {

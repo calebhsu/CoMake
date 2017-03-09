@@ -16,9 +16,9 @@ const CanvasCreationService = CoMakeServices.CanvasCreationService;
  */
 function CreateNewCanvas(){
   const reqBody = CanvasCreationService.formRequestBody(
-    'new canvas',
+    'Untitled',
     '0',
-    ['0']
+    []
   );
 
   CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
