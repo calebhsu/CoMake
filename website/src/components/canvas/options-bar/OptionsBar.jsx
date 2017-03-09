@@ -22,6 +22,8 @@ import {
   orange500,
 } from 'material-ui/styles/colors';
 
+const COLORS = [purple500, blue500, green400, orange500];
+
 const styles = {
   box: {
     width: '100%'
@@ -82,8 +84,33 @@ class OptionsBar extends React.Component {
    */
   render() {
     let canvasName = 'Canvas Name';
+    const userDivs = [];
     if (this.props.canvas) {
       canvasName = this.props.canvas[RC.CANVAS_NAME];
+      if (this.props.canvas[RC.CANVAS_USERS]) {
+        let currColorIndex = 0;
+        Object.keys(this.props.canvas[RC.CANVAS_USERS]).forEach((uid) => {
+          const userEmail = this.props.canvas[RC.CANVAS_USERS][uid];
+          userDivs.push(
+            <IconButton
+              tooltip={userEmail}
+              touch={true}
+              tooltipPosition="bottom-center"
+              key={userEmail}
+            >
+              <Avatar
+                color={white}
+                backgroundColor={COLORS[currColorIndex]}
+                style={styles.avatar}
+                size={30}
+              >
+                {userEmail[0]}
+              </Avatar>
+            </IconButton>
+          );
+          currColorIndex = (currColorIndex + 1) % COLORS.length;
+        });
+      }
     }
     return (
       <Box style={styles.box} col={9} sm={12} md={9}>
@@ -99,26 +126,7 @@ class OptionsBar extends React.Component {
             <FlatButton label="Import" style={styles.optionBtn} />
             <ExportModal />
             <ShareCanvasModal />
-            <IconButton tooltip="Shaggy" touch={true} tooltipPosition="bottom-center">
-              <Avatar color={white} backgroundColor={green400} style={styles.avatar} size={30}>
-                S
-              </Avatar>
-            </IconButton>
-            <IconButton tooltip="Velma" touch={true} tooltipPosition="bottom-center">
-              <Avatar color={white} backgroundColor={orange500} style={styles.avatar} size={30}>
-                V
-              </Avatar>
-            </IconButton>
-            <IconButton tooltip="Fred" touch={true} tooltipPosition="bottom-center">
-              <Avatar color={white} backgroundColor={blue500} style={styles.avatar} size={30}>
-                F
-              </Avatar>
-            </IconButton>
-            <IconButton tooltip="Daphne" touch={true} tooltipPosition="bottom-center">
-              <Avatar color={white} backgroundColor={purple500} style={styles.avatar} size={30}>
-                D
-              </Avatar>
-            </IconButton>
+            { userDivs }
           </span>
         </Paper>
       </Box>
