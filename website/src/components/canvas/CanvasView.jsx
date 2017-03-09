@@ -44,7 +44,12 @@ class CanvasView extends React.Component {
   componentDidMount() {
     const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
     firebase.database().ref(elementPath).once('value').then((elemListSnap) => {
-      this.props.dispatch(ElementActions.initElements(elemListSnap.val()));
+      let firebaseElemList = elemListSnap.val();
+      if(!firebaseElemList) {
+        firebaseElemList = {};
+      }
+
+      this.props.dispatch(ElementActions.initElements(firebaseElemList));
     });
     firebase.database().ref(elementPath).on('child_added', (elemSnap) => {
       this.props.dispatch(ElementActions.addElement(elemSnap.key,

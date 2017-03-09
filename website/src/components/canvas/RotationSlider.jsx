@@ -36,7 +36,6 @@ class RotationSlider extends React.Component {
    * @return {void}
    */
   handleSliderChange(e, sliderVal) {
-    console.log(this.props.currentCanvas);
     const updatedRotation = (sliderVal - 0.5) * 720;
     this.props.dispatch(updateAndPersist(UPDATE_ROTATION, this.props.targetedId,
       updatedRotation, this.props.currentCanvas));
