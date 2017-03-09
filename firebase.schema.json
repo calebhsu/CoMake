@@ -26,23 +26,6 @@
             }
         }
     ],
-    "itemLists":[
-      [
-          {
-              "content":"these are not the droids youre looking for",
-              "position": {
-                "x-coord":42,
-                "y-coord":42
-              },
-              "size":{
-                "width": 42,
-                "height": 42
-              },
-              "rotation":42,
-              "locked":false
-          }
-      ]
-    ],
     "users":[
         {
             "admin":false,
