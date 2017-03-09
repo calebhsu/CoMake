@@ -62,9 +62,8 @@ class Sidebar extends React.Component {
    */
   addElement() {
     /* TODO: Make this take a specific module*/
-    console.log(this.props);
-    FBHelper.addElement(this.props.currentCanvas, 'abcd', CC.INIT_POSITION, CC.INIT_SIZE,
-      CC.INIT_ROTATION);
+    FBHelper.addElement(this.props.currentCanvas, 'abcd',
+      CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 
   /**
@@ -119,7 +118,9 @@ class Sidebar extends React.Component {
             <li>
               <h3>Rotate</h3>
             </li>
-              <RotationSlider canvasId={this.props.currentCanvas} />
+              <RotationSlider
+                currentCanvas={this.props.currentCanvas}
+              />
             <li>
               <h3>Resize</h3>
             </li>
