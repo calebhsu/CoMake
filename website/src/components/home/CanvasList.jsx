@@ -1,7 +1,7 @@
 /**
  * @file HTML generation for the canvas list
  */
- import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
@@ -23,93 +23,101 @@ const styles = {
 };
 
 const generateCanvasCode = (
-    <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
- );
+  <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
+);
 
 
 /**
  * @classdesc Component for displaying list of available canvases.
  */
- class CanvasList extends React.Component {
+class CanvasList extends React.Component {
+  /**
+   * Constructor for CanvasList.
+   * @param {Object} props The prop list for this component.
+   * @returns {void}
+   */
+  constructor(props) {
+    super(props);
+    // Keeps track of whether we have attached listeners yet.
+    this.listenersAttached = false;
+    this.collectAndListenForCanvases = this.collectAndListenForCanvases.bind(this);
+    this.createClickHandler = this.createClickHandler.bind(this);
+  }
 
-   /**
-    * Constructor for CanvasList.
-    * @param {Object} props The prop list for this component.
-    * @returns {void}
-    */
-   constructor(props) {
-     super(props);
-     // Keeps track of whether we have attached listeners yet.
-     this.listenersAttached = false;
-     this.collectAndListenForCanvases = this.collectAndListenForCanvases.bind(this);
-     this.createClickHandler = this.createClickHandler.bind(this);
-   }
+  componentDidMount() {
+    if (!this.listenersAttached && this.props.userId) {
+      this.collectAndListenForCanvases(this.props.userId);
+    }
+  }
 
-   componentDidMount() {
-     if (!this.listenersAttached && this.props.userId) {
-       this.collectAndListenForCanvases(this.props.userId);
-     }
-   }
+  /**
+   * When CanvasList recieves uid, perform look up canvases from Firebase.
+   * @param {Object} nextProps The next props to be passed to the component.
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    if (!this.listenersAttached && nextProps.userId) {
+      this.collectAndListenForCanvases(nextProps.userId);
+    }
+  }
 
-   /**
-    * When CanvasList recieves uid, perform look up canvases from Firebase.
-    * @param {Object} nextProps The next props to be passed to the component.
-    * @returns {void}
-    */
-   componentWillReceiveProps(nextProps) {
-     if (!this.listenersAttached && nextProps.userId) {
-       this.collectAndListenForCanvases(nextProps.userId);
-     }
-   }
+  /**
+  * Stop listening for new canvases to be added once we leave home page.
+  * @returns {void}
+  */
+ componentWillUnmount() {
+    if (this.props.userId){
+      firebase.database().ref('/users').child(this.props.userId)
+        .child(RC.CANVASES).off()
+    }
 
-   /**
-    * Stop listening for new canvases to be added once we leave home page.
-    * @returns {void}
-    */
-   componentWillUnmount() {
-     if (this.props.userId){
-       firebase.database().ref('/users').child(this.props.userId)
-         .child(RC.CANVASES).off()
-     }
+    this.listenersAttached = false;
+  }
 
-     this.listenersAttached = false;
-   }
+  collectAndListenForCanvases(userId) {
+    // Helper function that will add just canvas id/name
+    const addCanvasHelper = (canvasId, canvasName) => {
+      // Check if the canvas has already been added.
+      const canvasKeys = Object.keys(this.props.canvases);
+      if (canvasKeys.indexOf(canvasId) >= 0) {
+        return;
+      }
+      // Otherwise dispatch action to add the canvas with just the name.
+      const actionPayload = {};
+      actionPayload[RC.CANVAS_NAME] = canvasName
+      this.props.dispatch(CanvasActions.addCanvas(canvasId, actionPayload));
+    }
 
-   collectAndListenForCanvases(userId) {
-     // Helper function that will add just canvas id/name
-     const addCanvasHelper = (canvasId, canvasName) => {
-       // Check if the canvas has already been added.
-       const canvasKeys = Object.keys(this.props.canvases);
-       if (canvasKeys.indexOf(canvasId) >= 0) {
-         return;
-       }
-       // Otherwise dispatch action to add the canvas with just the name.
-       const actionPayload = {};
-       actionPayload[RC.CANVAS_NAME] = canvasName
-       this.props.dispatch(CanvasActions.addCanvas(canvasId, actionPayload));
-     }
+  // If there is a valid username, fetch available canvas names.
+  firebase.database().ref('/users').child(userId)
+    .child(RC.CANVASES).once('value').then((canvasListSnap) => {
+      Object.keys(canvasListSnap.val()).forEach((canvasId) => {
+        addCanvasHelper(canvasId, canvasListSnap.child(canvasId).val());
+    });
+    });
 
-     // If there is a valid username, fetch available canvas names.
-     firebase.database().ref('/users').child(userId)
-       .child(RC.CANVASES).once('value').then((canvasListSnap) => {
-         Object.keys(canvasListSnap.val()).forEach((canvasId) => {
-           addCanvasHelper(canvasId, canvasListSnap.child(canvasId).val());
+    // Listen for any new canvases that might be added.
+    firebase.database().ref('/users').child(userId)
+      .child(RC.CANVASES).on('child_added', (canvasSnap) => {
+        addCanvasHelper(canvasSnap.key, canvasSnap.val());
+      });
+    this.listenersAttached = true;
+  }
+
+  createClickHandler(elementId) {
+    return () => {
+      this.props.dispatch(CanvasActions.setCurrentCanvas(elementId));
+      firebase.database().ref(`/canvases/${elementId}`).once('value')
+        .then((canvasSnap) => {
+          const canvasObj = {};
+          canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
+          canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
+          canvasObj[RC.CANVAS_USERS] = canvasSnap.child('users').val();
+
+          this.props.dispatch(CanvasActions.addCanvas(elementId, canvasObj));
         });
-       });
-
-     // Listen for any new canvases that might be added.
-     firebase.database().ref('/users').child(userId)
-       .child(RC.CANVASES).on('child_added', (canvasSnap) => {
-         addCanvasHelper(canvasSnap.key, canvasSnap.val());
-       });
-     this.listenersAttached = true;
-   }
-
-   createClickHandler(elementId) {
-     return () => {
-       this.props.dispatch(CanvasActions.setCurrentCanvas(elementId));
-     };
-   }
+    };
+  }
 
   /**
    * Generates HTML for the user canvas list.
@@ -126,7 +134,7 @@ const generateCanvasCode = (
               <CardMedia
                 overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
                 overlayContentStyle={styles.overlay}
-              >
+                >
                 {generateCanvasCode}
               </CardMedia>
             </Card>

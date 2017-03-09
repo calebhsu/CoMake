@@ -131,6 +131,8 @@ class ShareCanvasModal extends Component {
       />,
     ];
 
+    console.log(this.props);
+
     return (
       <div style={styles.wrapper}>
         <FlatButton
@@ -164,11 +166,13 @@ class ShareCanvasModal extends Component {
 }
 
 ShareCanvasModal.propTypes = {
+  canvases: PropTypes.object,
   currentCanvasId: PropTypes.string,
   userId: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
+  canvases: state.canvasReducer[RC.CANVASES],
   currentCanvasId: state.canvasReducer[RC.CURRENT_CANVAS],
   userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
 });
