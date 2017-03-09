@@ -18,7 +18,6 @@ function CreateNewCanvas(){
   const reqBody = CanvasCreationService.formRequestBody(
     'new canvas',
     '0',
-    '1',
     ['0']
   );
 
