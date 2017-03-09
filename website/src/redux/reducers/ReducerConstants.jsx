@@ -22,7 +22,12 @@
     USER_PHOTO_URL: null,
     USER_EMAIL: null,
   },
-  CANVASES: {},
+  CANVASES: {
+    <canvasID>: {
+      CANVAS_NAME: null,
+      CANVAS_OWNER: null,
+      CANVAS_USERS: null,
+  },
   CURRENT_CANVAS: null,
   ELEMENTS: {},
   ACTIVE_ELEMENT: null,

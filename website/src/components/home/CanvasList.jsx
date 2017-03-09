@@ -41,6 +41,14 @@ const generateCanvasCode = (
      super(props);
      // Keeps track of whether we have attached listeners yet.
      this.listenersAttached = false;
+     this.collectAndListenForCanvases = this.collectAndListenForCanvases.bind(this);
+     this.createClickHandler = this.createClickHandler.bind(this);
+   }
+
+   componentDidMount() {
+     if (!this.listenersAttached && this.props.userId) {
+       this.collectAndListenForCanvases(this.props.userId);
+     }
    }
 
    /**
@@ -49,6 +57,25 @@ const generateCanvasCode = (
     * @returns {void}
     */
    componentWillReceiveProps(nextProps) {
+     if (!this.listenersAttached && nextProps.userId) {
+       this.collectAndListenForCanvases(nextProps.userId);
+     }
+   }
+
+   /**
+    * Stop listening for new canvases to be added once we leave home page.
+    * @returns {void}
+    */
+   componentWillUnmount() {
+     if (this.props.userId){
+       firebase.database().ref('/users').child(this.props.userId)
+         .child(RC.CANVASES).off()
+     }
+
+     this.listenersAttached = false;
+   }
+
+   collectAndListenForCanvases(userId) {
      // Helper function that will add just canvas id/name
      const addCanvasHelper = (canvasId, canvasName) => {
        // Check if the canvas has already been added.
@@ -63,25 +90,25 @@ const generateCanvasCode = (
      }
 
      // If there is a valid username, fetch available canvas names.
-     if (!this.listenersAttached && nextProps.userId) {
-       // Listen for any new canvases that might be added.
-       firebase.database().ref('/users').child(nextProps.userId)
-         .child(RC.CANVASES).on('child_added', (canvasSnap) => {
-           addCanvasHelper(canvasSnap.key, canvasSnap.val());
-         });
-       this.listenersAttached = true;
-     }
+     firebase.database().ref('/users').child(userId)
+       .child(RC.CANVASES).once('value').then((canvasListSnap) => {
+         Object.keys(canvasListSnap.val()).forEach((canvasId) => {
+           addCanvasHelper(canvasId, canvasListSnap.child(canvasId).val());
+        });
+       });
+
+     // Listen for any new canvases that might be added.
+     firebase.database().ref('/users').child(userId)
+       .child(RC.CANVASES).on('child_added', (canvasSnap) => {
+         addCanvasHelper(canvasSnap.key, canvasSnap.val());
+       });
+     this.listenersAttached = true;
    }
 
-   /**
-    * Stop listening for new canvases to be added once we leave home page.
-    * @returns {void}
-    */
-   componentWillUnmount() {
-     if (this.props.userId){
-       firebase.database().ref('/users').child(this.props.userId)
-         .child(RC.CANVASES).off()
-     }
+   createClickHandler(elementId) {
+     return () => {
+       this.props.dispatch(CanvasActions.setCurrentCanvas(elementId));
+     };
    }
 
   /**
@@ -89,24 +116,15 @@ const generateCanvasCode = (
    * @returns {canvasList}  The array holding the canvas list HTML.
    */
   render() {
-    console.log(this.props);
-    let canvasList = [];
-    let numCanvases = 7;
-    let numCols = 3;
-    if(numCanvases > 10)
-        numCols = 1;
-    else if (numCanvases > 5)
-        numCols = 2;
-    else
-      numCols = 3;
+    const canvasList = [];
 
-    for (let i = 0; i < numCanvases; i++){
+    Object.keys(this.props.canvases).forEach((canvasId, i) => {
       canvasList.push(
-        <Box col={numCols} style={styles.models} key={i}>
+        <Box style={styles.models} key={i}>
           <Link to="/canvas">
-            <Card>
+            <Card onTouchTap={this.createClickHandler(canvasId)}>
               <CardMedia
-                overlay={<CardHeader title="Racecar" />}
+                overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
                 overlayContentStyle={styles.overlay}
               >
                 {generateCanvasCode}
@@ -114,8 +132,9 @@ const generateCanvasCode = (
             </Card>
           </Link>
         </Box>
-        )
-    }
+      )
+    });
+
     return (<div> {canvasList} </div>);
   }
 }

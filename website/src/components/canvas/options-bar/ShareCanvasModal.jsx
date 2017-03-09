@@ -2,7 +2,8 @@
  * @file Modal component for sharing canvas with users.
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import CoMakeServices from 'comake-services';
 
@@ -10,6 +11,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
+import * as RC from '../../../redux/reducers/ReducerConstants';
 import ServiceEndpoint from '../../../ServiceEndpoint';
 
 const CanvasSharingService = CoMakeServices.CanvasSharingService;
@@ -60,15 +62,18 @@ class ShareCanvasModal extends Component {
    * Triggered By: Share button onTouchTapEvent
    * @returns {void}
    */
-   shareCanvas() {
+  shareCanvas() {
+    if(!this.props.userId || !this.props.currentCanvasId) {
+     return;
+    }
 
      const emailList = this.state.emailListText.split(',').map((email) => {
        return email.trim();
      });
 
      const reqBody = CanvasSharingService.formRequestBody(
-       '-Kd6ynwWKglaq1V_j5ND',
-       '0',
+       this.props.currentCanvasId,
+       this.props.userId,
        emailList
      );
 
@@ -158,4 +163,14 @@ class ShareCanvasModal extends Component {
   }
 }
 
-export default ShareCanvasModal;
+ShareCanvasModal.propTypes = {
+  currentCanvasId: PropTypes.string,
+  userId: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  currentCanvasId: state.canvasReducer[RC.CURRENT_CANVAS],
+  userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
+});
+
+export default connect(mapStateToProps)(ShareCanvasModal);
