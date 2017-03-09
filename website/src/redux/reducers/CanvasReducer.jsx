@@ -23,6 +23,7 @@ export const canvasReducer = (state = RC.BLANK_STATE, action) => {
       pathToChange.push(RC.CANVASES);
       pathToChange.push(action.canvasId);
       pathToChange.push(RC.CANVAS_USERS);
+      pathToChange.push(action.userId);
       break;
     case AC.REMOVE_CANVAS:
       pathToChange.push(RC.CANVASES);
@@ -41,6 +42,12 @@ export const canvasReducer = (state = RC.BLANK_STATE, action) => {
       pathToChange.push(action.canvasId);
       pathToChange.push(RC.CANVAS_OWNER);
       break;
+    case AC.REMOVE_CANVAS_USER:
+      pathToChange.push(RC.CANVASES);
+      pathToChange.push(action.canvasId);
+      pathToChange.push(RC.CANVAS_USERS);
+      pathToChange.push(action.userId);
+      return removeField(state, pathToChange);
     default:
       // Any other action just return we do not want to handle.
       return state;

@@ -21,12 +21,14 @@ export const addCanvas = (canvasId, canvasInfo) => ({
  * Add a user to the canvas.
  * @param   {String} canvasId Id for the canvas.
  * @param   {String} userId   Id for the user.
+ * @param   {Object} userInfo The information for the user.
  * @returns {Object} 		  The object detailing the action.
  */
-export const addCanvasUser = (canvasId, userId) => ({
+export const addCanvasUser = (canvasId, userId, userInfo) => ({
   type: AC.ADD_CANVAS_USER,
   canvasId: canvasId,
-  payload: userId,
+  userId: userId,
+  payload: userInfo,
 });
 
 /**

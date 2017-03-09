@@ -32,14 +32,29 @@ describe('CanvasReducerUnitTests', () => {
   test('canvasReducer_AddCanvasUser', () => {
     const testId = 'testId';
     const testUserId = 'testUserId';
+    const testUserInfo = {'testname': 'nameHere'};
     const testAction = {
       type: AC.ADD_CANVAS_USER,
       canvasId: testId,
-      payload: testUserId,
+      userId: testUserId,
+      payload: testUserInfo,
     }
     canvasReducer(RC.BLANK_STATE, testAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      testUserId, [RC.CANVASES, testId, RC.CANVAS_USERS]);
+      testUserInfo, [RC.CANVASES, testId, RC.CANVAS_USERS, testUserId]);
+  });
+
+  test('canvasReducer_RemoveCanvasUser', () => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const testAction = {
+      type: AC.REMOVE_CANVAS_USER,
+      canvasId: testId,
+      userId: testUserId,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.removeField).toHaveBeenCalledWith(RC.BLANK_STATE,
+      [RC.CANVASES, testId, RC.CANVAS_USERS, testUserId]);
   });
 
   test('canvasReducer_RemoveCanvas', () => {

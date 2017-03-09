@@ -21,12 +21,15 @@ describe('CanvasActionsUnitTests', () => {
   test('addCanvasUser', () => {
     const testId = 'testId';
     const testUserId = 'testUserId';
+    const testUserInfo = {'testname': 'somenamehere'};
     const expected = {
       type: AC.ADD_CANVAS_USER,
       canvasId: testId,
-      payload: testUserId,
+      userId: testUserId,
+      payload: testUserInfo,
     }
-    expect(CA.addCanvasUser(testId, testUserId)).toEqual(expected);
+    expect(CA.addCanvasUser(testId, testUserId, testUserInfo))
+      .toEqual(expected);
   });
 
   test('removeCanvas', () => {

@@ -37,16 +37,36 @@ describe('CanvasIntegrationTests', () => {
   test('addCanvasUser_dispatch', (done) => {
     const testId = 'testId';
     const testUserId = 'testUserId';
+    const testUserInfo = {'testname': 'nameHere'};
     const expected = Object.assign({}, RC.BLANK_STATE);
     expected[RC.CANVASES][testId] = {}
-    expected[RC.CANVASES][testId][RC.CANVAS_USERS] = testUserId;
+    expected[RC.CANVASES][testId][RC.CANVAS_USERS] = {};
+    expected[RC.CANVASES][testId][RC.CANVAS_USERS][testUserId] = testUserInfo;
 
     testStore.subscribe(() => {
       expect(testStore.getState().canvasReducer).toEqual(expected);
       done();
     });
 
-    testStore.dispatch(CA.addCanvasUser(testId, testUserId));
+    testStore.dispatch(CA.addCanvasUser(testId, testUserId, testUserInfo));
+  });
+
+  test('removeCanvasUser_dispatch', (done) => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const testUserInfo = {'testname': 'nameHere'};
+    const testState = Object.assign({}, RC.BLANK_STATE);
+    testState[RC.CANVASES][testId] = {}
+    testState[RC.CANVASES][testId][RC.CANVAS_USERS] = {};
+    testState[RC.CANVASES][testId][RC.CANVAS_USERS][testUserId] = testUserInfo;
+
+    testStore.subscribe(() => {
+      expect(testStore.getState()
+        .canvasReducer[RC.CANVASES][testId][RC.CANVAS_USERS]).toEqual({});
+      done();
+    });
+
+  testStore.dispatch(CA.removeCanvasUser(testId, testUserId));
   });
 
   test('removeCanvas_dispatch', (done) => {
