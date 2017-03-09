@@ -116,7 +116,7 @@ class CanvasList extends React.Component {
   /**
    * Creates a click handler to handle the selection of a canvas.
    * @param {string} canvasId the ID to create the click handler for.
-   * @returns {void}
+   * @returns {Function} A click handler for the specified canvasId
    */
   createClickHandler(canvasId) {
     return () => {
