@@ -39,6 +39,8 @@ class CreateCanvas extends React.Component {
     );
 
     CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
+      this.props.dispatch(CanvasActions.setCurrentCanvas(resObj.newCanvasId));
+
       firebase.database().ref(`/canvases/${resObj.newCanvasId}`).once('value')
         .then((canvasSnap) => {
           const canvasObj = {};
@@ -52,7 +54,6 @@ class CreateCanvas extends React.Component {
           canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
 
           this.props.dispatch(CanvasActions.addCanvas(resObj.newCanvasId, canvasObj));
-          this.props.dispatch(CanvasActions.setCurrentCanvas(resObj.newCanvasId));
           document.location = '/#/canvas';
         });
     });
