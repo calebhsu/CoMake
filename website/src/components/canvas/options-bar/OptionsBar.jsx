@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField'
 import ExportModal from './ExportModal';
 import ShareCanvasModal from './ShareCanvasModal';
 import * as RC from '../../../redux/reducers/ReducerConstants';
+import * as CA from '../../../redux/actions/CanvasActions';
 
 
 import {
@@ -61,6 +62,18 @@ class OptionsBar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.nameFieldChangeHandler = this.nameFieldChangeHandler.bind(this);
+  }
+
+  /**
+   * Handler for when the name field is changed.
+   * @param {Object} e  The event of changing the name.
+   * @param {String} newValue The new name entered.
+   * @returns {void}
+   */
+  nameFieldChangeHandler(e, newValue) {
+    this.props.dispatch(CA.setCanvasNameAndPersist(this.props.currentCanvas,
+      newValue))
   }
 
   /**
@@ -75,7 +88,12 @@ class OptionsBar extends React.Component {
     return (
       <Box style={styles.box} col={9} sm={12} md={9}>
         <Paper style={styles.paper} zDepth={1}>
-        <TextField style={styles.modelName} id="text-field-default" defaultValue={canvasName}/>
+        <TextField
+          style={styles.modelName}
+          id="text-field-default"
+          defaultValue={canvasName}
+          onChange={this.nameFieldChangeHandler}
+        />
           <span style={styles.optionBtnGroup}>
             <FlatButton label="File Options" style={styles.optionBtn} />
             <FlatButton label="Import" style={styles.optionBtn} />
@@ -111,6 +129,7 @@ class OptionsBar extends React.Component {
 OptionsBar.propTypes = {
   dispatch: PropTypes.func,
   canvas: PropTypes.object,
+  currentCanvas: PropTypes.string,
 }
 
 export default connect()(OptionsBar);

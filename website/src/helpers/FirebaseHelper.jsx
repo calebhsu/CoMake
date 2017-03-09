@@ -99,6 +99,6 @@ export const addElement = (canvasId, module, initPosition, initSize, initRotatio
  * @returns {Promise}            Promise associated with the firebase action.
  */
 export const setCanvasName = (canvasId, newCanvasName) => {
-  const canvasPath = '/canvases/' + canvasId + RC.CANVAS_NAME;
+  const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_NAME;
   return firebase.database().ref(`${canvasPath}`).set(newCanvasName);
 }
