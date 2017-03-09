@@ -1,5 +1,5 @@
 /**
- * @file Possible actions we can take on the currentCanvas state branch.
+ * @file Possible actions we can take on the active element state branch.
  */
 
 import {

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Box, Flex } from 'reflexbox';
+import { connect } from 'react-redux';
 
 import Avatar from 'material-ui/Avatar';
 import MenuItem from 'material-ui/MenuItem';
@@ -36,9 +37,9 @@ const styles = {
  * Gives HTML of a user's profile page.
  * @returns {HTML}   The HTML of a profile page.
  */
-export default class Profile extends Component {
-  constructor() {
-      super();
+class Profile extends Component {
+  constructor(props) {
+      super(props);
       this.state = {
           value: 1,
       }
@@ -50,6 +51,10 @@ export default class Profile extends Component {
   }
 
   render() {
+    let photoURL = "";
+    if (this.props.userInfo) {
+      photoURL = this.props.userInfo.photo;
+    }
     return (
       <div>
         <Flex
@@ -61,7 +66,7 @@ export default class Profile extends Component {
           <Box col={12} sm={12} md={6}>
             <Paper style={styles.paper} zDepth={2}>
               <h2 style={styles.header}>My Profile</h2>
-              <Avatar src="http://placekitten.com/310/311" size="200"/>
+              <Avatar src={photoURL} size="200"/>
               <div style={styles.fields}>
                 <TextField
                   hintText="Vin"
@@ -115,3 +120,14 @@ export default class Profile extends Component {
     )
   }
 }
+
+Profile.propTypes = {
+  dispatch: PropTypes.func,
+  userInfo: PropTypes.object,
+}
+
+const mapStateToProps = state => ({
+  userInfo: state.userInfoReducer.userInfo,
+});
+
+export default connect(mapStateToProps)(Profile);

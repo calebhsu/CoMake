@@ -10,7 +10,7 @@ import {
   UPDATE_POSITION, UPDATE_SIZE
 } from '../../redux/actions/ActionConstants';
 import { updateAndPersist } from '../../redux/actions/ElementActions';
-import { targetElement } from '../../redux/actions/CurrentCanvasActions';
+import { targetElement } from '../../redux/actions/ActiveElementActions';
 /**
  * Component for an element on the canvas.
  */
@@ -94,7 +94,7 @@ class CanvasElement extends React.Component {
     return (
       <Rnd
         bounds={'parent'}
-        ref={ elem => { this.elemRef = elem; } }
+        ref={ elem => { this.elementRef = elem; } }
         {...elementProps}
       >
         <div

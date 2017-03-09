@@ -58,3 +58,29 @@ export const setElementRotation = (elementId, newRotation) => {
   return firebase.database().ref(`${BOARDS_PATH}/${elementId}/rotation`)
     .set(newRotation);
 };
+
+/**
+ * Deletes an element from the canvas.
+ * @param  {String} elementId Id of the element.
+ * @return {Promise}           The promise associated with the firebase action.
+ */
+export const deleteElement = (elementId) => {
+  return firebase.database().ref(`${BOARDS_PATH}/${elementId}`).remove();
+}
+
+/**
+ * Adds an element to the canvas.
+ * @param {String} module       String of the module associated with the element.
+ * @param {Object} initPosition Initial position e.g. { x: 0, y: 0}
+ * @param {Object} initSize     Initial size e.g. {width:0, height:0}
+ * @param {Number} initRotation Initial rotation
+ * @returns {Promise}           Promise associated with the firebase action.
+ */
+export const addElement = (module, initPosition, initSize, initRotation) => {
+  return firebase.database().ref(`${BOARDS_PATH}`).push({
+    module: module,
+    position: initPosition,
+    size: initSize,
+    rotation: initRotation,
+  });
+}
