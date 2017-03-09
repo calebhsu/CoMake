@@ -16,6 +16,7 @@
 /* Looks like...
 {
   USER_INFO: {
+    USER_ID: {};
     USERNAME: null,
     USER_PHOTO_URL: null,
     USER_EMAIL: null,
