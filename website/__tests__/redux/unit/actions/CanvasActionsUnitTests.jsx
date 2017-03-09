@@ -2,9 +2,7 @@
  * @file Automated tests for the Redux CurrentCanvas Actions.
  */
 
-import {
-	addCanvas, removeCanvas, setCurrentCanvas,
-} from '../../../../src/redux/actions/CanvasActions';
+import * as CA from '../../../../src/redux/actions/CanvasActions';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
 
 
@@ -17,7 +15,21 @@ describe('CanvasActionsUnitTests', () => {
       canvasId: testId,
       payload: testInfo,
     }
-    expect(addCanvas(testId, testInfo)).toEqual(expected);
+    expect(CA.addCanvas(testId, testInfo)).toEqual(expected);
+  });
+
+  test('addCanvasUser', () => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const testUserInfo = {'testname': 'somenamehere'};
+    const expected = {
+      type: AC.ADD_CANVAS_USER,
+      canvasId: testId,
+      userId: testUserId,
+      payload: testUserInfo,
+    }
+    expect(CA.addCanvasUser(testId, testUserId, testUserInfo))
+      .toEqual(expected);
   });
 
   test('removeCanvas', () => {
@@ -26,7 +38,7 @@ describe('CanvasActionsUnitTests', () => {
       type: AC.REMOVE_CANVAS,
       canvasId: testId,
     }
-    expect(removeCanvas(testId)).toEqual(expected);
+    expect(CA.removeCanvas(testId)).toEqual(expected);
   });
 
   test('setCurrentCanvas', () => {
@@ -35,6 +47,28 @@ describe('CanvasActionsUnitTests', () => {
       type: AC.SET_CURRENT_CANVAS,
       payload: testId,
     }
-    expect(setCurrentCanvas(testId)).toEqual(expected);
+    expect(CA.setCurrentCanvas(testId)).toEqual(expected);
+  });
+
+  test('setCanvasName', () => {
+    const testId = 'testId';
+    const testName = 'testName';
+    const expected = {
+      type: AC.SET_CANVAS_NAME,
+      canvasId: testId,
+      payload: testName,
+    }
+    expect(CA.setCanvasName(testId, testName)).toEqual(expected);
+  });
+
+  test('setCanvasOwner', () => {
+    const testId = 'testId';
+    const testOwner = 'testOwner';
+    const expected = {
+      type: AC.SET_CANVAS_OWNER,
+      canvasId: testId,
+      payload: testOwner,
+    }
+    expect(CA.setCanvasOwner(testId, testOwner)).toEqual(expected);
   });
 });
