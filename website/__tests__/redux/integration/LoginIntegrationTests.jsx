@@ -21,18 +21,22 @@ describe('LoginIntegrationTests', () => {
   });
 
   test('updateUserInfo_dispatch', (done) => {
+    const testId = 'uid';
     const testName = 'First Last';
     const testPhotoURL = 'photoURL';
     const testEmail = 'email';
+    const testPayload = {};
+    testPayload[RC.USER_ID] = testId;
+    testPayload[RC.USERNAME] = testName;
+    testPayload[RC.USER_PHOTO_URL] = testPhotoURL;
+    testPayload[RC.USER_EMAIL] = testEmail;
     const expected = Object.assign({}, RC.BLANK_STATE);
-    expected[RC.USER_INFO][RC.USERNAME] = testName;
-    expected[RC.USER_INFO][RC.USER_PHOTO_URL] = testPhotoURL;
-    expected[RC.USER_INFO][RC.USER_EMAIL] = testEmail;
+    expected[RC.USER_INFO] = testPayload
     testStore.subscribe(() => {
       expect(testStore.getState().userInfoReducer).toEqual(expected);
       done();
     });
 
-    testStore.dispatch(LoginActions.updateUserInfo(testName, testPhotoURL, testEmail));
+    testStore.dispatch(LoginActions.updateUserInfo(testPayload));
   });
 });
