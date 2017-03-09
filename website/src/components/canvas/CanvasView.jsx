@@ -64,7 +64,8 @@ class CanvasView extends React.Component {
    * @returns {void}
    */
   componentWillUnmount() {
-    firebase.database().ref('/test').off();
+    const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
+    firebase.database().ref(elementPath).off();
   }
 
   /**
