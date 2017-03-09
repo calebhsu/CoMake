@@ -2,45 +2,64 @@
  * @file HTML generation for the Home page
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import CoMakeServices from 'comake-services';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
+
+import * as RC from '../../redux/reducers/ReducerConstants';
 import ServiceEndpoint from '../../ServiceEndpoint'
 
 const CanvasCreationService = CoMakeServices.CanvasCreationService;
 
-/**
- * Creates a request for a new canvas.
- * @returns {null} Returns nothing
- */
-function CreateNewCanvas(){
-  const reqBody = CanvasCreationService.formRequestBody(
-    'new canvas',
-    '0',
-    '1',
-    ['0']
-  );
+class CreateCanvas extends React.Component {
 
-  CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
-}
+  constructor(props) {
+    super(props);
 
-/**
- * Returns the HTML for CreateCanvas
- * @return {HTML} The HTML for CreateCanvas
- */
-function CreateCanvas() {
-	return(
-		<span>
-      <Link to="/canvas">
-        <RaisedButton
+    this.createNewCanvas = this.createNewCanvas.bind(this);
+  }
+
+  /**
+   * Creates a request for a new canvas.
+   * @returns {null} Returns nothing
+   */
+  createNewCanvas() {
+    if(!this.props.userId) {
+      return;
+    }
+
+    const reqBody = CanvasCreationService.formRequestBody(
+      'Untitled',
+      this.props.userId,
+      []
+    );
+
+    CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, () => {});
+  }
+
+  render() {
+    return(
+  		<span>
+        <Link to="/canvas">
+          <RaisedButton
             label="New Canvas"
-            onClick={CreateNewCanvas}
+            onClick={this.createNewCanvas}
             secondary={true}
-        />
-      </Link>
-    </span>
+          />
+        </Link>
+      </span>
     )
+  }
 }
 
-export default CreateCanvas;
+CreateCanvas.propTypes = {
+  userId: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
+});
+
+export default connect(mapStateToProps)(CreateCanvas);
