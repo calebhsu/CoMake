@@ -91,7 +91,7 @@ class NavBar extends React.Component {
             <FlatButton
               label={"Log Out"}
               labelStyle={styles.user}
-              style={[styles.user, styles.btn]}
+              style={styles.user, styles.btn}
               onClick={signOut}
             />
           </div>

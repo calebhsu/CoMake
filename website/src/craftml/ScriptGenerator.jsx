@@ -16,7 +16,7 @@ export function generateScript(elements) {
   for (let i = 0; i < elementList.length; i++) {
     let currElement = elementList[i];
 
-    let elementScript = '<element' + String(elementId) + '\n';
+    let elementScript = '\t<element' + String(elementId) + '\n';
     elementScript += '\tmodule="' + currElement.module + '"\n';
     // Add in transitions
     elementScript += '\tt="size x ' + String(currElement.size.width);
@@ -27,6 +27,10 @@ export function generateScript(elements) {
 
     script += elementScript + '\n\n';
     elementId++;
+  }
+
+  if ( script !== '' ){
+    script = '<g>\n' + script + '</g>';
   }
   return script;
 }
