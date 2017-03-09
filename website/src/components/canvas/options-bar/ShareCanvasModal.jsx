@@ -131,8 +131,6 @@ class ShareCanvasModal extends Component {
       />,
     ];
 
-    console.log(this.props);
-
     return (
       <div style={styles.wrapper}>
         <FlatButton
