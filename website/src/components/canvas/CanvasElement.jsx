@@ -52,7 +52,7 @@ class CanvasElement extends React.Component {
       y: data.position.top,
     };
     this.props.dispatch(updateAndPersist(UPDATE_POSITION, this.props.elementId,
-      updatedLoc));
+      updatedLoc, this.props.canvasId));
   }
 
   /**
@@ -64,7 +64,7 @@ class CanvasElement extends React.Component {
    */
   endResize(direction, styleSize, clientSize) {
     this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
-      clientSize));
+      clientSize, this.props.canvasId));
   }
 
   /**
@@ -117,6 +117,7 @@ CanvasElement.propTypes = {
   initSize: PropTypes.object,
   rotation: PropTypes.number,
   elementId: PropTypes.string,
+  canvasId: PropTypes.string,
 }
 
 export default connect()(CanvasElement);

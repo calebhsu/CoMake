@@ -34,19 +34,20 @@ export const updateElement = (updateType, elementId, updatedVal) => ({
  * @param {String} updateType The type of update to be performed.
  * @param {String} elementId String of the elment ID.
  * @param {Any} updatedVal The new updated value..
+ * @param {String} canvasId The ID of the canvas.
  * @returns {Promise} A promise on the firebase set call
  */
-export const updateAndPersist = (updateType, elementId, updatedVal) => (
+export const updateAndPersist = (updateType, elementId, updatedVal, canvasId) => (
   (dispatch) => {
     const actionObject = updateElement(updateType, elementId, updatedVal);
     dispatch(actionObject);
     switch (updateType) {
       case AC.UPDATE_POSITION:
-        return FBHelper.setElementLocation(elementId, updatedVal);
+        return FBHelper.setElementLocation(canvasId, elementId, updatedVal);
       case AC.UPDATE_SIZE:
-        return FBHelper.setElementSize(elementId, updatedVal);
+        return FBHelper.setElementSize(canvasId, elementId, updatedVal);
       case AC.UPDATE_ROTATION:
-        return FBHelper.setElementRotation(elementId, updatedVal);
+        return FBHelper.setElementRotation(canvasId, elementId, updatedVal);
       default:
         return;
     }
@@ -80,10 +81,11 @@ export const removeElement = (elementId) => ({
  * Removes element from firebase and then returns removeElement
  * @param  {String} elementId The id of the element.
  * @return {Object}           Object detailing the action.
+ * @param {String} canvasId The ID of the canvas.
  */
-export const removeElementAndPersist = (elementId) => (
+export const removeElementAndPersist = (elementId, canvasId) => (
   (dispatch) => {
     dispatch(removeElement(elementId));
-    FBHelper.deleteElement(elementId);
+    FBHelper.deleteElement(canvasId, elementId);
   }
 )

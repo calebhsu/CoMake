@@ -2,11 +2,19 @@
  * @file Modal component for sharing canvas with users.
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+import CoMakeServices from 'comake-services';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+
+import * as RC from '../../../redux/reducers/ReducerConstants';
+import ServiceEndpoint from '../../../ServiceEndpoint';
+
+const CanvasSharingService = CoMakeServices.CanvasSharingService;
 
 const styles = {
   actionBtn: {
@@ -41,10 +49,50 @@ class ShareCanvasModal extends Component {
     super(props);
     this.state = {
       open: false,
+      emailListText: null
     };
+    this.shareCanvas = this.shareCanvas.bind(this);
+    this.updateEmailListText = this.updateEmailListText.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
   }
+
+  /**
+   * Shares a canvas with the users found in the emailListText state value
+   * Triggered By: Share button onTouchTapEvent
+   * @returns {void}
+   */
+  shareCanvas() {
+    if(!this.props.userId || !this.props.currentCanvasId) {
+     return;
+    }
+
+     const emailList = this.state.emailListText.split(',').map((email) => {
+       return email.trim();
+     });
+
+     const reqBody = CanvasSharingService.formRequestBody(
+       this.props.currentCanvasId,
+       this.props.userId,
+       emailList
+     );
+
+     CanvasSharingService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
+       console.log(resObj);
+     });
+
+     this.handleClose();
+   }
+
+  /**
+   * Updates the emailListText state value
+   * Triggered By: TextField onBlur event
+   * @param {Event} event the onBlur event from the TextField element
+   * @returns {void}
+   */
+   updateEmailListText(event) {
+     this.setState({emailListText: event.target.value});
+   }
 
   /**
   * Handler for onTouchTap that sets modal's open state to false.
@@ -78,7 +126,7 @@ class ShareCanvasModal extends Component {
         hoverColor="#0d7faa"
         label="Share"
         labelStyle={styles.shareBtn}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.shareCanvas}
         style={styles.actionBtn}
       />,
     ];
@@ -107,6 +155,7 @@ class ShareCanvasModal extends Component {
             floatingLabelFixed={true}
             fullWidth={true}
             hintText="abc123@email.com"
+            onBlur={this.updateEmailListText}
           />
         </Dialog>
       </div>
@@ -114,4 +163,16 @@ class ShareCanvasModal extends Component {
   }
 }
 
-export default ShareCanvasModal;
+ShareCanvasModal.propTypes = {
+  canvases: PropTypes.object,
+  currentCanvasId: PropTypes.string,
+  userId: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  canvases: state.canvasReducer[RC.CANVASES],
+  currentCanvasId: state.canvasReducer[RC.CURRENT_CANVAS],
+  userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
+});
+
+export default connect(mapStateToProps)(ShareCanvasModal);

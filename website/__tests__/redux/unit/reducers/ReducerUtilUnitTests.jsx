@@ -22,6 +22,7 @@ describe('ReducerUtilUnitTests', () => {
     // Form expected.
     const username = 'Vin Diesel';
     const userInfo = {};
+    userInfo[RC.USER_ID] = null;
     userInfo[RC.USERNAME] = username;
     userInfo[RC.USER_PHOTO_URL] = null;
     userInfo[RC.USER_EMAIL] = null;

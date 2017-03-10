@@ -4,6 +4,7 @@
 
  // Fields in the state tree..
  export const USER_INFO = 'userInfo';
+ export const USER_ID = 'userId';
  export const USERNAME = 'name';
  export const USER_PHOTO_URL = 'photo';
  export const USER_EMAIL = 'email';
@@ -16,17 +17,25 @@
 /* Looks like...
 {
   USER_INFO: {
+    USER_ID: null,
     USERNAME: null,
     USER_PHOTO_URL: null,
     USER_EMAIL: null,
   },
-  CANVASES: {},
+  CANVASES: {
+    <canvasID>: {
+      CANVAS_NAME: null,
+      CANVAS_OWNER: null,
+      CANVAS_USERS: null,
+    }
+  },
   CURRENT_CANVAS: null,
   ELEMENTS: {},
   ACTIVE_ELEMENT: null,
 }
 */
 const userInfoBranch = {};
+userInfoBranch[USER_ID] = null;
 userInfoBranch[USERNAME] = null;
 userInfoBranch[USER_PHOTO_URL] = null;
 userInfoBranch[USER_EMAIL] = null;

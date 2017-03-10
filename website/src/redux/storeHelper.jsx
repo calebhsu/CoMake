@@ -2,10 +2,11 @@
  * @file File to compile redux store helpers.
  */
 
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { autoRehydrate } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
-import reducers from '../reducers';
+import reducers from './reducers';
 
 /**
  * Constructs
@@ -13,8 +14,12 @@ import reducers from '../reducers';
  */
 const storeConstructor = () => {
   return createStore(reducers,
-    applyMiddleware(
-      thunkMiddleware
+    undefined,
+    compose(
+      applyMiddleware(
+        thunkMiddleware
+      ),
+      autoRehydrate()
     )
   );
 };

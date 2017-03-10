@@ -29,6 +29,34 @@ describe('CanvasReducerUnitTests', () => {
       testInfo, [RC.CANVASES, testId]);
   });
 
+  test('canvasReducer_AddCanvasUser', () => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const testUserInfo = {'testname': 'nameHere'};
+    const testAction = {
+      type: AC.ADD_CANVAS_USER,
+      canvasId: testId,
+      userId: testUserId,
+      payload: testUserInfo,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testUserInfo, [RC.CANVASES, testId, RC.CANVAS_USERS, testUserId]);
+  });
+
+  test('canvasReducer_RemoveCanvasUser', () => {
+    const testId = 'testId';
+    const testUserId = 'testUserId';
+    const testAction = {
+      type: AC.REMOVE_CANVAS_USER,
+      canvasId: testId,
+      userId: testUserId,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.removeField).toHaveBeenCalledWith(RC.BLANK_STATE,
+      [RC.CANVASES, testId, RC.CANVAS_USERS, testUserId]);
+  });
+
   test('canvasReducer_RemoveCanvas', () => {
     const testId = 'testId';
     const testAction = {
@@ -49,6 +77,32 @@ describe('CanvasReducerUnitTests', () => {
     canvasReducer(RC.BLANK_STATE, testAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
       testId, [RC.CURRENT_CANVAS]);
+  });
+
+  test('canvasReducer_SetCanvasName', () => {
+    const testId = 'testId';
+    const testName = 'testName';
+    const testAction = {
+      type: AC.SET_CANVAS_NAME,
+      canvasId: testId,
+      payload: testName,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testName, [RC.CANVASES, testId, RC.CANVAS_NAME]);
+  });
+
+  test('canvasReducer_SetCanvasOwner', () => {
+    const testId = 'testId';
+    const testOwner = 'testOwner';
+    const testAction = {
+      type: AC.SET_CANVAS_OWNER,
+      canvasId: testId,
+      payload: testOwner,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testOwner, [RC.CANVASES, testId, RC.CANVAS_OWNER]);
   });
 
   test('canvasReducer_NotSupportedAction', () => {

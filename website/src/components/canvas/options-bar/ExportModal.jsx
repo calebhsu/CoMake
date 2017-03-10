@@ -2,11 +2,18 @@
  * @file Modal component for displaying exported code.
  */
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import CopyToClipboard from 'react-copy-to-clipboard';
+
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
+
+import { generateScript } from '../../../craftml/ScriptGenerator';
 
 const styles = {
   copyBtn: {
@@ -36,73 +43,129 @@ class ExportModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      craftScript: '',
+      copied: false,
+      dialogOpen: false,
+      snackbarOpen: false,
     };
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
+    this.copyCraftScript = this.copyCraftScript.bind(this);
+    this.generateCraftScript = this.generateCraftScript.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
+    this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
 
   /**
-  * Handler for onTouchTap that sets modal's open state to false.
+  * Handler for onCopy that sets copied & snackbar open state to true.
   * @returns {void}
   */
-  handleClose() {
-    this.setState({open: false});
+  copyCraftScript() {
+    this.setState({
+      copied: true,
+      snackbarOpen: true
+    })
   }
 
   /**
-   * Handler for onTouchTap that sets modal's open state to true.
+  * Generates CraftML script for element positions in top-down view &
+  * opens the modal to display script.
+  * @returns {void}
+  */
+  generateCraftScript() {
+    this.setState({
+      craftScript: generateScript(this.props.elements)
+    });
+    this.handleDialogOpen();
+  }
+
+  /**
+  * Handler for onTouchTap that sets dialog's open state to false.
+  * @returns {void}
+  */
+  handleDialogClose() {
+    this.setState({dialogOpen: false});
+  }
+
+  /**
+   * Handler for onTouchTap that sets dialog's open state to true.
    * @returns {void}
    */
-  handleOpen() {
-    this.setState({open: true});
+  handleDialogOpen() {
+    this.setState({dialogOpen: true});
+  }
+
+  /**
+   * Handler for onRequestClose that sets snackbar's open state to false.
+   * @returns {void}
+   */
+  handleSnackbarRequestClose() {
+    this.setState({snackbarOpen: false});
   }
 
   /**
    * Renders the exported code modal for display.
-   * @returns {HTML} The rendered HTML of the modal.
+   * @returns {HTML} The rendered HTML of the trigger button and modal.
    */
   render() {
-    const actions = [
-      <FlatButton
-        label="Close"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        backgroundColor="#229bc8"
-        hoverColor="#0d7faa"
-        label="Copy"
-        primary={true}
-        onTouchTap={this.handleClose}
-        style={styles.copyBtn}
-      />
+  const actions = [
+    <FlatButton
+      label="Close"
+      onTouchTap={this.handleDialogClose}
+      primary={true}
+    />,
+    <CopyToClipboard
+      onCopy={this.copyCraftScript}
+      text={this.state.craftScript}
+      >
+        <FlatButton
+          label="Copy"
+          onTouchTap={this.handleDialogClose}
+          primary={true}
+        />
+      </CopyToClipboard>
     ];
 
     return (
       <div style={styles.wrapper}>
         <FlatButton
           label="Export"
-          onTouchTap={this.handleOpen}
+          onTouchTap={this.generateCraftScript}
         />
         <Dialog
           actions={actions}
           actionsContainerStyle={styles.dialogActions}
           bodyStyle={styles.dialogBody}
           modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
+          open={this.state.dialogOpen}
+          onRequestClose={this.handleDialogClose}
           title="Generated CraftML Code"
         >
           <TextField
             fullWidth={true}
+            hintText="<g></g>"
             multiLine={true}
             rows={5}
+            value={this.state.craftScript}
           />
         </Dialog>
+        <Snackbar
+          autoHideDuration={4000}
+          message="Copied to your clipboard."
+          onRequestClose={this.handleSnackbarRequestClose}
+          open={this.state.snackbarOpen}
+        />
       </div>
     );
   }
 }
 
-export default ExportModal;
+ExportModal.propTypes = {
+  elements: PropTypes.object,
+}
+
+const mapStateToProps = state => ({
+  elements: (state
+    .updateElementReducer[RC.ELEMENTS]),
+});
+
+export default connect(mapStateToProps)(ExportModal);

@@ -3,6 +3,7 @@ import CoMakeServices from 'comake-services';
 
 import { updateUserInfo } from './../redux/actions/LoginActions';
 import ServiceEndpoint from '../ServiceEndpoint';
+import * as RC from '../redux/reducers/ReducerConstants';
 
 /**
  * Opens login prompt for user and redirects them to the home page if successful.
@@ -21,9 +22,7 @@ export const promptForLogin = () => {
               .formRequestBody(result.user.uid);
 
             CoMakeServices.UserInfoService
-              .sendRequest(reqBody, ServiceEndpoint, () => {
-                console.log('made it fool');
-              });
+              .sendRequest(reqBody, ServiceEndpoint, () => {});
           }
         });
       document.location = "/#/home";
@@ -49,10 +48,11 @@ export const getUserInfo = (dispatch) => {
   const currentUser = firebase.auth().currentUser;
 
   if(currentUser) {
-    dispatch(updateUserInfo(
-      currentUser.displayName,
-      currentUser.photoURL,
-      currentUser.email,
-    ));
+    const actionPayload = {};
+    actionPayload[RC.USER_ID] = currentUser.uid;
+    actionPayload[RC.USERNAME] = currentUser.displayName;
+    actionPayload[RC.USER_PHOTO_URL] = currentUser.photoURL;
+    actionPayload[RC.USER_EMAIL] = currentUser.email;
+    dispatch(updateUserInfo(actionPayload));
   }
 }
