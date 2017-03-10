@@ -77,7 +77,7 @@
          backgroundColor="#229bc8"
          hoverColor="#0d7faa"
          label="Import"
-         labelStyle={styles.shareBtn}
+         labelStyle={styles.importBtn}
          onTouchTap={this.handleClose}
          style={styles.actionBtn}
        />,
