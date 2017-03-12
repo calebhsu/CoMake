@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField'
 
 import ExportModal from './ExportModal';
-import ImportModal from './ImportModal';
+import ImportModelModal from './ImportModelModal';
 import ShareCanvasModal from './ShareCanvasModal';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
@@ -149,7 +149,7 @@ class OptionsBar extends React.Component {
         />
           <span style={styles.optionBtnGroup}>
             <FlatButton label="File Options" style={styles.optionBtn} />
-            <ImportModal />
+            <ImportModelModal />
             <ExportModal />
             <ShareCanvasModal />
             { userDivs }

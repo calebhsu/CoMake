@@ -51,7 +51,7 @@ const sendRequest = (requestBody, endpoint, responseCallback) => {
     },
     withCredentials: false
   }, (res) => {
-    let responseObject = null;
+    var responseObject = null;
 
     res.on('data', (bodyChunk) => {
     if(!responseObject)

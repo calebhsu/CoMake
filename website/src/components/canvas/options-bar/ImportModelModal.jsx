@@ -2,11 +2,18 @@
  * @file Modal component for importing model image by ID from CraftML.
  */
 
- import React, { Component } from 'react';
+ import React, { Component, PropTypes } from 'react';
+ import { connect } from 'react-redux';
+
+ import CoMakeServices from 'comake-services';
 
  import Dialog from 'material-ui/Dialog';
  import FlatButton from 'material-ui/FlatButton';
  import TextField from 'material-ui/TextField';
+
+ import * as RC from '../../../redux/reducers/ReducerConstants';
+
+ const ModelImportService = CoMakeServices.ModelImportService;
 
  const styles = {
    actionBtn: {
@@ -31,7 +38,7 @@
   * Gives HTML for model import modal.
   * @returns {HTML}   The HTML of the model import modal.
   */
- class ImportModal extends Component {
+ class ImportModelModal extends Component {
 
    /**
     * Constructor for ImportModal
@@ -40,10 +47,13 @@
    constructor(props) {
      super(props);
      this.state = {
+       modelIdText: null,
        open: false,
      };
      this.handleClose = this.handleClose.bind(this);
      this.handleOpen = this.handleOpen.bind(this);
+     this.importModel = this.importModel.bind(this);
+     this.updateModelIdText = this.updateModelIdText.bind(this);
    }
 
    /**
@@ -63,6 +73,35 @@
    }
 
    /**
+    * Imports model image from CraftML using model ID found in the modelId state value
+    * Triggered By: Import button onTouchTapEvent
+    * @returns {void}
+    */
+   importModel() {
+      if(!this.props.currentCanvasId) {
+        return;
+      }
+
+      const reqBody = ModelImportService.formRequestBody(this.state.modelIdText);
+      console.log(reqBody);
+      // ImportModelService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
+      //   console.log(resObj);
+      // });
+
+      this.handleClose();
+    }
+
+    /**
+     * Updates the modelId state value
+     * Triggered By: TextField onBlur event
+     * @param {Event} event the onBlur event from the TextField element
+     * @returns {void}
+     */
+     updateModelIdText(event) {
+       this.setState({modelIdText: event.target.value});
+     }
+
+   /**
     * Renders the import model modal for display.
     * @returns {HTML} The rendered HTML of the modal.
     */
@@ -78,7 +117,7 @@
          hoverColor="#0d7faa"
          label="Import"
          labelStyle={styles.importBtn}
-         onTouchTap={this.handleClose}
+         onTouchTap={this.importModel}
          style={styles.actionBtn}
        />,
      ];
@@ -103,6 +142,7 @@
              floatingLabelFixed={true}
              fullWidth={true}
              hintText="9dKZ3"
+             onBlur={this.updateModelIdText}
            />
          </Dialog>
        </div>
@@ -110,4 +150,13 @@
    }
  }
 
- export default ImportModal;
+ ImportModelModal.propTypes = {
+   dispatch: PropTypes.func,
+   currentCanvasId: PropTypes.string,
+ }
+
+ const mapStateToProps = (state) => ({
+   currentCanvasId: state.canvasReducer[RC.CURRENT_CANVAS],
+ });
+
+ export default connect(mapStateToProps)(ImportModelModal);
