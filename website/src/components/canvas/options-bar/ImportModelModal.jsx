@@ -82,11 +82,11 @@
         return;
       }
 
-      const reqBody = ModelImportService.formRequestBody(this.state.modelIdText);
-      console.log(reqBody);
-      // ImportModelService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
-      //   console.log(resObj);
-      // });
+      const reqPath = ModelImportService.formRequestBody(this.state.modelIdText);
+
+      ModelImportService.sendRequest(reqPath, (resObj) => {
+        console.log(resObj);
+      });
 
       this.handleClose();
     }
