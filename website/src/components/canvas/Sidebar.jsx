@@ -136,9 +136,9 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,
-  currentCanvas: PropTypes.string,
 }
 
 export default connect()(Sidebar);
