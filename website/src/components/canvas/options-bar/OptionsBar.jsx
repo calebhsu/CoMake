@@ -91,8 +91,6 @@ class OptionsBar extends React.Component {
     firebase.database().ref(canvasPath).off();
   }
 
-
-
   /**
    * Handler for when the name field is changed.
    * @param {Object} e  The event of changing the name.
@@ -149,8 +147,8 @@ class OptionsBar extends React.Component {
         />
           <span style={styles.optionBtnGroup}>
             <FlatButton label="File Options" style={styles.optionBtn} />
-            <ImportModelModal />
-            <ExportModal />
+            <ImportModelModal currentCanvas={this.props.currentCanvas} />
+            <ExportModal elements={this.props.elements} />
             <ShareCanvasModal />
             { userDivs }
           </span>
@@ -162,6 +160,7 @@ class OptionsBar extends React.Component {
 
 OptionsBar.propTypes = {
   dispatch: PropTypes.func,
+  elements: PropTypes.object,
   canvas: PropTypes.object,
   currentCanvas: PropTypes.string,
 }
