@@ -100,48 +100,35 @@ class Sidebar extends React.Component {
    */
   render() {
     return (
-      <div>
-      <div
-      onMouseEnter={this.mouseEnter}
-      onMouseLeave={this.mouseLeave}>
-
+      <div onMouseEnter={this.mouseEnter}
+           onMouseLeave={this.mouseLeave}>
         <Drawer containerStyle={styles.sidebar}
-                open= {true}
                 docked={true}
+                open= {true}
                 openSecondary={false}
                 style={{opacity: this.state.opacity}}
                 zDepth={0}>
-          <div
-          style={styles.propertiesSpacing}>
-          <ul>
+          <ul style={styles.propertiesSpacing}>
             {this.listItems}
             <li>
               <h3>Rotate</h3>
+              <RotationSlider currentCanvas={this.props.currentCanvas} />
             </li>
-              <RotationSlider
-                currentCanvas={this.props.currentCanvas}
-              />
             <li>
               <h3>Resize</h3>
-            </li>
-            <li>
               <TextField
-                hintText="Current: 64px"
+                hintText="64px"
                 floatingLabelText="Height"
                 fullWidth={true}
-              /><br />
-            </li>
-            <li>
+              />
               <TextField
-                hintText="Current: 64px"
+                hintText="64px"
                 floatingLabelText="Width"
                 fullWidth={true}
-              /><br />
+              />
             </li>
           </ul>
-          </div>
         </Drawer>
-        </div>
       </div>
     );
   }
