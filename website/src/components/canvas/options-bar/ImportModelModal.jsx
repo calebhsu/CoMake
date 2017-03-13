@@ -83,9 +83,16 @@
 
       const modelId = ModelImportService.formRequestBody(this.state.modelIdText);
 
+      /* TODO: figure out how to preserve aspect ratio of imported module imgs
+       * ...it's different for every image */
+      const INIT_SIZE = {
+        'width': 300,
+        'height': 160,
+      }
+
       ModelImportService.sendRequest(modelId, (imgPath) => {
         FBHelper.addElement(this.props.currentCanvas, modelId, imgPath,
-          CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+          CC.INIT_POSITION, INIT_SIZE, CC.INIT_ROTATION);
       });
 
       this.handleClose();
