@@ -39,11 +39,11 @@ class Sidebar extends React.Component {
     this.state = {
       opacity: .7
     }
+    this.addElement = this.addElement.bind(this);
+    this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
     this.removeElement = this.removeElement.bind(this);
-    this.addElement = this.addElement.bind(this);
-    this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -61,8 +61,9 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   addElement() {
-    /* TODO: Make this take a specific module*/
-    FBHelper.addElement(this.props.currentCanvas, 'abcd',
+    /* NOTE: leaving this here for ease of testing */
+    /* TODO: remove before deploying */
+    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png',
       CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 

@@ -11,7 +11,8 @@
  import FlatButton from 'material-ui/FlatButton';
  import TextField from 'material-ui/TextField';
 
- import * as RC from '../../../redux/reducers/ReducerConstants';
+ import * as CC from '../CanvasConstants';
+ import * as FBHelper from '../../../helpers/FirebaseHelper';
 
  const ModelImportService = CoMakeServices.ModelImportService;
 
@@ -78,14 +79,13 @@
     * @returns {void}
     */
    importModel() {
-      if(!this.props.currentCanvasId) {
-        return;
-      }
+      if(!this.props.currentCanvas) { return; }
 
-      const reqPath = ModelImportService.formRequestBody(this.state.modelIdText);
+      const modelId = ModelImportService.formRequestBody(this.state.modelIdText);
 
-      ModelImportService.sendRequest(reqPath, (resObj) => {
-        console.log(resObj);
+      ModelImportService.sendRequest(modelId, (imgPath) => {
+        FBHelper.addElement(this.props.currentCanvas, modelId, imgPath,
+          CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
       });
 
       this.handleClose();
@@ -151,12 +151,8 @@
  }
 
  ImportModelModal.propTypes = {
+   currentCanvas: PropTypes.string,
    dispatch: PropTypes.func,
-   currentCanvasId: PropTypes.string,
  }
 
- const mapStateToProps = (state) => ({
-   currentCanvasId: state.canvasReducer[RC.CURRENT_CANVAS],
- });
-
- export default connect(mapStateToProps)(ImportModelModal);
+ export default connect()(ImportModelModal);

@@ -78,8 +78,8 @@ class Canvas extends React.Component {
           </Paper>
         </Box>
         <CanvasView
-          elements={this.props.elements}
           currentCanvas={this.props.currentCanvas}
+          elements={this.props.elements}
         />
         <Sidebar
           targetedId={this.props.targetedId}

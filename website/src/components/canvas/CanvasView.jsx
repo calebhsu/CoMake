@@ -10,8 +10,8 @@ import CanvasElement from './CanvasElement';
 import * as ElementActions from '../../redux/actions/ElementActions';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
-  + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
-  + 'transparent 1px)');
+                               + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
+                               + 'transparent 1px)');
 const styles = {
   canvas: {
     backgroundSize: '25px 25px',
@@ -86,10 +86,11 @@ class CanvasView extends React.Component {
           const elemDetails = this.props.elements[id];
           elemDivs.push(
             <CanvasElement key={id} elementId={id}
+              canvasId={this.props.currentCanvas}
+              image={elemDetails.image}
               initLoc={elemDetails.position}
               initSize={elemDetails.size}
               rotation={Number(elemDetails.rotation)}
-              canvasId={this.props.currentCanvas}
             />
           );
         });
@@ -104,11 +105,9 @@ class CanvasView extends React.Component {
 }
 
 CanvasView.propTypes = {
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
-  currentCanvas: PropTypes.string,
 }
-
-
 
 export default connect()(CanvasView);
