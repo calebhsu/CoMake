@@ -86,7 +86,7 @@ class CanvasView extends React.Component {
           const elemDetails = this.props.elements[id];
           elemDivs.push(
             <CanvasElement key={id} elementId={id}
-              canvasId={this.props.currentCanvas}
+              currentCanvas={this.props.currentCanvas}
               image={elemDetails.image}
               initLoc={elemDetails.position}
               initSize={elemDetails.size}

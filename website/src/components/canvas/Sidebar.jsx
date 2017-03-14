@@ -105,7 +105,7 @@ class Sidebar extends React.Component {
            onMouseLeave={this.mouseLeave}>
         <Drawer containerStyle={styles.sidebar}
                 docked={true}
-                open= {true}
+                open={true}
                 openSecondary={false}
                 style={{opacity: this.state.opacity}}
                 zDepth={0}>

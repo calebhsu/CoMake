@@ -52,7 +52,7 @@ class CanvasElement extends React.Component {
       y: data.position.top,
     };
     this.props.dispatch(updateAndPersist(UPDATE_POSITION, this.props.elementId,
-      updatedLoc, this.props.canvasId));
+      updatedLoc, this.props.currentCanvas));
   }
 
   /**
@@ -64,7 +64,7 @@ class CanvasElement extends React.Component {
    */
   endResize(direction, styleSize, clientSize) {
     this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
-      clientSize, this.props.canvasId));
+      clientSize, this.props.currentCanvas));
   }
 
   /**
@@ -115,7 +115,7 @@ class CanvasElement extends React.Component {
 }
 
 CanvasElement.propTypes = {
-  canvasId: PropTypes.string,
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   elementId: PropTypes.string,
   image: PropTypes.string,
