@@ -37,7 +37,7 @@ const sendRequest = (requestPath, responseCallback) => {
     },
     withCredentials: false
   }, (res) => {
-    var responseObject = null;
+    let responseObject = null;
 
     res.on('data', (bodyChunk) => {
     if(!responseObject)
