@@ -84,14 +84,16 @@ class CanvasView extends React.Component {
       if (elemKeys.length > 0) {
         elemKeys.forEach((id) => {
           const elemDetails = this.props.elements[id];
-          elemDivs.push(
-            <CanvasElement key={id} elementId={id}
-              initLoc={elemDetails.position}
-              initSize={elemDetails.size}
-              rotation={Number(elemDetails.rotation)}
-              canvasId={this.props.currentCanvas}
-            />
-          );
+          if (elemDetails.position && elemDetails.size && typeof(elemDetails.rotation) === 'number') {
+            elemDivs.push(
+              <CanvasElement key={id} elementId={id}
+                initLoc={elemDetails.position}
+                initSize={elemDetails.size}
+                rotation={Number(elemDetails.rotation)}
+                canvasId={this.props.currentCanvas}
+              />
+            );
+          }
         });
       }
     }
