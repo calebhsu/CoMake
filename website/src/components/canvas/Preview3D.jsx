@@ -1,5 +1,6 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
+import { ReactCraftMLRenderer } from 'craftml';
 
 const styles = {
   img: {
@@ -28,9 +29,7 @@ const styles = {
 function Preview3D() {
   return (
     <div style={styles.preview3d}>
-      <Paper zDepth={1}>
-        <img src="http://placekitten.com/121/121" style={styles.img} />
-      </Paper>
+      <ReactCraftMLRenderer code='<cube/>' />
     </div>
   );
 }
