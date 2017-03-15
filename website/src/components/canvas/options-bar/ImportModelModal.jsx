@@ -81,18 +81,21 @@
    importModel() {
       if(!this.props.currentCanvas) { return; }
 
-      const modelId = ModelImportService.formRequestBody(this.state.modelIdText);
-
-      /* TODO: figure out how to preserve aspect ratio of imported module imgs
-       * ...it's different for every image */
+      /* NOTE: needed to preserve appx aspect ratio of image */
       const INIT_SIZE = {
         'width': 300,
         'height': 160,
       }
 
-      ModelImportService.sendRequest(modelId, (imgPath) => {
-        FBHelper.addElement(this.props.currentCanvas, modelId, imgPath,
-          CC.INIT_POSITION, INIT_SIZE, CC.INIT_ROTATION);
+      ModelImportService.sendRequest(this.state.modelIdText, (resObj) => {
+        if (resObj.error) {
+          throw 'ModelImportService.sendRequest - error sending ModelImportService request: '
+            + resObj.error;
+        }
+        else {
+          FBHelper.addElement(this.props.currentCanvas, this.state.modelIdText, resObj,
+            CC.INIT_POSITION, INIT_SIZE, CC.INIT_ROTATION);
+        }
       });
 
       this.handleClose();
