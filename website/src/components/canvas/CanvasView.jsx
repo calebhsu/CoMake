@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 
 import CanvasElement from './CanvasElement';
 import * as ElementActions from '../../redux/actions/ElementActions';
+import * as ActiveElementActions from '../../redux/actions/ActiveElementActions';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
   + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
@@ -71,6 +72,7 @@ class CanvasView extends React.Component {
   componentWillUnmount() {
     const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
     firebase.database().ref(elementPath).off();
+    this.props.dispatch(ActiveElementActions.targetElement(null));
   }
 
   /**
@@ -84,7 +86,9 @@ class CanvasView extends React.Component {
       if (elemKeys.length > 0) {
         elemKeys.forEach((id) => {
           const elemDetails = this.props.elements[id];
-          if (elemDetails.position && elemDetails.size && typeof(elemDetails.rotation) === 'number') {
+          if (elemDetails.position
+              && elemDetails.size
+              && typeof(elemDetails.rotation) === 'number') {
             elemDivs.push(
               <CanvasElement key={id} elementId={id}
                 initLoc={elemDetails.position}
