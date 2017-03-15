@@ -42,6 +42,7 @@ class CanvasList extends React.Component {
     this.listenersAttached = false;
     this.collectAndListenForCanvases = this.collectAndListenForCanvases.bind(this);
     this.createClickHandler = this.createClickHandler.bind(this);
+    this.fetchCanvasInfo = this.fetchCanvasInfo.bind(this);
   }
 
   /**
@@ -84,34 +85,44 @@ class CanvasList extends React.Component {
    * @returns {void}
    */
   collectAndListenForCanvases(userId) {
-    // Helper function that will add just canvas id/name
-    const addCanvasHelper = (canvasId, canvasName) => {
-      // Check if the canvas has already been added.
-      const canvasKeys = Object.keys(this.props.canvases);
-      if (canvasKeys.indexOf(canvasId) >= 0) {
-        return;
-      }
-      // Otherwise dispatch action to add the canvas with just the name.
-      const actionPayload = {};
-      actionPayload[RC.CANVAS_NAME] = canvasName;
-      actionPayload[RC.CANVAS_USERS] = {};
-      this.props.dispatch(CanvasActions.addCanvas(canvasId, actionPayload));
-    }
-
-  // If there is a valid username, fetch available canvas names.
-  firebase.database().ref('/users').child(userId)
-    .child(RC.CANVASES).once('value').then((canvasListSnap) => {
-      Object.keys(canvasListSnap.val()).forEach((canvasId) => {
-        addCanvasHelper(canvasId, canvasListSnap.child(canvasId).val());
-    });
+    // If there is a valid username, fetch available canvas names.
+    firebase.database().ref('/users').child(userId)
+      .child(RC.CANVASES).once('value').then((canvasListSnap) => {
+        Object.keys(canvasListSnap.val()).forEach((canvasId) => {
+          if (Object.keys(this.props.canvases).indexOf(canvasId) < 0) {
+            this.fetchCanvasInfo(canvasId);
+          }
+      });
     });
 
     // Listen for any new canvases that might be added.
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).on('child_added', (canvasSnap) => {
-        addCanvasHelper(canvasSnap.key, canvasSnap.val());
+        this.fetchCanvasInfo(canvasSnap.key);
       });
     this.listenersAttached = true;
+  }
+
+  /**
+   * Fetches information in canvas and dispatches action to update meta data.
+   * @param {String} canvasId The ID for the canvas.
+   * @returns {void}
+   */
+  fetchCanvasInfo(canvasId) {
+    firebase.database().ref(`/canvases/${canvasId}`).once('value')
+      .then((canvasSnap) => {
+        const canvasObj = {};
+        canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
+        canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
+
+        let canvasUsersObj = canvasSnap.child('users').val();
+        if(!canvasUsersObj) {
+          canvasUsersObj = {};
+        }
+        canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
+
+        this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+    });
   }
 
   /**
@@ -122,20 +133,7 @@ class CanvasList extends React.Component {
   createClickHandler(canvasId) {
     return () => {
       this.props.dispatch(CanvasActions.setCurrentCanvas(canvasId));
-      firebase.database().ref(`/canvases/${canvasId}`).once('value')
-        .then((canvasSnap) => {
-          const canvasObj = {};
-          canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
-          canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
-
-          let canvasUsersObj = canvasSnap.child('users').val();
-          if(!canvasUsersObj) {
-            canvasUsersObj = {};
-          }
-          canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
-
-          this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
-        });
+      this.fetchCanvasInfo(canvasId);
     };
   }
 
