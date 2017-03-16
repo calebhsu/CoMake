@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
 import { Box } from 'reflexbox';
-import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField'
 
+import ArchiveCanvas from './ArchiveCanvas';
 import ExportModal from './ExportModal';
 import ShareCanvasModal from './ShareCanvasModal';
 import * as RC from '../../../redux/reducers/ReducerConstants';
@@ -154,6 +155,7 @@ class OptionsBar extends React.Component {
             <ShareCanvasModal />
             { userDivs }
           </span>
+          <ArchiveCanvas />
         </Paper>
       </Box>
     );
