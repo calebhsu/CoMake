@@ -19,7 +19,7 @@ injectTapEventPlugin();
 initFirebase();
 
 // construct redux store
-const store = storeHelper.constructStore();
+const store = storeHelper.constructStore(true);
 
 firebase.auth().onAuthStateChanged(() => {
   persistStore(store);
