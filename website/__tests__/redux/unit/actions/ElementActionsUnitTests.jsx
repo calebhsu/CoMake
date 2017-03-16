@@ -65,6 +65,7 @@ describe('ElementActionsUnitTests', () => {
       },
       'rotation': 30,
       'module': 'testModule',
+      'image': 'http://marcoortiztorres.me/images/craftml.png',
     };
     const elemId = 'someId';
     const expected = {

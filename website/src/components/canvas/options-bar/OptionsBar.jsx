@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField'
 
 import ArchiveCanvas from './ArchiveCanvas';
 import ExportModal from './ExportModal';
+import ImportModelModal from './ImportModelModal';
 import ShareCanvasModal from './ShareCanvasModal';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
@@ -57,7 +58,6 @@ const styles = {
   }
 };
 
-
 class OptionsBar extends React.Component {
   /**
    * Constructor for the class.
@@ -91,8 +91,6 @@ class OptionsBar extends React.Component {
     const canvasPath = 'canvases/' + this.props.currentCanvas + '/';
     firebase.database().ref(canvasPath).off();
   }
-
-
 
   /**
    * Handler for when the name field is changed.
@@ -150,8 +148,8 @@ class OptionsBar extends React.Component {
         />
           <span style={styles.optionBtnGroup}>
             <FlatButton label="File Options" style={styles.optionBtn} />
-            <FlatButton label="Import" style={styles.optionBtn} />
-            <ExportModal />
+            <ImportModelModal currentCanvas={this.props.currentCanvas} />
+            <ExportModal elements={this.props.elements} />
             <ShareCanvasModal />
             { userDivs }
           </span>
@@ -164,6 +162,7 @@ class OptionsBar extends React.Component {
 
 OptionsBar.propTypes = {
   dispatch: PropTypes.func,
+  elements: PropTypes.object,
   canvas: PropTypes.object,
   currentCanvas: PropTypes.string,
 }

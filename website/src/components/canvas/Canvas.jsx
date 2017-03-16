@@ -73,12 +73,13 @@ class Canvas extends React.Component {
           <Paper style={styles.paper} zDepth={4}>
           <OptionsBar
             canvas={currentCanvasInfo}
-            currentCanvas={this.props.currentCanvas} />
+            currentCanvas={this.props.currentCanvas}
+            elements={this.props.elements} />
           </Paper>
         </Box>
         <CanvasView
-          elements={this.props.elements}
           currentCanvas={this.props.currentCanvas}
+          elements={this.props.elements}
         />
         <Sidebar
           targetedId={this.props.targetedId}

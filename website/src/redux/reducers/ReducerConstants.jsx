@@ -52,8 +52,9 @@ export const ELEMENT_POSITION = 'position';
 export const ELEMENT_SIZE = 'size';
 export const ELEMENT_ROTATION = 'rotation';
 export const ELEMENT_MODULE = 'module';
+export const ELEMENT_IMAGE = 'image';
 export const ELEMENT_ATTRS = [ELEMENT_POSITION, ELEMENT_SIZE, ELEMENT_ROTATION,
-  ELEMENT_MODULE]
+  ELEMENT_MODULE, ELEMENT_IMAGE];
 
 // Fields for canvas.
 export const CANVAS_NAME = 'name';
