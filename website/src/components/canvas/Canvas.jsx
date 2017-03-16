@@ -66,6 +66,13 @@ class Canvas extends React.Component {
     this.collectAndListenForElementChanges = this.collectAndListenForElementChanges.bind(this);
   }
 
+  /**
+   * Initializes the element list for the current canvas and sets up listeners
+   * to monitor element changes. Should only be called the first time (at time of
+   * or after mounting) that a valid currentCanvas string is passed into the props
+   * @param {string} canvasId The canvas ID to collect element info for
+   * @returns {void}
+   */
   collectAndListenForElementChanges(canvasId){
     firebase.database().ref(`canvases/${canvasId}/elements`).once('value')
       .then((elemListSnap) => {
@@ -95,6 +102,12 @@ class Canvas extends React.Component {
       this.listenersAttached = true;
   }
 
+  /**
+   * Function to automatically be performed once the component mount.
+   * Used here to initialize canvas elements if not done and if the new canvas id
+   * is not null
+   * @returns {void}
+   */
   componentDidMount() {
     console.log(this.props.currentCanvas)
     if(!this.listenersAttached && this.props.currentCanvas) {
@@ -103,7 +116,10 @@ class Canvas extends React.Component {
   }
 
   /**
-   * Function to automatically be performed once the component mounts.
+   * Function to automatically be performed once the component receives new props.
+   * Used here to initialize canvas elements if not done and if the new canvas id
+   * is not null
+   * @param {Object} nextProps The new props object to be given to the component
    * @returns {void}
    */
   componentWillReceiveProps(nextProps) {
@@ -119,7 +135,6 @@ class Canvas extends React.Component {
   componentWillUnmount() {
     if(this.props.currentCanvas) {
       firebase.database().ref(`canvases/${this.props.currentCanvas}/elements`).off();
-      console.log('removing listeners')
     }
 
     this.listenersAttached = false;
