@@ -88,14 +88,8 @@
       }
 
       ModelImportService.sendRequest(this.state.modelIdText, (resObj) => {
-        if (resObj.error) {
-          throw 'ModelImportService.sendRequest - error sending ModelImportService request: '
-            + resObj.error;
-        }
-        else {
           FBHelper.addElement(this.props.currentCanvas, this.state.modelIdText, resObj,
             CC.INIT_POSITION, INIT_SIZE, CC.INIT_ROTATION);
-        }
       });
 
       this.handleClose();

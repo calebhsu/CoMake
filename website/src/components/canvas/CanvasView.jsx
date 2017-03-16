@@ -87,7 +87,8 @@ class CanvasView extends React.Component {
         elemKeys.forEach((id) => {
           const elemDetails = this.props.elements[id];
 
-          if (elemDetails.position
+          if (elemDetails.image
+              && elemDetails.position
               && elemDetails.size
               && typeof(elemDetails.rotation) === 'number') {
             elemDivs.push(

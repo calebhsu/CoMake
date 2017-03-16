@@ -37,11 +37,14 @@ const sendRequest = (modelId, responseCallback) => {
 
     res.on('end', () => {
       try {
-        if (response.includes('error')) {
-          responseCallback(JSON.parse(response));
+        if (res.statusCode === 200) {
+          responseCallback(response);
         }
         else {
-          responseCallback(response);
+          console.log(
+            'ModelImportService.sendRequest - error handling ModelImportService response: Status Code '
+            + res.statusCode
+          )
         }
       } catch (error) {
         console.log(
