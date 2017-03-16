@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import ArrowBack from 'material-ui/svg-icons/Navigation/arrow-back';
+import ArrowForward from  'material-ui/svg-icons/Navigation/arrow-forward';
 import Drawer from 'material-ui/Drawer';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import NavClose from 'material-ui/svg-icons/Navigation/arrow-back';
-import NavOpen from  'material-ui/svg-icons/Navigation/arrow-forward';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
@@ -15,8 +15,15 @@ import * as FBHelper from '../../helpers/FirebaseHelper';
 
 const styles = {
   arrowIcon: {
-    width: 29,
-    height: 29,
+    width: 33,
+    height: 33,
+  },
+  arrowOpen: {
+    width: 33,
+    height: 33,
+    marginLeft: -13,
+    marginTop: -18,
+    padding: 10,
     backgroundColor: '#FFFFFF',
   },
   listItems: {
@@ -132,13 +139,13 @@ class Sidebar extends React.Component {
       onMouseEnter={this.mouseEnter}
       onMouseLeave={this.mouseLeave}>
        <IconButton
-        iconStyle={styles.arrowIcon}
+        iconStyle={styles.arrowOpen}
         tooltip="Show sidebar"
         tooltipPosition="bottom-right"
         onClick={this.onClickOpen}
         style={{opacity: this.state.closed}}>
         {this.state.closed ? 0 : 1}
-        <NavOpen/>
+        <ArrowForward/>
       </IconButton>
         <Drawer containerStyle={styles.sidebar}
                 open= {this.state.isOpen}
@@ -155,7 +162,7 @@ class Sidebar extends React.Component {
               tooltipPosition="bottom-right"
               onClick={this.onClickClose}
               >
-              <NavClose/>
+              <ArrowBack/>
             </IconButton>
           </ul>
           <ul>
