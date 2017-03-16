@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as firebase from 'firebase';
 
 import { Box } from 'reflexbox';
 import FlatButton from 'material-ui/FlatButton';
