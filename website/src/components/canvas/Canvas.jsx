@@ -109,7 +109,6 @@ class Canvas extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    console.log(this.props.currentCanvas)
     if(!this.listenersAttached && this.props.currentCanvas) {
       this.collectAndListenForElementChanges(this.props.currentCanvas);
     }
