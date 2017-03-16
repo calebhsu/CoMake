@@ -6,8 +6,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import * as RC from '../../../redux/reducers/ReducerConstants';
-
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
@@ -16,6 +14,9 @@ import TextField from 'material-ui/TextField';
 import { generateScript } from '../../../craftml/ScriptGenerator';
 
 const styles = {
+  copyBtn: {
+    color: '#FFFFFF',
+  },
   dialogActions: {
     padding: '8px 15px 15px',
   },
@@ -160,9 +161,4 @@ ExportModal.propTypes = {
   elements: PropTypes.object,
 }
 
-const mapStateToProps = state => ({
-  elements: (state
-    .updateElementReducer[RC.ELEMENTS]),
-});
-
-export default connect(mapStateToProps)(ExportModal);
+export default connect()(ExportModal);

@@ -39,11 +39,11 @@ class Sidebar extends React.Component {
     this.state = {
       opacity: .7
     }
+    this.addElement = this.addElement.bind(this);
+    this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
     this.removeElement = this.removeElement.bind(this);
-    this.addElement = this.addElement.bind(this);
-    this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -61,8 +61,9 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   addElement() {
-    /* TODO: Make this take a specific module*/
-    FBHelper.addElement(this.props.currentCanvas, 'abcd',
+    /* NOTE: leaving this here for ease of testing */
+    /* TODO: remove before deploying */
+    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png',
       CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 
@@ -100,57 +101,44 @@ class Sidebar extends React.Component {
    */
   render() {
     return (
-      <div>
-      <div
-      onMouseEnter={this.mouseEnter}
-      onMouseLeave={this.mouseLeave}>
-
+      <div onMouseEnter={this.mouseEnter}
+           onMouseLeave={this.mouseLeave}>
         <Drawer containerStyle={styles.sidebar}
-                open= {true}
                 docked={true}
+                open={true}
                 openSecondary={false}
                 style={{opacity: this.state.opacity}}
                 zDepth={0}>
-          <div
-          style={styles.propertiesSpacing}>
-          <ul>
+          <ul style={styles.propertiesSpacing}>
             {this.listItems}
             <li>
               <h3>Rotate</h3>
+              <RotationSlider currentCanvas={this.props.currentCanvas} />
             </li>
-              <RotationSlider
-                currentCanvas={this.props.currentCanvas}
-              />
             <li>
               <h3>Resize</h3>
-            </li>
-            <li>
               <TextField
-                hintText="Current: 64px"
+                hintText="64px"
                 floatingLabelText="Height"
                 fullWidth={true}
-              /><br />
-            </li>
-            <li>
+              />
               <TextField
-                hintText="Current: 64px"
+                hintText="64px"
                 floatingLabelText="Width"
                 fullWidth={true}
-              /><br />
+              />
             </li>
           </ul>
-          </div>
         </Drawer>
-        </div>
       </div>
     );
   }
 }
 
 Sidebar.propTypes = {
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,
-  currentCanvas: PropTypes.string,
 }
 
 export default connect()(Sidebar);

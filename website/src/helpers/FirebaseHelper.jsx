@@ -77,15 +77,17 @@ export const deleteElement = (canvasId, elementId) => {
  * Adds an element to the canvas.
  * @param {String} canvasId The ID of the canvas.
  * @param {String} module       String of the module associated with the element.
+ * @param {String} image        String of the image path associated with the element.
  * @param {Object} initPosition Initial position e.g. { x: 0, y: 0}
  * @param {Object} initSize     Initial size e.g. {width:0, height:0}
  * @param {Number} initRotation Initial rotation
  * @returns {Promise}           Promise associated with the firebase action.
  */
-export const addElement = (canvasId, module, initPosition, initSize, initRotation) => {
+export const addElement = (canvasId, module, image, initPosition, initSize, initRotation) => {
   const canvasPath = '/canvases/' + canvasId + '/elements';
   const toPush = {};
   toPush[RC.ELEMENT_MODULE] = module;
+  toPush[RC.ELEMENT_IMAGE] = image;
   toPush[RC.ELEMENT_POSITION] = initPosition;
   toPush[RC.ELEMENT_SIZE] = initSize;
   toPush[RC.ELEMENT_ROTATION] = initRotation;

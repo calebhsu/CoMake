@@ -16,12 +16,14 @@ describe('ElementIntegrationTests', () => {
       size: { width: 100, height: 100 },
       rotation: 0,
       module: 'abcd',
+      image: 'http://marcoortiztorres.me/images/craftml.png',
     },
     testingAnotherNewItem: {
       position: { x: 1, y: 2 },
       size: { width: 50, height: 75 },
       rotation: 45,
       module: 'wxyz',
+      image: 'http://marcoortiztorres.me/images/craftml.png',
     }
   };
   const filledState = Object.assign({}, RC.BLANK_STATE);
@@ -119,6 +121,7 @@ describe('ElementIntegrationTests', () => {
       },
       'rotation': 30,
       'module': 'testModule',
+      'image': 'http://marcoortiztorres.me/images/craftml.png',
     };
     const elemId = 'newElement';
     const expected = Object.assign({}, filledState);
