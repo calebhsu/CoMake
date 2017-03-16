@@ -69,29 +69,6 @@ class OptionsBar extends React.Component {
   }
 
   /**
-   * Function to automatically be performed once the component mounts.
-   * @returns {void}
-   */
-  componentDidMount() {
-    const canvasPath = 'canvases/' + this.props.currentCanvas + '/';
-    firebase.database().ref(canvasPath + RC.CANVAS_NAME).on('value', (snap) => {
-      this.props.dispatch(CA.setCanvasName(this.props.currentCanvas, snap.val()));
-    });
-    firebase.database().ref(canvasPath + RC.CANVAS_USERS).on('child_added', (snap) => {
-      this.props.dispatch(CA.addCanvasUser(this.props.currentCanvas, snap.key, snap.val()));
-    })
-  }
-
-  /**
-   * After we unmount the canvas stop listening to the elements.
-   * @returns {void}
-   */
-  componentWillUnmount() {
-    const canvasPath = 'canvases/' + this.props.currentCanvas + '/';
-    firebase.database().ref(canvasPath).off();
-  }
-
-  /**
    * Handler for when the name field is changed.
    * @param {Object} e  The event of changing the name.
    * @param {String} newValue The new name entered.
@@ -142,7 +119,7 @@ class OptionsBar extends React.Component {
         <TextField
           style={styles.modelName}
           id="text-field-default"
-          defaultValue={canvasName}
+          value={canvasName}
           onChange={this.nameFieldChangeHandler}
         />
           <span style={styles.optionBtnGroup}>

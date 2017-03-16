@@ -9,6 +9,7 @@ import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';
 
+import * as CanvasActions from '../../redux/actions/CanvasActions';
 import * as ElementActions from '../../redux/actions/ElementActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
 
@@ -63,7 +64,8 @@ class Canvas extends React.Component {
     super(props);
     this.listenersAttached = false;
 
-    this.collectAndListenForElementChanges = this.collectAndListenForElementChanges.bind(this);
+    this.fetchAndListenForCanvasInfo = this.fetchAndListenForCanvasInfo.bind(this);
+    this.fetchCanvasInfo = this.fetchCanvasInfo.bind(this);
   }
 
   /**
@@ -73,33 +75,75 @@ class Canvas extends React.Component {
    * @param {string} canvasId The canvas ID to collect element info for
    * @returns {void}
    */
-  collectAndListenForElementChanges(canvasId){
-    firebase.database().ref(`canvases/${canvasId}/elements`).once('value')
-      .then((elemListSnap) => {
-        let firebaseElemList = elemListSnap.val();
+  fetchAndListenForCanvasInfo(canvasId) {
+    this.fetchCanvasInfo(canvasId);
+    this.listenForCanvasInfo(canvasId);
+  }
+
+  /**
+   * Fetches information in canvas and dispatches action to update meta data.
+   * @param {String} canvasId The ID for the canvas.
+   * @returns {void}
+   */
+  fetchCanvasInfo(canvasId) {
+    firebase.database().ref(`/canvases/${canvasId}`).once('value')
+      .then((canvasSnap) => {
+        //fetch canvas specific info
+        const canvasObj = {};
+        canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
+        canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
+
+        let canvasUsersObj = canvasSnap.child('users').val();
+        if(!canvasUsersObj) {
+          canvasUsersObj = {};
+        }
+
+        canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
+
+        this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+
+        //fetch canvas element info
+        let firebaseElemList = canvasSnap.child(RC.ELEMENTS).val();
         if(!firebaseElemList) {
           firebaseElemList = {};
         }
 
         this.props.dispatch(ElementActions.initElements(firebaseElemList));
-      });
+    });
+  }
 
-    firebase.database().ref(`canvases/${canvasId}/elements`)
+  listenForCanvasInfo(canvasId) {
+    //listen for element info
+    firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.ELEMENTS}`)
       .on('child_added', (elemSnap) => {
         this.props.dispatch(ElementActions.addElement(elemSnap.key,
           elemSnap.val()));
       });
-    firebase.database().ref(`canvases/${canvasId}/elements`)
+    firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.ELEMENTS}`)
     .on('child_changed', (elemSnap) => {
         this.props.dispatch(ElementActions.addElement(elemSnap.key,
           elemSnap.val()));
       });
-    firebase.database().ref(`canvases/${canvasId}/elements`)
+    firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.ELEMENTS}`)
       .on('child_removed', (elemSnap) => {
         this.props.dispatch(ElementActions.removeElement(elemSnap.key));
       });
 
-      this.listenersAttached = true;
+
+    firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.CANVAS_NAME}`)
+      .on('value', (snap) => {
+        this.props.dispatch(
+          CanvasActions.setCanvasName(this.props.currentCanvas, snap.val())
+        );
+      });
+    firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.CANVAS_USERS}`)
+      .on('child_added', (snap) => {
+        this.props.dispatch(
+          CanvasActions.addCanvasUser(this.props.currentCanvas, snap.key, snap.val())
+        );
+      });
+
+    this.listenersAttached = true;
   }
 
   /**
@@ -110,7 +154,7 @@ class Canvas extends React.Component {
    */
   componentDidMount() {
     if(!this.listenersAttached && this.props.currentCanvas) {
-      this.collectAndListenForElementChanges(this.props.currentCanvas);
+      this.fetchAndListenForCanvasInfo(this.props.currentCanvas);
     }
   }
 
@@ -123,7 +167,7 @@ class Canvas extends React.Component {
    */
   componentWillReceiveProps(nextProps) {
     if(!this.listenersAttached && nextProps.currentCanvas) {
-      this.collectAndListenForElementChanges(nextProps.currentCanvas);
+      this.fetchAndListenForCanvasInfo(nextProps.currentCanvas);
     }
   }
 
@@ -133,7 +177,7 @@ class Canvas extends React.Component {
    */
   componentWillUnmount() {
     if(this.props.currentCanvas) {
-      firebase.database().ref(`canvases/${this.props.currentCanvas}/elements`).off();
+      firebase.database().ref(`${RC.CANVASES}/${this.props.currentCanvas}`).off();
     }
 
     this.listenersAttached = false;

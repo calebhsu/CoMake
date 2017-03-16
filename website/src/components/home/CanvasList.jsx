@@ -133,7 +133,6 @@ class CanvasList extends React.Component {
   createClickHandler(canvasId) {
     return () => {
       this.props.dispatch(CanvasActions.setCurrentCanvas(canvasId));
-      this.fetchCanvasInfo(canvasId);
     };
   }
 
