@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import * as firebase from 'firebase';
 
 import { Box } from 'reflexbox';
 import Paper from 'material-ui/Paper';
@@ -8,6 +9,7 @@ import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';
 
+import * as ElementActions from '../../redux/actions/ElementActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 
@@ -59,6 +61,68 @@ class Canvas extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.listenersAttached = false;
+
+    this.collectAndListenForElementChanges = this.collectAndListenForElementChanges.bind(this);
+  }
+
+  collectAndListenForElementChanges(canvasId){
+    firebase.database().ref(`canvases/${canvasId}/elements`).once('value')
+      .then((elemListSnap) => {
+        let firebaseElemList = elemListSnap.val();
+        if(!firebaseElemList) {
+          firebaseElemList = {};
+        }
+
+        this.props.dispatch(ElementActions.initElements(firebaseElemList));
+      });
+
+    firebase.database().ref(`canvases/${canvasId}/elements`)
+      .on('child_added', (elemSnap) => {
+        this.props.dispatch(ElementActions.addElement(elemSnap.key,
+          elemSnap.val()));
+      });
+    firebase.database().ref(`canvases/${canvasId}/elements`)
+    .on('child_changed', (elemSnap) => {
+        this.props.dispatch(ElementActions.addElement(elemSnap.key,
+          elemSnap.val()));
+      });
+    firebase.database().ref(`canvases/${canvasId}/elements`)
+      .on('child_removed', (elemSnap) => {
+        this.props.dispatch(ElementActions.removeElement(elemSnap.key));
+      });
+
+      this.listenersAttached = true;
+  }
+
+  componentDidMount() {
+    console.log(this.props.currentCanvas)
+    if(!this.listenersAttached && this.props.currentCanvas) {
+      this.collectAndListenForElementChanges(this.props.currentCanvas);
+    }
+  }
+
+  /**
+   * Function to automatically be performed once the component mounts.
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    if(!this.listenersAttached && nextProps.currentCanvas) {
+      this.collectAndListenForElementChanges(nextProps.currentCanvas);
+    }
+  }
+
+  /**
+   * After we unmount the canvas stop listening to the elements.
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    if(this.props.currentCanvas) {
+      firebase.database().ref(`canvases/${this.props.currentCanvas}/elements`).off();
+      console.log('removing listeners')
+    }
+
+    this.listenersAttached = false;
   }
 
   /**
@@ -90,12 +154,10 @@ class Canvas extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  elements: (state
-    .updateElementReducer[RC.ELEMENTS]),
+  elements: (state.updateElementReducer[RC.ELEMENTS]),
   currentCanvas: (state.canvasReducer[RC.CURRENT_CANVAS]),
   canvases: (state.canvasReducer[RC.CANVASES]),
-  targetedId: (state
-    .activeElementReducer[RC.ACTIVE_ELEMENT]),
+  targetedId: (state.activeElementReducer[RC.ACTIVE_ELEMENT]),
 });
 
 Canvas.propTypes = {
