@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Drawer from 'material-ui/Drawer';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import NavClose from 'material-ui/svg-icons/Navigation/arrow-back';
+import NavOpen from  'material-ui/svg-icons/Navigation/arrow-forward';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
@@ -11,6 +14,11 @@ import * as CC from './CanvasConstants';
 import * as FBHelper from '../../helpers/FirebaseHelper';
 
 const styles = {
+  arrowIcon: {
+    width: 29,
+    height: 29,
+    backgroundColor: '#FFFFFF',
+  },
   listItems: {
     marginTop: 20,
   },
@@ -37,16 +45,24 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      opacity: .7
+      opacity: .7,
     }
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
+    this.onClickOpen = this.onClickOpen.bind(this);
+    this.onClickClose = this.onClickClose.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
-  }
 
+    }
+    componentDidMount(){
+      this.setState({
+        isOpen: true,
+        closed: 0
+      })
+    }
   /**
    * Function that will delete the current targeted element.
    * @returns {void}
@@ -89,7 +105,18 @@ class Sidebar extends React.Component {
   mouseEnter() {
     this.setState({opacity: 1})
   }
-
+  onClickClose() {
+   this.setState(prevState => ({
+     isOpen: !prevState.isOpen,
+     closed: 1
+   }));
+ }
+ onClickOpen() {
+  this.setState(prevState => ({
+    isOpen: !prevState.isOpen,
+    closed: 0
+  }));
+}
   mouseLeave() {
     this.setState({opacity: .7})
   }
@@ -104,15 +131,33 @@ class Sidebar extends React.Component {
       <div
       onMouseEnter={this.mouseEnter}
       onMouseLeave={this.mouseLeave}>
-
+       <IconButton
+        iconStyle={styles.arrowIcon}
+        tooltip="Show sidebar"
+        tooltipPosition="bottom-right"
+        onClick={this.onClickOpen}
+        style={{opacity: this.state.closed}}>
+        {this.state.closed ? 0 : 1}
+        <NavOpen/>
+      </IconButton>
         <Drawer containerStyle={styles.sidebar}
-                open= {true}
+                open= {this.state.isOpen}
                 docked={true}
                 openSecondary={false}
                 style={{opacity: this.state.opacity}}
                 zDepth={0}>
           <div
           style={styles.propertiesSpacing}>
+          <ul>
+            <IconButton
+              iconStyle={styles.arrowIcon}
+              tooltip="hide sidebar"
+              tooltipPosition="bottom-right"
+              onClick={this.onClickClose}
+              >
+              <NavClose/>
+            </IconButton>
+          </ul>
           <ul>
             {this.listItems}
             <li>
