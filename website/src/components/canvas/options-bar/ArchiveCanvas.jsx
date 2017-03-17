@@ -2,11 +2,16 @@
  * @file Button component for archiving canvas.
  */
 
-import React, { Component } from 'react';
+import * as firebase from 'firebase';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import Archive from 'material-ui/svg-icons/content/archive';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+
+import * as CanvasActions from '../../../redux/actions/CanvasActions';
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
 const styles = {
   actionBtn: {
@@ -49,6 +54,22 @@ class ArchiveCanvas extends Component {
   };
 
   /**
+   * Creates a request to remove a canvas from a user's list of canvases
+   * @returns {null} Returns nothing
+   */
+  archiveCanvas() {
+    if((!this.props.userId)||(!this.props.canvasId)) {
+      return;
+    }
+
+    firebase.database().ref(`/users/${this.props.userId}/canvases/${this.props.canvasId}`).once('value')
+      .then((canvasSnap) => {
+        console.log(canvasSnap);
+        document.location = '/#/home';
+      });
+  };
+
+  /**
    * Renders the archive canvas button for display.
    * @returns {HTML} The rendered HTML of the archive canvas button.
    */
@@ -63,6 +84,7 @@ class ArchiveCanvas extends Component {
         label="Archive"
         onTouchTap={this.handleClose}
         style={styles.actionBtn}
+        onClick={this.archiveCanvas}
       />,
     ];
 
@@ -87,4 +109,14 @@ class ArchiveCanvas extends Component {
   }
 }
 
-export default ArchiveCanvas;
+ArchiveCanvas.propTypes = {
+  dispatch: PropTypes.func,
+  userId: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
+  canvasId: state.userInfoReducer[RC.CURRENT_CANVAS],
+});
+
+export default connect(mapStateToProps)(ArchiveCanvas);
