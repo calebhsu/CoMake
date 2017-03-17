@@ -16,7 +16,6 @@ import ShareCanvasModal from './ShareCanvasModal';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
 
-
 import {
   white,
   purple500,
@@ -153,7 +152,8 @@ class OptionsBar extends React.Component {
             <ShareCanvasModal />
             { userDivs }
           </span>
-          <ArchiveCanvas />
+          <ArchiveCanvas
+            canvasId={this.props.currentCanvas} />
         </Paper>
       </Box>
     );

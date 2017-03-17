@@ -27,9 +27,10 @@ const styles = {
  * Gives HTML for archive canvas button & modal.
  * @returns {HTML}   The HTML of the export button & modal.
  */
-class ArchiveCanvas extends Component {
+class ArchiveCanvas extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.archiveCanvas = this.archiveCanvas.bind(this);
     this.state = {
       open: false,
     };
@@ -58,15 +59,15 @@ class ArchiveCanvas extends Component {
    * @returns {null} Returns nothing
    */
   archiveCanvas() {
-    if((!this.props.userId)||(!this.props.canvasId)) {
+    const userId = this.props.userInfo.userId;
+    const canvasId = this.props.canvasId;
+
+    if((!userId)||(!canvasId)) {
       return;
     }
 
-    firebase.database().ref(`/users/${this.props.userId}/canvases/${this.props.canvasId}`).once('value')
-      .then((canvasSnap) => {
-        console.log(canvasSnap);
-        document.location = '/#/home';
-      });
+    firebase.database().ref(`/users/${userId}/canvases/${canvasId}`).set(false);
+    document.location = '/#/home';
   };
 
   /**
@@ -111,12 +112,11 @@ class ArchiveCanvas extends Component {
 
 ArchiveCanvas.propTypes = {
   dispatch: PropTypes.func,
-  userId: PropTypes.string,
+  canvasId: PropTypes.string,
 };
 
-const mapStateToProps = (state) => ({
-  userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
-  canvasId: state.userInfoReducer[RC.CURRENT_CANVAS],
+const mapStateToProps = state => ({
+  userInfo: state.userInfoReducer.userInfo,
 });
 
 export default connect(mapStateToProps)(ArchiveCanvas);
