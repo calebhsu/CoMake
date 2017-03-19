@@ -53,9 +53,6 @@ class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {
-      opacity: 1,
-    }
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
@@ -68,7 +65,7 @@ class Sidebar extends React.Component {
      * Function to automatically be performed once the component mounts.
      * @returns {void}
      */
-    componentDidMount(){
+    componentWillMount(){
       this.setState({
         isOpen: true,
         closed: 0
@@ -132,7 +129,7 @@ class Sidebar extends React.Component {
  handleSidebarOpen() {
   this.setState({
     isOpen: true,
-    closed: 1
+    closed: 0
     });
   }
 
@@ -146,14 +143,12 @@ class Sidebar extends React.Component {
        <IconButton
         iconStyle={styles.arrowOpen}
         onClick={this.handleSidebarOpen}>
-        {this.state.closed ? 0 : 1}
         <ArrowForward/>
       </IconButton>
         <Drawer containerStyle={styles.sidebar}
-                open= {this.state.isOpen}
+                open={this.state.isOpen}
                 docked={true}
                 openSecondary={false}
-                style={{opacity: this.state.opacity}}
                 zDepth={0}>
             <AppBar
             title="Edit"
