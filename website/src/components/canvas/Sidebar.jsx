@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import AppBar from 'material-ui/AppBar';
 import ArrowBack from 'material-ui/svg-icons/Navigation/arrow-back';
 import ArrowForward from  'material-ui/svg-icons/Navigation/arrow-forward';
 import Drawer from 'material-ui/Drawer';
-import TextField from 'material-ui/TextField';
-import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
@@ -15,16 +16,17 @@ import * as FBHelper from '../../helpers/FirebaseHelper';
 
 const styles = {
   arrowIcon: {
-    width: 33,
+    color: '#FFFFFF',
     height: 33,
+    width: 33,
   },
   arrowOpen: {
-    width: 33,
+    backgroundColor: '#FFFFFF',
     height: 33,
     marginLeft: -13,
-    marginTop: -18,
+    marginTop: -15,
     padding: 10,
-    backgroundColor: '#FFFFFF',
+    width: 33,
   },
   listItems: {
     marginTop: 20,
@@ -34,10 +36,10 @@ const styles = {
     marginRight: 20,
   },
   sidebar: {
-    marginTop: 110,
+    height: '89vh',
+    marginTop: 119,
     overflowX: 'hidden',
     position: 'absolute',
-    height: '89vh',
   },
 };
 
@@ -52,18 +54,20 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      opacity: .7,
+      opacity: 1,
     }
-    this.mouseEnter = this.mouseEnter.bind(this);
-    this.mouseLeave = this.mouseLeave.bind(this);
-    this.onClickOpen = this.onClickOpen.bind(this);
-    this.onClickClose = this.onClickClose.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
+    this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
+    this.handleSidebarClose = this.handleSidebarClose.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
 
     }
+    /**
+     * Function to automatically be performed once the component mounts.
+     * @returns {void}
+     */
     componentDidMount(){
       this.setState({
         isOpen: true,
@@ -109,23 +113,26 @@ class Sidebar extends React.Component {
     </MenuItem>);
   }
 
-  mouseEnter() {
-    this.setState({opacity: 1})
-  }
-  onClickClose() {
-   this.setState(prevState => ({
-     isOpen: !prevState.isOpen,
+  /**
+   * Mouse event that closes sidebar
+   * @returns {void}
+   */
+  handleSidebarClose() {
+   this.setState({
+     isOpen: false,
      closed: 1
-   }));
- }
- onClickOpen() {
-  this.setState(prevState => ({
-    isOpen: !prevState.isOpen,
-    closed: 0
-  }));
-}
-  mouseLeave() {
-    this.setState({opacity: .7})
+    });
+  }
+  
+ /**
+  * Mouse event that opens sidebar
+  * @returns {void}
+  */
+ handleSidebarOpen() {
+  this.setState({
+    isOpen: true,
+    closed: 1
+    });
   }
 
   /**
@@ -135,15 +142,9 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div>
-      <div
-      onMouseEnter={this.mouseEnter}
-      onMouseLeave={this.mouseLeave}>
        <IconButton
         iconStyle={styles.arrowOpen}
-        tooltip="Show sidebar"
-        tooltipPosition="bottom-right"
-        onClick={this.onClickOpen}
-        style={{opacity: this.state.closed}}>
+        onClick={this.handleSidebarOpen}>
         {this.state.closed ? 0 : 1}
         <ArrowForward/>
       </IconButton>
@@ -153,20 +154,17 @@ class Sidebar extends React.Component {
                 openSecondary={false}
                 style={{opacity: this.state.opacity}}
                 zDepth={0}>
-          <div
-          style={styles.propertiesSpacing}>
+            <AppBar
+            title="Edit"
+            iconElementRight={<IconButton><ArrowBack/></IconButton>}
+            showMenuIconButton={false}
+            onRightIconButtonTouchTap={this.handleSidebarClose}
+          />
+          <div style={styles.propertiesSpacing}>
           <ul>
-            <IconButton
-              iconStyle={styles.arrowIcon}
-              tooltip="hide sidebar"
-              tooltipPosition="bottom-right"
-              onClick={this.onClickClose}
-              >
-              <ArrowBack/>
-            </IconButton>
-          </ul>
-          <ul>
-            {this.listItems}
+            <li>
+              {this.listItems}
+            </li>
             <li>
               <h3>Rotate</h3>
             </li>
@@ -194,7 +192,6 @@ class Sidebar extends React.Component {
           </div>
         </Drawer>
         </div>
-      </div>
     );
   }
 }
