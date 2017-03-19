@@ -7,6 +7,9 @@ const styles = {
   circProg: {
     display: 'block'
   },
+  container: {
+    position: 'relative',
+  },
   loadingText: {
     color: '#409c93',
     fontWeight: 600,
@@ -15,27 +18,44 @@ const styles = {
     position: 'absolute',
     textTransform: 'uppercase',
     top: 48,
-    zIndex: 10,
+    zIndex: 20,
   },
   loadingWrapper: {
-    margin: '0 auto',
-    position: 'relative',
+    left: '50%',
+    position: 'fixed',
+    top: '45vh',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 15,
+  },
+  pageFade: {
+    background: '#FFFFFF',
+    content: '',
+    height: '100%',
+    left: 0,
+    opacity: 0.85,
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    zIndex: 10,
   }
 }
 const LoadingIndicator = () => (
-  <div style={styles.loadingWrapper}>
-    <span
-      className={globalStyles.blinkAnimation}
-      style={styles.loadingText}
-    >
-      Loading
-    </span>
-    <CircularProgress
-      color="#72cfad"
-      size={120}
-      style={styles.circProg}
-      thickness={5}
-    />
+  <div style={styles.container}>
+    <div style={styles.pageFade} />
+    <div style={styles.loadingWrapper}>
+      <span
+        className={globalStyles.blinkAnimation}
+        style={styles.loadingText}
+      >
+        Loading
+      </span>
+      <CircularProgress
+        color="#72cfad"
+        size={120}
+        style={styles.circProg}
+        thickness={5}
+      />
+    </div>
   </div>
 );
 
