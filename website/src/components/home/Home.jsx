@@ -6,7 +6,6 @@ import React from 'react';
 import { Box, Flex } from 'reflexbox';
 import CanvasList from './CanvasList';
 import CreateCanvas from './CreateCanvas';
-import LoadingIndicator from './LoadingIndicator';
 
 const styles = {
   body: {
@@ -37,7 +36,6 @@ function Home() {
       style={styles.body}
       wrap
     >
-      <LoadingIndicator />
       <Box col={12} sm={12} mb={4}>
         <header style={styles.header}>
           <h1 style={styles.welcome}>Welcome to Comake</h1>

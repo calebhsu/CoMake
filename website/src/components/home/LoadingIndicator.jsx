@@ -1,3 +1,7 @@
+/**
+ * @file Progress indicator for new canvas creation.
+ */
+
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -39,6 +43,11 @@ const styles = {
     zIndex: 10,
   }
 }
+
+/**
+ * Gives HTML for loading progress indicator.
+ * @returns {HTML}   The HTML of the loading progress indicator.
+ */
 const LoadingIndicator = () => (
   <div style={styles.container}>
     <div style={styles.pageFade} />
