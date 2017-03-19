@@ -52,7 +52,7 @@ class CanvasElement extends React.Component {
       y: data.position.top,
     };
     this.props.dispatch(updateAndPersist(UPDATE_POSITION, this.props.elementId,
-      updatedLoc, this.props.canvasId));
+      updatedLoc, this.props.currentCanvas));
   }
 
   /**
@@ -64,7 +64,7 @@ class CanvasElement extends React.Component {
    */
   endResize(direction, styleSize, clientSize) {
     this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
-      clientSize, this.props.canvasId));
+      clientSize, this.props.currentCanvas));
   }
 
   /**
@@ -81,16 +81,19 @@ class CanvasElement extends React.Component {
    */
   render() {
     const elementProps = {
-      onDragStop: this.endDrag,
-      onResizeStop: this.endResize,
-      onClick: this.targetClicked,
-      initial: { x: this.props.initLoc.x,
+      initial: {
+        x: this.props.initLoc.x,
         y: this.props.initLoc.y,
         width: this.props.initSize.width,
         height: this.props.initSize.height,
       },
+      onClick: this.targetClicked,
+      onDragStop: this.endDrag,
+      onResizeStop: this.endResize,
     };
+    const imagePath = 'url(' + this.props.image + ')';
     const rotationTransform = 'rotate(' + String(this.props.rotation) + 'deg)';
+
     return (
       <Rnd
         bounds={'parent'}
@@ -99,11 +102,11 @@ class CanvasElement extends React.Component {
       >
         <div
           style={{
-            backgroundImage: 'url(http://marcoortiztorres.me/images/craftml.png)',
-            transform: rotationTransform,
-            backgroundSize: '100% 100%',
+            backgroundImage: imagePath,
             backgroundRepeat: 'no-repeat',
-            height: '100%'
+            backgroundSize: '100% 100%',
+            height: '100%',
+            transform: rotationTransform,
           }}
         />
       </Rnd>
@@ -112,12 +115,13 @@ class CanvasElement extends React.Component {
 }
 
 CanvasElement.propTypes = {
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
+  elementId: PropTypes.string,
+  image: PropTypes.string,
   initLoc: PropTypes.object,
   initSize: PropTypes.object,
   rotation: PropTypes.number,
-  elementId: PropTypes.string,
-  canvasId: PropTypes.string,
 }
 
 export default connect()(CanvasElement);

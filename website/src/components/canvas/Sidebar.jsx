@@ -56,11 +56,11 @@ class Sidebar extends React.Component {
     this.state = {
       opacity: 1,
     }
-    this.removeElement = this.removeElement.bind(this);
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
     this.handleSidebarClose = this.handleSidebarClose.bind(this);
+    this.removeElement = this.removeElement.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
 
     }
@@ -88,8 +88,9 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   addElement() {
-    /* TODO: Make this take a specific module*/
-    FBHelper.addElement(this.props.currentCanvas, 'abcd',
+    /* NOTE: leaving this here for ease of testing */
+    /* TODO: remove before deploying */
+    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png',
       CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 
@@ -123,7 +124,7 @@ class Sidebar extends React.Component {
      closed: 1
     });
   }
-  
+
  /**
   * Mouse event that opens sidebar
   * @returns {void}
@@ -161,45 +162,39 @@ class Sidebar extends React.Component {
             onRightIconButtonTouchTap={this.handleSidebarClose}
           />
           <div style={styles.propertiesSpacing}>
-          <ul>
-            <li>
-              {this.listItems}
-            </li>
-            <li>
-              <h3>Rotate</h3>
-            </li>
-              <RotationSlider
-                currentCanvas={this.props.currentCanvas}
-              />
-            <li>
-              <h3>Resize</h3>
-            </li>
-            <li>
-              <TextField
-                hintText="Current: 64px"
-                floatingLabelText="Height"
-                fullWidth={true}
-              /><br />
-            </li>
-            <li>
-              <TextField
-                hintText="Current: 64px"
-                floatingLabelText="Width"
-                fullWidth={true}
-              /><br />
-            </li>
-          </ul>
+            <ul>
+              <li>
+                {this.listItems}
+              </li>
+              <li>
+                <h3>Rotate</h3>
+                <RotationSlider currentCanvas={this.props.currentCanvas} />
+              </li>
+              <li>
+                <h3>Resize</h3>
+                <TextField
+                  hintText="64px"
+                  floatingLabelText="Height"
+                  fullWidth={true}
+                />
+                <TextField
+                  hintText="64px"
+                  floatingLabelText="Width"
+                  fullWidth={true}
+                />
+              </li>
+            </ul>
           </div>
         </Drawer>
-        </div>
+      </div>
     );
   }
 }
 
 Sidebar.propTypes = {
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,
-  currentCanvas: PropTypes.string,
 }
 
 export default connect()(Sidebar);

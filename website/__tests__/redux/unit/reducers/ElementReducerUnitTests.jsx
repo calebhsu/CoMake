@@ -15,6 +15,7 @@ describe('ElementReducerUnitTests', () => {
   testElement[RC.ELEMENT_SIZE] = {'height': 1, 'width': 1};
   testElement[RC.ELEMENT_ROTATION] = 1;
   testElement[RC.ELEMENT_MODULE] = 'one';
+  testElement[RC.ELEMENT_IMAGE] = 'http://marcoortiztorres.me/images/craftml.png';
   const elements = {'oneElem': testElement};
   const loadedState = Object.assign({}, RC.BLANK_STATE);
   loadedState[RC.ELEMENTS] = elements;
@@ -85,6 +86,7 @@ describe('ElementReducerUnitTests', () => {
       },
       'rotation': 30,
       'module': 'testModule',
+      'image': 'http://marcoortiztorres.me/images/craftml.png',
     };
     const elemId = 'newElement';
     const newElemAction = {

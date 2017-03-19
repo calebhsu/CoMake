@@ -6,7 +6,6 @@ import * as firebase from 'firebase';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CoMakeServices from 'comake-services';
-import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
@@ -73,6 +72,7 @@ class CreateCanvas extends React.Component {
 }
 
 CreateCanvas.propTypes = {
+  dispatch: PropTypes.func,
   userId: PropTypes.string,
 };
 
