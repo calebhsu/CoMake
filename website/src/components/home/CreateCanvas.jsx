@@ -18,7 +18,10 @@ class CreateCanvas extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.state = {
+      loading: false,
+    };
+    
     this.createNewCanvas = this.createNewCanvas.bind(this);
   }
 
