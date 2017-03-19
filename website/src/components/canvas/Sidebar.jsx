@@ -1,9 +1,13 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 
+import AppBar from 'material-ui/AppBar';
+import ArrowBack from 'material-ui/svg-icons/Navigation/arrow-back';
+import ArrowForward from 'material-ui/svg-icons/Navigation/arrow-forward';
 import Drawer from 'material-ui/Drawer';
-import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
@@ -11,19 +15,32 @@ import * as CC from './CanvasConstants';
 import * as FBHelper from '../../helpers/FirebaseHelper';
 
 const styles = {
+  arrowIcon: {
+    color: '#FFFFFF',
+    height: 33,
+    width: 33
+  },
+  arrowOpen: {
+    backgroundColor: '#FFFFFF',
+    height: 33,
+    marginLeft: -13,
+    marginTop: -15,
+    padding: 10,
+    width: 33
+  },
   listItems: {
-    marginTop: 20,
+    marginTop: 20
   },
   propertiesSpacing: {
     marginLeft: 10,
-    marginRight: 20,
+    marginRight: 20
   },
   sidebar: {
-    marginTop: 110,
-    overflowX: 'hidden',
-    position: 'absolute',
     height: '89vh',
-  },
+    marginTop: 119,
+    overflowX: 'hidden',
+    position: 'absolute'
+  }
 };
 
 /**
@@ -36,15 +53,20 @@ class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {
-      opacity: .7
-    }
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
-    this.mouseEnter = this.mouseEnter.bind(this);
-    this.mouseLeave = this.mouseLeave.bind(this);
+    this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
+    this.handleSidebarClose = this.handleSidebarClose.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
+  }
+
+  /**
+   * Function to automatically be performed once the component mounts.
+   * @returns {void}
+   */
+  componentWillMount() {
+    this.setState({isOpen: true, closed: 0})
   }
 
   /**
@@ -52,8 +74,7 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   removeElement() {
-    this.props.dispatch(ElementActions.removeElementAndPersist(
-      this.props.targetedId, this.props.currentCanvas));
+    this.props.dispatch(ElementActions.removeElementAndPersist(this.props.targetedId, this.props.currentCanvas));
   }
 
   /**
@@ -63,8 +84,7 @@ class Sidebar extends React.Component {
   addElement() {
     /* NOTE: leaving this here for ease of testing */
     /* TODO: remove before deploying */
-    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png',
-      CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 
   /**
@@ -74,7 +94,7 @@ class Sidebar extends React.Component {
    */
   mapOptionToDiv(item) {
     let buttonAction = () => {};
-    switch(item) {
+    switch (item) {
       case CC.DELETE_ELEMENT_BUTTON:
         buttonAction = this.removeElement;
         break;
@@ -82,17 +102,27 @@ class Sidebar extends React.Component {
         buttonAction = this.addElement;
         break;
     }
-    return (<MenuItem key={item.toString()} onClick={buttonAction}>
-      {item}
-    </MenuItem>);
+    return (
+      <MenuItem key={item.toString()} onClick={buttonAction}>
+        {item}
+      </MenuItem>
+    );
   }
 
-  mouseEnter() {
-    this.setState({opacity: 1})
+  /**
+   * Mouse event that closes sidebar
+   * @returns {void}
+   */
+  handleSidebarClose() {
+    this.setState({isOpen: false, closed: 1});
   }
 
-  mouseLeave() {
-    this.setState({opacity: .7})
+  /**
+  * Mouse event that opens sidebar
+  * @returns {void}
+  */
+  handleSidebarOpen() {
+    this.setState({isOpen: true, closed: 0});
   }
 
   /**
@@ -101,34 +131,26 @@ class Sidebar extends React.Component {
    */
   render() {
     return (
-      <div onMouseEnter={this.mouseEnter}
-           onMouseLeave={this.mouseLeave}>
-        <Drawer containerStyle={styles.sidebar}
-                docked={true}
-                open={true}
-                openSecondary={false}
-                style={{opacity: this.state.opacity}}
-                zDepth={0}>
-          <ul style={styles.propertiesSpacing}>
-            {this.listItems}
-            <li>
-              <h3>Rotate</h3>
-              <RotationSlider currentCanvas={this.props.currentCanvas} />
-            </li>
-            <li>
-              <h3>Resize</h3>
-              <TextField
-                hintText="64px"
-                floatingLabelText="Height"
-                fullWidth={true}
-              />
-              <TextField
-                hintText="64px"
-                floatingLabelText="Width"
-                fullWidth={true}
-              />
-            </li>
-          </ul>
+      <div>
+        <IconButton iconStyle={styles.arrowOpen} onClick={this.handleSidebarOpen}>
+          <ArrowForward/>
+        </IconButton>
+        <Drawer containerStyle={styles.sidebar} open={this.state.isOpen} docked={true} openSecondary={false} zDepth={0}>
+          <AppBar title="Edit" iconElementRight={< IconButton > <ArrowBack/> < /IconButton>} showMenuIconButton={false} onRightIconButtonTouchTap={this.handleSidebarClose}/>
+            <ul style={styles.propertiesSpacing}>
+              <li>
+                {this.listItems}
+              </li>
+              <li>
+                <h3>Rotate</h3>
+                <RotationSlider currentCanvas={this.props.currentCanvas}/>
+              </li>
+              <li>
+                <h3>Resize</h3>
+                <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
+                <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
+              </li>
+            </ul>
         </Drawer>
       </div>
     );
@@ -138,7 +160,7 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
-  targetedId: PropTypes.string,
+  targetedId: PropTypes.string
 }
 
 export default connect()(Sidebar);

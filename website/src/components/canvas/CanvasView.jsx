@@ -19,9 +19,9 @@ const styles = {
     backgroundImage: backgroundImageString,
     border: '2px dashed #7e7e7e',
     height: '84vh',
-    margin: '1vw 0 1vw 0vw',
+    margin: '1vw 1vw 1vw 0.5vw',
     position: 'absolute',
-    width: '99vw',
+    width: '98vw',
   }
 };
 

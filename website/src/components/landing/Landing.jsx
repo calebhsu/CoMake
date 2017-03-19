@@ -59,7 +59,7 @@ function Landing() {
         align="stretch"
         justify="space-around"
         px={5}
-        py={2}
+        py={5}
         style={styles.about}
         wrap
       >
