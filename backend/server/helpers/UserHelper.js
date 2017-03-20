@@ -10,7 +10,7 @@
  /**
   * Looks up a firebase user by their email
   * @param {string} email the email of the user to lookup
-  * @returns {Promise} A promise that contains a Firebase DataSnapshot with an array of the query results
+  * @returns {Promise} A promise that contains a Firebase DataSnapshot with the query results
   */
  const getFirebaseUserByEmail = (email) => {
   winston.info(
