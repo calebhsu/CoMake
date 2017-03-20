@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
-import ArrowBack from 'material-ui/svg-icons/Navigation/arrow-back';
-import ArrowForward from 'material-ui/svg-icons/Navigation/arrow-forward';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
