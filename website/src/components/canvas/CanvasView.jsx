@@ -73,6 +73,7 @@ class CanvasView extends React.Component {
     const elementPath = 'canvases/' + this.props.currentCanvas + '/elements';
     firebase.database().ref(elementPath).off();
     this.props.dispatch(ActiveElementActions.targetElement(null));
+    this.props.dispatch(ElementActions.initElements({}));
   }
 
   /**

@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
-import ArrowBack from 'material-ui/svg-icons/Navigation/arrow-back';
-import ArrowForward from 'material-ui/svg-icons/Navigation/arrow-forward';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
@@ -84,7 +84,7 @@ class Sidebar extends React.Component {
   addElement() {
     /* NOTE: leaving this here for ease of testing */
     /* TODO: remove before deploying */
-    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+    FBHelper.addElement(this.props.currentCanvas, '1CEKd', 'http://marcoortiztorres.me/images/craftml.png', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
   }
 
   /**

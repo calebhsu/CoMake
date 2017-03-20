@@ -1,6 +1,6 @@
-import React from 'react';
-import Paper from 'material-ui/Paper';
+import React, { PropTypes } from 'react';
 import { ReactCraftMLRenderer } from 'craftml';
+import { generateScript } from '../../craftml/ScriptGenerator';
 
 const styles = {
   img: {
@@ -23,15 +23,37 @@ const styles = {
 };
 
 /**
-  * Gives HTML for 3D preview component.
-  * @returns {HTML}   The HTML of the 3D preview.
+ * @classdesc The component that gives a 3D prreview of the model.
  */
-function Preview3D() {
-  return (
-    <div style={styles.preview3d}>
-      <ReactCraftMLRenderer code='<cube/>' />
-    </div>
-  );
+class Preview3D extends React.Component {
+
+  /**
+   * constructor for the Sidebar.
+   * @param {Object} props The props to be passed in.
+   */
+  constructor(props) {
+    super(props);
+  }
+
+  /**
+    * Gives HTML for 3D preview component.
+    * @returns {HTML}   The HTML of the 3D preview.
+   */
+  render() {
+    let generatedCode = '';
+    if (this.props.elements) {
+      generatedCode = generateScript(this.props.elements);
+    }
+    return (
+      <div style={styles.preview3d}>
+        <ReactCraftMLRenderer code={generatedCode} />
+      </div>
+    );
+  }
+}
+
+Preview3D.propTypes = {
+  elements: PropTypes.object,
 }
 
 export default Preview3D;
