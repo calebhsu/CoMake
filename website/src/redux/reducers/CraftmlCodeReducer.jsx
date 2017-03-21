@@ -20,9 +20,11 @@ export const craftmlCodeReducer = (state = RC.BLANK_STATE, action) => {
         throw Error('Expected code set to be of type string.');
       }
       return insertIntoState(state, action.payload, [RC.CODE]);
-    case AC.TOGGLE_AUTO_CODE_UPDATE:
-      return insertIntoState(state, !state[RC.AUTO_GENERATE_CODE],
-        [RC.AUTO_GENERATE_CODE]);
+    case AC.SET_AUTO_CODE_UPDATE:
+      if (typeof(action.payload) !== 'boolean') {
+        throw Error('Expected condition for auto code update to be of type boolean.');
+      }
+      return insertIntoState(state, action.payload, [RC.AUTO_GENERATE_CODE]);
     default:
       // Reducer should not do anything otherwise so return.
       return state

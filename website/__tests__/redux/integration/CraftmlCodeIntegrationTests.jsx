@@ -6,7 +6,7 @@ import storeHelper from '../../../src/redux/storeHelper';
 import * as CodeActions from '../../../src/redux/actions/CraftmlCodeActions';
 import * as RC from '../../../src/redux/reducers/ReducerConstants';
 
-describe('ActiveElementIntegrationTests', () => {
+describe('CraftmlCodeIntegrationTests', () => {
 
   let testStore = null;
 
@@ -30,22 +30,12 @@ describe('ActiveElementIntegrationTests', () => {
     testStore.dispatch(CodeActions.setCode(expectedCode));
   });
 
-  test('toggleAutoUpdate_dispatch_toTrue', (done) => {
+  test('setAutoUpdate_dispatch_toTrue', (done) => {
     testStore.subscribe(() => {
       expect(testStore.getState().craftmlCodeReducer[RC.AUTO_GENERATE_CODE])
         .toEqual(true);
       done();
     });
-    testStore.dispatch(CodeActions.toggleAutoCodeUpdate());
-  })
-
-  test('toggleAutoUpdate_dispatch_toFalse', (done) => {
-    testStore.dispatch(CodeActions.toggleAutoCodeUpdate());
-    testStore.subscribe(() => {
-      expect(testStore.getState().craftmlCodeReducer[RC.AUTO_GENERATE_CODE])
-        .toEqual(false);
-      done();
-    });
-    testStore.dispatch(CodeActions.toggleAutoCodeUpdate());
+    testStore.dispatch(CodeActions.setAutoCodeUpdate(true));
   })
 });

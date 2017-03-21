@@ -7,6 +7,9 @@ import Sidebar from './Sidebar';
 import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';
+import * as ElementActions from '../../redux/actions/ElementActions';
+import * as ActiveElementActions from '../../redux/actions/ActiveElementActions';
+import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 import * as RC from '../../redux/reducers/ReducerConstants';
 
@@ -62,6 +65,17 @@ class Canvas extends React.Component {
   }
 
   /**
+   * After we unmount the canvas clear out the appropriate fields of store.
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    this.props.dispatch(ActiveElementActions.targetElement(null));
+    this.props.dispatch(ElementActions.initElements({}));
+    this.props.dispatch(CodeActions.setCode(''));
+    this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
+  }
+
+  /**
    * Renders the component into HTML.
    * @returns {HTML}    The rendered componenet.
    */
@@ -85,9 +99,12 @@ class Canvas extends React.Component {
           targetedId={this.props.targetedId}
           currentCanvas={this.props.currentCanvas}
           elements={this.props.elements}
+          autoRender={this.props.autoRender}
         />
         <Preview3D
           craftmlCode={this.props.craftmlCode}
+          elements={this.props.elements}
+          autoRender={this.props.autoRender}
         />
       </div>
     )
@@ -102,6 +119,7 @@ const mapStateToProps = state => ({
   targetedId: (state
     .activeElementReducer[RC.ACTIVE_ELEMENT]),
   craftmlCode: state.craftmlCodeReducer[RC.CODE],
+  autoRender: state.craftmlCodeReducer[RC.AUTO_GENERATE_CODE],
 });
 
 Canvas.propTypes = {
@@ -111,6 +129,7 @@ Canvas.propTypes = {
   canvases: PropTypes.object,
   targetedId: PropTypes.string,
   craftmlCode: PropTypes.string,
+  autoRender: PropTypes.bool,
 }
 
 export default connect(mapStateToProps)(Canvas);

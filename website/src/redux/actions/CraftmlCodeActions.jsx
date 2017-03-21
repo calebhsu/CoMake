@@ -15,9 +15,11 @@ export const setCode = (code) => ({
 });
 
 /**
- * Action for toggling whether code should be automatically updated.
+ * Action for setting whether code should be automatically updated.
+ * @param {Boolean} isAuto  Whether auto update should be performed on code.
  * @return {Object} Action for toggling auto code updating.
  */
-export const toggleAutoCodeUpdate = () => ({
-  type: AC.TOGGLE_AUTO_CODE_UPDATE,
+export const setAutoCodeUpdate = (isAuto) => ({
+  type: AC.SET_AUTO_CODE_UPDATE,
+  payload: isAuto,
 })

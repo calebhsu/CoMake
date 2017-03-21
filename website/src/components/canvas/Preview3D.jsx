@@ -1,5 +1,10 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+
 import { ReactCraftMLRenderer } from 'craftml';
+import { generateScript } from '../../craftml/ScriptGenerator';
+import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 const styles = {
   img: {
@@ -35,6 +40,20 @@ class Preview3D extends React.Component {
   }
 
   /**
+   * If the elements have changed and auto-render is on then update code.
+   * @param {Object} nextProps  The next props to be recieved by the component.
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.autoRender) {
+      if (! _.isEqual(this.props.elements, nextProps.elements)) {
+        const newCode = generateScript(nextProps.elements);
+        this.props.dispatch(CodeActions.setCode(newCode));
+      }
+    }
+  }
+
+  /**
     * Gives HTML for 3D preview component.
     * @returns {HTML}   The HTML of the 3D preview.
    */
@@ -48,7 +67,10 @@ class Preview3D extends React.Component {
 }
 
 Preview3D.propTypes = {
+  dispatch: PropTypes.func,
   craftmlCode: PropTypes.string,
-}
+  elements: PropTypes.object,
+  autoRender: PropTypes.bool,
+};
 
-export default Preview3D;
+export default connect()(Preview3D);

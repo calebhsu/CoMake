@@ -9,7 +9,7 @@ import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 import * as AC from '../../../../src/redux/actions/ActionConstants';
 import * as ReducerUtil from '../../../../src/redux/reducers/ReducerUtil';
 
-describe('ElementReducerUnitTests', () => {
+describe('CraftmlCodeReducerUnitTests', () => {
 
   beforeEach(() => {
     spyOn(ReducerUtil, 'insertIntoState');
@@ -36,24 +36,24 @@ describe('ElementReducerUnitTests', () => {
     }).toThrow();
   });
 
-  test('craftmlCodeReducer_ToggleAutoUpdate_toTrue', () => {
-    const toggleAction = {
-      type: AC.TOGGLE_AUTO_CODE_UPDATE,
+  test('craftmlCodeReducer_SetAutoUpdate', () => {
+    const isAuto = true;
+    const setAutoAction = {
+      type: AC.SET_AUTO_CODE_UPDATE,
+      payload: isAuto,
     };
-    craftmlCodeReducer(RC.BLANK_STATE, toggleAction);
+    craftmlCodeReducer(RC.BLANK_STATE, setAutoAction);
     expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      true, [RC.AUTO_GENERATE_CODE]);
+      isAuto, [RC.AUTO_GENERATE_CODE]);
   });
 
-  test('craftmlCodeReducer_ToggleAutoUpdate_toFalse', () => {
-    const toggleAction = {
-      type: AC.TOGGLE_AUTO_CODE_UPDATE,
+  test('craftmlCodeReducer_SetAutoUpdate_InvalidCondition', () => {
+    const setAutoAction = {
+      type: AC.SET_AUTO_CODE_UPDATE,
+      payload: 'error',
     };
-    const stateWithTrue = Object.assign({}, RC.BLANK_STATE);
-    stateWithTrue[RC.AUTO_GENERATE_CODE] = true;
-    craftmlCodeReducer(stateWithTrue, toggleAction);
-    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(stateWithTrue,
-      false, [RC.AUTO_GENERATE_CODE]);
+    expect(() => {
+      craftmlCodeReducer(RC.BLANK_STATE, setAutoAction);
+    }).toThrow();
   });
-
 });

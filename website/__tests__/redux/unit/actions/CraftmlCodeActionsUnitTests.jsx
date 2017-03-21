@@ -16,10 +16,13 @@ describe('CraftmlCodeActionsUnitTests', () => {
     expect(CodeActions.setCode(testCode)).toEqual(expectedActionResult);
   });
 
-  test('toggleAutoUpdate', () => {
+  test('setAutoUpdate', () => {
+    const isAuto = true;
     const expectedActionResult = {
-      type: AC.TOGGLE_AUTO_CODE_UPDATE,
+      type: AC.SET_AUTO_CODE_UPDATE,
+      payload: isAuto,
     };
-    expect(CodeActions.toggleAutoCodeUpdate()).toEqual(expectedActionResult);
+    expect(CodeActions.setAutoCodeUpdate(isAuto))
+      .toEqual(expectedActionResult);
   });
 });

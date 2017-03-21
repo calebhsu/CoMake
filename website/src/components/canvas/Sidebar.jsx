@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import ArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
+import Checkbox from 'material-ui/Checkbox';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
@@ -61,6 +62,7 @@ class Sidebar extends React.Component {
     this.handleSidebarClose = this.handleSidebarClose.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
+    this.toggleAutoRender = this.toggleAutoRender.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -97,6 +99,17 @@ class Sidebar extends React.Component {
   updateCraftmlCode() {
     const newCode = generateScript(this.props.elements);
     this.props.dispatch(CodeActions.setCode(newCode));
+  }
+
+  /**
+   * Handler that toggles whether the 3D model should be auto rendered.
+   * @returns {void}
+   */
+  toggleAutoRender() {
+    if (!this.props.autoRender) {
+      this.updateCraftmlCode();
+    }
+    this.props.dispatch(CodeActions.setAutoCodeUpdate(!this.props.autoRender));
   }
 
   /**
@@ -157,6 +170,13 @@ class Sidebar extends React.Component {
                 {this.listItems}
               </li>
               <li>
+                <Checkbox
+                  label='Auto Render'
+                  checked={this.props.autoRender}
+                  onCheck={this.toggleAutoRender}
+                />
+              </li>
+              <li>
                 <h3>Rotate</h3>
                 <RotationSlider currentCanvas={this.props.currentCanvas}/>
               </li>
@@ -177,6 +197,7 @@ Sidebar.propTypes = {
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,
   elements: PropTypes.object,
+  autoRender: PropTypes.bool,
 }
 
 export default connect()(Sidebar);

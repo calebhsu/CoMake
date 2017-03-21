@@ -27,4 +27,4 @@ export const UPDATE_USER_INFO = 'updateUserInfo';
 
 // Code Actions
 export const SET_CODE = 'setCode';
-export const TOGGLE_AUTO_CODE_UPDATE = 'toggleAutoCodeUpdate';
+export const SET_AUTO_CODE_UPDATE = 'toggleAutoCodeUpdate';
