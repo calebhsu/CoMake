@@ -6,18 +6,12 @@ import * as AC from './ActionConstants';
 
 /**
  * Action for updating the code.
+ * @param {String} code  The code to be set in the state.
  * @return {Object} Action for updating the code.
  */
-export const updateCode = () => ({
-  type: AC.UPDATE_CODE,
-});
-
-/**
- * Action for clearing the code.
- * @return {Object} Action for clearing the code.
- */
-export const clearCode = () => ({
-  type: AC.CLEAR_CODE,
+export const setCode = (code) => ({
+  type: AC.SET_CODE,
+  payload: code,
 });
 
 /**

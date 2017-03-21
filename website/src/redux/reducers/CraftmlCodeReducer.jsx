@@ -6,7 +6,6 @@ import * as AC from './../actions/ActionConstants';
 
 import * as RC from './ReducerConstants';
 import { insertIntoState } from './ReducerUtil';
-import { generateScript } from '../../craftml/ScriptGenerator';
 
 /**
  * Update the position in firebase.
@@ -16,11 +15,11 @@ import { generateScript } from '../../craftml/ScriptGenerator';
  */
 export const craftmlCodeReducer = (state = RC.BLANK_STATE, action) => {
   switch (action.type) {
-    case AC.UPDATE_CODE:
-      const generatedCode = generateScript(state[RC.ELEMENTS]);
-      return insertIntoState(state, generatedCode, [RC.CODE]);
-    case AC.CLEAR_CODE:
-      return insertIntoState(state, '', [RC.CODE]);
+    case AC.SET_CODE:
+      if (typeof(action.payload) !== 'string') {
+        throw Error('Expected code set to be of type string.');
+      }
+      return insertIntoState(state, action.payload, [RC.CODE]);
     case AC.TOGGLE_AUTO_CODE_UPDATE:
       return insertIntoState(state, !state[RC.AUTO_GENERATE_CODE],
         [RC.AUTO_GENERATE_CODE]);

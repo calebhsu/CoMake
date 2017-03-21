@@ -26,6 +26,5 @@ export const SET_CANVAS_OWNER = 'setCanvasOwner';
 export const UPDATE_USER_INFO = 'updateUserInfo';
 
 // Code Actions
-export const UPDATE_CODE = 'updateCode';
-export const CLEAR_CODE = 'clearCode';
+export const SET_CODE = 'setCode';
 export const TOGGLE_AUTO_CODE_UPDATE = 'toggleAutoCodeUpdate';
