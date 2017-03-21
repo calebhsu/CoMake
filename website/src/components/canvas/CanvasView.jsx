@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import CanvasElement from './CanvasElement';
 import * as ElementActions from '../../redux/actions/ElementActions';
 import * as ActiveElementActions from '../../redux/actions/ActiveElementActions';
+import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
                                + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'
@@ -74,6 +75,7 @@ class CanvasView extends React.Component {
     firebase.database().ref(elementPath).off();
     this.props.dispatch(ActiveElementActions.targetElement(null));
     this.props.dispatch(ElementActions.initElements({}));
+    this.props.dispatch(CodeActions.setCode(''));
   }
 
   /**

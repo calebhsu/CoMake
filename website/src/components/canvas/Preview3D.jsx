@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { ReactCraftMLRenderer } from 'craftml';
-import { generateScript } from '../../craftml/ScriptGenerator';
 
 const styles = {
   img: {
@@ -40,20 +39,16 @@ class Preview3D extends React.Component {
     * @returns {HTML}   The HTML of the 3D preview.
    */
   render() {
-    let generatedCode = '';
-    if (this.props.elements) {
-      generatedCode = generateScript(this.props.elements);
-    }
     return (
       <div style={styles.preview3d}>
-        <ReactCraftMLRenderer code={generatedCode} />
+        <ReactCraftMLRenderer code={this.props.craftmlCode} />
       </div>
     );
   }
 }
 
 Preview3D.propTypes = {
-  elements: PropTypes.object,
+  craftmlCode: PropTypes.string,
 }
 
 export default Preview3D;

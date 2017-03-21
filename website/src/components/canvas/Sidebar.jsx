@@ -11,8 +11,10 @@ import TextField from 'material-ui/TextField';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
+import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 import * as CC from './CanvasConstants';
 import * as FBHelper from '../../helpers/FirebaseHelper';
+import { generateScript } from '../../craftml/ScriptGenerator';
 
 const styles = {
   arrowIcon: {
@@ -58,6 +60,7 @@ class Sidebar extends React.Component {
     this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
     this.handleSidebarClose = this.handleSidebarClose.bind(this);
     this.removeElement = this.removeElement.bind(this);
+    this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -88,6 +91,15 @@ class Sidebar extends React.Component {
   }
 
   /**
+   * Handler for updating craftml code (triggers 3D rerender).
+   * @returns {void}
+   */
+  updateCraftmlCode() {
+    const newCode = generateScript(this.props.elements);
+    this.props.dispatch(CodeActions.setCode(newCode));
+  }
+
+  /**
    * Maps list item to a div to put in the drawer.
    * @param {String} item The item name to encapsulate into a ManueItem.
    * @returns {HTML} A MenuItem tag that holds the name of the item.
@@ -100,6 +112,9 @@ class Sidebar extends React.Component {
         break;
       case CC.ADD_ELEMENT_BUTTON:
         buttonAction = this.addElement;
+        break;
+      case CC.RERENDER_BUTTON:
+        buttonAction = this.updateCraftmlCode;
         break;
     }
     return (
@@ -160,7 +175,8 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
-  targetedId: PropTypes.string
+  targetedId: PropTypes.string,
+  elements: PropTypes.object,
 }
 
 export default connect()(Sidebar);
