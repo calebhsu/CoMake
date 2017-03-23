@@ -11,6 +11,13 @@ import {
 } from '../../redux/actions/ActionConstants';
 import { updateAndPersist } from '../../redux/actions/ElementActions';
 import { targetElement } from '../../redux/actions/ActiveElementActions';
+
+const styles = {
+  selected: {
+    border: '1px solid red',
+  }
+}
+
 /**
  * Component for an element on the canvas.
  */
@@ -22,10 +29,24 @@ class CanvasElement extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      [this.props.elementId]: null,
+    };
     this.elementRef;
     this.endDrag = this.endDrag.bind(this);
     this.endResize = this.endResize.bind(this);
     this.targetClicked = this.targetClicked.bind(this);
+  }
+
+  /**
+   * Deselects the previous canvas element after a new target is selected.
+   * @param {Object} prevProps The previous props of the component before it updated.
+   * @returns {void}
+   */
+  componentDidUpdate(prevProps) {
+    if (this.props.targetedId !== prevProps.targetedId) {
+      this.setState({ [prevProps.targetedId]: false })
+    }
   }
 
   /**
@@ -69,9 +90,11 @@ class CanvasElement extends React.Component {
 
   /**
    * Handler for onClick that dispatches a targetElement event.
+   * @param {Event} event The event of the element click.
    * @returns {void}
    */
-  targetClicked() {
+  targetClicked(event) {
+    this.setState({ [event.target.id]: true });
     this.props.dispatch(targetElement(this.props.elementId));
   }
 
@@ -98,9 +121,11 @@ class CanvasElement extends React.Component {
       <Rnd
         bounds={'parent'}
         ref={ elem => { this.elementRef = elem; } }
+        style={this.state[this.props.elementId] ? styles.selected : {}}
         {...elementProps}
       >
         <div
+          id={this.props.elementId}
           style={{
             backgroundImage: imagePath,
             backgroundRepeat: 'no-repeat',
@@ -122,6 +147,7 @@ CanvasElement.propTypes = {
   initLoc: PropTypes.object,
   initSize: PropTypes.object,
   rotation: PropTypes.number,
+  targetedId: PropTypes.string,
 }
 
 export default connect()(CanvasElement);

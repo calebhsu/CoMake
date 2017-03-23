@@ -80,6 +80,7 @@ class Canvas extends React.Component {
         <CanvasView
           currentCanvas={this.props.currentCanvas}
           elements={this.props.elements}
+          targetedId={this.props.targetedId}
         />
         <Sidebar
           targetedId={this.props.targetedId}

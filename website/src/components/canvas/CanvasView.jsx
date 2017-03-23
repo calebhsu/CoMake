@@ -31,7 +31,7 @@ const styles = {
 class CanvasView extends React.Component {
 
   /**
-   *  Constructor for CanvasElement
+   *  Constructor for CanvasView
    * @param {Object} props The props for the CanvasElement.
    */
   constructor(props) {
@@ -98,6 +98,7 @@ class CanvasView extends React.Component {
                 initLoc={elemDetails.position}
                 initSize={elemDetails.size}
                 rotation={Number(elemDetails.rotation)}
+                targetedId={this.props.targetedId}
               />
             );
           }
@@ -116,6 +117,7 @@ CanvasView.propTypes = {
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
+  targetedId: PropTypes.string,
 }
 
 export default connect()(CanvasView);
