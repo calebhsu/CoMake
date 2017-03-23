@@ -14,7 +14,7 @@ import { targetElement } from '../../redux/actions/ActiveElementActions';
 
 const styles = {
   selected: {
-    border: '1px solid red',
+    border: '4px solid rgba(39, 179, 198, 0.78)',
   }
 }
 

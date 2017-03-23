@@ -17,7 +17,6 @@ const styles = {
   canvas: {
     backgroundSize: '25px 25px',
     backgroundImage: backgroundImageString,
-    border: '2px dashed #7e7e7e',
     height: '84vh',
     margin: '1vw 1vw 1vw 0.5vw',
     position: 'absolute',
