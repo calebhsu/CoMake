@@ -50,7 +50,7 @@ class ShareCanvasModal extends Component {
     this.state = {
       open: false,
       emailListText: null,
-			usersNotFound: null
+      usersNotFound: null
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
@@ -64,7 +64,7 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   shareCanvas() {
-		this.setState({usersNotFound: null});
+    this.setState({usersNotFound: null});
 
     if(!this.props.userId || !this.props.currentCanvasId) {
      return;
@@ -83,20 +83,20 @@ class ShareCanvasModal extends Component {
      CanvasSharingService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
        if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
 
-				 var usersNotFoundString =
-				 	resObj.usersNotFound.reduce(
-						(notFoundEmailList, userEmail) => {
-							if(notFoundEmailList)
-								return notFoundEmailList + ', ' + userEmail
-							return 'User(s) were not found: ' + userEmail
-					 		},
-							null
-						);
+         var usersNotFoundString =
+           resObj.usersNotFound.reduce(
+            (notFoundEmailList, userEmail) => {
+              if(notFoundEmailList)
+                return notFoundEmailList + ', ' + userEmail
+              return 'User(s) were not found: ' + userEmail
+               },
+              null
+            );
 
-				 this.setState({usersNotFound: usersNotFoundString});
-			 } else {
-				 this.handleClose();
-			 }
+         this.setState({usersNotFound: usersNotFoundString});
+       } else {
+         this.handleClose();
+       }
      });
    }
 
@@ -172,7 +172,7 @@ class ShareCanvasModal extends Component {
             fullWidth={true}
             hintText="abc123@email.com"
             onBlur={this.updateEmailListText}
-						errorText={this.state.usersNotFound}
+            errorText={this.state.usersNotFound}
           />
         </Dialog>
       </div>
