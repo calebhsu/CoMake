@@ -49,7 +49,8 @@ class ShareCanvasModal extends Component {
     super(props);
     this.state = {
       open: false,
-      emailListText: null
+      emailListText: null,
+			usersNotFound: null
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
@@ -63,6 +64,8 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   shareCanvas() {
+		this.setState({usersNotFound: null});
+
     if(!this.props.userId || !this.props.currentCanvasId) {
      return;
     }
@@ -78,10 +81,23 @@ class ShareCanvasModal extends Component {
      );
 
      CanvasSharingService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
-       console.log(resObj);
-     });
+       if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
 
-     this.handleClose();
+				 var usersNotFoundString =
+				 	resObj.usersNotFound.reduce(
+						(notFoundEmailList, userEmail) => {
+							if(notFoundEmailList)
+								return notFoundEmailList + ', ' + userEmail
+							return 'User(s) were not found: ' + userEmail
+					 		},
+							null
+						);
+
+				 this.setState({usersNotFound: usersNotFoundString});
+			 } else {
+				 this.handleClose();
+			 }
+     });
    }
 
   /**
@@ -156,6 +172,7 @@ class ShareCanvasModal extends Component {
             fullWidth={true}
             hintText="abc123@email.com"
             onBlur={this.updateEmailListText}
+						errorText={this.state.usersNotFound}
           />
         </Dialog>
       </div>
