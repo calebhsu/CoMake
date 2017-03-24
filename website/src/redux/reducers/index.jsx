@@ -8,6 +8,7 @@ import { userInfoReducer } from './LoginReducer';
 import { updateElementReducer } from './ElementReducer';
 import { activeElementReducer } from './ActiveElementReducer';
 import { canvasReducer } from './CanvasReducer';
+import {responsiveStateReducer} from 'redux-responsive'
 
 /**
  * An object with all the specified reducers combined
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   updateElementReducer,
   activeElementReducer,
   canvasReducer,
+  browser: responsiveStateReducer,
 });
 
 export default reducers;

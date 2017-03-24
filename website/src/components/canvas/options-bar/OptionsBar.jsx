@@ -28,7 +28,7 @@ const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
   box: {
-    width: '100%'
+    display: 'flex',
   },
   header: {
     backgroundColor: '#49937f',
@@ -101,7 +101,12 @@ class OptionsBar extends React.Component {
     this.props.dispatch(CA.setCanvasNameAndPersist(this.props.currentCanvas,
       newValue))
   }
-
+  // grab only the responsive state from the store
+  // (assuming you have put the `responsiveStateReducer` under
+  //  the key `browser` in your state tree)
+  browserSelector({browser}) {
+      return {browser}
+  }
   /**
    * Gives HTML for the canvas options bar.
    * @returns {HTML}   The HTML of the canvas options toolbar.
@@ -137,7 +142,7 @@ class OptionsBar extends React.Component {
       }
     }
     return (
-      <Box style={styles.box} col={9} sm={12} md={9}>
+      <Box style={styles.box} lg={9} md={9}>
         <Paper style={styles.paper} zDepth={1}>
           <TextField
             style={styles.modelName}

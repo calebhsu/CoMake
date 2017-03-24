@@ -5,6 +5,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { autoRehydrate } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
+import {responsiveStoreEnhancer} from 'redux-responsive';
 
 import reducers from './reducers';
 
@@ -16,6 +17,7 @@ const storeConstructor = () => {
   return createStore(reducers,
     undefined,
     compose(
+      responsiveStoreEnhancer,
       applyMiddleware(
         thunkMiddleware
       ),
