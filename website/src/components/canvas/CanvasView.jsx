@@ -97,7 +97,7 @@ class CanvasView extends React.Component {
                 initLoc={elemDetails.position}
                 initSize={elemDetails.size}
                 rotation={Number(elemDetails.rotation)}
-                targetedId={this.props.targetedId}
+                isSelected={id === this.props.targetedId}
               />
             );
           }
