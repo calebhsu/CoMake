@@ -169,7 +169,7 @@ class OptionsBar extends React.Component {
         </Box>
         <Snackbar
           autoHideDuration={2000}
-          message="Name change saved"
+          message="Canvas name saved."
           onRequestClose={this.handleSnackbarRequestClose}
           open={this.state.snackbarOpen}
         />
