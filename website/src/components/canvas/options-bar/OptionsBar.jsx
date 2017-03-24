@@ -115,12 +115,12 @@ class OptionsBar extends React.Component {
     return (
       <Box style={styles.box} col={9} sm={12} md={9}>
         <Paper style={styles.paper} zDepth={1}>
-        <TextField
-          style={styles.modelName}
-          id="text-field-default"
-          value={canvasName}
-          onChange={this.nameFieldChangeHandler}
-        />
+          <TextField
+            style={styles.modelName}
+            id="text-field-default"
+            value={canvasName}
+            onChange={this.nameFieldChangeHandler}
+          />
           <span style={styles.optionBtnGroup}>
             <FlatButton label="File Options" style={styles.optionBtn} />
             <ImportModelModal currentCanvas={this.props.currentCanvas} />
