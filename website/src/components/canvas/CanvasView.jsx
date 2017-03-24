@@ -17,7 +17,6 @@ const styles = {
   canvas: {
     backgroundSize: '25px 25px',
     backgroundImage: backgroundImageString,
-    border: '2px dashed #7e7e7e',
     height: '84vh',
     margin: '1vw 1vw 1vw 0.5vw',
     position: 'absolute',
@@ -31,7 +30,7 @@ const styles = {
 class CanvasView extends React.Component {
 
   /**
-   *  Constructor for CanvasElement
+   *  Constructor for CanvasView
    * @param {Object} props The props for the CanvasElement.
    */
   constructor(props) {
@@ -98,6 +97,7 @@ class CanvasView extends React.Component {
                 initLoc={elemDetails.position}
                 initSize={elemDetails.size}
                 rotation={Number(elemDetails.rotation)}
+                isSelected={id === this.props.targetedId}
               />
             );
           }
@@ -116,6 +116,7 @@ CanvasView.propTypes = {
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
+  targetedId: PropTypes.string,
 }
 
 export default connect()(CanvasView);

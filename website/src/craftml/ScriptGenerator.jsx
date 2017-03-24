@@ -19,11 +19,11 @@ export function generateScript(elements) {
     let elementScript = '\t<element' + String(elementId) + '\n';
     elementScript += '\tmodule="' + currElement.module + '"\n';
     // Add in transitions
-    elementScript += '\tt="size x ' + String(currElement.size.width);
-    elementScript += ' y ' + String(currElement.size.height) + '; ';
-    elementScript += 'position x ' + String(currElement.position.x);
-    elementScript += ' y ' + String(currElement.position.y) + '; ';
-    elementScript += 'rotate z ' + String(currElement.rotation) + '" />';
+    elementScript += '\tt="size x ' + String(currElement.size.width / 10);
+    elementScript += ' y ' + String(currElement.size.height / 10) + '; ';
+    elementScript += 'position x ' + String(currElement.position.x / 10);
+    elementScript += ' y ' + String(currElement.position.y / 10) + '; ';
+    elementScript += 'rotate z ' + String(currElement.rotation.toFixed()) + '" />';
 
     script += elementScript + '\n\n';
     elementId++;
