@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CoMakeServices from 'comake-services';
+import LoadingIndicator from './LoadingIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
@@ -18,8 +19,12 @@ class CreateCanvas extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false,
+    };
 
     this.createNewCanvas = this.createNewCanvas.bind(this);
+    this.handleLoadingShow = this.handleLoadingShow.bind(this);
   }
 
   /**
@@ -30,6 +35,8 @@ class CreateCanvas extends React.Component {
     if(!this.props.userId) {
       return;
     }
+
+    this.handleLoadingShow();
 
     const reqBody = CanvasCreationService.formRequestBody(
       'Untitled',
@@ -58,15 +65,26 @@ class CreateCanvas extends React.Component {
     });
   }
 
+  /**
+  * Handler for LoadingIndicator that sets loading display state to true.
+  * @returns {void}
+  */
+  handleLoadingShow(){
+    this.setState({loading: true});
+  }
+
   render() {
     return(
-  		<span>
-        <RaisedButton
-          label="New Canvas"
-          onClick={this.createNewCanvas}
-          secondary={true}
-        />
-      </span>
+      <div>
+        { this.state.loading ? <LoadingIndicator /> : null }
+        <span>
+          <RaisedButton
+            label="New Canvas"
+            onClick={this.createNewCanvas}
+            secondary={true}
+          />
+        </span>
+      </div>
     )
   }
 }
