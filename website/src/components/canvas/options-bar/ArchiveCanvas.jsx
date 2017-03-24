@@ -68,6 +68,7 @@ class ArchiveCanvas extends React.Component {
 
     firebase.database().ref(`/users/${userId}/canvases/${canvasId}`).set(false);
     document.location = '/#/home';
+    location.reload(true);
   };
 
   /**
