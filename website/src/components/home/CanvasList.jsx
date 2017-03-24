@@ -26,6 +26,8 @@ const generateCanvasCode = (
   <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
 );
 
+var userCanvasList = null;
+
 
 /**
  * @classdesc Component for displaying list of available canvases.
@@ -63,6 +65,11 @@ class CanvasList extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.listenersAttached && nextProps.userId) {
       this.collectAndListenForCanvases(nextProps.userId);
+    }
+    if (!userCanvasList) {
+      firebase.database().ref(`/users/${this.props.userId}/${RC.CANVASES}`).once('value').then((canvasListSnap) => {
+        userCanvasList = canvasListSnap.val();
+      });
     }
   }
 
@@ -145,20 +152,22 @@ class CanvasList extends React.Component {
     const canvasList = [];
 
     Object.keys(this.props.canvases).forEach((canvasId, i) => {
-      canvasList.push(
-        <Box style={styles.models} key={i}>
-          <Link to="/canvas">
-            <Card onTouchTap={this.createClickHandler(canvasId)}>
-              <CardMedia
-                overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
-                overlayContentStyle={styles.overlay}
-                >
-                {generateCanvasCode}
-              </CardMedia>
-            </Card>
-          </Link>
-        </Box>
-      )
+      if (userCanvasList[canvasId]) {
+        canvasList.push(
+          <Box style={styles.models} key={i}>
+            <Link to="/canvas">
+              <Card onTouchTap={this.createClickHandler(canvasId)}>
+                <CardMedia
+                  overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
+                  overlayContentStyle={styles.overlay}
+                  >
+                  {generateCanvasCode}
+                </CardMedia>
+              </Card>
+            </Link>
+          </Box>
+        )
+      }
     });
 
     return (<div> {canvasList} </div>);
