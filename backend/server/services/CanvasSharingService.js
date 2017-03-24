@@ -5,6 +5,7 @@
 const admin = require('firebase-admin');
 const winston = require('winston');
 
+const Errors = require('../helpers/Errors');
 const UserHelper = require('../helpers/UserHelper');
 
 /**
@@ -51,19 +52,41 @@ const handleRequest = (request, response) => {
 
     canvasUsersRef.once('value').then((canvasUsersSnap) => {
 
+      const usersNotFound = [];
+      const addUserPromises = [];
+
       if(canvasUsersSnap.val() && canvasUsersSnap.val()[request.body.sharingUser]) {
         // add the users in the user list to the canvas
         request.body.userList.forEach((userEmail) => {
-        UserHelper.addUserToCanvasByEmail(userEmail, request.body.canvasId)
+          addUserPromises.push(
+            UserHelper.addUserToCanvasByEmail(userEmail, request.body.canvasId)
+              .catch((error) => {
+                if(error === Errors.UserNotFound) {
+                  usersNotFound.push(userEmail);
+                }
+                else {
+                  winston.error(
+                    'CanvasSharingService.handleRequest - unknown error in UserHelper.addUserToCanvasByEmail when adding user %s: %s',
+                    userEmail,
+                    error.message
+                  );
+                }
+              })
+            );
         });
 
-        winston.info(
-          'CanvasSharingService.handleRequest - successfully shared canvas %s with users',
-          request.body.canvasId
-        );
+        admin.Promise.all(addUserPromises).then(() => {
+          winston.info(
+            'CanvasSharingService.handleRequest - completed canvas share with users for canvas %s',
+            request.body.canvasId
+          );
 
-        // send the new canvas id to the requesting user
-        response.send({ sharedCanvasId: request.body.canvasId });
+          // send the new canvas id to the requesting user
+          response.send({
+            sharedCanvasId: request.body.canvasId,
+            usersNotFound
+          });
+        });
       } else {
         winston.error(
           'CanvasSharingService.handleRequest - user %s is not on canvas %s and cannot share it',
