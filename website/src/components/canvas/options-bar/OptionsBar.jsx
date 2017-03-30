@@ -13,7 +13,6 @@ import TextField from 'material-ui/TextField'
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
 import ShareCanvasModal from './ShareCanvasModal';
-import responsive from '../../../scss/main.scss';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
 
@@ -29,6 +28,10 @@ import {
 const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
+
+  box: {
+    display: 'block',
+  },
   header: {
     backgroundColor: '#49937f',
     color: '#FFFFFF',
@@ -49,10 +52,10 @@ const styles = {
     marginRight: 10,
   },
   paper: {
-    display: 'inline-block',
+    display: 'block',
     height: 50,
     textAlign: 'center',
-    width: '100%',
+    width: 1920,
   }
 };
 
@@ -148,7 +151,7 @@ class OptionsBar extends React.Component {
     }
     return (
       <div>
-        <Box className={responsive.box}>
+        <Box className={styles.box}>
           <Paper style={styles.paper} zDepth={1}>
             <TextField
               style={styles.modelName}

@@ -15,16 +15,6 @@ h2 {
 .blinkAnimation {
   animation: blinker 2s ease-in-out infinite;
 }
-
-.box {
-  display: flex;
-}
 @keyframes blinker {
   50% { opacity: 0; }
-}
-
-@media(max-width: 700px ){
-  .box{
-    display: none;
-  }
 }
