@@ -11,6 +11,13 @@ import {
 } from '../../redux/actions/ActionConstants';
 import { updateAndPersist } from '../../redux/actions/ElementActions';
 import { targetElement } from '../../redux/actions/ActiveElementActions';
+
+const styles = {
+  selected: {
+    border: '4px solid rgba(39, 179, 198, 0.78)',
+  }
+}
+
 /**
  * Component for an element on the canvas.
  */
@@ -98,9 +105,11 @@ class CanvasElement extends React.Component {
       <Rnd
         bounds={'parent'}
         ref={ elem => { this.elementRef = elem; } }
+        style={this.props.isSelected ? styles.selected : {}}
         {...elementProps}
       >
         <div
+          id={this.props.elementId}
           style={{
             backgroundImage: imagePath,
             backgroundRepeat: 'no-repeat',
@@ -122,6 +131,7 @@ CanvasElement.propTypes = {
   initLoc: PropTypes.object,
   initSize: PropTypes.object,
   rotation: PropTypes.number,
+  isSelected: PropTypes.bool,
 }
 
 export default connect()(CanvasElement);

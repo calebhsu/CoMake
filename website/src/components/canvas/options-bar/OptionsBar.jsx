@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField'
 
 import ExportModal from './ExportModal';
@@ -63,7 +64,11 @@ class OptionsBar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      snackbarOpen: false,
+    };
     this.nameFieldChangeHandler = this.nameFieldChangeHandler.bind(this);
+    this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
 
   /**
@@ -88,7 +93,13 @@ class OptionsBar extends React.Component {
     const canvasPath = 'canvases/' + this.props.currentCanvas + '/';
     firebase.database().ref(canvasPath).off();
   }
-
+  /**
+   * Handler for onRequestClose that sets snackbar's open state to false.
+   * @returns {void}
+   */
+  handleSnackbarRequestClose() {
+      this.setState({snackbarOpen: false});
+  }
   /**
    * Handler for when the name field is changed.
    * @param {Object} e  The event of changing the name.
@@ -98,6 +109,7 @@ class OptionsBar extends React.Component {
   nameFieldChangeHandler(e, newValue) {
     this.props.dispatch(CA.setCanvasNameAndPersist(this.props.currentCanvas,
       newValue))
+      this.setState({snackbarOpen: true});
   }
   // grab only the responsive state from the store
   // (assuming you have put the `responsiveStateReducer` under
