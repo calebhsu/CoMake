@@ -13,6 +13,7 @@ import TextField from 'material-ui/TextField'
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
 import ShareCanvasModal from './ShareCanvasModal';
+import responsive from '../../../scss/main.scss';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
 
@@ -28,9 +29,6 @@ import {
 const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
-  box: {
-    width: '100%'
-  },
   header: {
     backgroundColor: '#49937f',
     color: '#FFFFFF',
@@ -113,7 +111,12 @@ class OptionsBar extends React.Component {
       newValue))
       this.setState({snackbarOpen: true});
   }
-
+  // grab only the responsive state from the store
+  // (assuming you have put the `responsiveStateReducer` under
+  //  the key `browser` in your state tree)
+  browserSelector({browser}) {
+      return {browser}
+  }
   /**
    * Gives HTML for the canvas options bar.
    * @returns {HTML}   The HTML of the canvas options toolbar.
@@ -149,31 +152,23 @@ class OptionsBar extends React.Component {
       }
     }
     return (
-      <div>
-        <Box style={styles.box} col={9} sm={12} md={9}>
-          <Paper style={styles.paper} zDepth={1}>
-            <TextField
-              style={styles.modelName}
-              id="text-field-default"
-              defaultValue={canvasName}
-              onChange={this.nameFieldChangeHandler}
-            />
-            <span style={styles.optionBtnGroup}>
-              <FlatButton label="File Options" style={styles.optionBtn} />
-              <ImportModelModal currentCanvas={this.props.currentCanvas} />
-              <ExportModal elements={this.props.elements} />
-              <ShareCanvasModal />
-              { userDivs }
-            </span>
-          </Paper>
-        </Box>
-        <Snackbar
-          autoHideDuration={2000}
-          message="Canvas name saved."
-          onRequestClose={this.handleSnackbarRequestClose}
-          open={this.state.snackbarOpen}
-        />
-      </div>
+      <Box className={responsive.box}>
+        <Paper style={styles.paper} zDepth={1}>
+          <TextField
+            style={styles.modelName}
+            id="text-field-default"
+            defaultValue={canvasName}
+            onChange={this.nameFieldChangeHandler}
+          />
+          <span style={styles.optionBtnGroup}>
+            <FlatButton label="File Options" style={styles.optionBtn} />
+            <ImportModelModal currentCanvas={this.props.currentCanvas} />
+            <ExportModal elements={this.props.elements} />
+            <ShareCanvasModal />
+            { userDivs }
+          </span>
+        </Paper>
+      </Box>
     );
   }
 }
