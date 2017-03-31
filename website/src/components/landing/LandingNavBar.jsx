@@ -8,7 +8,6 @@ const styles = {
     height: 54,
   },
   navBtn: {
-    fontWeight: 700,
     marginTop: 8,
   },
   navBtnLabel: {
@@ -31,6 +30,12 @@ function LandingNavBar() {
       />
       <FlatButton
         label="User Guide"
+        labelStyle={styles.navBtnLabel}
+        style={styles.navBtn}
+      />
+      <FlatButton
+        href="https://craftml.io/"
+        label="CraftML"
         labelStyle={styles.navBtnLabel}
         style={styles.navBtn}
       />

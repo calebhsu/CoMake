@@ -4,26 +4,32 @@ import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
-import Down from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import FlatButton from 'material-ui/FlatButton';
 import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
-import { white } from 'material-ui/styles/colors';
+import { grey900 } from 'material-ui/styles/colors';
 
 import { getUserInfo, signOut } from '../helpers/LoginHelper';
 
 const styles = {
-  btn: {
-    height: 64,
-  },
   dropdownIcon: {
     verticalAlign: 'middle',
   },
-  user: {
-    color: white,
+  title: {
+    color: grey900,
+  },
+  navBtn: {
+    height: 64,
+  },
+  navBtnLabel: {
+    fontWeight: 600,
+    letterSpacing: 1,
+  },
+  navUser: {
+    color: grey900,
     fontSize: 14,
-    height: 50,
+    fontWeight: 600,
     letterSpacing: 1,
     marginTop: 5,
     textTransform: 'uppercase',
@@ -66,43 +72,37 @@ class NavBar extends React.Component {
     }
     return (
       <AppBar
-        title="CoMake"
-        iconElementRight={
-          <div>
-            <Link to="/profile">
-              <FlatButton
-                secondary={true}
-                style={styles.btn}
-              >
-                <ListItem
-                  disabled={true}
-                  leftAvatar={
-                    <Avatar src={photoURL} />
-                  }
-                  style={styles.user}
-                >
-                  <span>
-                    {username}
-                    <Down color={white} style={styles.dropdownIcon} />
-                  </span>
-                </ListItem>
-              </FlatButton>
-            </Link>
-            <FlatButton
-              label={"Log Out"}
-              labelStyle={styles.user}
-              style={styles.user, styles.btn}
-              onClick={signOut}
-            />
-          </div>
-        }
+        title="comake"
+        titleStyle={styles.title}
         iconStyleRight={styles.userElement}
         iconElementLeft={
           <Link to="/home">
-            <IconButton><Home color={white} /></IconButton>
+            <IconButton><Home color={grey900} /></IconButton>
           </Link>
         }
-      />
+      >
+        <Link to="/profile">
+          <FlatButton
+            style={styles.navBtn}
+          >
+            <ListItem
+              disabled={true}
+              leftAvatar={
+                <Avatar src={photoURL} />
+              }
+              style={styles.navUser}
+            >
+              {username}
+            </ListItem>
+          </FlatButton>
+        </Link>
+        <FlatButton
+          label="Log Out"
+          labelStyle={styles.navBtnLabel}
+          style={styles.navBtn}
+          onClick={signOut}
+        />
+      </AppBar>
     );
   }
 }
