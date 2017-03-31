@@ -5,7 +5,7 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import * as globalStyles from '../../scss/main.scss';
+import * as globalStyles from '../scss/main.scss';
 
 const styles = {
   circProg: {

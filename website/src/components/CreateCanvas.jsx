@@ -9,14 +9,23 @@ import CoMakeServices from 'comake-services';
 import LoadingIndicator from './LoadingIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import * as CanvasActions from '../../redux/actions/CanvasActions';
-import * as RC from '../../redux/reducers/ReducerConstants';
-import ServiceEndpoint from '../../ServiceEndpoint'
+import * as CanvasActions from '../redux/actions/CanvasActions';
+import * as RC from '../redux/reducers/ReducerConstants';
+import ServiceEndpoint from '../ServiceEndpoint'
 
 const CanvasCreationService = CoMakeServices.CanvasCreationService;
 
-class CreateCanvas extends React.Component {
+const styles = {
+  createBtn: {
+    marginTop: 15,
+  }
+};
 
+/**
+ * Gives HTML for new canvas button.
+ * @returns {HTML}   The HTML of the new canvas button.
+ */
+class CreateCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,6 +91,7 @@ class CreateCanvas extends React.Component {
             label="New Canvas"
             onClick={this.createNewCanvas}
             secondary={true}
+            style={styles.createBtn}
           />
         </span>
       </div>

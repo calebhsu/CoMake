@@ -10,6 +10,8 @@ import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 import { grey900 } from 'material-ui/styles/colors';
 
+import CreateCanvas from './CreateCanvas';
+
 import { getUserInfo, signOut } from '../helpers/LoginHelper';
 
 const styles = {
@@ -81,6 +83,7 @@ class NavBar extends React.Component {
           </Link>
         }
       >
+        <CreateCanvas />
         <Link to="/profile">
           <FlatButton
             style={styles.navBtn}
@@ -96,6 +99,11 @@ class NavBar extends React.Component {
             </ListItem>
           </FlatButton>
         </Link>
+        <FlatButton
+          label="User Guide"
+          labelStyle={styles.navBtnLabel}
+          style={styles.navBtn}
+        />
         <FlatButton
           label="Log Out"
           labelStyle={styles.navBtnLabel}

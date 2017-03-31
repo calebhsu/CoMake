@@ -8,6 +8,7 @@ import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+import { grey900 } from 'material-ui/styles/colors';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../redux/actions/ElementActions';
@@ -16,7 +17,7 @@ import * as FBHelper from '../../helpers/FirebaseHelper';
 
 const styles = {
   arrowIcon: {
-    color: '#FFFFFF',
+    color: grey900,
     height: 33,
     width: 33
   },
@@ -37,10 +38,13 @@ const styles = {
   },
   sidebar: {
     height: '89vh',
-    marginTop: 119,
+    marginTop: 114,
     overflowX: 'hidden',
     position: 'absolute'
-  }
+  },
+  title: {
+    color: grey900,
+  },
 };
 
 /**
@@ -135,22 +139,32 @@ class Sidebar extends React.Component {
         <IconButton iconStyle={styles.arrowOpen} onClick={this.handleSidebarOpen}>
           <ArrowForward/>
         </IconButton>
-        <Drawer containerStyle={styles.sidebar} open={this.state.isOpen} docked={true} openSecondary={false} zDepth={0}>
-          <AppBar title="Edit" iconElementRight={< IconButton > <ArrowBack/> < /IconButton>} showMenuIconButton={false} onRightIconButtonTouchTap={this.handleSidebarClose}/>
-            <ul style={styles.propertiesSpacing}>
-              <li>
-                {this.listItems}
-              </li>
-              <li>
-                <h3>Rotate</h3>
-                <RotationSlider currentCanvas={this.props.currentCanvas}/>
-              </li>
-              <li>
-                <h3>Resize</h3>
-                <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
-                <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
-              </li>
-            </ul>
+        <Drawer
+          containerStyle={styles.sidebar}
+          docked={true}
+          open={this.state.isOpen}
+          openSecondary={false}
+          zDepth={0}
+        >
+          <AppBar
+            title="Edit"
+            titleStyle={styles.title}
+            iconElementRight={<IconButton><ArrowBack /></IconButton>}
+            onRightIconButtonTouchTap={this.handleSidebarClose}
+            showMenuIconButton={false}
+          />
+          <ul style={styles.propertiesSpacing}>
+            {this.listItems}
+            <li>
+              <h3>Rotate</h3>
+              <RotationSlider currentCanvas={this.props.currentCanvas}/>
+            </li>
+            <li>
+              <h3>Resize</h3>
+              <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
+              <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
+            </li>
+          </ul>
         </Drawer>
       </div>
     );
