@@ -28,10 +28,6 @@ import {
 const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
-
-  box: {
-    display: 'block',
-  },
   header: {
     backgroundColor: '#49937f',
     color: '#FFFFFF',
@@ -151,7 +147,7 @@ class OptionsBar extends React.Component {
     }
     return (
       <div>
-        <Box style={styles.box}>
+        <Box>
           <Paper style={styles.paper} zDepth={1}>
             <TextField
               style={styles.modelName}
