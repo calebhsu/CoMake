@@ -151,7 +151,7 @@ class OptionsBar extends React.Component {
     }
     return (
       <div>
-        <Box className={styles.box}>
+        <Box styles={styles.box}>
           <Paper style={styles.paper} zDepth={1}>
             <TextField
               style={styles.modelName}
