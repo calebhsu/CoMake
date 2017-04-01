@@ -28,9 +28,6 @@ import {
 const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
-  box: {
-    width: '100%'
-  },
   header: {
     backgroundColor: '#49937f',
     color: '#FFFFFF',
@@ -51,10 +48,10 @@ const styles = {
     marginRight: 10,
   },
   paper: {
-    display: 'inline-block',
+    display: 'block',
     height: 50,
     textAlign: 'center',
-    width: '100%',
+    width: 1920,
   }
 };
 
@@ -150,7 +147,7 @@ class OptionsBar extends React.Component {
     }
     return (
       <div>
-        <Box style={styles.box} col={9} sm={12} md={9}>
+        <Box>
           <Paper style={styles.paper} zDepth={1}>
             <TextField
               style={styles.modelName}
