@@ -28,7 +28,6 @@ h2 {
 .blinkAnimation {
   animation: blinker 2s ease-in-out infinite;
 }
-
 @keyframes blinker {
   50% { opacity: 0; }
 }
