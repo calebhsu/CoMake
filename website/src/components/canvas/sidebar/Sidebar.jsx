@@ -20,10 +20,11 @@ import * as FBHelper from '../../../helpers/FirebaseHelper';
 const styles = {
   appbar: {
     backgroundColor: '#a7d2cb',
-    height: 40,
+    height: 49,
   },
   toggleEditMenu: {
-    marginTop: -3,
+    paddingLeft: 5,
+    marginTop: -1,
   },
   editBtn: {
     color: '#e74c49',
@@ -51,10 +52,10 @@ const styles = {
   sidebar: {
     color: black,
     backgroundColor: '#EFEFEF',
-    height: '89vh',
-    marginTop: 55,
-    overflowX: 'hidden',
-    position: 'absolute'
+    height: '92vh',
+    marginTop: 56,
+    overflow: 'hidden',
+    position: 'fixed'
   }
 };
 

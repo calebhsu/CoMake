@@ -86,14 +86,12 @@ class CreateCanvas extends React.Component {
     return(
       <div>
         { this.state.loading ? <LoadingIndicator /> : null }
-        <span>
-          <RaisedButton
-            label="New Canvas"
-            onClick={this.createNewCanvas}
-            secondary={true}
-            style={styles.createBtn}
-          />
-        </span>
+        <RaisedButton
+          label="New Canvas"
+          onClick={this.createNewCanvas}
+          secondary={true}
+          style={styles.createBtn}
+        />
       </div>
     )
   }

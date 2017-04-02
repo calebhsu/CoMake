@@ -15,7 +15,6 @@ const styles = {
   models: {
     display: 'inline-block',
     margin: 10,
-    zIndex: -10,
   },
   overlay: {
     padding: 0,
@@ -168,10 +167,7 @@ class CanvasList extends React.Component {
     });
 
     return (
-      <Grid
-        col={10}
-        mt={3}
-      >
+      <Grid col={10} mt={3}>
         <Flex
           mt={3}
           mb={2}

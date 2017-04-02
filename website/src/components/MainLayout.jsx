@@ -21,12 +21,16 @@ const muiTheme = getMuiTheme({
   menuItem: {
     hoverColor: '#f7f7f7',
   },
+  raisedButton: {
+    secondaryTextColor: white,
+  },
   slider: {
     handleColorZero: '#e74c49',
     trackColor: '#a7d2cb',
     selectionColor: '#42aeb5',
   },
   textField: {
+    textColor: grey900,
     focusColor: '#42aeb5',
   },
 });

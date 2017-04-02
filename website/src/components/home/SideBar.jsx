@@ -19,6 +19,7 @@ const styles = {
     position: 'fixed',
     textAlign: 'center',
     top: 0,
+    zIndex: 10,
   },
 };
 
