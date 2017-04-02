@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
@@ -126,7 +125,7 @@ class Sidebar extends React.Component {
   }
 
   /**
-   * Mouse event that closes sidebar
+   * Mouse event that toggles sidebar open state
    * @returns {void}
    */
   handleSidebarToggle() {
