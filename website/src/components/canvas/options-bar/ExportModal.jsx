@@ -10,12 +10,16 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
+import { white, grey900 } from 'material-ui/styles/colors';
 
 import { generateScript } from '../../../craftml/ScriptGenerator';
 
 const styles = {
-  copyBtn: {
-    color: '#FFFFFF',
+  actionBtn: {
+    color: white,
+  },
+  greyBtn: {
+    color: grey900,
   },
   dialogActions: {
     padding: '8px 15px 15px',
@@ -108,6 +112,7 @@ class ExportModal extends Component {
   const actions = [
     <FlatButton
       label="Close"
+      labelStyle={styles.greyBtn}
       onTouchTap={this.handleDialogClose}
       primary={true}
     />,
@@ -116,7 +121,10 @@ class ExportModal extends Component {
       text={this.state.craftScript}
       >
         <FlatButton
+          backgroundColor="#e74c49"
+          hoverColor="#c7270b"
           label="Copy"
+          labelStyle={styles.actionBtn}
           onTouchTap={this.handleDialogClose}
           primary={true}
         />
@@ -127,6 +135,7 @@ class ExportModal extends Component {
       <div style={styles.wrapper}>
         <FlatButton
           label="Export"
+          labelStyle={styles.greyBtn}
           onTouchTap={this.generateCraftScript}
         />
         <Dialog
