@@ -29,6 +29,10 @@ const muiTheme = getMuiTheme({
     trackColor: '#a7d2cb',
     selectionColor: '#42aeb5',
   },
+  snackbar: {
+    textColor: white,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
   textField: {
     textColor: grey900,
     focusColor: '#42aeb5',
