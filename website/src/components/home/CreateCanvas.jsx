@@ -6,12 +6,12 @@ import * as firebase from 'firebase';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CoMakeServices from 'comake-services';
-import LoadingIndicator from './LoadingIndicator';
+import LoadingIndicator from '../LoadingIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import * as CanvasActions from '../redux/actions/CanvasActions';
-import * as RC from '../redux/reducers/ReducerConstants';
-import ServiceEndpoint from '../ServiceEndpoint'
+import * as CanvasActions from '../../redux/actions/CanvasActions';
+import * as RC from '../../redux/reducers/ReducerConstants';
+import ServiceEndpoint from '../../ServiceEndpoint'
 
 const CanvasCreationService = CoMakeServices.CanvasCreationService;
 

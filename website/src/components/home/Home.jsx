@@ -3,21 +3,14 @@
  */
 
 import React from 'react';
-import { Flex } from 'reflexbox';
 
 import CanvasList from './CanvasList';
+import SideBar from './SideBar';
 
 const styles = {
   body: {
+    paddingTop: 35,
     textAlign: 'center',
-  },
-  header: {
-    textAlign: 'center',
-  },
-  welcome: {
-    fontSize: '3.5em',
-    fontWeight: 500,
-    marginBottom: 20,
   },
 };
 
@@ -27,19 +20,10 @@ const styles = {
  */
 function Home() {
   return (
-    <Flex
-      align="center"
-      mt={3}
-      mb={2}
-      mx={6}
-      justify="space-around"
-      style={styles.body}
-      wrap
-    >
-      <div>
-        <CanvasList />
-      </div>
-    </Flex>
+    <div style={styles.body}>
+      <SideBar />
+      <CanvasList />
+    </div>
   )
 }
 

@@ -8,13 +8,14 @@ import FlatButton from 'material-ui/FlatButton';
 import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
-import { grey900 } from 'material-ui/styles/colors';
-
-import CreateCanvas from './CreateCanvas';
 
 import { getUserInfo, signOut } from '../helpers/LoginHelper';
 
 const styles = {
+  appbar: {
+    height: 55,
+    position: 'fixed',
+  },
   dropdownIcon: {
     verticalAlign: 'middle',
   },
@@ -23,18 +24,18 @@ const styles = {
     fontWeight: 600,
   },
   navBtn: {
-    height: 64,
+    height: 55,
   },
   navBtnLabel: {
     fontWeight: 600,
     letterSpacing: 1,
   },
   navUser: {
-    color: '#e74c49',
+    backgroundColor: '#a7d2cb',
+    color: '#ffffff',
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 1,
-    marginTop: 5,
     textTransform: 'uppercase',
   },
   userElement: {
@@ -80,11 +81,11 @@ class NavBar extends React.Component {
         iconStyleRight={styles.userElement}
         iconElementLeft={
           <Link to="/home">
-            <IconButton><Home color={grey900} /></IconButton>
+            <IconButton><Home color="#e74c49" /></IconButton>
           </Link>
         }
+        style={styles.appbar}
       >
-        <CreateCanvas />
         <Link to="/profile">
           <FlatButton
             style={styles.navBtn}

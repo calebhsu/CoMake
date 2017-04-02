@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
-import { Box } from 'reflexbox';
+import { Grid, Flex, Box } from 'reflexbox';
 import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import { Link } from 'react-router';
 import * as RC from '../../redux/reducers/ReducerConstants';
@@ -146,7 +146,12 @@ class CanvasList extends React.Component {
 
     Object.keys(this.props.canvases).forEach((canvasId, i) => {
       canvasList.push(
-        <Box style={styles.models} key={i}>
+        <Box
+          col={12}
+          sm={3}
+          key={i}
+          style={styles.models}
+        >
           <Link to="/canvas">
             <Card onTouchTap={this.createClickHandler(canvasId)}>
               <CardMedia
@@ -161,7 +166,21 @@ class CanvasList extends React.Component {
       )
     });
 
-    return (<div> {canvasList} </div>);
+    return (
+      <Grid
+        col={10}
+        mt={3}
+      >
+        <Flex
+          mt={3}
+          mb={2}
+          justify="flex-end"
+          wrap
+        >
+          {canvasList}
+        </Flex>
+      </Grid>
+    );
   }
 }
 
