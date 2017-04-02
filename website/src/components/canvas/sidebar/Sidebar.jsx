@@ -34,6 +34,9 @@ const styles = {
     padding: 10,
     width: 33
   },
+  field: {
+    width: '90%',
+  },
   listItems: {
     marginTop: 20
   },
@@ -41,8 +44,8 @@ const styles = {
     color: grey900,
   },
   propertiesSpacing: {
-    marginLeft: 10,
-    marginRight: 20
+    marginLeft: 20,
+    marginRight: 20,
   },
   sidebar: {
     color: black,
@@ -177,8 +180,8 @@ class Sidebar extends React.Component {
             <Divider />
 
             <h3>Resize</h3>
-            <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
-            <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
+            <TextField hintText="64px" floatingLabelText="Height" style={styles.field} />
+            <TextField hintText="64px" floatingLabelText="Width" style={styles.field} />
           </Menu>
         </Drawer>
       </div>
