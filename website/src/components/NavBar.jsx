@@ -19,7 +19,8 @@ const styles = {
     verticalAlign: 'middle',
   },
   title: {
-    color: grey900,
+    color: '#e74c49',
+    fontWeight: 600,
   },
   navBtn: {
     height: 64,
@@ -29,7 +30,7 @@ const styles = {
     letterSpacing: 1,
   },
   navUser: {
-    color: grey900,
+    color: '#e74c49',
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 1,
@@ -118,5 +119,10 @@ class NavBar extends React.Component {
 const mapStateToProps = state => ({
   userInfo: state.userInfoReducer.userInfo,
 });
+
+NavBar.propTypes = {
+  dispatch: PropTypes.func,
+  userInfo: PropTypes.object
+}
 
 export default connect(mapStateToProps)(NavBar);
