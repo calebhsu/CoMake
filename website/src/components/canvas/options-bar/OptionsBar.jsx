@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
-import { Box } from 'reflexbox';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
@@ -48,11 +47,15 @@ const styles = {
     marginRight: 10,
   },
   paper: {
-    display: 'block',
+    display: 'inline-block',
     height: 50,
+    paddingLeft: 250,
+    position: 'fixed',
     textAlign: 'center',
-    width: 1920,
-  }
+    top: 55,
+    width: '100%',
+    zIndex: 10,
+  },
 };
 
 class OptionsBar extends React.Component {
@@ -146,24 +149,22 @@ class OptionsBar extends React.Component {
       }
     }
     return (
-      <div>
-        <Box>
-          <Paper style={styles.paper} zDepth={1}>
-            <TextField
-              style={styles.modelName}
-              id="text-field-default"
-              defaultValue={canvasName}
-              onChange={this.nameFieldChangeHandler}
-            />
-            <span style={styles.optionBtnGroup}>
-              <FlatButton label="File Options" style={styles.optionBtn} />
-              <ImportModelModal currentCanvas={this.props.currentCanvas} />
-              <ExportModal elements={this.props.elements} />
-              <ShareCanvasModal />
-              { userDivs }
-            </span>
-          </Paper>
-        </Box>
+      <div id="options">
+        <Paper style={styles.paper} zDepth={1}>
+          <TextField
+            style={styles.modelName}
+            id="text-field-default"
+            defaultValue={canvasName}
+            onChange={this.nameFieldChangeHandler}
+          />
+          <span style={styles.optionBtnGroup}>
+            <FlatButton label="File Options" style={styles.optionBtn} />
+            <ImportModelModal currentCanvas={this.props.currentCanvas} />
+            <ExportModal elements={this.props.elements} />
+            <ShareCanvasModal />
+            { userDivs }
+          </span>
+        </Paper>
         <Snackbar
           autoHideDuration={2000}
           message="Canvas name saved."

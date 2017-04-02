@@ -22,17 +22,18 @@ const styles = {
     backgroundColor: '#a7d2cb',
     height: 40,
   },
-  closeEditBtn: {
-    marginTop: 0,
+  toggleEditMenu: {
+    marginTop: -3,
   },
   editBtn: {
-    backgroundColor: '#a7d2cb',
-    color: white,
-    height: 33,
+    color: '#e74c49',
+    height: 25,
     marginLeft: -13,
-    marginTop: -15,
-    padding: 10,
-    width: 33
+    top: 55,
+    padding: 12,
+    position: 'absolute',
+    width: 25,
+    zIndex: 15,
   },
   field: {
     width: '90%',
@@ -67,20 +68,16 @@ class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      isOpen: true,
+      translateX: '0px',
+    };
+
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
-    this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
-    this.handleSidebarClose = this.handleSidebarClose.bind(this);
+    this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
-  }
-
-  /**
-   * Function to automatically be performed once the component mounts.
-   * @returns {void}
-   */
-  componentWillMount() {
-    this.setState({isOpen: true, closed: 0})
   }
 
   /**
@@ -131,16 +128,12 @@ class Sidebar extends React.Component {
    * Mouse event that closes sidebar
    * @returns {void}
    */
-  handleSidebarClose() {
-    this.setState({isOpen: false, closed: 1});
-  }
-
-  /**
-  * Mouse event that opens sidebar
-  * @returns {void}
-  */
-  handleSidebarOpen() {
-    this.setState({isOpen: true, closed: 0});
+  handleSidebarToggle() {
+    this.setState(prevState => ({
+        isOpen: !prevState.isOpen,
+        translateX: !prevState.isOpen ? '0px' : '-206px'
+      })
+    );
   }
 
   /**
@@ -148,24 +141,22 @@ class Sidebar extends React.Component {
    * @returns {HTML} The html for the Sidebar.
    */
   render() {
+    const translateX = { transform: 'translate(' + this.state.translateX + ', 0px)' };
     return (
       <div>
-        <IconButton iconStyle={styles.editBtn} onClick={this.handleSidebarOpen}>
-          <ModeEdit />
-        </IconButton>
         <Drawer
-          containerStyle={styles.sidebar}
+          containerStyle={Object.assign({}, styles.sidebar, translateX)}
           open={this.state.isOpen}
           openSecondary={false}
           zDepth={0}
         >
           <AppBar
             iconElementRight={
-              <IconButton disableTouchRipple={false}>
-                <ArrowBack color={white} />
+              <IconButton>
+                <ModeEdit color={white} />
               </IconButton>}
-            iconStyleRight={styles.closeEditBtn}
-            onRightIconButtonTouchTap={this.handleSidebarClose}
+            iconStyleRight={styles.toggleEditMenu}
+            onRightIconButtonTouchTap={this.handleSidebarToggle}
             showMenuIconButton={false}
             style={styles.appbar}
           />
