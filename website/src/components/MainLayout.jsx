@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { white, grey900 } from 'material-ui/styles/colors';
+import { white, grey900, grey700 } from 'material-ui/styles/colors';
 
 import NavBar from './NavBar';
 
@@ -10,10 +10,24 @@ import '../scss/main.scss';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: white,
     accent1Color: '#e74c49',
+    alternateTextColor: grey900,
+    disabledColor: grey700,
+    primary1Color: white,
+    primary2Color: '#a7d2cb',
+    primary3Color: white,
     textColor: '#e74c49',
-    alternateTextColor: white,
+  },
+  menuItem: {
+    hoverColor: '#f7f7f7',
+  },
+  slider: {
+    handleColorZero: '#e74c49',
+    trackColor: '#a7d2cb',
+    selectionColor: '#42aeb5',
+  },
+  textField: {
+    focusColor: '#42aeb5',
   },
 });
 

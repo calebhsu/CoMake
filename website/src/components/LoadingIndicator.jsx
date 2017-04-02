@@ -15,7 +15,7 @@ const styles = {
     position: 'relative',
   },
   loadingText: {
-    color: '#409c93',
+    color: '#42aeb5',
     fontWeight: 600,
     left: 22,
     letterSpacing: 1,
@@ -59,7 +59,7 @@ const LoadingIndicator = () => (
         Loading
       </span>
       <CircularProgress
-        color="#72cfad"
+        color="#8ed6ca"
         size={120}
         style={styles.circProg}
         thickness={5}

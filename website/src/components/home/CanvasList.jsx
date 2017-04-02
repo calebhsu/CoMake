@@ -15,6 +15,7 @@ const styles = {
   models: {
     display: 'inline-block',
     margin: 10,
+    zIndex: -10,
   },
   overlay: {
     padding: 0,

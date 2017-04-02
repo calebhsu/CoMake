@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import IconButton from 'material-ui/IconButton';
+import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-import { black, white, grey700 } from 'material-ui/styles/colors';
+import { black, white, grey900 } from 'material-ui/styles/colors';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../../redux/actions/ElementActions';
@@ -34,6 +36,9 @@ const styles = {
   },
   listItems: {
     marginTop: 20
+  },
+  menuItem: {
+    color: grey900,
   },
   propertiesSpacing: {
     marginLeft: 10,
@@ -109,7 +114,11 @@ class Sidebar extends React.Component {
         break;
     }
     return (
-      <MenuItem key={item.toString()} onClick={buttonAction}>
+      <MenuItem
+        key={item.toString()}
+        onClick={buttonAction}
+        style={styles.menuItem}
+      >
         {item}
       </MenuItem>
     );
@@ -150,25 +159,27 @@ class Sidebar extends React.Component {
           <AppBar
             iconElementRight={
               <IconButton disableTouchRipple={false}>
-                <ArrowBack color={grey700} />
+                <ArrowBack color={white} />
               </IconButton>}
             iconStyleRight={styles.closeEditBtn}
             onRightIconButtonTouchTap={this.handleSidebarClose}
             showMenuIconButton={false}
             style={styles.appbar}
           />
-          <ul style={styles.propertiesSpacing}>
+          <Menu style={styles.propertiesSpacing}>
             {this.listItems}
-            <li>
-              <h3>Rotate</h3>
-              <RotationSlider currentCanvas={this.props.currentCanvas}/>
-            </li>
-            <li>
-              <h3>Resize</h3>
-              <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
-              <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
-            </li>
-          </ul>
+
+            <Divider />
+
+            <h3>Rotate</h3>
+            <RotationSlider currentCanvas={this.props.currentCanvas}/>
+
+            <Divider />
+
+            <h3>Resize</h3>
+            <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
+            <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
+          </Menu>
         </Drawer>
       </div>
     );

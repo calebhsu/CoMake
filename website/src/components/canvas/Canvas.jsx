@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Box } from 'reflexbox';
 import Paper from 'material-ui/Paper';
-import Sidebar from './Sidebar';
+import Sidebar from './sidebar/Sidebar';
 import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';

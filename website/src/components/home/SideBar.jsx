@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { Grid } from 'reflexbox';
-import IconButton from 'material-ui/IconButton';
 
 import CreateCanvas from './CreateCanvas';
 
