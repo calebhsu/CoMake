@@ -61,7 +61,7 @@ class ShareCanvasModal extends Component {
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
 
@@ -130,7 +130,7 @@ class ShareCanvasModal extends Component {
    * Handler for onTouchTap that sets modal's open state to true.
    * @returns {void}
    */
-  handleOpen() {
+  handleOpenModal() {
     this.setState({open: true});
   }
 
@@ -171,7 +171,7 @@ class ShareCanvasModal extends Component {
           hoverColor="#c7270b"
           label="Share"
           labelStyle={styles.shareBtn}
-          onTouchTap={this.handleOpen}
+          onTouchTap={this.handleOpenModal}
         />
         <Dialog
           actions={actions}
