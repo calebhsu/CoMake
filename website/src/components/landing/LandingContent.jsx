@@ -1,9 +1,7 @@
 import React from 'react';
 import { Box, Flex } from 'reflexbox';
 
-import Group from 'material-ui/svg-icons/social/group';
-import Share from 'material-ui/svg-icons/editor/highlight';
-import { black, grey800 } from 'material-ui/styles/colors';
+import { black, grey900, grey800 } from 'material-ui/styles/colors';
 
 const styles = {
   about: {
@@ -11,6 +9,7 @@ const styles = {
     textAlign: 'center',
   },
   blurbHeader: {
+    color: grey900,
     fontWeight: 600,
   },
   blurbSub: {

@@ -14,10 +14,10 @@ import headerImg from '../../img/landing-background.png';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: white,
     accent1Color: '#e74c49',
-    textColor: '#e74c49',
     alternateTextColor: white,
+    primary1Color: white,
+    textColor: '#e74c49',
   },
 });
 
