@@ -56,12 +56,13 @@ class ShareCanvasModal extends Component {
       open: false,
       emailListText: null,
       usersNotFound: null,
-      snackbarOpen: false
+      snackbarOpen: false,
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
+    this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
 
   /**
@@ -192,7 +193,7 @@ class ShareCanvasModal extends Component {
           />
         </Dialog>
         <Snackbar
-          autoHideDuration={3000}
+          autoHideDuration={1000}
           message="Canvas shared successfully."
           onRequestClose={this.handleSnackbarRequestClose}
           open={this.state.snackbarOpen}
