@@ -31,8 +31,6 @@ const styles = {
     letterSpacing: 1,
   },
   navUser: {
-    backgroundColor: '#a7d2cb',
-    color: '#ffffff',
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 1,

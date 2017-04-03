@@ -24,7 +24,7 @@ const styles = {
     marginTop: 0,
   },
   editBtn: {
-    backgroundColor: '#a7d2cb',
+    backgroundColor: '#e74c49',
     color: white,
     height: 33,
     marginLeft: -13,
