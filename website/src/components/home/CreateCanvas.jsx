@@ -6,7 +6,7 @@ import * as firebase from 'firebase';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CoMakeServices from 'comake-services';
-import LoadingIndicator from './LoadingIndicator';
+import LoadingIndicator from '../LoadingIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
@@ -15,8 +15,17 @@ import ServiceEndpoint from '../../ServiceEndpoint'
 
 const CanvasCreationService = CoMakeServices.CanvasCreationService;
 
-class CreateCanvas extends React.Component {
+const styles = {
+  createBtn: {
+    marginTop: 15,
+  }
+};
 
+/**
+ * Gives HTML for new canvas button.
+ * @returns {HTML}   The HTML of the new canvas button.
+ */
+class CreateCanvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,13 +86,12 @@ class CreateCanvas extends React.Component {
     return(
       <div>
         { this.state.loading ? <LoadingIndicator /> : null }
-        <span>
-          <RaisedButton
-            label="New Canvas"
-            onClick={this.createNewCanvas}
-            secondary={true}
-          />
-        </span>
+        <RaisedButton
+          label="New Canvas"
+          onClick={this.createNewCanvas}
+          secondary={true}
+          style={styles.createBtn}
+        />
       </div>
     )
   }

@@ -2,13 +2,15 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
-import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import IconButton from 'material-ui/IconButton';
+import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import TextField from 'material-ui/TextField';
-import { black, white, grey700 } from 'material-ui/styles/colors';
+import { black, white, grey900 } from 'material-ui/styles/colors';
 
 import RotationSlider from './RotationSlider';
 import * as ElementActions from '../../../redux/actions/ElementActions';
@@ -18,35 +20,46 @@ import * as FBHelper from '../../../helpers/FirebaseHelper';
 const styles = {
   appbar: {
     backgroundColor: '#a7d2cb',
-    height: 40,
+    height: 49,
   },
-  closeEditBtn: {
-    marginTop: 0,
+  toggleEditMenu: {
+    marginTop: -1,
+    paddingLeft: 5,
   },
   editBtn: {
-    backgroundColor: '#a7d2cb',
-    color: white,
-    height: 33,
+    color: '#e74c49',
+    height: 25,
     marginLeft: -13,
-    marginTop: -15,
-    padding: 10,
-    width: 33
+    padding: 12,
+    position: 'absolute',
+    top: 55,
+    width: 25,
+    zIndex: 15,
+  },
+  field: {
+    width: '90%',
   },
   listItems: {
     marginTop: 20
   },
+  menuItem: {
+    color: grey900,
+  },
   propertiesSpacing: {
-    marginLeft: 10,
-    marginRight: 20
+    marginLeft: 20,
+    marginRight: 20,
   },
   sidebar: {
-    color: black,
     backgroundColor: '#EFEFEF',
-    height: '89vh',
-    marginTop: 55,
-    overflowX: 'hidden',
-    position: 'absolute'
-  }
+    color: black,
+    height: '92vh',
+    marginTop: 56,
+    overflow: 'hidden',
+    position: 'fixed'
+  },
+  toggleButton: {
+    marginRight: -5,
+  },
 };
 
 /**
@@ -59,20 +72,16 @@ class Sidebar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      isOpen: true,
+      translateX: '0px',
+    };
+
     this.addElement = this.addElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
-    this.handleSidebarOpen = this.handleSidebarOpen.bind(this);
-    this.handleSidebarClose = this.handleSidebarClose.bind(this);
+    this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
-  }
-
-  /**
-   * Function to automatically be performed once the component mounts.
-   * @returns {void}
-   */
-  componentWillMount() {
-    this.setState({isOpen: true, closed: 0})
   }
 
   /**
@@ -109,26 +118,26 @@ class Sidebar extends React.Component {
         break;
     }
     return (
-      <MenuItem key={item.toString()} onClick={buttonAction}>
+      <MenuItem
+        key={item.toString()}
+        onClick={buttonAction}
+        style={styles.menuItem}
+      >
         {item}
       </MenuItem>
     );
   }
 
   /**
-   * Mouse event that closes sidebar
+   * Mouse event that toggles sidebar open state
    * @returns {void}
    */
-  handleSidebarClose() {
-    this.setState({isOpen: false, closed: 1});
-  }
-
-  /**
-  * Mouse event that opens sidebar
-  * @returns {void}
-  */
-  handleSidebarOpen() {
-    this.setState({isOpen: true, closed: 0});
+  handleSidebarToggle() {
+    this.setState(prevState => ({
+        isOpen: !prevState.isOpen,
+        translateX: !prevState.isOpen ? '0px' : '-206px'
+      })
+    );
   }
 
   /**
@@ -136,39 +145,42 @@ class Sidebar extends React.Component {
    * @returns {HTML} The html for the Sidebar.
    */
   render() {
+    const translateX = { transform: 'translate(' + this.state.translateX + ', 0px)' };
+    const toggleIcon = this.state.isOpen ? <KeyboardArrowLeft color={white} /> : <ModeEdit color={white} />
+
     return (
       <div>
-        <IconButton iconStyle={styles.editBtn} onClick={this.handleSidebarOpen}>
-          <ModeEdit />
-        </IconButton>
         <Drawer
-          containerStyle={styles.sidebar}
+          containerStyle={Object.assign({}, styles.sidebar, translateX)}
           open={this.state.isOpen}
           openSecondary={false}
           zDepth={0}
         >
           <AppBar
             iconElementRight={
-              <IconButton disableTouchRipple={false}>
-                <ArrowBack color={grey700} />
-              </IconButton>}
-            iconStyleRight={styles.closeEditBtn}
-            onRightIconButtonTouchTap={this.handleSidebarClose}
+              <IconButton style={styles.toggleButton}>
+                {toggleIcon}
+              </IconButton>
+            }
+            iconStyleRight={styles.toggleEditMenu}
+            onRightIconButtonTouchTap={this.handleSidebarToggle}
             showMenuIconButton={false}
             style={styles.appbar}
           />
-          <ul style={styles.propertiesSpacing}>
+          <Menu style={styles.propertiesSpacing}>
             {this.listItems}
-            <li>
-              <h3>Rotate</h3>
-              <RotationSlider currentCanvas={this.props.currentCanvas}/>
-            </li>
-            <li>
-              <h3>Resize</h3>
-              <TextField hintText="64px" floatingLabelText="Height" fullWidth={true}/>
-              <TextField hintText="64px" floatingLabelText="Width" fullWidth={true}/>
-            </li>
-          </ul>
+
+            <Divider />
+
+            <h3>Rotate</h3>
+            <RotationSlider currentCanvas={this.props.currentCanvas}/>
+
+            <Divider />
+
+            <h3>Resize</h3>
+            <TextField hintText="64px" floatingLabelText="Height" style={styles.field} />
+            <TextField hintText="64px" floatingLabelText="Width" style={styles.field} />
+          </Menu>
         </Drawer>
       </div>
     );

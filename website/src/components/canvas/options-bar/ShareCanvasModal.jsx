@@ -11,6 +11,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
+import { white, grey900 } from 'material-ui/styles/colors';
 
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import ServiceEndpoint from '../../../ServiceEndpoint';
@@ -27,8 +28,11 @@ const styles = {
   dialogBody: {
     padding: '0 32px 24px',
   },
+  greyBtn: {
+    color: grey900,
+  },
   shareBtn: {
-    color: '#FFFFFF',
+    color: white,
     fontWeight: 700,
   },
   wrapper: {
@@ -145,12 +149,13 @@ class ShareCanvasModal extends Component {
     const actions = [
       <FlatButton
         label="Cancel"
+        labelStyle={styles.greyBtn}
         primary={true}
         onTouchTap={this.handleClose}
       />,
       <FlatButton
-        backgroundColor="#229bc8"
-        hoverColor="#0d7faa"
+        backgroundColor="#e74c49"
+        hoverColor="#c7270b"
         label="Share"
         labelStyle={styles.shareBtn}
         onTouchTap={this.shareCanvas}
@@ -161,8 +166,8 @@ class ShareCanvasModal extends Component {
     return (
       <div style={styles.wrapper}>
         <FlatButton
-          backgroundColor="#229bc8"
-          hoverColor="#0d7faa"
+          backgroundColor="#e74c49"
+          hoverColor="#c7270b"
           label="Share"
           labelStyle={styles.shareBtn}
           onTouchTap={this.handleOpen}
