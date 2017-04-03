@@ -20,6 +20,7 @@ const styles = {
     height: '84vh',
     margin: '1vw 1vw 1vw 0.5vw',
     position: 'absolute',
+    top: 100,
     width: '98vw',
   }
 };

@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
-import { Box } from 'reflexbox';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField'
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
@@ -23,36 +23,29 @@ import {
   blue500,
   green400,
   orange500,
+  grey900,
 } from 'material-ui/styles/colors';
 
 const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
-  header: {
-    backgroundColor: '#49937f',
-    color: '#FFFFFF',
-    marginTop: 0,
-    padding: '15px 10px',
-    textTransform: 'uppercase',
-  },
   modelName: {
-    float: 'left',
     marginLeft: 15,
-  },
-  optionBtn: {
-    marginTop: 10,
   },
   optionBtnGroup: {
     float: 'left',
     marginLeft: 20,
     marginRight: 10,
   },
-  paper: {
-    display: 'block',
+  toolbar: {
     height: 50,
+    paddingLeft: 55,
+    position: 'fixed',
     textAlign: 'center',
-    width: 1920,
-  }
+    top: 55,
+    width: '100%',
+    zIndex: 10,
+  },
 };
 
 class OptionsBar extends React.Component {
@@ -146,24 +139,23 @@ class OptionsBar extends React.Component {
       }
     }
     return (
-      <div>
-        <Box>
-          <Paper style={styles.paper} zDepth={1}>
+      <div id="options">
+        <Toolbar style={styles.toolbar}>
+          <ToolbarGroup>
             <TextField
-              style={styles.modelName}
               id="text-field-default"
               defaultValue={canvasName}
               onChange={this.nameFieldChangeHandler}
+              style={styles.modelName}
             />
-            <span style={styles.optionBtnGroup}>
-              <FlatButton label="File Options" style={styles.optionBtn} />
-              <ImportModelModal currentCanvas={this.props.currentCanvas} />
-              <ExportModal elements={this.props.elements} />
-              <ShareCanvasModal />
-              { userDivs }
-            </span>
-          </Paper>
-        </Box>
+            <ImportModelModal currentCanvas={this.props.currentCanvas} />
+            <ExportModal elements={this.props.elements} />
+            <ShareCanvasModal />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            { userDivs }
+          </ToolbarGroup>
+        </Toolbar>
         <Snackbar
           autoHideDuration={2000}
           message="Canvas name saved."
