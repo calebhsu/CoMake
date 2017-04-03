@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
-import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import IconButton from 'material-ui/IconButton';
+import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import TextField from 'material-ui/TextField';
 import { black, white, grey900 } from 'material-ui/styles/colors';
 
@@ -22,16 +23,16 @@ const styles = {
     height: 49,
   },
   toggleEditMenu: {
-    paddingLeft: 5,
     marginTop: -1,
+    paddingLeft: 5,
   },
   editBtn: {
     color: '#e74c49',
     height: 25,
     marginLeft: -13,
-    top: 55,
     padding: 12,
     position: 'absolute',
+    top: 55,
     width: 25,
     zIndex: 15,
   },
@@ -49,13 +50,16 @@ const styles = {
     marginRight: 20,
   },
   sidebar: {
-    color: black,
     backgroundColor: '#EFEFEF',
+    color: black,
     height: '92vh',
     marginTop: 56,
     overflow: 'hidden',
     position: 'fixed'
-  }
+  },
+  toggleButton: {
+    marginRight: -5,
+  },
 };
 
 /**
@@ -142,6 +146,8 @@ class Sidebar extends React.Component {
    */
   render() {
     const translateX = { transform: 'translate(' + this.state.translateX + ', 0px)' };
+    const toggleIcon = this.state.isOpen ? <KeyboardArrowLeft color={white} /> : <ModeEdit color={white} />
+
     return (
       <div>
         <Drawer
@@ -152,9 +158,10 @@ class Sidebar extends React.Component {
         >
           <AppBar
             iconElementRight={
-              <IconButton>
-                <ModeEdit color={white} />
-              </IconButton>}
+              <IconButton style={styles.toggleButton}>
+                {toggleIcon}
+              </IconButton>
+            }
             iconStyleRight={styles.toggleEditMenu}
             onRightIconButtonTouchTap={this.handleSidebarToggle}
             showMenuIconButton={false}

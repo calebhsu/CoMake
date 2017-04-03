@@ -26,16 +26,16 @@ const muiTheme = getMuiTheme({
   },
   slider: {
     handleColorZero: '#e74c49',
-    trackColor: '#a7d2cb',
     selectionColor: '#42aeb5',
+    trackColor: '#a7d2cb',
   },
   snackbar: {
-    textColor: white,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    textColor: white,
   },
   textField: {
-    textColor: grey900,
     focusColor: '#42aeb5',
+    textColor: grey900,
   },
 });
 
