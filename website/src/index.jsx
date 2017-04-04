@@ -11,6 +11,8 @@ import Routes from './routes'
 import { initFirebase } from './helpers/FirebaseHelper';
 import storeHelper from './redux/storeHelper'
 
+const PERSIST_STORE = true;
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -19,7 +21,7 @@ injectTapEventPlugin();
 initFirebase();
 
 // construct redux store
-const store = storeHelper.constructStore(true);
+const store = storeHelper.constructStore(PERSIST_STORE);
 
 firebase.auth().onAuthStateChanged(() => {
   persistStore(store);
