@@ -9,6 +9,8 @@ import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 
+import * as ClearActions from '../redux/actions/ClearActions';
+
 import { getUserInfo, signOut } from '../helpers/LoginHelper';
 
 const styles = {
@@ -53,6 +55,17 @@ class NavBar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.clearStoreAndSignOut = this.clearStoreAndSignOut.bind(this);
+  }
+
+  /**
+   * Clears the redux store and signs out
+   * @returns {void}
+   */
+  clearStoreAndSignOut() {
+    this.props.dispatch(ClearActions.clear());
+
+    signOut();
   }
 
   /**
@@ -110,7 +123,7 @@ class NavBar extends React.Component {
           label="Log Out"
           labelStyle={styles.navBtnLabel}
           style={styles.navBtn}
-          onClick={signOut}
+          onClick={this.clearStoreAndSignOut}
         />
       </AppBar>
     );
