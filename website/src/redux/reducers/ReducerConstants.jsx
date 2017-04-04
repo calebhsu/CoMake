@@ -33,7 +33,7 @@
   },
   CURRENT_CANVAS: null,
   ELEMENTS: {},
-  CODE: null,
+  CODE: '',
   AUTO_GENERATE_CODE: false,
   ACTIVE_ELEMENT: null,
 }

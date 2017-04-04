@@ -10,6 +10,7 @@
  import Dialog from 'material-ui/Dialog';
  import FlatButton from 'material-ui/FlatButton';
  import TextField from 'material-ui/TextField';
+ import { white, grey900 } from 'material-ui/styles/colors';
 
  import * as CC from '../CanvasConstants';
  import * as FBHelper from '../../../helpers/FirebaseHelper';
@@ -20,14 +21,17 @@
    actionBtn: {
      marginLeft: 6,
    },
+   greyBtn: {
+     color: grey900,
+   },
    dialogActions: {
      padding: '8px 15px 15px',
    },
    dialogBody: {
      padding: '0 32px 24px',
    },
-   importBtn: {
-     color: '#FFFFFF',
+   importModalBtn: {
+     color: white,
      fontWeight: 700,
    },
    wrapper: {
@@ -113,14 +117,15 @@
      const actions = [
        <FlatButton
          label="Cancel"
+         labelStyle={styles.greyBtn}
          primary={true}
          onTouchTap={this.handleClose}
        />,
        <FlatButton
-         backgroundColor="#229bc8"
-         hoverColor="#0d7faa"
+         backgroundColor="#e74c49"
+         hoverColor="#c7270b"
          label="Import"
-         labelStyle={styles.importBtn}
+         labelStyle={styles.importModalBtn}
          onTouchTap={this.importModel}
          style={styles.actionBtn}
        />,
@@ -130,6 +135,7 @@
        <div style={styles.wrapper}>
          <FlatButton
            label="Import"
+           labelStyle={styles.greyBtn}
            onTouchTap={this.handleOpen}
          />
          <Dialog

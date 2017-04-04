@@ -1,3 +1,7 @@
+/**
+ * @file The 3D previewer component for the canvas.
+ */
+
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -58,11 +62,19 @@ class Preview3D extends React.Component {
     * @returns {HTML}   The HTML of the 3D preview.
    */
   render() {
-    return (
-      <div style={styles.preview3d}>
-        <ReactCraftMLRenderer code={this.props.craftmlCode} />
-      </div>
-    );
+    if (this.props.craftmlCode !== '') {
+      return (
+        <div style={styles.preview3d}>
+          <ReactCraftMLRenderer code={this.props.craftmlCode} />
+        </div>
+      );
+    } else {
+      return (
+        <div style={styles.preview3d}>
+          EMPTY PLACE HOLDER HERE
+        </div>
+      )
+    }
   }
 }
 
