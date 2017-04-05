@@ -2,13 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 
-import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField'
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
@@ -22,8 +20,8 @@ import {
   purple500,
   blue500,
   green400,
+  grey400,
   orange500,
-  grey900,
 } from 'material-ui/styles/colors';
 
 const COLORS = [purple500, blue500, green400, orange500];
@@ -46,6 +44,9 @@ const styles = {
     width: '100%',
     zIndex: 10,
   },
+  underlineStyle: {
+   borderColor: grey400,
+ },
 };
 
 class OptionsBar extends React.Component {
@@ -147,6 +148,7 @@ class OptionsBar extends React.Component {
               defaultValue={canvasName}
               onChange={this.nameFieldChangeHandler}
               style={styles.modelName}
+              underlineFocusStyle={styles.underlineStyle}
             />
             <ImportModelModal currentCanvas={this.props.currentCanvas} />
             <ExportModal elements={this.props.elements} />
