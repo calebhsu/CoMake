@@ -15,11 +15,14 @@ const styles = {
   canvas: {
     backgroundSize: '25px 25px',
     backgroundImage: backgroundImageString,
-    height: '84vh',
-    margin: '1vw 1vw 1vw 0.5vw',
+    borderBottom: '1px solid #dddddd',
+    borderRight: '1px solid #dddddd',
+    height: '83vh',
+    margin: '13px 0 0 60px',
+    overFlowY: 'scroll',
     position: 'absolute',
     top: 100,
-    width: '98vw',
+    width: 'calc(100% - 70px)',
   }
 };
 
