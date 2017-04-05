@@ -22,7 +22,7 @@ const styles = {
     overFlowY: 'scroll',
     position: 'absolute',
     top: 100,
-    width: 'calc(100% - 70px)',
+    width: 1600,
   }
 };
 
