@@ -24,6 +24,7 @@ import * as CC from '../CanvasConstants';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
 import { generateScript } from '../../../craftml/ScriptGenerator';
 
+
 const styles = {
   appbar: {
     backgroundColor: '#a7d2cb',
@@ -51,6 +52,17 @@ const styles = {
   },
   menuItem: {
     color: grey900,
+  },
+  renderCheckboxLabel: {
+    color: grey900,
+    paddingBottom: 10,
+    paddingLeft: 16,
+  },
+  unchecked: {
+    fill: grey900,
+  },
+  checked: {
+    fill: '#e74c49',
   },
   propertiesSpacing: {
     marginLeft: 20,
@@ -224,9 +236,12 @@ class Sidebar extends React.Component {
 
             <h3>Rendering</h3>
             <Checkbox
-              label='Auto Render'
+              label={CC.AUTO_RENDER_CHECKBOX}
               checked={this.props.autoRender}
               onCheck={this.toggleAutoRender}
+              labelStyle={styles.renderCheckboxLabel}
+              iconStyle={this.props.autoRender ? styles.checked : styles.unchecked}
+              labelPosition={CC.AUTO_RENDER_LABEL_POSITION}
             />
             <MenuItem
               key={CC.RENDER_BUTTON}
