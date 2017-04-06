@@ -31,8 +31,8 @@ const styles = {
     color: grey900,
   },
   shareBtn: {
-    color: white,
-    fontWeight: 700,
+   color: white,
+   fontWeight: 700,
   },
   wrapper: {
     display: 'inline-block',
@@ -139,6 +139,7 @@ class ShareCanvasModal extends Component {
       <FlatButton
         label="Cancel"
         labelStyle={styles.greyBtn}
+        rippleColor="#e74c49"
         primary={true}
         onTouchTap={this.handleClose}
       />,
@@ -155,10 +156,8 @@ class ShareCanvasModal extends Component {
     return (
       <div style={styles.wrapper}>
         <FlatButton
-          backgroundColor="#e74c49"
-          hoverColor="#c7270b"
+          labelStyle={styles.greyBtn}
           label="Share"
-          labelStyle={styles.shareBtn}
           onTouchTap={this.handleOpen}
         />
         <Dialog

@@ -19,7 +19,7 @@ import * as FBHelper from '../../../helpers/FirebaseHelper';
 
 const styles = {
   appbar: {
-    backgroundColor: '#a7d2cb',
+    backgroundColor: '#e74c49',
     height: 49,
   },
   toggleEditMenu: {
@@ -77,7 +77,7 @@ class Sidebar extends React.Component {
       translateX: '0px',
     };
 
-    this.addElement = this.addElement.bind(this);
+    this.duplicateElement = this.duplicateElement.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
@@ -96,7 +96,7 @@ class Sidebar extends React.Component {
    * Handler for adding an element to firebase.
    * @returns {void}
    */
-  addElement() {
+  duplicateElement() {
     /* NOTE: leaving this here for ease of testing */
     /* TODO: remove before deploying */
     FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
@@ -113,8 +113,8 @@ class Sidebar extends React.Component {
       case CC.DELETE_ELEMENT_BUTTON:
         buttonAction = this.removeElement;
         break;
-      case CC.ADD_ELEMENT_BUTTON:
-        buttonAction = this.addElement;
+      case CC.DUPLICATE_ELEMENT_BUTTON:
+        buttonAction = this.duplicateElement;
         break;
     }
     return (
