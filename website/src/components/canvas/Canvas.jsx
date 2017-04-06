@@ -15,10 +15,8 @@ import * as ActiveElementActions from '../../redux/actions/ActiveElementActions'
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
-<<<<<<< HEAD
+
 import * as ElementActions from '../../redux/actions/ElementActions';
-=======
->>>>>>> dev
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 /**
@@ -158,8 +156,6 @@ class Canvas extends React.Component {
     }
 
     this.hasInitialized = false;
-<<<<<<< HEAD
-=======
   }
 
   /**
@@ -171,7 +167,6 @@ class Canvas extends React.Component {
     this.props.dispatch(ElementActions.initElements({}));
     this.props.dispatch(CodeActions.setCode(''));
     this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
->>>>>>> dev
   }
 
   /**
@@ -212,14 +207,10 @@ const mapStateToProps = state => ({
   elements: (state.updateElementReducer[RC.ELEMENTS]),
   currentCanvas: (state.canvasReducer[RC.CURRENT_CANVAS]),
   canvases: (state.canvasReducer[RC.CANVASES]),
-<<<<<<< HEAD
-  targetedId: (state.activeElementReducer[RC.ACTIVE_ELEMENT]),
-=======
   targetedId: (state
     .activeElementReducer[RC.ACTIVE_ELEMENT]),
   craftmlCode: state.craftmlCodeReducer[RC.CODE],
   autoRender: state.craftmlCodeReducer[RC.AUTO_GENERATE_CODE],
->>>>>>> dev
 });
 
 Canvas.propTypes = {
