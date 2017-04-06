@@ -6,7 +6,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import CanvasElement from './CanvasElement';
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 
 const backgroundImageString = ('linear-gradient(to right, #dddddd 1px, '
                                + 'transparent 1px), linear-gradient(to bottom, #dddddd 1px,'

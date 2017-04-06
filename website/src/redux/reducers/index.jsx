@@ -8,6 +8,7 @@ import { userInfoReducer } from './LoginReducer';
 import { updateElementReducer } from './ElementReducer';
 import { activeElementReducer } from './ActiveElementReducer';
 import { canvasReducer } from './CanvasReducer';
+import { craftmlCodeReducer } from './CraftmlCodeReducer';
 
 import { CLEAR } from '../actions/ActionConstants';
 
@@ -19,6 +20,7 @@ const mainReducers = combineReducers({
   updateElementReducer,
   activeElementReducer,
   canvasReducer,
+  craftmlCodeReducer,
 });
 
 //http://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store/35641992#35641992
