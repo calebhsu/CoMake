@@ -13,7 +13,7 @@ import { insertIntoState } from './ReducerUtil';
  * @param {Object} action action to be performed.
  * @returns {Object} The new state object.
  */
-export const craftmlCodeReducer = (state = RC.BLANK_STATE, action) => {
+export const craftmlCodeReducer = (state = RC.BLANK_STATE_CRAFTML_CODE, action) => {
   switch (action.type) {
     case AC.SET_CODE:
       if (typeof(action.payload) !== 'string') {

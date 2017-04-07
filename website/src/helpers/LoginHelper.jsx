@@ -22,8 +22,13 @@ export const promptForLogin = () => {
               .formRequestBody(result.user.uid);
 
             CoMakeServices.UserInfoService
-              .sendRequest(reqBody, ServiceEndpoint, () => {});
+              .sendRequest(reqBody, ServiceEndpoint, () => {
+                //dispatch login info
+                  //then persist store
+              });
           }
+          //otherwise dispatch login info
+            //then persist store
         });
       document.location = "/#/home";
     });
@@ -35,8 +40,9 @@ export const promptForLogin = () => {
  * @returns {void}
  */
 export const signOut = () => {
-  firebase.auth().signOut();
-  document.location = "/#/login";
+  firebase.auth().signOut().then(() => {
+    document.location = "/#/login";
+  });
 }
 
 /**

@@ -13,7 +13,7 @@ import { insertIntoState } from './ReducerUtil';
   * @param {Object} action action to be performed.
   * @returns {Object} The new state object.
   */
-export const userInfoReducer = (state = RC.BLANK_STATE, action) => {
+export const userInfoReducer = (state = RC.BLANK_STATE_USER_INFO, action) => {
   if(action.type === UPDATE_USER_INFO) {
     return insertIntoState(state, action.payload, [RC.USER_INFO]);
   }

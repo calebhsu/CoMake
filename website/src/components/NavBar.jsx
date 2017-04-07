@@ -64,7 +64,7 @@ class NavBar extends React.Component {
    */
   clearStoreAndSignOut() {
     this.props.dispatch(ClearActions.clear());
-
+    //wait here before signing out
     signOut();
   }
 

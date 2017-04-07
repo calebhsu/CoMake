@@ -16,7 +16,6 @@ import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
 
-import * as ElementActions from '../../redux/actions/ElementActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 /**
