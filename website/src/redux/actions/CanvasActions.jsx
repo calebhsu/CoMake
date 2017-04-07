@@ -33,6 +33,17 @@ export const addCanvasUser = (canvasId, userId, userInfo) => ({
 });
 
 /**
+ * Action for archiving a canvas.
+ * @param  {String} canvasId Id of the canvas to archive.
+ * @return {Object}          Object detailing the action.
+ */
+export const archiveCanvas = (canvasId) => ({
+  type: AC.ARCHIVE_CANVAS,
+  canvasId: canvasId,
+  payload: false,
+});
+
+/**
  * Action for removing a canvas.
  * @param  {String} canvasId Id of the canvas to remove.
  * @return {Object}          Object detailing the action.

@@ -107,6 +107,12 @@ class CanvasList extends React.Component {
       .child(RC.CANVASES).on('child_added', (canvasSnap) => {
         this.fetchCanvasInfo(canvasSnap.key);
       });
+
+    // Listen for any canvases that might be removed.
+    firebase.database().ref('/users').child(userId)
+      .child(RC.CANVASES).on('child_removed', (canvasSnap) => {
+        this.fetchCanvasInfo(canvasSnap.key);
+      });
     this.listenersAttached = true;
   }
 
