@@ -1,50 +1,53 @@
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Box, Flex } from 'reflexbox';
+import RaisedButton from 'material-ui/RaisedButton';
+import { white, grey700 } from 'material-ui/styles/colors';
 
-import Brush from 'material-ui/svg-icons/image/brush';
-import FlatButton from 'material-ui/FlatButton';
-import Group from 'material-ui/svg-icons/social/group';
-import Share from 'material-ui/svg-icons/editor/highlight';
-import { white } from 'material-ui/styles/colors';
+import LandingContent from './LandingContent';
+import LandingNavBar from './LandingNavBar';
 
 import { promptForLogin } from '../../helpers/LoginHelper'
 
+import globalStyles from '../../scss/main.scss';
+import headerImg from '../../img/landing-background.png';
+
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: '#2c9a8a',
+    accent1Color: '#e74c49',
+    alternateTextColor: white,
+    primary1Color: white,
+    textColor: '#e74c49',
   },
 });
 
 const styles = {
-  about: {
-    backgroundColor: '#2c9a8a',
-    color: white,
-    textAlign: 'center',
-  },
-  boxText: {
-    color: white,
-    textAlign: 'justify',
-  },
   header: {
-    color: white,
-  },
-  icon: {
-    fontSize: '4em',
-    height: '1.6em',
-    width: '1.5em',
+    background: 'url(' + headerImg + ') no-repeat center top scroll',
+    backgroundSize: 'cover',
+    marginTop: 0,
+    paddingBottom: 100,
+    textAlign: 'center'
   },
   loginBtn: {
-    border: '1px solid rgba(255, 255, 255, 0.75)',
-    borderRadius: 10,
-    color: white,
-    height: '2.6em',
     marginTop: '1em',
   },
   loginLabel: {
-    fontSize: '1.4em',
-    padding: '1.4em 2em',
+    fontSize: '1em',
+    fontWeight: 500,
+    letterSpacing: 1.5,
+    padding: '1.8em 2em',
+  },
+  subtitle: {
+    color: grey700,
+    fontSize: '1.8em',
+    marginTop: '-0.5em',
+  },
+  title: {
+    color: '#e74c49',
+    fontSize: '5em',
+    margin: 0,
+    paddingTop: '2.2em',
   },
 };
 
@@ -55,54 +58,21 @@ const styles = {
 function Landing() {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Flex
-        align="stretch"
-        justify="space-around"
-        px={5}
-        py={5}
-        style={styles.about}
-        wrap
-      >
-        <Box col={12} sm={12} mt={5} mb={5}>
-          <h1 style={styles.header}>CoMake</h1>
-          <FlatButton
-            label="Login"
+      <div>
+        <LandingNavBar />
+        <div style={styles.header}>
+          <h1 style={styles.title} className={globalStyles.title}>comake</h1>
+          <p style={styles.subtitle} className={globalStyles.subtitle}>design 2D, export 3D</p>
+          <RaisedButton
+            label="Sign Up / Log In"
             labelStyle={styles.loginLabel}
+            secondary={true}
             style={styles.loginBtn}
             onClick={promptForLogin}
           />
-        </Box>
-        <Box col={3} sm={3}>
-          <Brush style={styles.icon} color={white} />
-          <h2 style={styles.header}>Design New Models</h2>
-          <p style={styles.boxText}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </p>
-        </Box>
-        <Box col={3} sm={3}>
-          <Group style={styles.icon} color={white} />
-          <h2 style={styles.header}>Collaborate With Friends</h2>
-          <p style={styles.boxText}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </p>
-        </Box>
-        <Box col={3} sm={3}>
-          <Share style={styles.icon} color={white} />
-          <h2 style={styles.header}>Share With Everyone</h2>
-          <p style={styles.boxText}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </p>
-        </Box>
-      </Flex>
+        </div>
+        <LandingContent />
+      </div>
     </MuiThemeProvider>
   );
 }

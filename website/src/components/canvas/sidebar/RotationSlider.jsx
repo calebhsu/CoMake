@@ -8,12 +8,12 @@ import Slider from 'material-ui/Slider';
 
 import {
   UPDATE_ROTATION
-} from '../../redux/actions/ActionConstants';
+} from '../../../redux/actions/ActionConstants';
 import {
   updateAndPersist
-} from '../../redux/actions/ElementActions';
-import { DEFAULT_SLIDER_POSITION } from './CanvasConstants';
-import * as RC from '../../redux/reducers/ReducerConstants';
+} from '../../../redux/actions/ElementActions';
+import { DEFAULT_SLIDER_POSITION } from '../CanvasConstants';
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
 /**
  * Component of slider for rotating canvas elements.
@@ -52,7 +52,7 @@ class RotationSlider extends React.Component {
       style={{
       visibility: typeof this.props.targetedId === "undefined"
         ? "hidden" : "visible",
-        width: '10vw',
+        width: 200,
         marginLeft: 10,
       }}/>
   }

@@ -44,11 +44,11 @@ const TEST_ELEMENTS = {
 };
 
 const EXPECTED_SCRIPT = ('<g>\n\t<element1\n\tmodule="AoN5x"\n'
-  + '\tt="size x 30 y 50; position x 100 y 200; rotate z 0" />\n\n'
+  + '\tt="size x 3 y 5; position x 10 y 20; rotate z 0" />\n\n'
   + '\t<element2\n\tmodule="Baxrz"\n'
-  + '\tt="size x 100 y 100; position x 400 y 500; rotate z 30" />\n\n'
+  + '\tt="size x 10 y 10; position x 40 y 50; rotate z 30" />\n\n'
   + '\t<element3\n\tmodule="1CEKd"\n'
-  + '\tt="size x 10 y 10; position x 20 y 20; rotate z -50" />\n\n</g>');
+  + '\tt="size x 1 y 1; position x 2 y 2; rotate z -50" />\n\n</g>');
 
 describe('ScriptGeneratorTest', () => {
   test('generateScript_emptyElements', () => {
