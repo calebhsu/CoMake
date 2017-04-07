@@ -96,7 +96,7 @@ class CanvasList extends React.Component {
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).once('value').then((canvasListSnap) => {
         Object.keys(canvasListSnap.val()).forEach((canvasId) => {
-          if (Object.keys(this.props.canvases).indexOf(canvasId) < 0) {
+          if ((Object.keys(this.props.canvases).indexOf(canvasId) < 0)&&(canvasListSnap.val()[canvasId])) {
             this.fetchCanvasInfo(canvasId);
           }
       });
@@ -105,13 +105,15 @@ class CanvasList extends React.Component {
     // Listen for any new canvases that might be added.
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).on('child_added', (canvasSnap) => {
-        this.fetchCanvasInfo(canvasSnap.key);
+        if (canvasSnap.val()) {
+          this.fetchCanvasInfo(canvasSnap.key);
+        }
       });
 
     // Listen for any canvases that might be removed.
     firebase.database().ref('/users').child(userId)
-      .child(RC.CANVASES).on('child_removed', (canvasSnap) => {
-        this.fetchCanvasInfo(canvasSnap.key);
+      .child(RC.CANVASES).on('child_changed', (canvasSnap) => {
+        this.props.dispatch(CanvasActions.removeCanvas(canvasSnap.key));
       });
     this.listenersAttached = true;
   }
@@ -157,27 +159,25 @@ class CanvasList extends React.Component {
     const canvasList = [];
 
     Object.keys(this.props.canvases).forEach((canvasId, i) => {
-      if (userCanvasList[canvasId]) {
-        canvasList.push(
-          <Box
-            col={12}
-            sm={3}
-            key={i}
-            style={styles.models}
-          >
-            <Link to="/canvas">
-              <Card onTouchTap={this.createClickHandler(canvasId)}>
-                <CardMedia
-                  overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
-                  overlayContentStyle={styles.overlay}
-                  >
-                  {generateCanvasCode}
-                </CardMedia>
-              </Card>
-            </Link>
-          </Box>
-        )
-      }
+      canvasList.push(
+        <Box
+          col={12}
+          sm={3}
+          key={i}
+          style={styles.models}
+        >
+          <Link to="/canvas">
+            <Card onTouchTap={this.createClickHandler(canvasId)}>
+              <CardMedia
+                overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
+                overlayContentStyle={styles.overlay}
+                >
+                {generateCanvasCode}
+              </CardMedia>
+            </Card>
+          </Link>
+        </Box>
+      )
     });
 
     return (
