@@ -15,7 +15,6 @@ export const TARGET_ELEMENT = 'targetElement';
 
 // Canvas Actions
 export const ADD_CANVAS = 'addCanvas';
-export const ARCHIVE_CANVAS = 'archiveCanvas';
 export const REMOVE_CANVAS = 'removeCanvas';
 export const SET_CURRENT_CANVAS = 'setCurrentCanvas';
 export const ADD_CANVAS_USER = 'addCanvasUser';
