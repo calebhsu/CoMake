@@ -10,6 +10,7 @@ var loaders = require('./webpack.loaders');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+var BabiliPlugin = require("babili-webpack-plugin");
 
 // global css files
 loaders.push({
@@ -58,6 +59,7 @@ module.exports = {
 				NODE_ENV: '"production"'
 			}
 		}),
+		new BabiliPlugin(),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new ExtractTextPlugin('[contenthash].css', {
 			allChunks: true
@@ -66,6 +68,6 @@ module.exports = {
 			template: './src/index.html',
 			title: 'CoMake'
 		}),
-		new webpack.optimize.DedupePlugin()
+		new webpack.optimize.DedupePlugin(),
 	]
 };
