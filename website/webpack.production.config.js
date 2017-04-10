@@ -28,14 +28,18 @@ loaders.push({
 	exclude: /(node_modules|bower_components|public)/,
 	loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
 });
-
+// 3D viewer
+loaders.push({
+	test: /\.json$/,
+	loader: 'json',
+});
 
 module.exports = {
 	entry: [
-		'./src/components/index.jsx'
+		'./src/index.jsx'
 	],
 	output: {
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, '..', 'public'),
 		filename: '[chunkhash].js'
 	},
 	resolve: {
@@ -44,19 +48,14 @@ module.exports = {
 	module: {
 		loaders
 	},
+	node: {
+		fs: 'empty',
+	},
 	plugins: [
 		new WebpackCleanupPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: '"production"'
-			}
-		}),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-				drop_console: true,
-				drop_debugger: true
 			}
 		}),
 		new webpack.optimize.OccurenceOrderPlugin(),
