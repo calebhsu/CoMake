@@ -8,6 +8,7 @@ import _ from 'lodash';
 
 import { ReactCraftMLRenderer } from 'craftml';
 import { generateScript } from '../../craftml/ScriptGenerator';
+import * as CC from './CanvasConstants';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 const styles = {
@@ -58,14 +59,30 @@ class Preview3D extends React.Component {
   }
 
   /**
+   * Gets the image URL for the 3D render.
+   * @returns {String}  The URL for the image.
+   * @throws Will throw if canvas has not been loaded onto the page yet.
+   */
+  getImageURL() {
+    const renderWrapper = document.getElementById(CC.RENDER_WRAPPER_ID);
+    if (renderWrapper !== null) {
+      const canvas = renderWrapper.getElementsByTagName('canvas')[0];
+      return canvas.toDataURL();
+    } else {
+      throw CC.CAPTURE_IMAGE_ERROR;
+    }
+  }
+
+  /**
     * Gives HTML for 3D preview component.
     * @returns {HTML}   The HTML of the 3D preview.
    */
   render() {
     if (this.props.craftmlCode !== '') {
       return (
-        <div style={styles.preview3d}>
-          <ReactCraftMLRenderer code={this.props.craftmlCode} />
+        <div style={styles.preview3d} id={CC.RENDER_WRAPPER_ID} >
+          <ReactCraftMLRenderer
+            code={this.props.craftmlCode} />
         </div>
       );
     } else {
