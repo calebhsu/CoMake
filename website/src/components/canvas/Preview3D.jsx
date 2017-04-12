@@ -6,6 +6,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import IconButton from 'material-ui/IconButton';
+import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
+
 import { ReactCraftMLRenderer } from 'craftml';
 import { generateOverheadScript, generateSideScript } from '../../craftml/ScriptGenerator';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
@@ -71,7 +74,15 @@ class Preview3D extends React.Component {
     } else {
       return (
         <div style={styles.preview3d}>
-          EMPTY PLACE HOLDER HERE
+          <IconButton
+            iconStyle={styles.iconSize}
+            style={styles.size}
+            tooltip="3D Preview"
+            tooltipPosition="top-center"
+            touch={true}
+          >
+            <ThreeDRotation />
+          </IconButton>
         </div>
       )
     }

@@ -9,6 +9,8 @@ import IconButton from 'material-ui/IconButton';
 import FlipToFront from 'material-ui/svg-icons/action/flip-to-front';
 import Layers from 'material-ui/svg-icons/maps/layers';
 
+import * as CanvasActions from '../../../redux/actions/CanvasActions';
+
 import { grey800 } from 'material-ui/styles/colors';
 
 const styles = {
@@ -25,25 +27,51 @@ const styles = {
 };
 
 /**
- * Gives HTML for canvas side view button.
- * @returns {HTML}   The HTML of the canvas side view button.
+ * Gives HTML for canvas orientation buttons.
+ * @returns {HTML}   The HTML of the canvas orientation buttons.
  */
-class SideViewBtn extends Component {
+class CanvasOrientationBtns extends Component {
+  /**
+   * Constructor for CanvasOrientationBtns
+   * @param {Object} props The props for the CanvasOrientationBtns.
+   */
   constructor(props) {
     super(props);
+    this.state = {
+      orientation: 'overhead',
+    };
+
+    this.handleOrientSide = this.handleOrientSide.bind(this);
+    this.handleOrientOverhead = this.handleOrientOverhead.bind(this);
+    this.setOrientation = this.setOrientation.bind(this);
   }
 
   /**
-   * Sets canvas view to side view
-   * Triggered By: Side view button onTouchTapEvent
+  * Handler for onTouchTap that sets orientation state to overhead.
+  * @returns {void}
+  */
+  handleOrientOverhead() {
+    this.setState({orientation: 'overhead'});
+  }
+
+  /**
+  * Handler for onTouchTap that sets orientation state to side.
+  * @returns {void}
+  */
+  handleOrientSide() {
+    this.setState({orientation: 'side'});
+  }
+
+
+   /**
+   * Sets canvas orientation
+   * Triggered By: Orientation view button onTouchTapEvent
    * @returns {void}
    */
-  setSideView() {
-    this.props.dispatch(CanvasActions.removeCanvas(canvasId));
-
-    document.location = '/#/home';
-    location.reload(true);
-  };
+   setOrientation() {
+    //  this.props.dispatch(CanvasActions.setCanvasOrientation(this.props.currentCanvas,
+    //    this.state.orientation));
+   }
 
   /**
    * Renders the side view button for display.
@@ -54,6 +82,7 @@ class SideViewBtn extends Component {
       <div>
         <IconButton
           iconStyle={styles.iconSize}
+          onTouchTap={this.handleOrientOverhead}
           style={styles.size}
           tooltip="Overhead View"
           tooltipPosition="bottom-center"
@@ -63,6 +92,7 @@ class SideViewBtn extends Component {
         </IconButton>
         <IconButton
           iconStyle={styles.iconSize}
+          onTouchTap={this.handleOrientSide}
           style={styles.size}
           tooltip="Side View"
           tooltipPosition="bottom-center"
@@ -75,7 +105,9 @@ class SideViewBtn extends Component {
   }
 }
 
-SideViewBtn.propTypes = {
+CanvasOrientationBtns.propTypes = {
+  currentCanvas: PropTypes.string,
+  dispatch: PropTypes.func,
 };
 
-export default connect()(SideViewBtn);
+export default connect()(CanvasOrientationBtns);
