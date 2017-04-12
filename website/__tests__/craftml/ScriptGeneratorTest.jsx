@@ -2,7 +2,7 @@
  * @file Unit tests for ScriptGenerator
  */
 
-import { generateScript } from './../../src/craftml/ScriptGenerator';
+import { generateOverheadScript, generateSideScript } from './../../src/craftml/ScriptGenerator';
 
 const TEST_ELEMENTS = {
   element1: {
@@ -43,7 +43,7 @@ const TEST_ELEMENTS = {
   },
 };
 
-const EXPECTED_SCRIPT = ('<g>\n\t<element1\n\tmodule="AoN5x"\n'
+const EXPECTED_OVERHEAD_SCRIPT = ('<g>\n\t<element1\n\tmodule="AoN5x"\n'
   + '\tt="size x 3 y 5; position x 10 y 20; rotate z 0" />\n\n'
   + '\t<element2\n\tmodule="Baxrz"\n'
   + '\tt="size x 10 y 10; position x 40 y 50; rotate z 30" />\n\n'
@@ -51,12 +51,12 @@ const EXPECTED_SCRIPT = ('<g>\n\t<element1\n\tmodule="AoN5x"\n'
   + '\tt="size x 1 y 1; position x 2 y 2; rotate z -50" />\n\n</g>');
 
 describe('ScriptGeneratorTest', () => {
-  test('generateScript_emptyElements', () => {
+  test('generateTOverheadScript_emptyElements', () => {
     const emptyElements = {};
-    expect(generateScript(emptyElements)).toEqual('');
+    expect(generateOverheadScript(emptyElements)).toEqual('');
   });
 
-  test('generateScript_validElements', () => {
-    expect(generateScript(TEST_ELEMENTS)).toEqual(EXPECTED_SCRIPT);
+  test('generateOverheadScript_validElements', () => {
+    expect(generateOverheadScript(TEST_ELEMENTS)).toEqual(EXPECTED_OVERHEAD_SCRIPT);
   });
 });
