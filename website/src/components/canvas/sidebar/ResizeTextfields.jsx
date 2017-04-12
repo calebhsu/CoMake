@@ -5,6 +5,9 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
+import AddCircle from 'material-ui/svg-icons/content/add-circle';
+import IconButton from 'material-ui/IconButton';
+import RemoveCircle from 'material-ui/svg-icons/content/remove-circle';
 import TextField from 'material-ui/TextField';
 
 import * as AC from '../../../redux/actions/ActionConstants';
@@ -12,7 +15,17 @@ import * as EA from '../../../redux/actions/ElementActions';
 
 const styles = {
     field: {
-        width: '90%'
+        width: '30%'
+    },
+    smallIcon: {
+        width: 36,
+        height: 36
+    },
+    small: {
+        width: 60,
+        height: 60,
+        padding: 2,
+        display: 'inline-block',
     }
 };
 
@@ -29,6 +42,12 @@ class ResizeTextfields extends React.Component {
         this.heightChangeHandler = this.heightChangeHandler.bind(this);
         this.widthChangeHandler = this.widthChangeHandler.bind(this);
     }
+    /**
+     * Handler for when the height field is changed.
+     * @param {Object} e  The event of changing the name.
+     * @param {String} newHeight The new name entered.
+     * @returns {void}
+     */
     heightChangeHandler(e, newHeight) {
         let newSize = {
             height: newHeight,
@@ -36,7 +55,12 @@ class ResizeTextfields extends React.Component {
         }
         this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
     }
-
+    /**
+     * Handler for when the width field is changed.
+     * @param {Object} e  The event of changing the name.
+     * @param {String} newWidth The new name entered.
+     * @returns {void}
+     */
     widthChangeHandler(e, newWidth) {
         let newSize = {
             height: this.props.elements[this.props.targetedId].size.height,
@@ -47,17 +71,20 @@ class ResizeTextfields extends React.Component {
     render() {
         return (
             <div>
-                <TextField
-                  onChange={this.heightChangeHandler}
-                  floatingLabelText="Height"
-                  style={styles.field}
-                />
-
-                <TextField
-                  onChange={this.widthChangeHandler}
-                  floatingLabelText="Width"
-                  style={styles.field}
-                />
+                <TextField onChange={this.heightChangeHandler} floatingLabelText="Height" style={styles.field}/>
+                <IconButton iconStyle={styles.smallIcon} style={styles.small}>
+                    <AddCircle/>
+                </IconButton>
+                <IconButton iconStyle={styles.smallIcon} style={styles.small}>
+                    <RemoveCircle/>
+                </IconButton>
+                <TextField onChange={this.widthChangeHandler} floatingLabelText="Width" style={styles.field}/>
+                <IconButton iconStyle={styles.smallIcon} style={styles.small}>
+                    <AddCircle/>
+                </IconButton>
+                <IconButton iconStyle={styles.smallIcon} style={styles.small}>
+                    <RemoveCircle/>
+                </IconButton>
             </div>
         );
     }
