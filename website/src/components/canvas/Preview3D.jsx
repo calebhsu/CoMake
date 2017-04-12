@@ -13,7 +13,14 @@ import { ReactCraftMLRenderer } from 'craftml';
 import { generateOverheadScript, generateSideScript } from '../../craftml/ScriptGenerator';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
+import { grey800 } from 'material-ui/styles/colors';
+
 const styles = {
+  iconSize: {
+    color: grey800,
+    height: 48,
+    width: 48,
+  },
   img: {
     padding: '5px 5px 1px',
     width: 95,
@@ -30,6 +37,13 @@ const styles = {
     position: 'fixed',
     right: 20,
     zIndex: 100,
+  },
+  size: {
+    height: 96,
+    marginBottom: -10,
+    marginRight: 6,
+    padding: 24,
+    width: 96,
   },
 };
 
