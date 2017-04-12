@@ -8,11 +8,10 @@ import TextField from 'material-ui/TextField'
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
 import ArchiveCanvasBtn from './ArchiveCanvasBtn';
+import CanvasOrientationBtns from './CanvasOrientationBtns';
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
-import OverheadViewBtn from './OverheadViewBtn';
 import ShareCanvasModal from './ShareCanvasModal';
-import SideViewBtn from './SideViewBtn';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
 
@@ -135,8 +134,7 @@ class OptionsBar extends Component {
             { userDivs }
           </ToolbarGroup>
           <ToolbarGroup>
-            <OverheadViewBtn />
-            <SideViewBtn />
+            <CanvasOrientationBtns />
             <ToolbarSeparator style={styles.greyDivider} />
             <ArchiveCanvasBtn canvasId={this.props.currentCanvas} />
           </ToolbarGroup>

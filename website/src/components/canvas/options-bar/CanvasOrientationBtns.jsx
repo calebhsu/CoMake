@@ -6,7 +6,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import IconButton from 'material-ui/IconButton';
-import Layers from 'material-ui/svg-icons/action/flip-to-front';
+import FlipToFront from 'material-ui/svg-icons/action/flip-to-front';
+import Layers from 'material-ui/svg-icons/maps/layers';
 
 import { grey800 } from 'material-ui/styles/colors';
 
@@ -33,6 +34,18 @@ class SideViewBtn extends Component {
   }
 
   /**
+   * Sets canvas view to side view
+   * Triggered By: Side view button onTouchTapEvent
+   * @returns {void}
+   */
+  setSideView() {
+    this.props.dispatch(CanvasActions.removeCanvas(canvasId));
+
+    document.location = '/#/home';
+    location.reload(true);
+  };
+
+  /**
    * Renders the side view button for display.
    * @returns {HTML} The rendered HTML of the canvas side view button.
    */
@@ -42,11 +55,20 @@ class SideViewBtn extends Component {
         <IconButton
           iconStyle={styles.iconSize}
           style={styles.size}
-          tooltip="Side View"
+          tooltip="Overhead View"
           tooltipPosition="bottom-center"
           touch={true}
         >
           <Layers />
+        </IconButton>
+        <IconButton
+          iconStyle={styles.iconSize}
+          style={styles.size}
+          tooltip="Side View"
+          tooltipPosition="bottom-center"
+          touch={true}
+        >
+          <FlipToFront />
         </IconButton>
       </div>
     );
