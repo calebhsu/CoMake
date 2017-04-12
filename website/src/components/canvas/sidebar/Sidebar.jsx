@@ -22,8 +22,7 @@ import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as CC from '../CanvasConstants';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
-import { generateScript } from '../../../craftml/ScriptGenerator';
-
+import { generateOverheadScript, generateSideScript } from '../../../craftml/ScriptGenerator';
 
 const styles = {
   appbar: {
@@ -129,7 +128,7 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   updateCraftmlCode() {
-    const newCode = generateScript(this.props.elements);
+    const newCode = generateSideScript(this.props.elements);
     this.props.dispatch(CodeActions.setCode(newCode));
   }
 

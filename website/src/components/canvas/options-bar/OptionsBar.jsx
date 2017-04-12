@@ -1,18 +1,18 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { Box } from 'reflexbox';
 import Avatar from 'material-ui/Avatar';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField'
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
-import ArchiveCanvas from './ArchiveCanvas';
+import ArchiveCanvasBtn from './ArchiveCanvasBtn';
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
+import OverheadViewBtn from './OverheadViewBtn';
 import ShareCanvasModal from './ShareCanvasModal';
+import SideViewBtn from './SideViewBtn';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
 
@@ -22,12 +22,15 @@ import {
   blue500,
   green400,
   orange500,
-  grey900,
+  grey400
 } from 'material-ui/styles/colors';
 
 const COLORS = [purple500, blue500, green400, orange500];
 
 const styles = {
+  greyDivider: {
+    backgroundColor: grey400,
+  },
   modelName: {
     marginLeft: 15,
   },
@@ -47,7 +50,7 @@ const styles = {
   },
 };
 
-class OptionsBar extends React.Component {
+class OptionsBar extends Component {
   /**
    * Constructor for the class.
    * @param {Object} props The props passed to the component.
@@ -128,11 +131,14 @@ class OptionsBar extends React.Component {
             <ImportModelModal currentCanvas={this.props.currentCanvas} />
             <ExportModal elements={this.props.elements} />
             <ShareCanvasModal />
+            <ToolbarSeparator style={styles.greyDivider} />
+            { userDivs }
           </ToolbarGroup>
           <ToolbarGroup>
-            { userDivs }
-          <ArchiveCanvas
-            canvasId={this.props.currentCanvas} />
+            <OverheadViewBtn />
+            <SideViewBtn />
+            <ToolbarSeparator style={styles.greyDivider} />
+            <ArchiveCanvasBtn canvasId={this.props.currentCanvas} />
           </ToolbarGroup>
         </Toolbar>
         <Snackbar

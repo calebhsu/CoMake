@@ -12,7 +12,7 @@ import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import { white, grey900 } from 'material-ui/styles/colors';
 
-import { generateScript } from '../../../craftml/ScriptGenerator';
+import { generateSideScript } from '../../../craftml/ScriptGenerator';
 
 const styles = {
   actionBtn: {
@@ -75,7 +75,7 @@ class ExportModal extends Component {
   */
   generateCraftScript() {
     this.setState({
-      craftScript: generateScript(this.props.elements)
+      craftScript: generateSideScript(this.props.elements)
     });
     this.handleDialogOpen();
   }

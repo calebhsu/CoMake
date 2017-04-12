@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { ReactCraftMLRenderer } from 'craftml';
-import { generateScript } from '../../craftml/ScriptGenerator';
+import { generateOverheadScript, generateSideScript } from '../../craftml/ScriptGenerator';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 const styles = {
@@ -51,7 +51,7 @@ class Preview3D extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.autoRender) {
       if (! _.isEqual(this.props.elements, nextProps.elements)) {
-        const newCode = generateScript(nextProps.elements);
+        const newCode = generateSideScript(nextProps.elements);
         this.props.dispatch(CodeActions.setCode(newCode));
       }
     }
