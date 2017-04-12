@@ -22,6 +22,7 @@ import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as CC from '../CanvasConstants';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
+import * as FBStorageHelper from '../../../helpers/FirebaseStorageHelper';
 import { generateScript } from '../../../craftml/ScriptGenerator';
 
 
@@ -38,9 +39,9 @@ const styles = {
     color: '#e74c49',
     height: 25,
     marginLeft: -13,
-    padding: 12,
     position: 'absolute',
     top: 55,
+    padding: 12,
     width: 25,
     zIndex: 15,
   },
@@ -103,6 +104,7 @@ class Sidebar extends React.Component {
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
+    this.save3DImage = this.save3DImage.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -150,6 +152,38 @@ class Sidebar extends React.Component {
       this.updateCraftmlCode();
     }
     this.props.dispatch(CodeActions.setAutoCodeUpdate(!this.props.autoRender));
+  }
+
+  /**
+   * Gets the image URL for the 3D render.
+   * @returns {String}  The URL for the image.
+   * @throws Will throw if canvas has not been loaded onto the page yet.
+   */
+  getImageURL() {
+    const renderWrapper = document.getElementById(CC.RENDER_WRAPPER_ID);
+    if (renderWrapper !== null) {
+      const canvas = renderWrapper.getElementsByTagName('canvas')[0];
+      return canvas.toDataURL();
+    } else {
+      throw CC.CAPTURE_IMAGE_ERROR;
+    }
+  }
+
+  /**
+   * Saves off an image of the current 3D Renderer to firebase.
+   * @returns {void}
+   */
+  save3DImage() {
+    let imageURL = null;
+    try {
+      imageURL = this.getImageURL();
+    } catch(e) {
+      console.log(e);
+      return;
+    }
+    FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL, () => {
+      console.log('Successfully saved!');
+    });
   }
 
   /**
@@ -257,6 +291,14 @@ class Sidebar extends React.Component {
             >
               {CC.CLEAR_3D_BUTTON}
             </MenuItem>
+            <MenuItem
+              key={CC.SAVE_3D_IMAGE_BUTTON}
+              onClick={this.save3DImage}
+              style={styles.menuItem}
+            >
+              {CC.SAVE_3D_IMAGE_BUTTON}
+            </MenuItem>
+
 
           </Menu>
         </Drawer>

@@ -59,21 +59,6 @@ class Preview3D extends React.Component {
   }
 
   /**
-   * Gets the image URL for the 3D render.
-   * @returns {String}  The URL for the image.
-   * @throws Will throw if canvas has not been loaded onto the page yet.
-   */
-  getImageURL() {
-    const renderWrapper = document.getElementById(CC.RENDER_WRAPPER_ID);
-    if (renderWrapper !== null) {
-      const canvas = renderWrapper.getElementsByTagName('canvas')[0];
-      return canvas.toDataURL();
-    } else {
-      throw CC.CAPTURE_IMAGE_ERROR;
-    }
-  }
-
-  /**
     * Gives HTML for 3D preview component.
     * @returns {HTML}   The HTML of the 3D preview.
    */
