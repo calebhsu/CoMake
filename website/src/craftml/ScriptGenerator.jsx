@@ -53,10 +53,10 @@ export function generateSideScript(elements) {
     elementScript += '\tmodule="' + currElement.module + '"\n';
     // Add in transitions
     elementScript += '\tt="size x ' + String(currElement.size.width / 10);
-    elementScript += ' y ' + String(currElement.size.height / 10) + '; ';
+    elementScript += ' z ' + String(currElement.size.height / 10) + '; ';
     elementScript += 'position x ' + String(currElement.position.x / 10);
-    elementScript += ' y ' + String(currElement.position.y / 10) + '; ';
-    elementScript += 'rotate z ' + String(currElement.rotation.toFixed()) + '" />';
+    elementScript += ' z ' + String(-currElement.position.y / 10) + '; ';
+    elementScript += 'rotate y ' + String(currElement.rotation.toFixed()) + '" />';
 
     script += elementScript + '\n\n';
     elementId++;
