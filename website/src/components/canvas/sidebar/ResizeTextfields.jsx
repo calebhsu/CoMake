@@ -13,6 +13,10 @@ import TextField from 'material-ui/TextField';
 import * as AC from '../../../redux/actions/ActionConstants';
 import * as EA from '../../../redux/actions/ElementActions';
 
+
+const ONE_UNIT = 1;
+const h = 'height';
+const w = 'width';
 const styles = {
     field: {
         width: '25%'
@@ -39,6 +43,7 @@ class ResizeTextfields extends React.Component {
    * Constructor for ResizeTextfields
    * @param {Object} props The props for the ResizeTextfields.
    */
+
     constructor(props) {
         super(props);
         this.generateButtonHandler = this.generateButtonHandler.bind(this);
@@ -54,8 +59,9 @@ class ResizeTextfields extends React.Component {
      */
     generateButtonHandler(changeAmount, widthOrHeight) {
       const handler = () => {
+
         const newSize = this.props.elements[this.props.targetedId].size;
-        newSize[widthOrHeight] += changeAmount;
+        newSize[widthOrHeight] += parseInt(changeAmount);
         this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE,
           this.props.targetedId, newSize, this.props.currentCanvas));
       }
@@ -69,7 +75,7 @@ class ResizeTextfields extends React.Component {
      */
     handlerTextfieldHeight(e, newHeight) {
       const newFieldSize = {
-          height: newHeight,
+          height: parseInt(newHeight),
           width: this.props.elements[this.props.targetedId].size.width
       };
 
@@ -85,23 +91,19 @@ class ResizeTextfields extends React.Component {
     handlerTextfieldWidth(e, newWidth) {
       const newFieldSize = {
           height: this.props.elements[this.props.targetedId].size.height,
-          width: newWidth
+          width: parseInt(newWidth)
       };
 
       this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE,
         this.props.targetedId, newFieldSize, this.props.currentCanvas));
     }
     render() {
-        const oneUnit = 1;
-        const oneUnitNeg = -1;
-        const h = 'height';
-        const w = 'width';
         return (
             <div>
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(oneUnitNeg, h)}
+                  onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, h)}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -113,14 +115,14 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(oneUnit, h)}
+                  onTouchTap={this.generateButtonHandler(ONE_UNIT, h)}
                 >
                     <AddCircle/>
                 </IconButton>
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(oneUnitNeg, w)}
+                  onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, w)}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -132,7 +134,7 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(oneUnit, w)}
+                  onTouchTap={this.generateButtonHandler(ONE_UNIT, w)}
                 >
                     <AddCircle/>
                 </IconButton>
