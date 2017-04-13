@@ -111,6 +111,20 @@ describe('CanvasIntegrationTests', () => {
     testStore.dispatch(CA.setCanvasName(testId, testName));
   });
 
+  test('setCanvasOrientation_dispatch', (done) => {
+    const testId = 'testId';
+    const testOrientation = 'side';
+    const expected = Object.assign({}, RC.BLANK_STATE);
+    expected[RC.CANVASES][testId][RC.CANVAS_ORIENTATION] = testOrientation;
+
+    testStore.subscribe(() => {
+      expect(testStore.getState().canvasReducer).toEqual(expected);
+      done();
+    });
+
+    testStore.dispatch(CA.setCanvasOrientation(testId, testOrientation));
+  });
+
   test('setCanvasOwner_dispatch', (done) => {
     const testId = 'testId';
     const testOwner = 'testOwner';
