@@ -80,7 +80,6 @@ class ExportModal extends Component {
   */
   generateCraftScript() {
     let craftScript = '';
-
     if (this.props.canvas &&
         this.props.canvas[CANVAS_ORIENTATION] === CC.OVERHEAD_VIEW) {
           craftScript = generateOverheadScript(this.props.elements)
@@ -92,6 +91,7 @@ class ExportModal extends Component {
     this.setState({
       craftScript: craftScript
     });
+
     this.handleDialogOpen();
   }
 
