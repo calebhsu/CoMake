@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import Layers from 'material-ui/svg-icons/maps/layers';
 
 import * as CA from '../../../redux/actions/CanvasActions';
-import { INIT_ORIENTATION } from '../CanvasConstants';
+import * as CC from '../CanvasConstants';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 
 import { grey400, grey800 } from 'material-ui/styles/colors';
@@ -58,7 +58,7 @@ class CanvasOrientationBtns extends Component {
   * @returns {void}
   */
   handleOrientOverhead() {
-    this.setOrientation('overhead');
+    this.setOrientation(CC.OVERHEAD_VIEW);
   }
 
   /**
@@ -67,7 +67,7 @@ class CanvasOrientationBtns extends Component {
   * @returns {void}
   */
   handleOrientSide() {
-    this.setOrientation('side');
+    this.setOrientation(CC.SIDE_VIEW);
   }
 
    /**
@@ -85,14 +85,12 @@ class CanvasOrientationBtns extends Component {
    * @returns {HTML} The rendered HTML of the canvas side view button.
    */
   render() {
-    let canvasOrientation = INIT_ORIENTATION;
-    if (this.props.canvas) {
-       canvasOrientation = this.props.canvas[RC.CANVAS_ORIENTATION];
-    }
+    const canvasOrientation = this.props.canvas ? this.props.canvas[RC.CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
+
     return (
       <div>
         <IconButton
-          iconStyle={canvasOrientation === 'overhead' ? styles.activeIcon : styles.inactiveIcon}
+          iconStyle={canvasOrientation === CC.OVERHEAD_VIEW ? styles.activeIcon : styles.inactiveIcon}
           onTouchTap={this.handleOrientOverhead}
           style={styles.size}
           tooltip="Overhead View"
@@ -102,7 +100,7 @@ class CanvasOrientationBtns extends Component {
           <Layers />
         </IconButton>
         <IconButton
-          iconStyle={canvasOrientation === 'side' ? styles.activeIcon : styles.inactiveIcon}
+          iconStyle={canvasOrientation === CC.SIDE_VIEW ? styles.activeIcon : styles.inactiveIcon}
           onTouchTap={this.handleOrientSide}
           style={styles.size}
           tooltip="Side View"
