@@ -3,5 +3,6 @@
  */
 
 export default {
-  host: 'comakeserver.herokuapp.com'
+  //host: 'comakeserver.herokuapp.com'
+  host: 'us-central1-comake-95cb7.cloudfunctions.net'
 };

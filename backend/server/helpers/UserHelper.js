@@ -3,7 +3,6 @@
  */
 
  const admin = require('firebase-admin');
- const winston = require('winston');
 
  const Errors = require('./Errors');
 
@@ -13,7 +12,7 @@
   * @returns {Promise} A promise that contains a Firebase DataSnapshot with the query results
   */
  const getFirebaseUserByEmail = (email) => {
-  winston.info(
+  console.info(
     'UserHelper.getFirebaseUserByEmail - looking up user with email %s',
     email
   );
@@ -22,7 +21,7 @@
   try {
     return usersRef.orderByChild('email').equalTo(email).limitToFirst(1)
       .once('value').catch((error) => {
-        winston.error(
+        console.error(
           'UserHelper.getFirebaseUserByEmail - Error looking up user by email %s. Error message: %s',
           email,
           error.message
@@ -30,7 +29,7 @@
       });
   }
   catch (error) {
-    winston.error(
+    console.error(
       'UserHelper.getFirebaseUserByEmail - Error looking up user by email %s. Error message: %s',
       email,
       error.message
@@ -46,7 +45,7 @@
  * @returns {void}
 */
 const addUserToCanvasByEmail = (email, canvasId) => {
-  winston.info(
+  console.info(
     'UserHelper.addUserToCanvasByEmail - adding user %s to canvas %s',
     email,
     canvasId
@@ -54,7 +53,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
 
   return getFirebaseUserByEmail(email).then((queryResultSnap) => {
     if(!(queryResultSnap.val()) || queryResultSnap.numChildren() !== 1) {
-      winston.info(
+      console.info(
         'UserHelper.addUserToCanvasByEmail - no info for user %s found in the database %s',
         email
       );
@@ -67,7 +66,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
       try {
         // add user to the canvas's user list
         canvasRef.child('/users').transaction((oldValue) => {
-          winston.info(
+          console.info(
             'UserHelper.addUserToCanvasByEmail - writing user %s to canvas %s',
             email,
             canvasId
@@ -77,13 +76,13 @@ const addUserToCanvasByEmail = (email, canvasId) => {
           oldValue[userSnap.key] = userSnap.child('email').val();
           return oldValue;
         }).then(() => {
-          winston.info(
+          console.info(
             'UserHelper.addUserToCanvasByEmail - successfully added user %s to canvas %s',
             email,
             canvasId
           );
         }).catch((error) => {
-          winston.error(
+          console.error(
             'UserHelper.addUserToCanvasByEmail - error adding user %s to canvas %s: %s',
             email,
             canvasId,
@@ -91,7 +90,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
           );
         });
       } catch (error) {
-        winston.error(
+        console.error(
           'UserHelper.addUserToCanvasByEmail - error adding user %s to canvas %s: %s',
           email,
           canvasId,
@@ -104,7 +103,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
         canvasRef.child('name').once('value').then((canvasNameSnap) => {
           admin.database().ref('/users/' + userSnap.key + '/canvases')
             .transaction((oldValue) => {
-              winston.info(
+              console.info(
                 'UserHelper.addUserToCanvasByEmail - writing canvas %s to user %s',
                 canvasId,
                 email
@@ -115,13 +114,13 @@ const addUserToCanvasByEmail = (email, canvasId) => {
               oldValue[canvasId] = canvasNameSnap.val();
               return oldValue;
             }).then(() => {
-              winston.info(
+              console.info(
                 'UserHelper.addUserToCanvasByEmail - successfully added canvas %s to user %s',
                 canvasId,
                 email
               );
             }).catch((error) => {
-              winston.error(
+              console.error(
                 'UserHelper.addUserToCanvasByEmail - error adding canvas %s to user %s: %s',
                 canvasId,
                 email,
@@ -130,7 +129,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
             });
         });
       } catch (error) {
-        winston.error(
+        console.error(
           'UserHelper.addUserToCanvasByEmail - error adding canvas %s to user %s: %s',
           canvasId,
           email,
@@ -148,7 +147,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
  * @returns {void}
 */
 const addUserToCanvasByUid = (uid, canvasId) => {
-  winston.info(
+  console.info(
     'UserHelper.addUserToCanvasByUid - adding user %s to canvas %s',
     uid,
     canvasId
@@ -161,7 +160,7 @@ const addUserToCanvasByUid = (uid, canvasId) => {
     // adding user to canvas
     userRef.once('value').then((userSnap) => {
       canvasRef.child('users').transaction((oldValue) => {
-        winston.info(
+        console.info(
           'UserHelper.addUserToCanvasByUid - writing user %s to canvas %s',
           userSnap.key,
           canvasId
@@ -173,13 +172,13 @@ const addUserToCanvasByUid = (uid, canvasId) => {
         oldValue[userSnap.key] = userSnap.child('email').val();
         return oldValue;
       }).then(() => {
-        winston.info(
+        console.info(
           'UserHelper.addUserToCanvasByUid - successfully added user %s to canvas %s',
           uid,
           canvasId
         );
       }).catch((error) => {
-        winston.error(
+        console.error(
           'UserHelper.addUserToCanvasByUid - error adding user %s to canvas %s: %s',
           uid,
           canvasId,
@@ -188,7 +187,7 @@ const addUserToCanvasByUid = (uid, canvasId) => {
       });
     });
   } catch (error) {
-    winston.error(
+    console.error(
       'UserHelper.addUserToCanvasByUid - error adding user %s to canvas %s: %s',
       uid,
       canvasId,
@@ -200,7 +199,7 @@ const addUserToCanvasByUid = (uid, canvasId) => {
     // add canvas to the user's canvas list
     canvasRef.child('name').once('value').then((canvasNameSnap) => {
       userRef.child('canvases').transaction((oldValue) => {
-        winston.info(
+        console.info(
           'UserHelper.addUserToCanvasByUid - writing canvas %s to user %s',
           canvasId,
           uid
@@ -212,13 +211,13 @@ const addUserToCanvasByUid = (uid, canvasId) => {
         oldValue[canvasId] = canvasNameSnap.val();
         return oldValue;
       }).then(() => {
-        winston.info(
+        console.info(
           'UserHelper.addUserToCanvasByUid - successfully added canvas %s to user %s',
           canvasId,
           uid
         );
       }).catch((error) => {
-        winston.error(
+        console.error(
           'UserHelper.addUserToCanvasByUid - error adding canvas %s to user %s: %s',
           canvasId,
           uid,
@@ -227,7 +226,7 @@ const addUserToCanvasByUid = (uid, canvasId) => {
       });
     });
   } catch (error) {
-    winston.error(
+    console.error(
       'UserHelper.addUserToCanvasByUid - error adding canvas %s to user %s: %s',
       canvasId,
       uid,

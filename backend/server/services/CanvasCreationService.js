@@ -3,7 +3,7 @@
  */
 
 const admin = require('firebase-admin');
-const winston = require('winston');
+const cors = require('cors')({origin: true});
 
 const UserHelper = require('../helpers/UserHelper');
 
@@ -13,97 +13,99 @@ const UserHelper = require('../helpers/UserHelper');
  * @param {ExpressResponse} response An express response object representing the response
  * @returns {void}
  */
-const handleRequest = (request, response) => {
-  winston.info(
-    'CanvasCreationService.handleRequest - handling a new request: %j',
-    request.body
-  );
+const handleCorsRequest = (request, response) => {
+  cors(request, response, () => {
+    console.info(
+      'CanvasCreationService.handleRequest - handling a new request: %j',
+      request.body
+    );
 
- if(typeof request.body.name !== "string") {
-    winston.error('CanvasCreationService.handleRequest - invalid name param, must be a String');
-    response.status(500)
-      .send('Invalid name param.');
-    return;
- }
+   if(typeof request.body.name !== "string") {
+      console.error('CanvasCreationService.handleRequest - invalid name param, must be a String');
+      response.status(500)
+        .send('Invalid name param.');
+      return;
+   }
 
- if(typeof request.body.creatingUser !== "string") {
-   winston.error(
-     'CanvasCreationService.handleRequest - invalid creatingUser param, must be a String'
-   );
-   response.status(500)
-     .send('Invalid creatingUser param.');
-   return;
- }
+   if(typeof request.body.creatingUser !== "string") {
+     console.error(
+       'CanvasCreationService.handleRequest - invalid creatingUser param, must be a String'
+     );
+     response.status(500)
+       .send('Invalid creatingUser param.');
+     return;
+   }
 
- if(!(request.body.userList instanceof Array)) {
-   winston.error(
-     'CanvasCreationService.handleRequest - invalid userList param, must be an Array'
-   );
-   response.status(500)
-     .send('Invalid userList param.');
-   return;
- }
+   if(!(request.body.userList instanceof Array)) {
+     console.error(
+       'CanvasCreationService.handleRequest - invalid userList param, must be an Array'
+     );
+     response.status(500)
+       .send('Invalid userList param.');
+     return;
+   }
 
- let newCanvasId = null;
+   let newCanvasId = null;
 
- try {
-   const newCanvasRef = admin.database().ref('/canvases').push();
-   newCanvasId = newCanvasRef.key;
+   try {
+     const newCanvasRef = admin.database().ref('/canvases').push();
+     newCanvasId = newCanvasRef.key;
 
-   winston.info(
-     'CanvasCreationService.handleRequest - creating a new canvas with id %s',
-     newCanvasId
-   );
-
-   //configure the relevant fields on the new canvas
-   newCanvasRef.set({
-       items: [],
-       name: request.body.name,
-       owner: request.body.creatingUser,
-   }).then(() => {
-     winston.info(
-       'CanvasCreationService.handleRequest - adding users to new canvas %s',
+     console.info(
+       'CanvasCreationService.handleRequest - creating a new canvas with id %s',
        newCanvasId
      );
 
-     // add the creating user to the canvas
-     UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
+     //configure the relevant fields on the new canvas
+     newCanvasRef.set({
+         items: [],
+         name: request.body.name,
+         owner: request.body.creatingUser,
+     }).then(() => {
+       console.info(
+         'CanvasCreationService.handleRequest - adding users to new canvas %s',
+         newCanvasId
+       );
 
-     // add the users in the user list to the canvas
-     request.body.userList.forEach((userEmail) => {
-       UserHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
+       // add the creating user to the canvas
+       UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
+
+       // add the users in the user list to the canvas
+       request.body.userList.forEach((userEmail) => {
+         UserHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
+       });
+
+       console.info(
+         'CanvasCreationService.handleRequest - successfully created canvas %s, sending response to client',
+         newCanvasId
+       );
+
+       // send the new canvas id to the requesting user
+       response.send({ newCanvasId });
+
+     }).catch((error) => {
+       console.error(
+         'CanvasCreationService.handleRequest - error creating canvas %s: %s',
+         newCanvasId,
+         error.message
+       );
+
+       response.status(500).send({ message: 'Error creating canvas.' });
      });
-
-     winston.info(
-       'CanvasCreationService.handleRequest - successfully created canvas %s, sending response to client',
-       newCanvasId
-     );
-
-     // send the new canvas id to the requesting user
-     response.send({ newCanvasId });
-
-   }).catch((error) => {
-     winston.error(
+   } catch (error) {
+     console.error(
        'CanvasCreationService.handleRequest - error creating canvas %s: %s',
        newCanvasId,
        error.message
      );
 
      response.status(500).send({ message: 'Error creating canvas.' });
-   });
- } catch (error) {
-   winston.error(
-     'CanvasCreationService.handleRequest - error creating canvas %s: %s',
-     newCanvasId,
-     error.message
-   );
-
-   response.status(500).send({ message: 'Error creating canvas.' });
- }
+   }
+ });
 };
 
 module.exports = {
-handleRequest,
+handleCorsRequest
 };
 
 /*
