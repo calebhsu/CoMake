@@ -7,10 +7,10 @@
       "$canvas": {
         // users can read all info on canvases they are assigned to
         ".read": "auth !== null && data.child('users').child(auth.uid).exists()",
-        "items": {
-          "$item": {
-            // users can write to items on canvases they are assigned to that aren't locked
-            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked').val() !== true && data.exists() && newData.exists()"
+        "elements": {
+          "$element": {
+            // users can write to elements on canvases they are assigned to
+            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists()"
           }
         },
         "users": {
@@ -19,10 +19,6 @@
         },
         "owner": {
           // users cannot modify a canvas's owner
-          ".write": false
-        },
-        "teacher": {
-          // users cannot modify a canvas's teacher
           ".write": false
         },
         "$canvasItem": {
@@ -40,22 +36,19 @@
           ".write": false
         },
         "canvases": {
-          // users cannot modify their canvases list
-          ".write": false
+          // users can only change the values in their canvas list
+          ".write": "auth !== null && $uid === auth.uid && data.exists() && newData.exists()"
         },
         "providerData": {
           // users cannot modify the data provided by their Auth provider
-          ".write": false
-        },
-        "teacher": {
-          // users cannot modify the teacher flag on their account
           ".write": false
         },
         "$userItem": {
           // users can write any of the other fields on their user item
           ".write": "auth !== null && $uid === auth.uid && data.exists() && newData.exists()"
         }
-      }
+      },
+      ".indexOn":["email"]
     }
   }
 }
