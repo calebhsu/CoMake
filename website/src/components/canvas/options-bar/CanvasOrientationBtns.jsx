@@ -5,16 +5,26 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import IconButton from 'material-ui/IconButton';
 import FlipToFront from 'material-ui/svg-icons/action/flip-to-front';
+import IconButton from 'material-ui/IconButton';
 import Layers from 'material-ui/svg-icons/maps/layers';
 
-import * as CanvasActions from '../../../redux/actions/CanvasActions';
+import * as CA from '../../../redux/actions/CanvasActions';
+import { INIT_ORIENTATION } from '../CanvasConstants';
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
-import { grey800 } from 'material-ui/styles/colors';
+import { grey400, grey800 } from 'material-ui/styles/colors';
 
 const styles = {
-  iconSize: {
+  activeIcon: {
+    backgroundColor: grey400,
+    borderRadius: '50%',
+    color: grey800,
+    height: 32,
+    padding: 3,
+    width: 32,
+  },
+  inactiveIcon: {
     color: grey800,
     height: 32,
     width: 32,
@@ -37,40 +47,37 @@ class CanvasOrientationBtns extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = {
-      orientation: 'overhead',
-    };
-
-    this.handleOrientSide = this.handleOrientSide.bind(this);
     this.handleOrientOverhead = this.handleOrientOverhead.bind(this);
+    this.handleOrientSide = this.handleOrientSide.bind(this);
     this.setOrientation = this.setOrientation.bind(this);
   }
 
   /**
-  * Handler for onTouchTap that sets orientation state to overhead.
+  * Handler for onTouchTap that sets orientation to overhead
+  * by calling dispatch function setOrientation
   * @returns {void}
   */
   handleOrientOverhead() {
-    this.setState({orientation: 'overhead'});
+    this.setOrientation('overhead');
   }
 
   /**
-  * Handler for onTouchTap that sets orientation state to side.
+  * Handler for onTouchTap that sets orientation to side.
+  * by calling dispatch function setOrientation
   * @returns {void}
   */
   handleOrientSide() {
-    this.setState({orientation: 'side'});
+    this.setOrientation('side');
   }
 
-
    /**
-   * Sets canvas orientation
-   * Triggered By: Orientation view button onTouchTapEvent
+   * Sets canvas orientation by dispatching set canvas orientation event
+   * @param {String} orientation  The canvas orientation.
    * @returns {void}
    */
-   setOrientation() {
-    //  this.props.dispatch(CanvasActions.setCanvasOrientation(this.props.currentCanvas,
-    //    this.state.orientation));
+   setOrientation(orientation) {
+     this.props.dispatch(CA.setCanvasOrientationAndPersist(this.props.currentCanvas,
+       orientation));
    }
 
   /**
@@ -78,10 +85,14 @@ class CanvasOrientationBtns extends Component {
    * @returns {HTML} The rendered HTML of the canvas side view button.
    */
   render() {
+    let canvasOrientation = INIT_ORIENTATION;
+    if (this.props.canvas) {
+       canvasOrientation = this.props.canvas[RC.CANVAS_ORIENTATION];
+    }
     return (
       <div>
         <IconButton
-          iconStyle={styles.iconSize}
+          iconStyle={canvasOrientation === 'overhead' ? styles.activeIcon : styles.inactiveIcon}
           onTouchTap={this.handleOrientOverhead}
           style={styles.size}
           tooltip="Overhead View"
@@ -91,7 +102,7 @@ class CanvasOrientationBtns extends Component {
           <Layers />
         </IconButton>
         <IconButton
-          iconStyle={styles.iconSize}
+          iconStyle={canvasOrientation === 'side' ? styles.activeIcon : styles.inactiveIcon}
           onTouchTap={this.handleOrientSide}
           style={styles.size}
           tooltip="Side View"
@@ -106,6 +117,7 @@ class CanvasOrientationBtns extends Component {
 }
 
 CanvasOrientationBtns.propTypes = {
+  canvas: PropTypes.object,
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
 };

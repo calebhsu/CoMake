@@ -134,7 +134,10 @@ class OptionsBar extends Component {
             { userDivs }
           </ToolbarGroup>
           <ToolbarGroup>
-            <CanvasOrientationBtns currentCanvas={this.props.currentCanvas} />
+            <CanvasOrientationBtns
+              canvas={this.props.canvas}
+              currentCanvas={this.props.currentCanvas}
+            />
             <ToolbarSeparator style={styles.greyDivider} />
             <ArchiveCanvasBtn canvasId={this.props.currentCanvas} />
           </ToolbarGroup>
