@@ -15,8 +15,8 @@ import * as EA from '../../../redux/actions/ElementActions';
 
 
 const ONE_UNIT = 1;
-const h = 'height';
-const w = 'width';
+const HEIGHT = 'height';
+const WIDTH = 'width';
 const styles = {
     field: {
         width: '25%'
@@ -103,7 +103,7 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, h)}
+                  onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, HEIGHT)}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -115,14 +115,14 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(ONE_UNIT, h)}
+                  onTouchTap={this.generateButtonHandler(ONE_UNIT, HEIGHT)}
                 >
                     <AddCircle/>
                 </IconButton>
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, w)}
+                  onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, WIDTH)}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -134,7 +134,7 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.generateButtonHandler(ONE_UNIT, w)}
+                  onTouchTap={this.generateButtonHandler(ONE_UNIT, WIDTH)}
                 >
                     <AddCircle/>
                 </IconButton>
