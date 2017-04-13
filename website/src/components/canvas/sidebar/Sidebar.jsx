@@ -183,6 +183,13 @@ class Sidebar extends React.Component {
     }
     FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL, () => {
       console.log('Successfully saved!');
+    }, (error) => {
+      console.log('Error!');
+      console.log(error);
+    }, (snapshot) => {
+      if (snapshot.state === FBStorageHelper.PAUSED) {
+        console.log('Upload paused.');
+      }
     });
   }
 
