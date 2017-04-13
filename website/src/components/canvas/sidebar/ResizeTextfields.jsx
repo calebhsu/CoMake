@@ -18,14 +18,14 @@ const styles = {
         width: '30%'
     },
     smallIcon: {
-        width: 36,
-        height: 36
+        height: 36,
+        width: 36
     },
     small: {
-        width: 60,
+        display: 'inline-block',
         height: 60,
         padding: 2,
-        display: 'inline-block',
+        width: 60
     }
 };
 
@@ -39,12 +39,56 @@ class ResizeTextfields extends React.Component {
    */
     constructor(props) {
         super(props);
-        this.heightChangeHandler = this.heightChangeHandler.bind(this);
-        this.widthChangeHandler = this.widthChangeHandler.bind(this);
         this.handleButtonAddHeight = this.handleButtonAddHeight.bind(this);
         this.handleButtonAddWidth = this.handleButtonAddWidth.bind(this);
         this.handleButtonSubHeight = this.handleButtonSubHeight.bind(this);
         this.handleButtonSubWidth = this.handleButtonSubWidth.bind(this);
+        this.handlerTextfieldHeight = this.handlerTextfieldHeight.bind(this);
+        this.handlerTextfieldWidth = this.handlerTextfieldWidth.bind(this);
+    }
+    /**
+     * Handler that adds 1px to height
+     * @returns {void}
+     */
+    handleButtonAddHeight() {
+        let newSize = {
+            height: this.props.elements[this.props.targetedId].size.height + 1,
+            width: this.props.elements[this.props.targetedId].size.width
+        }
+        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
+    }
+    /**
+     * Handler that adds 1px to width
+     * @returns {void}
+     */
+    handleButtonAddWidth() {
+        let newSize = {
+            height: this.props.elements[this.props.targetedId].size.height,
+            width: this.props.elements[this.props.targetedId].size.width + 1
+        }
+        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
+    }
+    /**
+     * Handler that subtracts 1px to height
+     * @returns {void}
+     */
+    handleButtonSubHeight() {
+        let newSize = {
+            height: this.props.elements[this.props.targetedId].size.height - 1,
+            width: this.props.elements[this.props.targetedId].size.width
+        }
+        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
+    }
+    /**
+     * Handler that subtracts 1px to width
+     * @returns {void}
+     */
+    handleButtonSubWidth() {
+        let newSize = {
+            height: this.props.elements[this.props.targetedId].size.height,
+            width: this.props.elements[this.props.targetedId].size.width - 1
+        }
+        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
     }
     /**
      * Handler for when the height field is changed.
@@ -52,7 +96,7 @@ class ResizeTextfields extends React.Component {
      * @param {String} newHeight The new name entered.
      * @returns {void}
      */
-    heightChangeHandler(e, newHeight) {
+    handlerTextfieldHeight(e, newHeight) {
         let newSize = {
             height: newHeight,
             width: this.props.elements[this.props.targetedId].size.width
@@ -65,56 +109,52 @@ class ResizeTextfields extends React.Component {
      * @param {String} newWidth The new name entered.
      * @returns {void}
      */
-    widthChangeHandler(e, newWidth) {
+    handlerTextfieldWidth(e, newWidth) {
         let newSize = {
             height: this.props.elements[this.props.targetedId].size.height,
             width: newWidth
         }
         this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
     }
-    handleButtonAddHeight(){
-      let newSize = {
-          height: this.props.elements[this.props.targetedId].size.height + 1,
-          width: this.props.elements[this.props.targetedId].size.width
-      }
-      this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
-    handleButtonAddWidth(){
-      let newSize = {
-          height: this.props.elements[this.props.targetedId].size.height,
-          width: this.props.elements[this.props.targetedId].size.width + 1
-      }
-      this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
-    handleButtonSubHeight(){
-      let newSize = {
-          height: this.props.elements[this.props.targetedId].size.height - 1,
-          width: this.props.elements[this.props.targetedId].size.width
-      }
-      this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
-    handleButtonSubWidth(){
-      let newSize = {
-          height: this.props.elements[this.props.targetedId].size.height,
-          width: this.props.elements[this.props.targetedId].size.width - 1
-      }
-      this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
     render() {
         return (
             <div>
-                <TextField onChange={this.heightChangeHandler} floatingLabelText="Height" style={styles.field}/>
-                <IconButton iconStyle={styles.smallIcon} style={styles.small} onTouchTap={this.handleButtonAddHeight} >
+                <TextField
+                  onChange={this.handlerTextfieldHeight}
+                  floatingLabelText="Height"
+                  style={styles.field}
+                />
+                <IconButton
+                  iconStyle={styles.smallIcon}
+                  style={styles.small}
+                  onTouchTap={this.handleButtonAddHeight}
+                >
                     <AddCircle/>
                 </IconButton>
-                <IconButton iconStyle={styles.smallIcon} style={styles.small} onTouchTap={this.handleButtonSubHeight}>
+                <IconButton
+                  iconStyle={styles.smallIcon}
+                  style={styles.small}
+                  onTouchTap={this.handleButtonSubHeight}
+                >
                     <RemoveCircle/>
                 </IconButton>
-                <TextField onChange={this.widthChangeHandler} floatingLabelText="Width" style={styles.field}/>
-                <IconButton iconStyle={styles.smallIcon} style={styles.small} onTouchTap={this.handleButtonAddWidth}>
+                <TextField
+                  onChange={this.handlerTextfieldWidth}
+                  floatingLabelText="Width"
+                  style={styles.field}
+                />
+                <IconButton
+                  iconStyle={styles.smallIcon}
+                  style={styles.small}
+                  onTouchTap={this.handleButtonAddWidth}
+                >
                     <AddCircle/>
                 </IconButton>
-                <IconButton iconStyle={styles.smallIcon} style={styles.small} onTouchTap={this.handleButtonSubWidth}>
+                <IconButton
+                  iconStyle={styles.smallIcon}
+                  style={styles.small}
+                  onTouchTap={this.handleButtonSubWidth}
+                >
                     <RemoveCircle/>
                 </IconButton>
             </div>
