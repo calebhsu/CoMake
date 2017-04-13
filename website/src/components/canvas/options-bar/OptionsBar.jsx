@@ -1,20 +1,20 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
+import { Box } from 'reflexbox';
 import Avatar from 'material-ui/Avatar';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField'
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 
+import ArchiveCanvas from './ArchiveCanvas';
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
 import ShareCanvasModal from './ShareCanvasModal';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import * as CA from '../../../redux/actions/CanvasActions';
-
 
 import {
   white,
@@ -131,6 +131,8 @@ class OptionsBar extends React.Component {
           </ToolbarGroup>
           <ToolbarGroup>
             { userDivs }
+          <ArchiveCanvas
+            canvasId={this.props.currentCanvas} />
           </ToolbarGroup>
         </Toolbar>
         <Snackbar
