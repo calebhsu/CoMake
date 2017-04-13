@@ -26,3 +26,19 @@ export const saveRenderedImage = (canvasId, imageURL, onSuccess, onFailure,
   imageTask.on(firebase.storage.TaskEvent.STATE_CHANGED, processing, onFailure,
     onSuccess);
 }
+
+/**
+ * Gets the rendered image url and hands it off to urlHanlder.
+ * @param  {String} canvasId   The ID of the canvas.
+ * @param  {Function} urlHandler Function that is fed the image url.
+ * @return {void}
+ */
+export const getRenderedImageUrl = (canvasId, urlHandler) => {
+  const imagePath = RENDER_IMAGE_PATH + String(canvasId) + '.png';
+  const imageRef = firebase.storage().ref().child(imagePath);
+  imageRef.getDownloadURL().then((url) => {
+    urlHandler(url);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
