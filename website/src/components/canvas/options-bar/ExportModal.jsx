@@ -77,7 +77,7 @@ class ExportModal extends Component {
   generateCraftScript() {
     let craftScript = '';
     if (this.props.canvas && this.props.canvas[CANVAS_ORIENTATION]) {
-      craftScript = generateScript(this.props.elements, this.props.canvas[CANVAS_ORIENTATION] )
+      craftScript = generateScript(this.props.elements, this.props.canvas[CANVAS_ORIENTATION]);
     }
 
     this.setState({

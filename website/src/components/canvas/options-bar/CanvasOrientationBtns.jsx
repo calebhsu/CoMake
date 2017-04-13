@@ -1,13 +1,13 @@
 /**
- * @file Buttons for switching views of canvas.
+ * @file Buttons for switching orientation of canvas.
  */
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import FlipToFront from 'material-ui/svg-icons/action/flip-to-front';
 import IconButton from 'material-ui/IconButton';
 import Layers from 'material-ui/svg-icons/maps/layers';
+import ViewStream from 'material-ui/svg-icons/action/view-stream';
 
 import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
 import { setCanvasOrientationAndPersist } from '../../../redux/actions/CanvasActions';
@@ -36,10 +36,6 @@ const styles = {
   },
 };
 
-/**
- * Gives HTML for canvas orientation buttons.
- * @returns {HTML}   The HTML of the canvas orientation buttons.
- */
 class CanvasOrientationBtns extends Component {
   /**
    * Constructor for CanvasOrientationBtns
@@ -53,38 +49,38 @@ class CanvasOrientationBtns extends Component {
   }
 
   /**
-  * Handler for onTouchTap that sets orientation to overhead
-  * by calling dispatch function setOrientation
-  * @returns {void}
-  */
+   * Handler for onTouchTap that sets orientation to overhead
+   * by calling dispatch function setOrientation
+   * @returns {void}
+   */
   handleOrientOverhead() {
     this.setOrientation(CC.OVERHEAD_VIEW);
   }
 
   /**
-  * Handler for onTouchTap that sets orientation to side.
-  * by calling dispatch function setOrientation
-  * @returns {void}
-  */
+   * Handler for onTouchTap that sets orientation to side.
+   * by calling dispatch function setOrientation
+   * @returns {void}
+   */
   handleOrientSide() {
     this.setOrientation(CC.SIDE_VIEW);
   }
 
    /**
-   * Sets canvas orientation by dispatching set canvas orientation event.
-   * Updates CraftML code for previewer by generating new code based on
-   * orientation.
-   * @param {String} orientation  The canvas orientation.
-   * @returns {void}
-   */
+    * Sets canvas orientation by dispatching set canvas orientation event.
+    * Updates CraftML code for previewer by generating new code based on
+    * orientation.
+    * @param {String} orientation  The canvas orientation.
+    * @returns {void}
+    */
    setOrientation(orientation) {
      this.props.dispatch(setCanvasOrientationAndPersist(this.props.currentCanvas,
        orientation));
    }
 
   /**
-   * Renders the side view button for display.
-   * @returns {HTML} The rendered HTML of the canvas side view button.
+   * Gives HTML for canvas orientation buttons.
+   * @returns {HTML}   The HTML of the canvas orientation buttons.
    */
   render() {
     const canvasOrientation = this.props.canvas ? this.props.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
@@ -109,7 +105,7 @@ class CanvasOrientationBtns extends Component {
           tooltipPosition="bottom-center"
           touch={true}
         >
-          <FlipToFront />
+          <ViewStream />
         </IconButton>
       </div>
     );
