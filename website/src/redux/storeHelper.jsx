@@ -17,11 +17,9 @@ const storeConstructor = (persist, existingState) => {
 
   let enhancers = null
 
-  const composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
   if(persist) {
     //will persist
-    enhancers = composer(
+    enhancers = compose(
       applyMiddleware(
         thunkMiddleware
       )
@@ -29,10 +27,8 @@ const storeConstructor = (persist, existingState) => {
   }
   else {
     //won't persist
-    enhancers = composer(
-      applyMiddleware(
-        thunkMiddleware
-      )
+    enhancers = applyMiddleware(
+      thunkMiddleware
     );
   }
 
