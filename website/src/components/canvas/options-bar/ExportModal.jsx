@@ -12,7 +12,12 @@ import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import { white, grey900 } from 'material-ui/styles/colors';
 
-import { generateSideScript } from '../../../craftml/ScriptGenerator';
+import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
+import {
+  generateOverheadScript,
+  generateSideScript
+} from '../../../craftml/ScriptGenerator';
+import * as CC from '../CanvasConstants';
 
 const styles = {
   actionBtn: {
@@ -74,8 +79,18 @@ class ExportModal extends Component {
   * @returns {void}
   */
   generateCraftScript() {
+    let craftScript = '';
+
+    if (this.props.canvas &&
+        this.props.canvas[CANVAS_ORIENTATION] === CC.OVERHEAD_VIEW) {
+          craftScript = generateOverheadScript(this.props.elements)
+    }
+    else {
+      craftScript = generateSideScript(this.props.elements)
+    }
+
     this.setState({
-      craftScript: generateSideScript(this.props.elements)
+      craftScript: craftScript
     });
     this.handleDialogOpen();
   }
@@ -167,6 +182,7 @@ class ExportModal extends Component {
 }
 
 ExportModal.propTypes = {
+  canvas: PropTypes.object,
   elements: PropTypes.object,
 }
 

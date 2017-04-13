@@ -1,5 +1,5 @@
 /**
- * @file Button component for switching view of canvas to side view.
+ * @file Buttons for switching views of canvas.
  */
 
 import React, { Component, PropTypes } from 'react';
@@ -9,9 +9,9 @@ import FlipToFront from 'material-ui/svg-icons/action/flip-to-front';
 import IconButton from 'material-ui/IconButton';
 import Layers from 'material-ui/svg-icons/maps/layers';
 
-import * as CA from '../../../redux/actions/CanvasActions';
+import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
+import { setCanvasOrientationAndPersist } from '../../../redux/actions/CanvasActions';
 import * as CC from '../CanvasConstants';
-import * as RC from '../../../redux/reducers/ReducerConstants';
 
 import { grey400, grey800 } from 'material-ui/styles/colors';
 
@@ -76,7 +76,7 @@ class CanvasOrientationBtns extends Component {
    * @returns {void}
    */
    setOrientation(orientation) {
-     this.props.dispatch(CA.setCanvasOrientationAndPersist(this.props.currentCanvas,
+     this.props.dispatch(setCanvasOrientationAndPersist(this.props.currentCanvas,
        orientation));
    }
 
@@ -85,7 +85,7 @@ class CanvasOrientationBtns extends Component {
    * @returns {HTML} The rendered HTML of the canvas side view button.
    */
   render() {
-    const canvasOrientation = this.props.canvas ? this.props.canvas[RC.CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
+    const canvasOrientation = this.props.canvas ? this.props.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
 
     return (
       <div>

@@ -128,7 +128,10 @@ class OptionsBar extends Component {
               style={styles.modelName}
             />
             <ImportModelModal currentCanvas={this.props.currentCanvas} />
-            <ExportModal elements={this.props.elements} />
+            <ExportModal
+              canvas={this.props.canvas}
+              elements={this.props.elements}
+            />
             <ShareCanvasModal />
             <ToolbarSeparator style={styles.greyDivider} />
             { userDivs }
@@ -154,10 +157,10 @@ class OptionsBar extends Component {
 }
 
 OptionsBar.propTypes = {
-  dispatch: PropTypes.func,
-  elements: PropTypes.object,
   canvas: PropTypes.object,
   currentCanvas: PropTypes.string,
+  dispatch: PropTypes.func,
+  elements: PropTypes.object,
 }
 
 export default connect()(OptionsBar);

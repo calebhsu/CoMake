@@ -193,15 +193,16 @@ class Canvas extends React.Component {
           targetedId={this.props.targetedId}
         />
         <Sidebar
-          targetedId={this.props.targetedId}
+          autoRender={this.props.autoRender}
           currentCanvas={this.props.currentCanvas}
           elements={this.props.elements}
-          autoRender={this.props.autoRender}
+          targetedId={this.props.targetedId}
         />
         <Preview3D
+          autoRender={this.props.autoRender}
+          canvas={currentCanvasInfo}
           craftmlCode={this.props.craftmlCode}
           elements={this.props.elements}
-          autoRender={this.props.autoRender}
         />
       </div>
     )
