@@ -2,6 +2,13 @@
  * @file Constants needed for the Redux reducers.
  */
 
+ // Reducer names
+ export const ACTIVE_ELEMENT_REDUCER = 'activeElementReducer';
+ export const CANVAS_REDUCER = 'canvasReducer';
+ export const CRAFTML_CODE_REDUCER = 'craftmlCodeReducer';
+ export const ELEMENT_REDUCER = 'updateElementReducer';
+ export const LOGIN_REDUCER = 'userInfoReducer';
+
  // Fields in the state tree..
  export const USER_INFO = 'userInfo';
  export const USER_ID = 'userId';

@@ -9,9 +9,7 @@ import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 
-import * as ClearActions from '../redux/actions/ClearActions';
-
-import { getUserInfo, signOut } from '../helpers/LoginHelper';
+import { signOut } from '../helpers/LoginHelper';
 
 const styles = {
   appbar: {
@@ -63,17 +61,7 @@ class NavBar extends React.Component {
    * @returns {void}
    */
   clearStoreAndSignOut() {
-    this.props.dispatch(ClearActions.clear());
-    //wait here before signing out
-    signOut();
-  }
-
-  /**
-   * Function to be triggered on NavBar mounting, fetches user's information.
-   * @returns {void}
-   */
-  componentDidMount() {
-    getUserInfo(this.props.dispatch);
+    signOut(this.props.dispatch);
   }
 
   /**
