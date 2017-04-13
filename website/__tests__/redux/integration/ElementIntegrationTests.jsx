@@ -26,7 +26,7 @@ describe('ElementIntegrationTests', () => {
       image: 'http://marcoortiztorres.me/images/craftml.png',
     }
   };
-  const filledState = Object.assign({}, RC.BLANK_STATE);
+  const filledState = Object.assign({}, RC.BLANK_STATE_ELEMENTS);
   filledState[RC.ELEMENTS] = elemList;
 
   // create a new store before each test
