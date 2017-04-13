@@ -39,56 +39,26 @@ class ResizeTextfields extends React.Component {
    */
     constructor(props) {
         super(props);
-        this.handleButtonAddHeight = this.handleButtonAddHeight.bind(this);
-        this.handleButtonAddWidth = this.handleButtonAddWidth.bind(this);
-        this.handleButtonSubHeight = this.handleButtonSubHeight.bind(this);
-        this.handleButtonSubWidth = this.handleButtonSubWidth.bind(this);
+        this.generateButtonHandler = this.generateButtonHandler.bind(this);
         this.handlerTextfieldHeight = this.handlerTextfieldHeight.bind(this);
         this.handlerTextfieldWidth = this.handlerTextfieldWidth.bind(this);
     }
+
     /**
-     * Handler that adds 1px to height
+     * Generic button handler for when the height field is changed.
+     * @param {value} changeAmount numerical value for width/height change
+     * @param {String} widthOrHeight specifies whether height or width should be changed
      * @returns {void}
      */
-    handleButtonAddHeight() {
-        let newSize = {
-            height: this.props.elements[this.props.targetedId].size.height + 1,
-            width: this.props.elements[this.props.targetedId].size.width
-        }
-        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
-    /**
-     * Handler that adds 1px to width
-     * @returns {void}
-     */
-    handleButtonAddWidth() {
-        let newSize = {
-            height: this.props.elements[this.props.targetedId].size.height,
-            width: this.props.elements[this.props.targetedId].size.width + 1
-        }
-        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
-    /**
-     * Handler that subtracts 1px to height
-     * @returns {void}
-     */
-    handleButtonSubHeight() {
-        let newSize = {
-            height: this.props.elements[this.props.targetedId].size.height - 1,
-            width: this.props.elements[this.props.targetedId].size.width
-        }
-        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
-    }
-    /**
-     * Handler that subtracts 1px to width
-     * @returns {void}
-     */
-    handleButtonSubWidth() {
-        let newSize = {
-            height: this.props.elements[this.props.targetedId].size.height,
-            width: this.props.elements[this.props.targetedId].size.width - 1
-        }
-        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
+    generateButtonHandler(changeAmount, widthOrHeight) {
+      const handler = () => {
+        const newSize = this.props.elements[this.props.targetedId].size;
+        newSize[widthOrHeight] += changeAmount;
+        console.log(widthOrHeight);
+        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE,
+          this.props.targetedId, newSize, this.props.currentCanvas));
+      }
+      return handler;
     }
     /**
      * Handler for when the height field is changed.
@@ -97,11 +67,13 @@ class ResizeTextfields extends React.Component {
      * @returns {void}
      */
     handlerTextfieldHeight(e, newHeight) {
-        let newSize = {
-            height: newHeight,
-            width: this.props.elements[this.props.targetedId].size.width
-        }
-        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
+      const newFieldSize = {
+          height: newHeight,
+          width: this.props.elements[this.props.targetedId].size.width
+      };
+
+      this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE,
+        this.props.targetedId, newFieldSize, this.props.currentCanvas));
     }
     /**
      * Handler for when the width field is changed.
@@ -110,13 +82,17 @@ class ResizeTextfields extends React.Component {
      * @returns {void}
      */
     handlerTextfieldWidth(e, newWidth) {
-        let newSize = {
-            height: this.props.elements[this.props.targetedId].size.height,
-            width: newWidth
-        }
-        this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE, this.props.targetedId, newSize, this.props.currentCanvas));
+      const newFieldSize = {
+          height: this.props.elements[this.props.targetedId].size.height,
+          width: newWidth
+      };
+      this.props.dispatch(EA.updateAndPersist(AC.UPDATE_SIZE,
+        this.props.targetedId, newFieldSize, this.props.currentCanvas));
     }
     render() {
+        const oneUnit = 1;
+        const h = 'height';
+        const w = 'width';
         return (
             <div>
                 <TextField
@@ -127,14 +103,14 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.handleButtonAddHeight}
+                  onTouchTap={this.generateButtonHandler(oneUnit, h)}
                 >
                     <AddCircle/>
                 </IconButton>
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.handleButtonSubHeight}
+                  onTouchTap={this.generateButtonHandler(-1 * oneUnit, h)}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -146,14 +122,14 @@ class ResizeTextfields extends React.Component {
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.handleButtonAddWidth}
+                  onTouchTap={this.generateButtonHandler(oneUnit, w)}
                 >
                     <AddCircle/>
                 </IconButton>
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
-                  onTouchTap={this.handleButtonSubWidth}
+                  onTouchTap={this.generateButtonHandler(-1 * oneUnit, w)}
                 >
                     <RemoveCircle/>
                 </IconButton>
