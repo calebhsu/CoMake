@@ -80,10 +80,6 @@ class CanvasOrientationBtns extends Component {
    setOrientation(orientation) {
      this.props.dispatch(setCanvasOrientationAndPersist(this.props.currentCanvas,
        orientation));
-
-    //  let newCode = '';
-    //  if (orientation)
-    //  this.props.dispatch(CodeActions.setCode(newCode));
    }
 
   /**

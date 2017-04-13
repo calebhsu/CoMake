@@ -14,7 +14,6 @@ import { white, grey900 } from 'material-ui/styles/colors';
 
 import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
 import { generateScript } from '../../../craftml/ScriptGenerator';
-import * as CC from '../CanvasConstants';
 
 const styles = {
   actionBtn: {
