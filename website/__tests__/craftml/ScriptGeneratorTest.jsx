@@ -2,7 +2,8 @@
  * @file Unit tests for ScriptGenerator
  */
 
-import { generateOverheadScript, generateSideScript } from './../../src/craftml/ScriptGenerator';
+import { generateScript } from './../../src/craftml/ScriptGenerator';
+import { OVERHEAD_VIEW, SIDE_VIEW } from '../../src/components/canvas/CanvasConstants';
 
 const TEST_ELEMENTS = {
   element1: {
@@ -60,19 +61,19 @@ const EXPECTED_SIDE_SCRIPT = ('<g>\n\t<element1\n\tmodule="AoN5x"\n'
 describe('ScriptGeneratorTest', () => {
   test('generateOverheadScript_emptyElements', () => {
     const emptyElements = {};
-    expect(generateOverheadScript(emptyElements)).toEqual('');
+    expect(generateScript(emptyElements, OVERHEAD_VIEW)).toEqual('');
   });
 
   test('generateOverheadScript_validElements', () => {
-    expect(generateOverheadScript(TEST_ELEMENTS)).toEqual(EXPECTED_OVERHEAD_SCRIPT);
+    expect(generateScript(TEST_ELEMENTS, OVERHEAD_VIEW)).toEqual(EXPECTED_OVERHEAD_SCRIPT);
   });
 
   test('generateSideScript_emptyElements', () => {
     const emptyElements = {};
-    expect(generateSideScript(emptyElements)).toEqual('');
+    expect(generateScript(emptyElements, SIDE_VIEW)).toEqual('');
   });
 
   test('generateSideScript_validElements', () => {
-    expect(generateSideScript(TEST_ELEMENTS)).toEqual(EXPECTED_SIDE_SCRIPT);
+    expect(generateScript(TEST_ELEMENTS, SIDE_VIEW)).toEqual(EXPECTED_SIDE_SCRIPT);
   });
 });
