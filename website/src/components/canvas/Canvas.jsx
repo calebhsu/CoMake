@@ -194,6 +194,7 @@ class Canvas extends React.Component {
         />
         <Sidebar
           autoRender={this.props.autoRender}
+          canvas={currentCanvasInfo}
           currentCanvas={this.props.currentCanvas}
           elements={this.props.elements}
           targetedId={this.props.targetedId}

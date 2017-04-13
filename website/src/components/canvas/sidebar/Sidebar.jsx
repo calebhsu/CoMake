@@ -18,11 +18,13 @@ import TextField from 'material-ui/TextField';
 import { black, white, grey900 } from 'material-ui/styles/colors';
 
 import RotationSlider from './RotationSlider';
+
+import { generateScript } from '../../../craftml/ScriptGenerator';
+import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
+import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
-import * as CC from '../CanvasConstants';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
-import { generateOverheadScript, generateSideScript } from '../../../craftml/ScriptGenerator';
 
 const styles = {
   appbar: {
@@ -128,7 +130,7 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   updateCraftmlCode() {
-    const newCode = generateSideScript(this.props.elements);
+    const newCode = generateScript(this.props.elements, this.props.canvas[CANVAS_ORIENTATION]);
     this.props.dispatch(CodeActions.setCode(newCode));
   }
 
@@ -265,6 +267,7 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
+  canvas: PropTypes.object,
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   targetedId: PropTypes.string,

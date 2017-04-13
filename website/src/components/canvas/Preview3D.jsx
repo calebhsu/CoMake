@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
 
 import { CANVAS_ORIENTATION } from '../../redux/reducers/ReducerConstants';
-import { generateOverheadScript, generateSideScript } from '../../craftml/ScriptGenerator';
+import { generateScript } from '../../craftml/ScriptGenerator';
 import { ReactCraftMLRenderer } from 'craftml';
 import * as CC from './CanvasConstants';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
@@ -71,15 +71,8 @@ class Preview3D extends React.Component {
     if (nextProps.autoRender) {
       if (! _.isEqual(this.props.elements, nextProps.elements) ||
           ! _.isEqual(this.props.canvas[CANVAS_ORIENTATION], nextProps.canvas[CANVAS_ORIENTATION])) {
-            let newCode = '';
-            let canvasOrientation = nextProps.canvas ? nextProps.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
-
-            if (canvasOrientation === CC.OVERHEAD_VIEW) {
-              newCode = generateOverheadScript(nextProps.elements);
-            }
-            else {
-              newCode = generateSideScript(nextProps.elements);
-            }
+            const canvasOrientation = nextProps.canvas ? nextProps.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
+            const newCode = generateScript(nextProps.elements, canvasOrientation);
 
             this.props.dispatch(CodeActions.setCode(newCode));
       }

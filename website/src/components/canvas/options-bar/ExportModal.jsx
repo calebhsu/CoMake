@@ -13,10 +13,7 @@ import TextField from 'material-ui/TextField';
 import { white, grey900 } from 'material-ui/styles/colors';
 
 import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
-import {
-  generateOverheadScript,
-  generateSideScript
-} from '../../../craftml/ScriptGenerator';
+import { generateScript } from '../../../craftml/ScriptGenerator';
 import * as CC from '../CanvasConstants';
 
 const styles = {
@@ -80,12 +77,8 @@ class ExportModal extends Component {
   */
   generateCraftScript() {
     let craftScript = '';
-    if (this.props.canvas &&
-        this.props.canvas[CANVAS_ORIENTATION] === CC.OVERHEAD_VIEW) {
-          craftScript = generateOverheadScript(this.props.elements)
-    }
-    else {
-      craftScript = generateSideScript(this.props.elements)
+    if (this.props.canvas && this.props.canvas[CANVAS_ORIENTATION]) {
+      craftScript = generateScript(this.props.elements, this.props.canvas[CANVAS_ORIENTATION] )
     }
 
     this.setState({

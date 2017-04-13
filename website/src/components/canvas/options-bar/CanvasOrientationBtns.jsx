@@ -71,13 +71,19 @@ class CanvasOrientationBtns extends Component {
   }
 
    /**
-   * Sets canvas orientation by dispatching set canvas orientation event
+   * Sets canvas orientation by dispatching set canvas orientation event.
+   * Updates CraftML code for previewer by generating new code based on
+   * orientation.
    * @param {String} orientation  The canvas orientation.
    * @returns {void}
    */
    setOrientation(orientation) {
      this.props.dispatch(setCanvasOrientationAndPersist(this.props.currentCanvas,
        orientation));
+
+    //  let newCode = '';
+    //  if (orientation)
+    //  this.props.dispatch(CodeActions.setCode(newCode));
    }
 
   /**
