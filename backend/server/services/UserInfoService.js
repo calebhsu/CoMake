@@ -3,7 +3,7 @@
  */
 
 const admin = require('firebase-admin');
-const cors = require('cors')({origin: true});
+const cors = require('cors')({origin: ["http://localhost:8888", "https://comake-95cb7.firebaseapp.com"]});
 
 /**
  * Creates a new canvas based on a UserInfoService request
