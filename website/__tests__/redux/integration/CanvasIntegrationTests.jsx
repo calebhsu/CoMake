@@ -23,7 +23,7 @@ describe('CanvasIntegrationTests', () => {
   test('addCanvas_dispatch', (done) => {
     const testId = 'testId';
     const testInfo = 'testInfo';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CANVASES][testId] = testInfo;
 
     testStore.subscribe(() => {
@@ -38,7 +38,7 @@ describe('CanvasIntegrationTests', () => {
     const testId = 'testId';
     const testUserId = 'testUserId';
     const testUserInfo = {'testname': 'nameHere'};
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CANVASES][testId] = {}
     expected[RC.CANVASES][testId][RC.CANVAS_USERS] = {};
     expected[RC.CANVASES][testId][RC.CANVAS_USERS][testUserId] = testUserInfo;
@@ -55,7 +55,7 @@ describe('CanvasIntegrationTests', () => {
     const testId = 'testId';
     const testUserId = 'testUserId';
     const testUserInfo = {'testname': 'nameHere'};
-    const testState = Object.assign({}, RC.BLANK_STATE);
+    const testState = Object.assign({}, RC.BLANK_STATE_CANVAS);
     testState[RC.CANVASES][testId] = {}
     testState[RC.CANVASES][testId][RC.CANVAS_USERS] = {};
     testState[RC.CANVASES][testId][RC.CANVAS_USERS][testUserId] = testUserInfo;
@@ -72,7 +72,7 @@ describe('CanvasIntegrationTests', () => {
   test('removeCanvas_dispatch', (done) => {
     const testId = 'testId';
     const testInfo = 'testInfo';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CANVASES] = {};
     testStore.dispatch(CA.addCanvas(testId, testInfo));
 
@@ -86,7 +86,7 @@ describe('CanvasIntegrationTests', () => {
 
   test('setCurrentCanvas_dispatch', (done) => {
     const testId = 'testId';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CURRENT_CANVAS] = testId;
 
     testStore.subscribe(() => {
@@ -100,7 +100,7 @@ describe('CanvasIntegrationTests', () => {
   test('setCanvasName_dispatch', (done) => {
     const testId = 'testId';
     const testName = 'testName';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CANVASES][testId][RC.CANVAS_NAME] = testName;
 
     testStore.subscribe(() => {
@@ -128,7 +128,7 @@ describe('CanvasIntegrationTests', () => {
   test('setCanvasOwner_dispatch', (done) => {
     const testId = 'testId';
     const testOwner = 'testOwner';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CANVASES][testId][RC.CANVAS_OWNER] = testOwner;
 
     testStore.subscribe(() => {

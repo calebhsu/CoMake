@@ -7,55 +7,54 @@
       "$canvas": {
         // users can read all info on canvases they are assigned to
         ".read": "auth !== null && data.child('users').child(auth.uid).exists()",
-        "items": {
-          "$item": {
-            // users can write to items on canvases they are assigned to that aren't locked
-            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists() && data.child('locked').val() !== true && data.exists() && newData.exists()"
+        "elements": {
+          "$element": {
+            // users can write to elements on canvases they are assigned to
+            ".write": "auth !== null && data.parent().parent().child('users').child(auth.uid).exists()",
+            "image":{ ".validate": "!newData.exists() || newData.isString()" }, // image field is a string
+            "module":{ ".validate": "!newData.exists() || newData.isString()" }, // module field is a string
+            "orienation":{ ".validate": "!newData.exists() || newData.isString()" },
+            "position":{
+              "x": { ".validate": "!newData.exists() || newData.isNumber()" }, // x field is a number
+              "y": { ".validate": "!newData.exists() || newData.isNumber()" } // y field is a number
+            },
+            "rotation": { ".validate": "!newData.exists() || newData.isNumber()" }, // rotation field is a number
+            "size":{
+              "height":{ ".validate": "!newData.exists() || newData.isNumber()" }, // height field is a number
+              "width":{ ".validate": "!newData.exists() || newData.isNumber()" } // width field is a number
+            }
           }
         },
-        "users": {
-          // users cannot modify a canvas's user list
-          ".write": false
-        },
-        "owner": {
-          // users cannot modify a canvas's owner
-          ".write": false
-        },
-        "teacher": {
-          // users cannot modify a canvas's teacher
-          ".write": false
-        },
+        "users": { ".write": false }, // users cannot modify a canvas's user list
+        "owner": { ".write": false }, // users cannot modify a canvas's owner
         "$canvasItem": {
-          // users can write any of the other fields on the canvas if they are in the users list
-          ".write": "auth !== null && data.parent().child('users').child(auth.uid).exists() && data.exists() && newData.exists()",
+          // users can create/modify any other field on the canvas if they are in the users list
+          ".write": "auth !== null && data.parent().child('users').child(auth.uid).exists() && newData.exists()"
         }
       }
     },
     "users": {
       "$uid": {
-        // users can only read their own user data
-        ".read": "auth !== null && $uid === auth.uid",
-        "admin": {
-          // users cannot modify the admin flag on their account
-          ".write": false
-        },
+        ".read": "auth !== null && $uid === auth.uid", // users can only read their own user data
+        "admin": { ".write": false }, // users cannot modify the admin flag on their account
         "canvases": {
-          // users cannot modify their canvases list
-          ".write": false
+          "$canvasItem":{
+            // users can only modify the values in their canvas list
+            ".write": "auth !== null && $uid === auth.uid && data.exists()  && newData.exists()",
+            ".validate": "newData.isString() || newData.isBoolean()" // canvas entry should be a string/bool
+          }
         },
-        "providerData": {
-          // users cannot modify the data provided by their Auth provider
-          ".write": false
-        },
-        "teacher": {
-          // users cannot modify the teacher flag on their account
-          ".write": false
-        },
+        "email":{ ".write": false }, // users cannot modify the email associated with their account
+        "emailVerified":{ ".write": false }, //users cannot modify whether their email has been verified
+        "photoUrl":{ ".write": false }, //users cannot modify their photo url
+        "providerData": { ".write": false }, // users cannot modify the data provided by their Auth provider
+        "providerID": { ".write": false }, // users cannot modify the ID of their data provider
         "$userItem": {
-          // users can write any of the other fields on their user item
-          ".write": "auth !== null && $uid === auth.uid && data.exists() && newData.exists()"
+          // users can create/modify any of the other fields on their user item
+          ".write": "auth !== null && $uid === auth.uid && newData.exists()"
         }
-      }
+      },
+      ".indexOn":["email"]
     }
   }
 }

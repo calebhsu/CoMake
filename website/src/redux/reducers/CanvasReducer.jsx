@@ -12,7 +12,7 @@
  * @param  {Object} action The action to reduce.
  * @return {Object} The new state of the store.
  */
-export const canvasReducer = (state = RC.BLANK_STATE, action) => {
+export const canvasReducer = (state = RC.BLANK_STATE_CANVAS, action) => {
   const pathToChange = [];
   switch (action.type) {
     case AC.ADD_CANVAS:
