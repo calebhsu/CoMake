@@ -14,9 +14,9 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
-import TextField from 'material-ui/TextField';
 import { black, white, grey900 } from 'material-ui/styles/colors';
 
+import ResizeTextfields from './ResizeTextfields';
 import RotationSlider from './RotationSlider';
 
 import { generateScript } from '../../../craftml/ScriptGenerator';
@@ -44,9 +44,6 @@ const styles = {
     top: 55,
     width: 25,
     zIndex: 15,
-  },
-  field: {
-    width: '90%',
   },
   listItems: {
     marginTop: 20
@@ -218,7 +215,9 @@ class Sidebar extends React.Component {
             showMenuIconButton={false}
             style={styles.appbar}
           />
-          <Menu style={styles.propertiesSpacing}>
+          <Menu
+            style={styles.propertiesSpacing}
+            disableAutoFocus={true}>
 
             {this.listItems}
 
@@ -230,9 +229,11 @@ class Sidebar extends React.Component {
             <Divider />
 
             <h3>Resize</h3>
-            <TextField hintText="64px" floatingLabelText="Height" style={styles.field} />
-            <TextField hintText="64px" floatingLabelText="Width" style={styles.field} />
-
+            <ResizeTextfields
+              targetedId={this.props.targetedId}
+              currentCanvas={this.props.currentCanvas}
+              elements={this.props.elements}
+            />
             <Divider />
 
             <h3>Rendering</h3>
