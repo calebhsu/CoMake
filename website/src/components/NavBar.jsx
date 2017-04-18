@@ -86,21 +86,19 @@ class NavBar extends React.Component {
         }
         style={styles.appbar}
       >
-        <Link to="/profile">
-          <FlatButton
-            style={styles.navBtn}
+        <FlatButton
+          style={styles.navBtn}
+        >
+          <ListItem
+            disabled={true}
+            leftAvatar={
+              <Avatar src={photoURL} />
+            }
+            style={styles.navUser}
           >
-            <ListItem
-              disabled={true}
-              leftAvatar={
-                <Avatar src={photoURL} />
-              }
-              style={styles.navUser}
-            >
-              {username}
-            </ListItem>
-          </FlatButton>
-        </Link>
+            {username}
+          </ListItem>
+        </FlatButton>
         <FlatButton
           label="User Guide"
           labelStyle={styles.navBtnLabel}

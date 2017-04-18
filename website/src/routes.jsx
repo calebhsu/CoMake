@@ -4,7 +4,6 @@ import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 import Canvas from './components/canvas/Canvas';
 import Home from './components/home/Home';
 import Landing from './components/landing/Landing';
-import Profile from './components/profile/Profile';
 import MainLayout from './components/MainLayout';
 
 import { isLoggedIn } from './helpers/LoginHelper.jsx';
@@ -21,7 +20,6 @@ function Routes() {
         <IndexRoute component={Home} />
         <Route path="/home" component={Home} />
         <Route path="/canvas" component={Canvas} />
-        <Route path="/profile" component={Profile} />
       </Route>
     </Router>
   );
