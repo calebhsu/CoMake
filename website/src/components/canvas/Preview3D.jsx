@@ -70,7 +70,7 @@ class Preview3D extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.autoRender) {
       if (! _.isEqual(this.props.elements, nextProps.elements) ||
-          ! _.isEqual(this.props.canvas[CANVAS_ORIENTATION], nextProps.canvas[CANVAS_ORIENTATION])) {
+          this.props.canvas[CANVAS_ORIENTATION] !== nextProps.canvas[CANVAS_ORIENTATION]) {
             const canvasOrientation = nextProps.canvas ? nextProps.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
             const newCode = generateScript(nextProps.elements, canvasOrientation);
 

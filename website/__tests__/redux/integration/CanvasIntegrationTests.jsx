@@ -114,7 +114,7 @@ describe('CanvasIntegrationTests', () => {
   test('setCanvasOrientation_dispatch', (done) => {
     const testId = 'testId';
     const testOrientation = 'side';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
     expected[RC.CANVASES][testId][RC.CANVAS_ORIENTATION] = testOrientation;
 
     testStore.subscribe(() => {
