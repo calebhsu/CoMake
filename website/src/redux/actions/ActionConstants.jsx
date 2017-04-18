@@ -21,6 +21,7 @@ export const ADD_CANVAS_USER = 'addCanvasUser';
 export const REMOVE_CANVAS_USER = 'removeCanvasUser';
 export const SET_CANVAS_NAME = 'setCanvasName';
 export const SET_CANVAS_OWNER = 'setCanvasOwner';
+export const SET_CANVAS_IMAGE = 'setCanvasImage';
 
 // User Actions
 export const UPDATE_USER_INFO = 'updateUserInfo';

@@ -71,4 +71,15 @@ describe('CanvasActionsUnitTests', () => {
     }
     expect(CA.setCanvasOwner(testId, testOwner)).toEqual(expected);
   });
+
+  test('setCanvasImage', () => {
+    const testId = 'testId';
+    const testUrl = 'testUrl';
+    const expected = {
+      type: AC.SET_CANVAS_IMAGE,
+      canvasId: testId,
+      payload: testUrl,
+    }
+    expect(CA.setCanvasImage(testId, testUrl)).toEqual(expected);
+  });
 });
