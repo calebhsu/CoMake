@@ -1,7 +1,12 @@
+/**
+ * @file Sidebar component holding canvas options.
+ */
+
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
+import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -9,13 +14,16 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
-import TextField from 'material-ui/TextField';
 import { black, white, grey900 } from 'material-ui/styles/colors';
 
+import ResizeTextfields from './ResizeTextfields';
 import RotationSlider from './RotationSlider';
+import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as CC from '../CanvasConstants';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
+import { generateScript } from '../../../craftml/ScriptGenerator';
+
 
 const styles = {
   appbar: {
@@ -36,14 +44,22 @@ const styles = {
     width: 25,
     zIndex: 15,
   },
-  field: {
-    width: '90%',
-  },
   listItems: {
     marginTop: 20
   },
   menuItem: {
     color: grey900,
+  },
+  renderCheckboxLabel: {
+    color: grey900,
+    paddingBottom: 10,
+    paddingLeft: 16,
+  },
+  unchecked: {
+    fill: grey900,
+  },
+  checked: {
+    fill: '#e74c49',
   },
   propertiesSpacing: {
     marginLeft: 20,
@@ -78,6 +94,9 @@ class Sidebar extends React.Component {
     };
 
     this.addElement = this.addElement.bind(this);
+    this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
+    this.clearCraftmlCode = this.clearCraftmlCode.bind(this);
+    this.toggleAutoRender = this.toggleAutoRender.bind(this);
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
@@ -100,6 +119,34 @@ class Sidebar extends React.Component {
     /* NOTE: leaving this here for ease of testing */
     /* TODO: remove before deploying */
     FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+  }
+
+  /**
+   * Handler for updating craftml code (triggers 3D rerender).
+   * @returns {void}
+   */
+  updateCraftmlCode() {
+    const newCode = generateScript(this.props.elements);
+    this.props.dispatch(CodeActions.setCode(newCode));
+  }
+
+  /**
+   * Handler for clearing the 3D model i.e. clearing the craftml code.
+   * @returns {void}
+   */
+  clearCraftmlCode() {
+    this.props.dispatch(CodeActions.setCode(''));
+  }
+
+  /**
+   * Handler that toggles whether the 3D model should be auto rendered.
+   * @returns {void}
+   */
+  toggleAutoRender() {
+    if (!this.props.autoRender) {
+      this.updateCraftmlCode();
+    }
+    this.props.dispatch(CodeActions.setAutoCodeUpdate(!this.props.autoRender));
   }
 
   /**
@@ -167,7 +214,10 @@ class Sidebar extends React.Component {
             showMenuIconButton={false}
             style={styles.appbar}
           />
-          <Menu style={styles.propertiesSpacing}>
+          <Menu
+            style={styles.propertiesSpacing}
+            disableAutoFocus={true}>
+
             {this.listItems}
 
             <Divider />
@@ -178,8 +228,37 @@ class Sidebar extends React.Component {
             <Divider />
 
             <h3>Resize</h3>
-            <TextField hintText="64px" floatingLabelText="Height" style={styles.field} />
-            <TextField hintText="64px" floatingLabelText="Width" style={styles.field} />
+            <ResizeTextfields
+              targetedId={this.props.targetedId}
+              currentCanvas={this.props.currentCanvas}
+              elements={this.props.elements}
+            />
+            <Divider />
+
+            <h3>Rendering</h3>
+            <Checkbox
+              label={CC.AUTO_RENDER_CHECKBOX}
+              checked={this.props.autoRender}
+              onCheck={this.toggleAutoRender}
+              labelStyle={styles.renderCheckboxLabel}
+              iconStyle={this.props.autoRender ? styles.checked : styles.unchecked}
+              labelPosition={CC.AUTO_RENDER_LABEL_POSITION}
+            />
+            <MenuItem
+              key={CC.RENDER_BUTTON}
+              onClick={this.updateCraftmlCode}
+              style={styles.menuItem}
+            >
+              {CC.RENDER_BUTTON}
+            </MenuItem>
+            <MenuItem
+              key={CC.CLEAR_3D_BUTTON}
+              onClick={this.clearCraftmlCode}
+              style={styles.menuItem}
+            >
+              {CC.CLEAR_3D_BUTTON}
+            </MenuItem>
+
           </Menu>
         </Drawer>
       </div>
@@ -190,7 +269,9 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
-  targetedId: PropTypes.string
+  targetedId: PropTypes.string,
+  elements: PropTypes.object,
+  autoRender: PropTypes.bool,
 }
 
 export default connect()(Sidebar);

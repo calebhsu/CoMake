@@ -12,6 +12,8 @@
  export const CURRENT_CANVAS = 'currentCanvas';
  export const ELEMENTS = 'elements';
  export const ACTIVE_ELEMENT = 'activeElement';
+ export const CODE = 'code';
+ export const AUTO_GENERATE_CODE = 'autoGenerateCode';
 
 // The blank state tree for redux.
 /* Looks like...
@@ -31,6 +33,8 @@
   },
   CURRENT_CANVAS: null,
   ELEMENTS: {},
+  CODE: '',
+  AUTO_GENERATE_CODE: false,
   ACTIVE_ELEMENT: null,
 }
 */
@@ -45,6 +49,8 @@ BLANK_STATE[CANVASES] = {};
 BLANK_STATE[CURRENT_CANVAS] = null;
 BLANK_STATE[ELEMENTS] = {};
 BLANK_STATE[ACTIVE_ELEMENT] = null;
+BLANK_STATE[CODE] = '';
+BLANK_STATE[AUTO_GENERATE_CODE] = false;
 export { BLANK_STATE };
 
 // Fields for elements.

@@ -89,7 +89,7 @@ class CanvasList extends React.Component {
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).once('value').then((canvasListSnap) => {
         Object.keys(canvasListSnap.val()).forEach((canvasId) => {
-          if (Object.keys(this.props.canvases).indexOf(canvasId) < 0) {
+          if ((Object.keys(this.props.canvases).indexOf(canvasId) < 0)&&(canvasListSnap.val()[canvasId])) {
             this.fetchCanvasInfo(canvasId);
           }
       });
@@ -98,7 +98,18 @@ class CanvasList extends React.Component {
     // Listen for any new canvases that might be added.
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).on('child_added', (canvasSnap) => {
-        this.fetchCanvasInfo(canvasSnap.key);
+        if (canvasSnap.val()) {
+          this.fetchCanvasInfo(canvasSnap.key);
+        }
+      });
+
+    // Listen for any canvases that might be removed.
+    firebase.database().ref('/users').child(userId)
+      .child(RC.CANVASES).on('child_changed', (canvasSnap) => {
+        console.log(canvasSnap.val());
+        if (!canvasSnap.val()) {
+          this.props.dispatch(CanvasActions.removeCanvas(canvasSnap.key));
+        }
       });
     this.listenersAttached = true;
   }
@@ -133,7 +144,6 @@ class CanvasList extends React.Component {
   createClickHandler(canvasId) {
     return () => {
       this.props.dispatch(CanvasActions.setCurrentCanvas(canvasId));
-      this.fetchCanvasInfo(canvasId);
     };
   }
 
