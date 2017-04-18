@@ -17,10 +17,12 @@ export function generateScript(elements, orientation) {
   // Set transformation axes based on orientation
   let orientAxis = ' y ';
   let rotateAxis = ' z ';
+  let multiplier = 1;
 
   if (orientation === SIDE_VIEW) {
      orientAxis = ' z ';
      rotateAxis = ' y ';
+     multiplier = -1;
   }
 
   // Iterate over elements and add them to script.
@@ -34,7 +36,7 @@ export function generateScript(elements, orientation) {
     elementScript += '\tt="size x ' + String(currElement.size.width / 10);
     elementScript += orientAxis + String(currElement.size.height / 10) + '; ';
     elementScript += 'position x ' + String(currElement.position.x / 10);
-    elementScript += orientAxis + String(-currElement.position.y / 10) + '; ';
+    elementScript += orientAxis + String(multiplier * currElement.position.y / 10) + '; ';
     elementScript += 'rotate' + rotateAxis + String(currElement.rotation.toFixed()) + '" />';
 
     script += elementScript + '\n\n';
