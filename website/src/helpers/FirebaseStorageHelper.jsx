@@ -40,5 +40,6 @@ export const getRenderedImageUrl = (canvasId, urlHandler) => {
     urlHandler(url);
   }).catch((error) => {
     console.log(error);
+    urlHandler(null);
   });
 }
