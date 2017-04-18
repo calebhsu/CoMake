@@ -4,7 +4,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { white, grey900, grey700 } from 'material-ui/styles/colors';
 
-import NavBar from './NavBar';
+import HomeNavBar from './home/HomeNavBar';
+import LandingNavBar from './landing/LandingNavBar';
 
 import '../scss/main.scss';
 
@@ -49,12 +50,14 @@ class MainLayout extends Component {
    * @returns {HTML} Rendered layout
    */
   render() {
+    const nav = document.location.hash === "#/login" ? <LandingNavBar /> : <HomeNavBar />;
+
     return (
       <MuiThemeProvider
        muiTheme={muiTheme}
       >
         <div>
-           <NavBar />
+           {nav}
            {this.props.children}
         </div>
       </MuiThemeProvider>

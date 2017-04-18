@@ -15,9 +15,9 @@ import { isLoggedIn } from './helpers/LoginHelper.jsx';
 function Routes() {
   return (
     <Router history={hashHistory}>
-      <Route path="/login" component={Landing} />
-      <Route path="/" component={MainLayout} onEnter={isLoggedIn}>
-        <IndexRoute component={Home} />
+      <Route path="/" component={MainLayout}>
+        <IndexRoute component={Home} onEnter={isLoggedIn} />
+        <Route path="/login" component={Landing}/>
         <Route path="/home" component={Home} />
         <Route path="/canvas" component={Canvas} />
       </Route>

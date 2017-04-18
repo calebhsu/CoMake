@@ -1,25 +1,14 @@
 import React from 'react';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import RaisedButton from 'material-ui/RaisedButton';
-import { white, grey700 } from 'material-ui/styles/colors';
+import { grey700 } from 'material-ui/styles/colors';
 
 import LandingContent from './LandingContent';
-import LandingNavBar from './LandingNavBar';
 
 import { promptForLogin } from '../../helpers/LoginHelper'
 
 import globalStyles from '../../scss/main.scss';
 import headerImg from '../../img/landing-background.png';
-
-const muiTheme = getMuiTheme({
-  palette: {
-    accent1Color: '#e74c49',
-    alternateTextColor: white,
-    primary1Color: white,
-    textColor: '#e74c49',
-  },
-});
 
 const styles = {
   header: {
@@ -57,9 +46,7 @@ const styles = {
  */
 function Landing() {
   return (
-    <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-        <LandingNavBar />
         <div style={styles.header}>
           <h1 style={styles.title} className={globalStyles.title}>comake</h1>
           <p style={styles.subtitle} className={globalStyles.subtitle}>design 2D, export 3D</p>
@@ -73,7 +60,6 @@ function Landing() {
         </div>
         <LandingContent />
       </div>
-    </MuiThemeProvider>
   );
 }
 

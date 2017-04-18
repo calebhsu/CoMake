@@ -30,15 +30,23 @@ export const getUserInfo = (dispatch) => {
 * @returns {void}
 */
 export const isLoggedIn = (nextState, replace) => {
+  console.log(document.location)
   if (!(firebase.auth().currentUser)) {
     replace({
       pathname: '/login'
     });
   }
+  // if (firebase.auth().currentUser && document.location === "/#/login"){
+  //   console.log(document.location)
+  //   replace({
+  //     pathname: '/home'
+  //   });
+  // }
 }
 
 /**
  * Opens login prompt for user and redirects them to the home page if successful.
+ * If authenticated user tries to access login page, redirect to home.
  * @returns {void}
  */
 export const promptForLogin = () => {

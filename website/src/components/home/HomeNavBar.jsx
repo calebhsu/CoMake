@@ -9,7 +9,7 @@ import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 
-import { getUserInfo, signOut } from '../helpers/LoginHelper';
+import { getUserInfo, signOut } from '../../helpers/LoginHelper';
 
 const styles = {
   appbar: {
@@ -44,9 +44,9 @@ const styles = {
 };
 
 /**
- * @classdesc The nav bar for the page.
+ * @classdesc The nav bar for the authenticated pages.
  */
-class NavBar extends React.Component {
+class HomeNavBar extends React.Component {
   /**
    * Constructor for the class.
    * @param {Object} props The props to be passed in.
@@ -119,9 +119,9 @@ const mapStateToProps = state => ({
   userInfo: state.userInfoReducer.userInfo,
 });
 
-NavBar.propTypes = {
+HomeNavBar.propTypes = {
   dispatch: PropTypes.func,
   userInfo: PropTypes.object
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps)(HomeNavBar);
