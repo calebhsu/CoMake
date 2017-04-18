@@ -10,6 +10,7 @@ var loaders = require('./webpack.loaders');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+var BabiliPlugin = require("babili-webpack-plugin");
 
 // global css files
 loaders.push({
@@ -28,14 +29,18 @@ loaders.push({
 	exclude: /(node_modules|bower_components|public)/,
 	loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]')
 });
-
+// 3D viewer
+loaders.push({
+	test: /\.json$/,
+	loader: 'json',
+});
 
 module.exports = {
 	entry: [
-		'./src/components/index.jsx'
+		'./src/index.jsx'
 	],
 	output: {
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, '..', 'public'),
 		filename: '[chunkhash].js'
 	},
 	resolve: {
@@ -44,6 +49,9 @@ module.exports = {
 	module: {
 		loaders
 	},
+	node: {
+		fs: 'empty',
+	},
 	plugins: [
 		new WebpackCleanupPlugin(),
 		new webpack.DefinePlugin({
@@ -51,14 +59,7 @@ module.exports = {
 				NODE_ENV: '"production"'
 			}
 		}),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-				drop_console: true,
-				drop_debugger: true
-			}
-		}),
+		new BabiliPlugin(),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new ExtractTextPlugin('[contenthash].css', {
 			allChunks: true
@@ -67,6 +68,6 @@ module.exports = {
 			template: './src/index.html',
 			title: 'CoMake'
 		}),
-		new webpack.optimize.DedupePlugin()
+		new webpack.optimize.DedupePlugin(),
 	]
 };

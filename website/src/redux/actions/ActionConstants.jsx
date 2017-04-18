@@ -24,3 +24,10 @@ export const SET_CANVAS_OWNER = 'setCanvasOwner';
 
 // User Actions
 export const UPDATE_USER_INFO = 'updateUserInfo';
+
+//Clear Actions
+export const CLEAR = 'clear';
+
+// Code Actions
+export const SET_CODE = 'setCode';
+export const SET_AUTO_CODE_UPDATE = 'toggleAutoCodeUpdate';

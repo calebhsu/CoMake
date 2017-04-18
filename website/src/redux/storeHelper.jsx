@@ -3,24 +3,39 @@
  */
 
 import { applyMiddleware, compose, createStore } from 'redux';
-import { autoRehydrate } from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
 import reducers from './reducers';
 
 /**
- * Constructs
+ * Constructs the redux store and persists if specified
+ * @param {Bool} persist whether or not to persist/rehyrdate the store
+ * @param {Object} existingState the state to initialize the app with
  * @returns {Store} A redux store with the reducers from the reducers folder and the thunk middleware applied to it.
  */
-const storeConstructor = () => {
-  return createStore(reducers,
-    undefined,
-    compose(
+const storeConstructor = (persist, existingState) => {
+
+  let enhancers = null
+
+  if(persist) {
+    //will persist
+    enhancers = compose(
       applyMiddleware(
         thunkMiddleware
-      ),
-      autoRehydrate()
-    )
+      )
+    );
+  }
+  else {
+    //won't persist
+    enhancers = applyMiddleware(
+      thunkMiddleware
+    );
+  }
+
+  return createStore(
+    reducers,
+    existingState,
+    enhancers
   );
 };
 
