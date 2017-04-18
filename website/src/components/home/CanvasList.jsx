@@ -88,11 +88,13 @@ class CanvasList extends React.Component {
     // If there is a valid username, fetch available canvas names.
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).once('value').then((canvasListSnap) => {
-        Object.keys(canvasListSnap.val()).forEach((canvasId) => {
-          if ((Object.keys(this.props.canvases).indexOf(canvasId) < 0)&&(canvasListSnap.val()[canvasId])) {
-            this.fetchCanvasInfo(canvasId);
-          }
-      });
+        if(canvasListSnap.val()) {
+          Object.keys(canvasListSnap.val()).forEach((canvasId) => {
+            if ((Object.keys(this.props.canvases).indexOf(canvasId) < 0) && (canvasListSnap.val()[canvasId])) {
+              this.fetchCanvasInfo(canvasId);
+            }
+          });
+        }
     });
 
     // Listen for any new canvases that might be added.
