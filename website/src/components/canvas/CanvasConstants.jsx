@@ -19,3 +19,7 @@ export const INIT_SIZE = {
   'height': 100,
 }
 export const INIT_ROTATION = 0;
+
+// Initial canvas settings
+export const OVERHEAD_VIEW = 'overhead';
+export const SIDE_VIEW = 'side';

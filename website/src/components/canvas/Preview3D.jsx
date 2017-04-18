@@ -6,11 +6,23 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { ReactCraftMLRenderer } from 'craftml';
+import IconButton from 'material-ui/IconButton';
+import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
+
+import { CANVAS_ORIENTATION } from '../../redux/reducers/ReducerConstants';
 import { generateScript } from '../../craftml/ScriptGenerator';
+import { ReactCraftMLRenderer } from 'craftml';
+import * as CC from './CanvasConstants';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
+import { grey800 } from 'material-ui/styles/colors';
+
 const styles = {
+  iconSize: {
+    color: grey800,
+    height: 48,
+    width: 48,
+  },
   img: {
     padding: '5px 5px 1px',
     width: 95,
@@ -28,6 +40,13 @@ const styles = {
     right: 20,
     zIndex: 100,
   },
+  size: {
+    height: 96,
+    marginBottom: -10,
+    marginRight: 6,
+    padding: 24,
+    width: 96,
+  },
 };
 
 /**
@@ -44,15 +63,18 @@ class Preview3D extends React.Component {
   }
 
   /**
-   * If the elements have changed and auto-render is on then update code.
+   * If the elements or canvas orientation have changed and auto-render is on then update code.
    * @param {Object} nextProps  The next props to be recieved by the component.
    * @returns {void}
    */
   componentWillReceiveProps(nextProps) {
     if (nextProps.autoRender) {
-      if (! _.isEqual(this.props.elements, nextProps.elements)) {
-        const newCode = generateScript(nextProps.elements);
-        this.props.dispatch(CodeActions.setCode(newCode));
+      if (! _.isEqual(this.props.elements, nextProps.elements) ||
+          this.props.canvas[CANVAS_ORIENTATION] !== nextProps.canvas[CANVAS_ORIENTATION]) {
+            const canvasOrientation = nextProps.canvas ? nextProps.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
+            const newCode = generateScript(nextProps.elements, canvasOrientation);
+
+            this.props.dispatch(CodeActions.setCode(newCode));
       }
     }
   }
@@ -71,7 +93,15 @@ class Preview3D extends React.Component {
     } else {
       return (
         <div style={styles.preview3d}>
-          EMPTY PLACE HOLDER HERE
+          <IconButton
+            iconStyle={styles.iconSize}
+            style={styles.size}
+            tooltip="3D Preview"
+            tooltipPosition="top-center"
+            touch={true}
+          >
+            <ThreeDRotation />
+          </IconButton>
         </div>
       )
     }
@@ -79,10 +109,11 @@ class Preview3D extends React.Component {
 }
 
 Preview3D.propTypes = {
-  dispatch: PropTypes.func,
-  craftmlCode: PropTypes.string,
-  elements: PropTypes.object,
   autoRender: PropTypes.bool,
+  canvas: PropTypes.object,
+  craftmlCode: PropTypes.string,
+  dispatch: PropTypes.func,
+  elements: PropTypes.object,
 };
 
 export default connect()(Preview3D);
