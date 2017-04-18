@@ -12,7 +12,7 @@
  * @param  {Object} action The action to reduce.
  * @return {Object} The new state of the store.
  */
-export const activeElementReducer = (state = RC.BLANK_STATE, action) => {
+export const activeElementReducer = (state = RC.BLANK_STATE_ACTIVE_ELEMENT, action) => {
   const pathToChange = [RC.ACTIVE_ELEMENT];
   switch (action.type) {
     case AC.TARGET_ELEMENT:

@@ -30,7 +30,7 @@ describe('LoginIntegrationTests', () => {
     testPayload[RC.USERNAME] = testName;
     testPayload[RC.USER_PHOTO_URL] = testPhotoURL;
     testPayload[RC.USER_EMAIL] = testEmail;
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_USER_INFO);
     expected[RC.USER_INFO] = testPayload
     testStore.subscribe(() => {
       expect(testStore.getState().userInfoReducer).toEqual(expected);
