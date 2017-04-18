@@ -27,6 +27,7 @@
   CANVASES: {
     <canvasID>: {
       CANVAS_NAME: null,
+      CANVAS_ORIENTATION: null,
       CANVAS_OWNER: null,
       CANVAS_USERS: null,
     }

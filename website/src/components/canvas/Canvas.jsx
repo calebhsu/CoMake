@@ -56,10 +56,12 @@ class Canvas extends React.Component {
   fetchCanvasInfo(canvasId) {
     firebase.database().ref(`/canvases/${canvasId}`).once('value')
       .then((canvasSnap) => {
-        //fetch canvas specific info
+        // fetch canvas specific info
         const canvasObj = {};
         canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
-        canvasObj[RC.CANVAS_ORIENTATION] = canvasSnap.child('orientation').val();
+        if (canvasSnap.child('orientation').val()) {
+          canvasObj[RC.CANVAS_ORIENTATION] = canvasSnap.child('orientation').val();
+        }
         canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
 
         let canvasUsersObj = canvasSnap.child('users').val();

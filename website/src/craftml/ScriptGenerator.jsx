@@ -14,6 +14,15 @@ export function generateScript(elements, orientation) {
   let script = '';
   let elementId = 1;
 
+  // Set transformation axes based on orientation
+  let orientAxis = ' y ';
+  let rotateAxis = ' z ';
+
+  if (orientation === SIDE_VIEW) {
+     orientAxis = ' z ';
+     rotateAxis = ' y ';
+  }
+
   // Iterate over elements and add them to script.
   const elementList = Object.values(elements);
   for (let i = 0; i < elementList.length; i++) {
@@ -22,21 +31,11 @@ export function generateScript(elements, orientation) {
     let elementScript = '\t<element' + String(elementId) + '\n';
     elementScript += '\tmodule="' + currElement.module + '"\n';
 
-    // Add in transitions based on orientation
-    if (orientation === SIDE_VIEW) {
-      elementScript += '\tt="size x ' + String(currElement.size.width / 10);
-      elementScript += ' z ' + String(currElement.size.height / 10) + '; ';
-      elementScript += 'position x ' + String(currElement.position.x / 10);
-      elementScript += ' z ' + String(-currElement.position.y / 10) + '; ';
-      elementScript += 'rotate y ' + String(currElement.rotation.toFixed()) + '" />';
-    }
-    else {
-      elementScript += '\tt="size x ' + String(currElement.size.width / 10);
-      elementScript += ' y ' + String(currElement.size.height / 10) + '; ';
-      elementScript += 'position x ' + String(currElement.position.x / 10);
-      elementScript += ' y ' + String(currElement.position.y / 10) + '; ';
-      elementScript += 'rotate z ' + String(currElement.rotation.toFixed()) + '" />';
-    }
+    elementScript += '\tt="size x ' + String(currElement.size.width / 10);
+    elementScript += orientAxis + String(currElement.size.height / 10) + '; ';
+    elementScript += 'position x ' + String(currElement.position.x / 10);
+    elementScript += orientAxis + String(-currElement.position.y / 10) + '; ';
+    elementScript += 'rotate' + rotateAxis + String(currElement.rotation.toFixed()) + '" />';
 
     script += elementScript + '\n\n';
     elementId++;
