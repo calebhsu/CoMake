@@ -7,6 +7,8 @@ import Landing from './components/landing/Landing';
 import Profile from './components/profile/Profile';
 import MainLayout from './components/MainLayout';
 
+import { isLoggedIn } from './helpers/LoginHelper.jsx';
+
 /**
  * Defines routes for all application components.
  * @returns {HTML} The application components and corresponding paths.
@@ -15,7 +17,7 @@ function Routes() {
   return (
     <Router history={hashHistory}>
       <Route path="/login" component={Landing} />
-      <Route path="/" component={MainLayout}>
+      <Route path="/" component={MainLayout} onEnter={isLoggedIn}>
         <IndexRoute component={Home} />
         <Route path="/home" component={Home} />
         <Route path="/canvas" component={Canvas} />
