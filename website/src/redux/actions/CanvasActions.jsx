@@ -125,15 +125,3 @@ export const setCanvasOwner = (canvasId, canvasOwner) => ({
   canvasId: canvasId,
   payload: canvasOwner,
 });
-
-/**
- * Action for setting the canvas image.
- * @param {String} canvasId The canvas ID.
- * @param {String} imageURL Url for the desired image.
- * @returns {Object}  The object detailing the action.
- */
-export const setCanvasImage = (canvasId, imageURL) => ({
-  type: AC.SET_CANVAS_IMAGE,
-  canvasId: canvasId,
-  payload: imageURL,
-});

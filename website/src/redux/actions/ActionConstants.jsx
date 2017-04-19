@@ -22,7 +22,6 @@ export const SET_CURRENT_CANVAS = 'setCurrentCanvas';
 export const SET_CANVAS_NAME = 'setCanvasName';
 export const SET_CANVAS_ORIENTATION = 'setCanvasOrientation';
 export const SET_CANVAS_OWNER = 'setCanvasOwner';
-export const SET_CANVAS_IMAGE = 'setCanvasImage';
 
 // User Actions
 export const UPDATE_USER_INFO = 'updateUserInfo';
