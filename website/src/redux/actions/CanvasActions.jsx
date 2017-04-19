@@ -110,5 +110,5 @@ export const setCanvasOwner = (canvasId, canvasOwner) => ({
 export const setCanvasImage = (canvasId, imageURL) => ({
   type: AC.SET_CANVAS_IMAGE,
   canvasId: canvasId,
-  paayload: imageURL,
-})
+  payload: imageURL,
+});

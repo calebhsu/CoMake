@@ -23,10 +23,6 @@ const styles = {
   },
 };
 
-const generateCanvasCode = (
-  <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
-);
-
 
 /**
  * @classdesc Component for displaying list of available canvases.
@@ -133,10 +129,16 @@ class CanvasList extends React.Component {
         }
         canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
 
-        FBStorageHelper.getRenderedImageUrl(canvasId, (url) => {
-          canvasObj[RC.CANVAS_IMAGE] = url;
+
+        if (canvasSnap.child(RC.CANVAS_IMAGE).val()) {
+          FBStorageHelper.getRenderedImageUrl(canvasId, (url) => {
+            canvasObj[RC.CANVAS_IMAGE] = url;
+            this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+          });
+        } else {
+          canvasObj[RC.CANVAS_IMAGE] = null;
           this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
-        });
+        }
     });
   }
 
@@ -175,10 +177,8 @@ class CanvasList extends React.Component {
             <Card onTouchTap={this.createClickHandler(canvasId)}>
               <CardMedia
                 overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
-                overlayContentStyle={styles.overlay}
-                >
+                overlayContentStyle={styles.overlay} >
                 <img src={canvasImage} className={'img-responsive'} />
-                {generateCanvasCode}
               </CardMedia>
             </Card>
           </Link>

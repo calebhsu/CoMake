@@ -178,8 +178,11 @@ class Sidebar extends React.Component {
       console.log(e);
       return;
     }
+    if (!this.props.hasCanvasImage) {
+      FBHelper.setHasCanvasImage(this.props.currentCanvas);
+    }
     FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL, () => {
-      console.log('Successfully saved!');
+      console.log('Successfully saved to storage.');
     });
   }
 
@@ -314,6 +317,7 @@ Sidebar.propTypes = {
   targetedId: PropTypes.string,
   elements: PropTypes.object,
   autoRender: PropTypes.bool,
+  hasCanvasImage: PropTypes.bool,
 }
 
 export default connect()(Sidebar);

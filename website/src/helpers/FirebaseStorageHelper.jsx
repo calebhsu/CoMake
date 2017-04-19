@@ -39,7 +39,10 @@ export const getRenderedImageUrl = (canvasId, urlHandler) => {
   imageRef.getDownloadURL().then((url) => {
     urlHandler(url);
   }).catch((error) => {
-    console.log(error);
-    urlHandler(null);
+    if (error.code === 'storage/object-not-found') {
+      urlHandler(null);
+    } else {
+      console.log(error.code);
+    }
   });
 }
