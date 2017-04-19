@@ -12,7 +12,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Popover from 'material-ui/Popover';
 
-import { getUserInfo, signOut } from '../helpers/LoginHelper';
+import { signOut } from '../helpers/LoginHelper';
 
 const styles = {
   appbar: {
@@ -56,18 +56,18 @@ class NavBar extends React.Component {
    */
   constructor(props) {
     super(props);
-
     this.state = {
       open: false,
     };
+    this.clearStoreAndSignOut = this.clearStoreAndSignOut.bind(this);
   }
 
   /**
-   * Function to be triggered on NavBar mounting, fetches user's information.
+   * Clears the redux store and signs out
    * @returns {void}
    */
-  componentDidMount() {
-    getUserInfo(this.props.dispatch);
+  clearStoreAndSignOut() {
+    signOut(this.props.dispatch);
   }
 
 
@@ -147,7 +147,7 @@ class NavBar extends React.Component {
           label="Log Out"
           labelStyle={styles.navBtnLabel}
           style={styles.navBtn}
-          onClick={signOut}
+          onClick={this.clearStoreAndSignOut}
         />
       </AppBar>
     );

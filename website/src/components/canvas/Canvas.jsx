@@ -15,6 +15,7 @@ import * as ActiveElementActions from '../../redux/actions/ActiveElementActions'
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
+
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 /**

@@ -70,7 +70,6 @@ class ArchiveCanvas extends React.Component {
     this.props.dispatch(CanvasActions.removeCanvas(canvasId));
 
     document.location = '/#/home';
-    location.reload(true);
   };
 
   /**
