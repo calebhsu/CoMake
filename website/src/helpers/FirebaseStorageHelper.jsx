@@ -5,7 +5,7 @@
 import * as firebase from 'firebase';
 
 const RENDER_IMAGE_PATH = 'images/rendered_images/';
-export const PAUSED = firebase.storage.TaskState.PAUSED;
+export const PAUSED = 'paused';
 
 /**
  * Save an image to the rendered_images directory.
