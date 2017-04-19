@@ -8,6 +8,9 @@ import FlatButton from 'material-ui/FlatButton';
 import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import Popover from 'material-ui/Popover';
 
 import { signOut } from '../helpers/LoginHelper';
 
@@ -31,8 +34,8 @@ const styles = {
     letterSpacing: 1,
   },
   navUser: {
-    backgroundColor: '#a7d2cb',
-    color: '#ffffff',
+    backgroundColor: '#ffffff',
+    color: '#e74c49',
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 1,
@@ -53,6 +56,9 @@ class NavBar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      open: false,
+    };
     this.clearStoreAndSignOut = this.clearStoreAndSignOut.bind(this);
   }
 
@@ -63,6 +69,24 @@ class NavBar extends React.Component {
   clearStoreAndSignOut() {
     signOut(this.props.dispatch);
   }
+
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  handleTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
 
   /**
    * Renders the NavBar.
@@ -87,21 +111,33 @@ class NavBar extends React.Component {
         }
         style={styles.appbar}
       >
-        <Link to="/profile">
-          <FlatButton
-            style={styles.navBtn}
+        <FlatButton
+          style={styles.navBtn}
+        >
+          <ListItem
+            disabled={true}
+            leftAvatar={
+              <Avatar src={photoURL} />
+            }
+            style={styles.navUser}
           >
-            <ListItem
-              disabled={true}
-              leftAvatar={
-                <Avatar src={photoURL} />
-              }
-              style={styles.navUser}
-            >
-              {username}
-            </ListItem>
-          </FlatButton>
-        </Link>
+            {username}
+          </ListItem>
+        </FlatButton>
+        <Popover
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          onRequestClose={this.handleRequestClose}
+        >
+          <Menu>
+            <MenuItem primaryText="Refresh" />
+            <MenuItem primaryText="Help &amp; feedback" />
+            <MenuItem primaryText="Settings" />
+            <MenuItem primaryText="Sign out" />
+          </Menu>
+        </Popover>
         <FlatButton
           label="User Guide"
           labelStyle={styles.navBtnLabel}
