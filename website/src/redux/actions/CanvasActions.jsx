@@ -90,6 +90,31 @@ export const setCanvasNameAndPersist = (canvasId, canvasName) => (
 );
 
 /**
+ * Action for setting canvas orientation.
+ * @param {String} canvasId          ID for the canvas to change.
+ * @param {String} canvasOrientation Orientation of the canvas view.
+ * @returns {Object}                 The object detailing the action.
+ */
+export const setCanvasOrientation = (canvasId, canvasOrientation) => ({
+  type: AC.SET_CANVAS_ORIENTATION,
+  canvasId: canvasId,
+  payload: canvasOrientation,
+});
+
+/**
+ * Action for setting canvas orientation and having it persist on firebase.
+ * @param {String} canvasId          ID for the canvas to change.
+ * @param {String} canvasOrientation Orientation of the canvas view.
+ * @returns {Promise}                A promise on the firebase set call
+ */
+export const setCanvasOrientationAndPersist = (canvasId, canvasOrientation) => (
+  (dispatch) => {
+    dispatch(setCanvasOrientation(canvasId, canvasOrientation));
+    return FBHelper.setCanvasOrientation(canvasId, canvasOrientation);
+  }
+);
+
+/**
  * Action for setting a canvas owner.
  * @param   {String} canvasId 	 Id for the canvas to have its name changed.
  * @param   {String} canvasOwner Owner that the canvas will be given from now on.

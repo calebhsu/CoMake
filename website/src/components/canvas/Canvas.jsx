@@ -57,9 +57,12 @@ class Canvas extends React.Component {
   fetchCanvasInfo(canvasId) {
     firebase.database().ref(`/canvases/${canvasId}`).once('value')
       .then((canvasSnap) => {
-        //fetch canvas specific info
+        // fetch canvas specific info
         const canvasObj = {};
         canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
+        if (canvasSnap.child('orientation').val()) {
+          canvasObj[RC.CANVAS_ORIENTATION] = canvasSnap.child('orientation').val();
+        }
         canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
 
         let canvasUsersObj = canvasSnap.child('users').val();
@@ -92,6 +95,12 @@ class Canvas extends React.Component {
       .on('value', (snap) => {
         this.props.dispatch(
           CanvasActions.setCanvasName(canvasId, snap.val())
+        );
+      });
+    firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.CANVAS_ORIENTATION}`)
+      .on('value', (snap) => {
+        this.props.dispatch(
+          CanvasActions.setCanvasOrientation(canvasId, snap.val())
         );
       });
     firebase.database().ref(`${RC.CANVASES}/${canvasId}/${RC.CANVAS_USERS}`)
@@ -177,7 +186,7 @@ class Canvas extends React.Component {
     let hasImage = false;
     if (currentCanvasInfo) {
       hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
-        && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');  
+        && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');
     }
     return (
       <div>
@@ -192,16 +201,18 @@ class Canvas extends React.Component {
           targetedId={this.props.targetedId}
         />
         <Sidebar
-          targetedId={this.props.targetedId}
+          autoRender={this.props.autoRender}
+          canvas={currentCanvasInfo}
           currentCanvas={this.props.currentCanvas}
           elements={this.props.elements}
-          autoRender={this.props.autoRender}
           hasCanvasImage={hasImage}
+          targetedId={this.props.targetedId}
         />
         <Preview3D
+          autoRender={this.props.autoRender}
+          canvas={currentCanvasInfo}
           craftmlCode={this.props.craftmlCode}
           elements={this.props.elements}
-          autoRender={this.props.autoRender}
         />
       </div>
     )

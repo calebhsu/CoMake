@@ -37,6 +37,11 @@ export const canvasReducer = (state = RC.BLANK_STATE_CANVAS, action) => {
       pathToChange.push(action.canvasId);
       pathToChange.push(RC.CANVAS_NAME);
       break;
+    case AC.SET_CANVAS_ORIENTATION:
+      pathToChange.push(RC.CANVASES);
+      pathToChange.push(action.canvasId);
+      pathToChange.push(RC.CANVAS_ORIENTATION);
+      break;
     case AC.SET_CANVAS_OWNER:
       pathToChange.push(RC.CANVASES);
       pathToChange.push(action.canvasId);

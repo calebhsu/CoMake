@@ -92,6 +92,19 @@ describe('CanvasReducerUnitTests', () => {
       testName, [RC.CANVASES, testId, RC.CANVAS_NAME]);
   });
 
+  test('canvasReducer_SetCanvasOrientation', () => {
+    const testId = 'testId';
+    const testOrientation = 'side';
+    const testAction = {
+      type: AC.SET_CANVAS_ORIENTATION,
+      canvasId: testId,
+      payload: testOrientation,
+    }
+    canvasReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testOrientation, [RC.CANVASES, testId, RC.CANVAS_ORIENTATION]);
+  });
+
   test('canvasReducer_SetCanvasOwner', () => {
     const testId = 'testId';
     const testOwner = 'testOwner';
