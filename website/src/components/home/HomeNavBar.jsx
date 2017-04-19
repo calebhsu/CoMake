@@ -9,7 +9,7 @@ import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 
-import { getUserInfo, signOut } from '../../helpers/LoginHelper';
+import { signOut } from '../../helpers/LoginHelper';
 
 const styles = {
   appbar: {
@@ -53,14 +53,15 @@ class HomeNavBar extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.clearStoreAndSignOut = this.clearStoreAndSignOut.bind(this);
   }
 
   /**
-   * Function to be triggered on NavBar mounting, fetches user's information.
+   * Clears the redux store and signs out
    * @returns {void}
    */
-  componentDidMount() {
-    getUserInfo(this.props.dispatch);
+  clearStoreAndSignOut() {
+    signOut(this.props.dispatch);
   }
 
   /**
@@ -108,7 +109,7 @@ class HomeNavBar extends React.Component {
           label="Log Out"
           labelStyle={styles.navBtnLabel}
           style={styles.navBtn}
-          onClick={signOut}
+          onClick={this.clearStoreAndSignOut}
         />
       </AppBar>
     );

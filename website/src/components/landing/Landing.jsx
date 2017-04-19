@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import { grey700 } from 'material-ui/styles/colors';
 
 import LandingContent from './LandingContent';
 
-import { promptForLogin } from '../../helpers/LoginHelper'
+import { performAndDispatchLogin } from '../../helpers/LoginHelper'
 
 import globalStyles from '../../scss/main.scss';
 import headerImg from '../../img/landing-background.png';
@@ -40,12 +41,31 @@ const styles = {
   },
 };
 
-/**
- * Gives HTML for the Landing.
- * @returns {HTML}   The HTML of the landing page.
- */
-function Landing() {
-  return (
+class Landing extends React.Component {
+  /**
+   * Constructor for the class
+   * @param {Object} props The props to be passed in.
+   * @returns {void}
+   */
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  /**
+   * Handles login, updates firebase if needed, and dispatches user info
+   * @returns {void}
+   */
+  handleLogin() {
+    performAndDispatchLogin(this.props.dispatch);
+  }
+
+ /**
+  * Gives HTML for the Landing.
+  * @returns {HTML} The HTML of the landing page.
+  */
+  render() {
+    return (
       <div>
         <div style={styles.header}>
           <h1 style={styles.title} className={globalStyles.title}>comake</h1>
@@ -55,12 +75,17 @@ function Landing() {
             labelStyle={styles.loginLabel}
             secondary={true}
             style={styles.loginBtn}
-            onClick={promptForLogin}
+            onClick={this.handleLogin}
           />
         </div>
         <LandingContent />
       </div>
-  );
+    );
+  }
 }
 
-export default Landing;
+Landing.propTypes = {
+  dispatch: PropTypes.func
+}
+
+export default connect()(Landing);
