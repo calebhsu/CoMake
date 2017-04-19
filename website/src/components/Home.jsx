@@ -12,7 +12,6 @@ class Home extends React.Component {
     */
    render() {
      const userId = this.props.userInfo.userId;
-     console.log(userId ? 'dash' : 'landing')
      const page = userId ? <Dashboard /> : <Landing />;
 
      return (

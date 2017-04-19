@@ -53,8 +53,6 @@ export const performAndDispatchLogin = (dispatch) => {
       actionPayload[RC.USER_PHOTO_URL] = result.user.photoURL;
       actionPayload[RC.USER_EMAIL] = result.user.email;
       dispatch(updateUserInfo(actionPayload));
-
-      document.location = "/#/";
     });
   }
 }
@@ -67,6 +65,5 @@ export const performAndDispatchLogin = (dispatch) => {
 export const signOut = (dispatch) => {
   firebase.auth().signOut().then(() => {
     dispatch(ClearActions.clear());
-
   });
 }
