@@ -6,7 +6,7 @@ import { grey700 } from 'material-ui/styles/colors';
 
 import LandingContent from './LandingContent';
 
-import { performAndDispatchLogin } from '../../helpers/LoginHelper'
+import { performAndDispatchLogin } from '../../helpers/LoginHelper';
 
 import globalStyles from '../../scss/main.scss';
 import headerImg from '../../img/landing-background.png';

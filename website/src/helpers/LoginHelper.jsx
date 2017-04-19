@@ -25,27 +25,6 @@ export const getUserInfo = (dispatch) => {
 }
 
 /**
-* Replaces current route with to login page route if no current user authenticated
-* @param   {Object} nextState The next router state
-* @param   {Function} replace The function that replaces the current path
-* @returns {void}
-*/
-export const isLoggedIn = (nextState, replace) => {
-  console.log(document.location)
-  if (!(firebase.auth().currentUser)) {
-    replace({
-      pathname: '/login'
-    });
-  }
-  // if (firebase.auth().currentUser && document.location === "/#/login"){
-  //   console.log(document.location)
-  //   replace({
-  //     pathname: '/home'
-  //   });
-  // }
-}
-
-/**
  * Opens login prompt for user and redirects them to the home page if successful.
  * @param {Function} dispatch The function to dispatch an action to a redux store
  * @returns {void}
@@ -75,7 +54,7 @@ export const performAndDispatchLogin = (dispatch) => {
       actionPayload[RC.USER_EMAIL] = result.user.email;
       dispatch(updateUserInfo(actionPayload));
 
-      document.location = "/#/home";
+      document.location = "/#/";
     });
   }
 }
@@ -89,6 +68,5 @@ export const signOut = (dispatch) => {
   firebase.auth().signOut().then(() => {
     dispatch(ClearActions.clear());
 
-    document.location = "/#/login";
   });
 }

@@ -46,7 +46,7 @@ const styles = {
 /**
  * @classdesc The nav bar for the authenticated pages.
  */
-class HomeNavBar extends React.Component {
+class DashNavBar extends React.Component {
   /**
    * Constructor for the class.
    * @param {Object} props The props to be passed in.
@@ -120,9 +120,9 @@ const mapStateToProps = state => ({
   userInfo: state.userInfoReducer.userInfo,
 });
 
-HomeNavBar.propTypes = {
+DashNavBar.propTypes = {
   dispatch: PropTypes.func,
   userInfo: PropTypes.object
 }
 
-export default connect(mapStateToProps)(HomeNavBar);
+export default connect(mapStateToProps)(DashNavBar);

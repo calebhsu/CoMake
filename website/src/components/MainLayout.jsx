@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { white, grey900, grey700 } from 'material-ui/styles/colors';
 
-import HomeNavBar from './home/HomeNavBar';
+import DashNavBar from './dashboard/DashNavBar';
 import LandingNavBar from './landing/LandingNavBar';
 
 import '../scss/main.scss';
@@ -50,7 +51,8 @@ class MainLayout extends Component {
    * @returns {HTML} Rendered layout
    */
   render() {
-    const nav = document.location.hash === "#/login" ? <LandingNavBar /> : <HomeNavBar />;
+    const userId = this.props.userInfo.userId;
+    const nav = userId ? <DashNavBar /> : <LandingNavBar />;
 
     return (
       <MuiThemeProvider
@@ -65,4 +67,12 @@ class MainLayout extends Component {
   }
 }
 
-export default MainLayout;
+const mapStateToProps = state => ({
+  userInfo: state.userInfoReducer.userInfo,
+});
+
+MainLayout.propTypes = {
+  userInfo: PropTypes.object
+}
+
+export default connect(mapStateToProps)(MainLayout);

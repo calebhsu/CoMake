@@ -1,5 +1,5 @@
 /**
- * @file HTML generation for the Home page
+ * @file HTML generation for the dashboard page on login.
  */
 
 import React from 'react';
@@ -18,7 +18,7 @@ const styles = {
  * Gives HTML for the home page after login.
  * @returns {HTML} The HTML of the home page.
  */
-function Home() {
+function Dashboard() {
   return (
     <div style={styles.body}>
       <SideBar />
@@ -27,4 +27,4 @@ function Home() {
   )
 }
 
-export default Home;
+export default Dashboard;
