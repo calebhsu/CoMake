@@ -1,8 +1,8 @@
 /**
- * @file Unit tests for Home page
+ * @file Unit tests for Dashboard page
  */
 
-import { CanvasList } from '../../../src/components/home/CanvasList';
+import { CanvasList } from '../../../src/components/dashboard/CanvasList';
 
 /**
  * Tests to see if store was called to generate the canvas list
