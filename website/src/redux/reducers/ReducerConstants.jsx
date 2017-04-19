@@ -34,6 +34,7 @@
   CANVASES: {
     <canvasID>: {
       CANVAS_NAME: null,
+      CANVAS_ORIENTATION: null,
       CANVAS_OWNER: null,
       CANVAS_USERS: null,
     }
@@ -71,7 +72,8 @@ export const ELEMENT_ATTRS = [ELEMENT_POSITION, ELEMENT_SIZE, ELEMENT_ROTATION,
 
 // Fields for canvas.
 export const CANVAS_NAME = 'name';
-export const CANVAS_OWNER = 'owner';
+export const CANVAS_ORIENTATION = 'orientation';
+export const CANVAS_OWNER = 'owner'
 export const CANVAS_USERS = 'users';
 
 //individual reducer blank states

@@ -104,3 +104,14 @@ export const setCanvasName = (canvasId, newCanvasName) => {
   const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_NAME;
   return firebase.database().ref(`${canvasPath}`).set(newCanvasName);
 }
+
+/**
+ * Sets a canvas' orientation view.
+ * @param {String} canvasId          The canvas id.
+ * @param {String} canvasOrientation The new orientation view to be set.
+ * @returns {Promise}                Promise associated with the firebase action.
+ */
+export const setCanvasOrientation = (canvasId, canvasOrientation) => {
+  const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_ORIENTATION;
+  return firebase.database().ref(`${canvasPath}`).set(canvasOrientation);
+}

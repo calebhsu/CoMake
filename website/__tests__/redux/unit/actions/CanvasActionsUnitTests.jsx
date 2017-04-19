@@ -61,6 +61,17 @@ describe('CanvasActionsUnitTests', () => {
     expect(CA.setCanvasName(testId, testName)).toEqual(expected);
   });
 
+  test('setCanvasOrientation', () => {
+    const testId = 'testId';
+    const testOrientation = 'side';
+    const expected = {
+      type: AC.SET_CANVAS_ORIENTATION,
+      canvasId: testId,
+      payload: testOrientation,
+    }
+    expect(CA.setCanvasOrientation(testId, testOrientation)).toEqual(expected);
+  });
+
   test('setCanvasOwner', () => {
     const testId = 'testId';
     const testOwner = 'testOwner';
