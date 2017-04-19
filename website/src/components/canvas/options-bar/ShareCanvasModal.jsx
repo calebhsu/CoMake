@@ -60,7 +60,7 @@ class ShareCanvasModal extends Component {
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
@@ -102,7 +102,7 @@ class ShareCanvasModal extends Component {
 
          this.setState({usersNotFound: usersNotFoundString});
        } else {
-         this.handleClose();
+         this.handleCloseModal();
          this.setState({snackbarOpen: true});
        }
      });
@@ -122,7 +122,7 @@ class ShareCanvasModal extends Component {
   * Handler for onTouchTap that sets modal's open state to false.
   * @returns {void}
   */
-  handleClose() {
+  handleCloseModal() {
     this.setState({open: false});
   }
 
@@ -152,7 +152,7 @@ class ShareCanvasModal extends Component {
         label="Cancel"
         labelStyle={styles.greyBtn}
         primary={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.handleCloseModal}
       />,
       <FlatButton
         backgroundColor="#e74c49"
@@ -179,7 +179,7 @@ class ShareCanvasModal extends Component {
           bodyStyle={styles.dialogBody}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}
+          onRequestClose={this.handleCloseModal}
           title="Share Canvas with Others"
         >
           <p>Separate multiple emails with a comma.</p>
