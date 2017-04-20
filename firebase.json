@@ -10,5 +10,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "source": "./backend/server"
   }
 }
