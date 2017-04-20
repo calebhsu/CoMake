@@ -67,12 +67,20 @@ const handleCorsRequest = (request, response) => {
          newCanvasId
        );
 
+       const addUserPromises = [];
+
        // add the creating user to the canvas
-       UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
+       const addUserUidPromises = UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
+
+       addUserUidPromises.forEach((promise) => {
+         addUserPromises.push(promise);
+       });
 
        // add the users in the user list to the canvas
        request.body.userList.forEach((userEmail) => {
-         UserHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
+         addUserPromises.push(
+           UserHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
+         );
        });
 
        console.info(
@@ -80,8 +88,10 @@ const handleCorsRequest = (request, response) => {
          newCanvasId
        );
 
-       // send the new canvas id to the requesting user
-       response.send({ newCanvasId });
+       admin.Promise.all(addUserPromises).then(() => {
+         // send the new canvas id to the requesting user
+         response.send({ newCanvasId });
+       });
 
      }).catch((error) => {
        console.error(

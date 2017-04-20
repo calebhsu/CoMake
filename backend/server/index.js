@@ -1,3 +1,7 @@
+/**
+ * @file Sets up the exports to be used when setting up the firebase functions
+ */
+
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 

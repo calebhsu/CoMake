@@ -156,36 +156,40 @@ const addUserToCanvasByUid = (uid, canvasId) => {
   const userRef = admin.database().ref('/users/' + uid);
   const canvasRef = admin.database().ref('/canvases/' + canvasId);
 
+  const promises = [];
+
   try {
     // adding user to canvas
-    userRef.once('value').then((userSnap) => {
-      canvasRef.child('users').transaction((oldValue) => {
-        console.info(
-          'UserHelper.addUserToCanvasByUid - writing user %s to canvas %s',
-          userSnap.key,
-          canvasId
-        );
+    promises.push(
+      userRef.once('value').then((userSnap) => {
+        canvasRef.child('users').transaction((oldValue) => {
+          console.info(
+            'UserHelper.addUserToCanvasByUid - writing user %s to canvas %s',
+            userSnap.key,
+            canvasId
+          );
 
-        if(!oldValue)
-          oldValue = {};
+          if(!oldValue)
+            oldValue = {};
 
-        oldValue[userSnap.key] = userSnap.child('email').val();
-        return oldValue;
-      }).then(() => {
-        console.info(
-          'UserHelper.addUserToCanvasByUid - successfully added user %s to canvas %s',
-          uid,
-          canvasId
-        );
-      }).catch((error) => {
-        console.error(
-          'UserHelper.addUserToCanvasByUid - error adding user %s to canvas %s: %s',
-          uid,
-          canvasId,
-          error.message
-        );
-      });
-    });
+          oldValue[userSnap.key] = userSnap.child('email').val();
+          return oldValue;
+        }).then(() => {
+          console.info(
+            'UserHelper.addUserToCanvasByUid - successfully added user %s to canvas %s',
+            uid,
+            canvasId
+          );
+        }).catch((error) => {
+          console.error(
+            'UserHelper.addUserToCanvasByUid - error adding user %s to canvas %s: %s',
+            uid,
+            canvasId,
+            error.message
+          );
+        });
+      })
+    );
   } catch (error) {
     console.error(
       'UserHelper.addUserToCanvasByUid - error adding user %s to canvas %s: %s',
@@ -197,34 +201,36 @@ const addUserToCanvasByUid = (uid, canvasId) => {
 
   try {
     // add canvas to the user's canvas list
-    canvasRef.child('name').once('value').then((canvasNameSnap) => {
-      userRef.child('canvases').transaction((oldValue) => {
-        console.info(
-          'UserHelper.addUserToCanvasByUid - writing canvas %s to user %s',
-          canvasId,
-          uid
-        );
+    promises.push(
+      canvasRef.child('name').once('value').then((canvasNameSnap) => {
+        userRef.child('canvases').transaction((oldValue) => {
+          console.info(
+            'UserHelper.addUserToCanvasByUid - writing canvas %s to user %s',
+            canvasId,
+            uid
+          );
 
-        if(!oldValue)
-          oldValue = {};
+          if(!oldValue)
+            oldValue = {};
 
-        oldValue[canvasId] = canvasNameSnap.val();
-        return oldValue;
-      }).then(() => {
-        console.info(
-          'UserHelper.addUserToCanvasByUid - successfully added canvas %s to user %s',
-          canvasId,
-          uid
-        );
-      }).catch((error) => {
-        console.error(
-          'UserHelper.addUserToCanvasByUid - error adding canvas %s to user %s: %s',
-          canvasId,
-          uid,
-          error.message
-        );
-      });
-    });
+          oldValue[canvasId] = canvasNameSnap.val();
+          return oldValue;
+        }).then(() => {
+          console.info(
+            'UserHelper.addUserToCanvasByUid - successfully added canvas %s to user %s',
+            canvasId,
+            uid
+          );
+        }).catch((error) => {
+          console.error(
+            'UserHelper.addUserToCanvasByUid - error adding canvas %s to user %s: %s',
+            canvasId,
+            uid,
+            error.message
+          );
+        });
+      })
+    );
   } catch (error) {
     console.error(
       'UserHelper.addUserToCanvasByUid - error adding canvas %s to user %s: %s',
