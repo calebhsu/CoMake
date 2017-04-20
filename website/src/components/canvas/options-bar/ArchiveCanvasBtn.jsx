@@ -6,20 +6,32 @@ import * as firebase from 'firebase';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Archive from 'material-ui/svg-icons/content/archive';
+import IconButton from 'material-ui/IconButton';
+import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 import * as CanvasActions from '../../../redux/actions/CanvasActions';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 
+import { white, grey800 } from 'material-ui/styles/colors';
+
 const styles = {
   actionBtn: {
-    marginLeft: 6,
+    color: white,
   },
-  archiveBtn: {
-    float: 'right',
-    marginTop: 10,
+  iconSize: {
+    color: grey800,
+    height: 32,
+    width: 32,
+  },
+  size: {
+    height: 64,
+    padding: 16,
+    width: 64,
+  },
+  greyBtn: {
+    color: grey800,
   },
 };
 
@@ -80,25 +92,32 @@ class ArchiveCanvas extends React.Component {
     const actions = [
       <FlatButton
         label="Cancel"
+        labelStyle={styles.greyBtn}
         primary={true}
         onTouchTap={this.handleClose}
       />,
       <FlatButton
+        backgroundColor="#e74c49"
+        hoverColor="#c7270b"
         label="Archive"
+        labelStyle={styles.actionBtn}
         onTouchTap={this.handleClose}
-        style={styles.actionBtn}
         onClick={this.archiveCanvas}
       />,
     ];
 
     return (
       <div>
-        <FlatButton
-          icon={<Archive />}
-          label="Archive Canvas"
+        <IconButton
+          iconStyle={styles.iconSize}
           onTouchTap={this.handleOpen}
-          style={styles.archiveBtn}
-        />
+          style={styles.size}
+          tooltip="Archive Canvas"
+          tooltipPosition="bottom-center"
+          touch={true}
+        >
+          <DeleteForever />
+        </IconButton>
         <Dialog
           actions={actions}
           modal={false}
