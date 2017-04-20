@@ -13,7 +13,7 @@ import { insertIntoState, removeField } from './ReducerUtil';
  * @param {Object} action action to be performed.
  * @returns {Object} The new state object.
  */
-export const updateElementReducer = (state = RC.BLANK_STATE, action) => {
+export const updateElementReducer = (state = RC.BLANK_STATE_ELEMENTS, action) => {
   const pathToChange = [RC.ELEMENTS];
   switch (action.type) {
     case AC.INIT_ELEMENTS:

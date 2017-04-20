@@ -1,24 +1,24 @@
 {
     "canvases":[
         {
-            "items":[
+            "elements":[
                 {
-                    "content":"these are not the droids youre looking for",
-                    "position": {
-                      "x-coord":42,
-                      "y-coord":42
+                    "image":"",
+                    "module":"",
+                    "position":{
+                      "x": 0,
+                      "y": 0
                     },
+                    "rotation": 0,
                     "size":{
-                      "width": 42,
-                      "height": 42
-                    },
-                    "rotation":42,
-                    "locked":false
+                      "height":0,
+                      "width":0
+                    }
                 }
             ],
             "name":"canvas-name",
             "owner":"def456",
-            "teacher":"def456",
+            "orientation":"",
             "users":{
                 "def456":"HanSolo",
                 "ghi789":"KyloRen",
@@ -43,7 +43,6 @@
               "uid": "123456789"
             },
             "providerID": "firebase",
-            "teacher": false,
             "username":"HanSolo"
         },
         {
@@ -62,7 +61,6 @@
               "uid": "123456789"
             },
             "providerID": "firebase",
-            "teacher":false,
             "username":"KyloRen"
         },
         {

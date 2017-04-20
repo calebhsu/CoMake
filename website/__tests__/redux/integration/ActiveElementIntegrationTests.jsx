@@ -25,7 +25,7 @@ describe('ActiveElementIntegrationTests', () => {
 
   test('targetElement_dispatch', (done) => {
     const testId = 'testId';
-    const expected = Object.assign({}, RC.BLANK_STATE);
+    const expected = Object.assign({}, RC.BLANK_STATE_ACTIVE_ELEMENT);
     expected[RC.ACTIVE_ELEMENT] = testId;
     testStore.subscribe(() => {
       expect(testStore.getState().activeElementReducer).toEqual(expected);
