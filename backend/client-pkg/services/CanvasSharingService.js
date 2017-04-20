@@ -2,7 +2,7 @@
 * @file Defines a function that creates and sends a request to the CanvasSharingService
 */
 
-const http = require('http');
+const https = require('https');
 
 const CNVS_SHARE_SVC_ROUTE = require('../Constants.js').CNVS_SHARE_SVC_ROUTE;
 
@@ -41,9 +41,8 @@ const formRequestBody = (canvasId, sharingUser, userList) => {
 const sendRequest = (requestBody, endpoint, responseCallback) => {
   // TODO: can remove withCredentials: false once the access control allow origin
   // header is updated in the server side code
-  const request = http.request({
+  const request = https.request({
     host: endpoint.host,
-    port: endpoint.port || 80,
     path: CNVS_SHARE_SVC_ROUTE,
     method: 'POST',
     headers: {
