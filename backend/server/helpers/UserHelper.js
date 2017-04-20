@@ -239,6 +239,8 @@ const addUserToCanvasByUid = (uid, canvasId) => {
       error.message
     );
   }
+
+  return promises;
 };
 
 module.exports = {
