@@ -2,7 +2,7 @@
 * @file Defines a function that creates and sends a request to the UserInfoService
 */
 
-const http = require('http');
+const https = require('https');
 
 const USR_INFO_SVC_ROUTE = require('../Constants.js').USR_INFO_SVC_ROUTE;
 
@@ -31,9 +31,8 @@ const formRequestBody = (uid) => {
 const sendRequest = (requestBody, endpoint, responseCallback) => {
   // TODO: can remove withCredentials: false once the access control allow origin
   // header is updated in the server side code
-  const request = http.request({
+  const request = https.request({
     host: endpoint.host,
-    port: endpoint.port || 80,
     path: USR_INFO_SVC_ROUTE,
     method: 'POST',
     headers: {
