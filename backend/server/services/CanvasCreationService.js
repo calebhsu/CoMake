@@ -15,46 +15,25 @@ const UserHelper = require('../helpers/UserHelper');
  */
 const handleCorsRequest = (request, response) => {
   cors(request, response, () => {
-    console.info(
-      'CanvasCreationService.handleRequest - handling a new request: %j',
-      request.body
-    );
 
    if(typeof request.body.name !== "string") {
-      console.error('CanvasCreationService.handleRequest - invalid name param, must be a String');
-      response.status(500)
-        .send('Invalid name param.');
+      response.status(500).send({ message: 'Invalid name param.' });
       return;
    }
 
    if(typeof request.body.creatingUser !== "string") {
-     console.error(
-       'CanvasCreationService.handleRequest - invalid creatingUser param, must be a String'
-     );
-     response.status(500)
-       .send('Invalid creatingUser param.');
+     response.status(500).send({ message: 'Invalid creatingUser param.' });
      return;
    }
 
    if(!(request.body.userList instanceof Array)) {
-     console.error(
-       'CanvasCreationService.handleRequest - invalid userList param, must be an Array'
-     );
-     response.status(500)
-       .send('Invalid userList param.');
+     response.status(500).send({ message: 'Invalid userList param.' });
      return;
    }
 
-   let newCanvasId = null;
-
    try {
      const newCanvasRef = admin.database().ref('/canvases').push();
-     newCanvasId = newCanvasRef.key;
-
-     console.info(
-       'CanvasCreationService.handleRequest - creating a new canvas with id %s',
-       newCanvasId
-     );
+     const newCanvasId = newCanvasRef.key;
 
      //configure the relevant fields on the new canvas
      newCanvasRef.set({
@@ -62,19 +41,13 @@ const handleCorsRequest = (request, response) => {
          name: request.body.name,
          owner: request.body.creatingUser,
      }).then(() => {
-       console.info(
-         'CanvasCreationService.handleRequest - adding users to new canvas %s',
-         newCanvasId
-       );
 
        const addUserPromises = [];
 
        // add the creating user to the canvas
-       const addUserUidPromises = UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
-
-       addUserUidPromises.forEach((promise) => {
-         addUserPromises.push(promise);
-       });
+       addUserPromises.concat(
+         UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId)
+       );
 
        // add the users in the user list to the canvas
        request.body.userList.forEach((userEmail) => {
@@ -83,39 +56,24 @@ const handleCorsRequest = (request, response) => {
          );
        });
 
-       console.info(
-         'CanvasCreationService.handleRequest - successfully created canvas %s, sending response to client',
-         newCanvasId
-       );
-
        admin.Promise.all(addUserPromises).then(() => {
          // send the new canvas id to the requesting user
          response.send({ newCanvasId });
+       }).catch((error) => {
+         throw error;
        });
 
      }).catch((error) => {
-       console.error(
-         'CanvasCreationService.handleRequest - error creating canvas %s: %s',
-         newCanvasId,
-         error.message
-       );
-
-       response.status(500).send({ message: 'Error creating canvas.' });
+       throw error;
      });
    } catch (error) {
-     console.error(
-       'CanvasCreationService.handleRequest - error creating canvas %s: %s',
-       newCanvasId,
-       error.message
-     );
-
      response.status(500).send({ message: 'Error creating canvas.' });
    }
  });
 };
 
 module.exports = {
-handleCorsRequest
+  handleCorsRequest
 };
 
 /*
