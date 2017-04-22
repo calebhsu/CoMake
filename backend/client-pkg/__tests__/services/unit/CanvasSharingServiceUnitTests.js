@@ -15,7 +15,7 @@ describe('CanvasSharingServiceUnitTests', () => {
        userList,
     }
 
-    const actualRequest = CanvasSharingService.formRequestBody(canvasId, sharingUser, userList);
+    const actualRequest = CanvasSharingService.formPostBody(canvasId, sharingUser, userList);
 
     expect(actualRequest).toEqual(expectedRequest);
   });
@@ -26,9 +26,9 @@ describe('CanvasSharingServiceUnitTests', () => {
     const userList = ['testing', 'testing2']
 
     try {
-      CanvasSharingService.formRequestBody(canvasId, sharingUser, userList);
+      CanvasSharingService.formPostBody(canvasId, sharingUser, userList);
     } catch(err) {
-      expect(err).toEqual('CanvasSharingService.formRequestBody - invalid canvasId param, must be a String');
+      expect(err).toEqual('Error forming request to share canvas. Invalid canvasId param, must be a String.');
     }
   });
 
@@ -38,9 +38,9 @@ describe('CanvasSharingServiceUnitTests', () => {
     const userList = ['testing', 'testing2']
 
     try {
-      CanvasSharingService.formRequestBody(canvasId, sharingUser, userList);
+      CanvasSharingService.formPostBody(canvasId, sharingUser, userList);
     } catch(err) {
-      expect(err).toEqual('CanvasSharingService.formRequestBody - invalid sharingUser param, must be a String');
+      expect(err).toEqual('Error forming request to share canvas. Invalid sharingUser param, must be a String.');
     }
   });
 
@@ -50,9 +50,9 @@ describe('CanvasSharingServiceUnitTests', () => {
     const userList = 'hello'
 
     try {
-      CanvasSharingService.formRequestBody(canvasId, sharingUser, userList);
+      CanvasSharingService.formPostBody(canvasId, sharingUser, userList);
     } catch(err) {
-      expect(err).toEqual('CanvasSharingService.formRequestBody - invalid userList param, must be an Array');
+      expect(err).toEqual('Error forming request to share canvas. Invalid userList param, must be an Array.');
     }
   });
 });

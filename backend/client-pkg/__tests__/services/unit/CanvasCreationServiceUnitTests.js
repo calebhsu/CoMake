@@ -16,7 +16,7 @@ describe('CanvasCreationServiceUnitTests', () => {
        userList,
     }
 
-    const actualRequest = CanvasCreationService.formRequestBody(name, creatingUser, userList);
+    const actualRequest = CanvasCreationService.formPostBody(name, creatingUser, userList);
 
     expect(actualRequest).toEqual(expectedRequest);
   });
@@ -27,9 +27,9 @@ describe('CanvasCreationServiceUnitTests', () => {
     const userList = ['testing', 'testing2']
 
     try {
-      CanvasCreationService.formRequestBody(name, creatingUser, userList);
+      CanvasCreationService.formPostBody(name, creatingUser, userList);
     } catch(err) {
-      expect(err).toEqual('CanvasCreationService.formRequestBody - invalid name param, must be a String');
+      expect(err).toEqual('Error forming request to create canvas. Invalid name param, must be a String.');
     }
   });
 
@@ -39,9 +39,9 @@ describe('CanvasCreationServiceUnitTests', () => {
     const userList = ['testing', 'testing2']
 
     try {
-      CanvasCreationService.formRequestBody(name, creatingUser, userList);
+      CanvasCreationService.formPostBody(name, creatingUser, userList);
     } catch(err) {
-      expect(err).toEqual('CanvasCreationService.formRequestBody - invalid creatingUser param, must be a String');
+      expect(err).toEqual('Error forming request to create canvas. Invalid creatingUser param, must be a String.');
     }
   });
 
@@ -51,9 +51,9 @@ describe('CanvasCreationServiceUnitTests', () => {
     const userList = 'Im a user'
 
     try {
-      CanvasCreationService.formRequestBody(name, creatingUser, userList);
+      CanvasCreationService.formPostBody(name, creatingUser, userList);
     } catch(err) {
-      expect(err).toEqual('CanvasCreationService.formRequestBody - invalid userList param, must be an Array');
+      expect(err).toEqual('Error forming request to create canvas. Invalid userList param, must be an Array.');
     }
   });
 });
