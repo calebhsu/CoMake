@@ -13,8 +13,6 @@ const https = require('https');
 * @returns {void}
 */
 const postRequest = (reqBody, endpoint, path, resCallback) => {
-  // TODO: can remove withCredentials: false once the access control allow origin
-  // header is updated in the server side code
   const request = https.request({
     host: endpoint.host,
     path: path,
