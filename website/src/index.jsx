@@ -13,7 +13,9 @@ import * as RC from './redux/reducers/ReducerConstants';
 import storeHelper from './redux/storeHelper'
 
 const PERSIST_STORE = true;
-const persistConfig = { storage: asyncLocalStorage, whitelist: [RC.LOGIN_REDUCER] };
+const userPersistConfig = { storage: asyncLocalStorage, whitelist: [RC.LOGIN_REDUCER] };
+const canvasPersistConfig = { storage: asyncLocalStorage, whitelist: [RC.CANVAS_REDUCER] };
+const allPersistConfig = { storage: asyncLocalStorage, whitelist: [RC.LOGIN_REDUCER, RC.CANVAS_REDUCER] };
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -22,20 +24,27 @@ injectTapEventPlugin();
 // initialize firebase
 initFirebase();
 
-getStoredState(persistConfig, (err, state) => {
+getStoredState(allPersistConfig, (err, state) => {
   // construct redux store
   const store = storeHelper.constructStore(PERSIST_STORE, state);
-  let persisted = false;
+  let userPersisted = false;
+  let currentCanvas = '';
 
   store.subscribe(() => {
     const currentState = store.getState();
-    if(currentState[RC.LOGIN_REDUCER][RC.USER_INFO][RC.USER_ID] && !persisted) {
-      persistStore(store, persistConfig);
-      persisted = true;
+    if(currentState[RC.LOGIN_REDUCER][RC.USER_INFO][RC.USER_ID] && !userPersisted) {
+      persistStore(store, userPersistConfig);
+      userPersisted = true;
     }
-    else if(!(currentState[RC.LOGIN_REDUCER][RC.USER_INFO][RC.USER_ID]) && persisted) {
-      purgeStoredState(persistConfig);
-      persisted = false;
+    else if(!(currentState[RC.LOGIN_REDUCER][RC.USER_INFO][RC.USER_ID]) && userPersisted) {
+      purgeStoredState(allPersistConfig);
+      userPersisted = false;
+    }
+
+    if(currentState[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS]
+      && currentState[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS] !== currentCanvas) {
+      persistStore(store, canvasPersistConfig);
+      currentCanvas = currentState[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS];
     }
   });
 
