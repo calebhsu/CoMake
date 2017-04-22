@@ -13,7 +13,7 @@ const https = require('https');
 * @returns {void}
 */
 const postRequest = (reqBody, endpoint, path, resCallback) => {
-  const request = https.request({
+  const req = https.request({
     host: endpoint.host,
     path: path,
     method: 'POST',
@@ -50,14 +50,14 @@ const postRequest = (reqBody, endpoint, path, resCallback) => {
 
   });
 
-  request.on('error', (error) => {
+  req.on('error', (error) => {
     console.error('Error sending request to path %s. Error is below.', path);
     console.log(error);
     throw error;
   });
 
-  request.write(JSON.stringify(reqBody));
-  request.end();
+  req.write(JSON.stringify(reqBody));
+  req.end();
 };
 
 module.exports = {
