@@ -92,6 +92,7 @@ class Sidebar extends React.Component {
     this.state = {
       isOpen: true,
       translateX: '0px',
+      disableRender: false,
     };
 
     this.addElement = this.addElement.bind(this);
@@ -146,6 +147,14 @@ class Sidebar extends React.Component {
   toggleAutoRender() {
     if (!this.props.autoRender) {
       this.updateCraftmlCode();
+      this.setState( {
+          disableRender: true
+        });
+    }
+    else{
+      this.setState( {
+          disableRender: false
+        });
     }
     this.props.dispatch(CodeActions.setAutoCodeUpdate(!this.props.autoRender));
   }
@@ -249,6 +258,7 @@ class Sidebar extends React.Component {
               key={CC.RENDER_BUTTON}
               onClick={this.updateCraftmlCode}
               style={styles.menuItem}
+              disabled={this.state.disableRender}
             >
               {CC.RENDER_BUTTON}
             </MenuItem>
