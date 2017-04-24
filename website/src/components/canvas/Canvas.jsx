@@ -183,33 +183,42 @@ class Canvas extends React.Component {
    */
   render() {
     const currentCanvasInfo = this.props.canvases[this.props.currentCanvas];
-    return (
-      <div>
-        <OptionsBar
-          canvas={currentCanvasInfo}
-          currentCanvas={this.props.currentCanvas}
-          elements={this.props.elements}
-        />
-        <CanvasView
-          currentCanvas={this.props.currentCanvas}
-          elements={this.props.elements}
-          targetedId={this.props.targetedId}
-        />
-        <Sidebar
-          autoRender={this.props.autoRender}
-          canvas={currentCanvasInfo}
-          currentCanvas={this.props.currentCanvas}
-          elements={this.props.elements}
-          targetedId={this.props.targetedId}
-        />
-        <Preview3D
-          autoRender={this.props.autoRender}
-          canvas={currentCanvasInfo}
-          craftmlCode={this.props.craftmlCode}
-          elements={this.props.elements}
-        />
-      </div>
-    )
+
+    if (this.props.authState) {
+      return (
+        <div>
+          <OptionsBar
+            canvas={currentCanvasInfo}
+            currentCanvas={this.props.currentCanvas}
+            elements={this.props.elements}
+          />
+          <CanvasView
+            currentCanvas={this.props.currentCanvas}
+            elements={this.props.elements}
+            targetedId={this.props.targetedId}
+          />
+          <Sidebar
+            autoRender={this.props.autoRender}
+            canvas={currentCanvasInfo}
+            currentCanvas={this.props.currentCanvas}
+            elements={this.props.elements}
+            targetedId={this.props.targetedId}
+          />
+          <Preview3D
+            autoRender={this.props.autoRender}
+            canvas={currentCanvasInfo}
+            craftmlCode={this.props.craftmlCode}
+            elements={this.props.elements}
+          />
+        </div>
+      );
+    }
+    else {
+      document.location = '/#/';
+      return (
+        <div></div>
+      );
+    }
   }
 }
 
@@ -224,6 +233,7 @@ const mapStateToProps = state => ({
 });
 
 Canvas.propTypes = {
+  authState: PropTypes.bool,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
   currentCanvas: PropTypes.string,
