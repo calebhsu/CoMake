@@ -58,7 +58,7 @@ class MainLayout extends Component {
   }
 
   /**
-   * Checks whether user is logged in after component mounts.
+   * Checks whether user is logged in before component mounts.
    * @returns {void}
    */
   componentWillMount() {

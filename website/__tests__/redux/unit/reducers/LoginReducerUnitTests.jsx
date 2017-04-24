@@ -15,6 +15,17 @@ describe('LoginReducerUnitTests', () => {
     spyOn(ReducerUtil, 'insertIntoState');
   });
 
+  test('userInfoReducer_SetAuthState', () => {
+    const testAuthState = true;
+    const testAction = {
+      type: AC.SET_AUTH_STATE,
+      payload: testAuthState,
+    }
+    userInfoReducer(RC.BLANK_STATE, testAction);
+    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
+      testAction.payload, [RC.AUTH_STATE]);
+  });
+
   test('userInfoReducer_UpdateUserInfo', () => {
     const testId = 'uid';
     const testName = 'First Last';
