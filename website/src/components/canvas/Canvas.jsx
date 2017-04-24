@@ -30,10 +30,27 @@ class Canvas extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      canvasId: null,
+    };
     this.hasInitialized = false;
 
     this.fetchAndListenForCanvasInfo = this.fetchAndListenForCanvasInfo.bind(this);
     this.fetchCanvasInfo = this.fetchCanvasInfo.bind(this);
+  }
+
+  /**
+   * Gets the canvasID from the current url and sets it in the state.
+   * @returns {String}  The canvas id.
+   */
+  getCanvasUrl() {
+    const url = document.URL;
+    const startIndex = url.lastIndexOf("/");
+    const urlId = url.substring(startIndex + 1);
+    this.setState({
+      canvasId: urlId,
+    });
+    return urlId;
   }
 
   /**
@@ -136,8 +153,9 @@ class Canvas extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    if(!this.hasInitialized && this.props.currentCanvas) {
-      this.fetchAndListenForCanvasInfo(this.props.currentCanvas);
+    const canvasId = this.getCanvasUrl();
+    if(!this.hasInitialized) {
+      this.fetchAndListenForCanvasInfo(canvasId);
     }
   }
 
