@@ -20,6 +20,18 @@ describe('LoginIntegrationTests', () => {
     testStore = null;
   });
 
+  test('setAuthState_dispatch', (done) => {
+    const testAuthState = true;
+    const expected = Object.assign({}, RC.BLANK_STATE_USER_INFO);
+    expected[RC.AUTH_STATE] = testAuthState;
+    testStore.subscribe(() => {
+      expect(testStore.getState().userInfoReducer).toEqual(expected);
+      done();
+    });
+
+    testStore.dispatch(LoginActions.setAuthState(testAuthState));
+  });
+
   test('updateUserInfo_dispatch', (done) => {
     const testId = 'uid';
     const testName = 'First Last';
