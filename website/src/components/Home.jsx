@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 
 import Dashboard from './dashboard/Dashboard';
 import Landing from './landing/Landing';
@@ -11,8 +10,7 @@ class Home extends React.Component {
     * @returns {HTML}    The HTML of the home page.
     */
    render() {
-     const userId = this.props.userInfo.userId;
-     const page = userId ? <Dashboard /> : <Landing />;
+     const page = this.props.authState ? <Dashboard /> : <Landing />;
 
      return (
        <div>
@@ -22,12 +20,8 @@ class Home extends React.Component {
    }
  }
 
- const mapStateToProps = state => ({
-   userInfo: state.userInfoReducer.userInfo,
- });
-
  Home.propTypes = {
-   userInfo: PropTypes.object
+   authState: PropTypes.bool,
  }
 
-export default connect(mapStateToProps)(Home);
+export default Home;

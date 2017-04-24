@@ -179,7 +179,7 @@ class Canvas extends React.Component {
 
   /**
    * Renders the component into HTML.
-   * @returns {HTML}    The rendered componenet.
+   * @returns {HTML}    The rendered component.
    */
   render() {
     const currentCanvasInfo = this.props.canvases[this.props.currentCanvas];

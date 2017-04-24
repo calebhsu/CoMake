@@ -8,6 +8,8 @@ import { white, grey900, grey700 } from 'material-ui/styles/colors';
 import DashNavBar from './dashboard/DashNavBar';
 import LandingNavBar from './landing/LandingNavBar';
 
+import { getAuthState } from '../helpers/LoginHelper';
+
 import '../scss/main.scss';
 
 const muiTheme = getMuiTheme({
@@ -47,12 +49,28 @@ const muiTheme = getMuiTheme({
  */
 class MainLayout extends Component {
   /**
+   * Constructor for the class
+   * @param {Object} props The props to be passed in.
+   * @returns {void}
+   */
+  constructor(props) {
+    super(props);
+  }
+
+  /**
+   * Checks whether user is logged in after component mounts.
+   * @returns {void}
+   */
+  componentWillMount() {
+    getAuthState(this.props.dispatch);
+  }
+
+  /**
    * @method MainLayout#render
    * @returns {HTML} Rendered layout
    */
   render() {
-    const userId = this.props.userInfo.userId;
-    const nav = userId ? <DashNavBar /> : <LandingNavBar />;
+    const nav = this.props.authState ? <DashNavBar /> : <LandingNavBar />;
 
     return (
       <MuiThemeProvider
@@ -60,7 +78,7 @@ class MainLayout extends Component {
       >
         <div>
            {nav}
-           {this.props.children}
+           {React.cloneElement(this.props.children, {authState: this.props.authState})}
         </div>
       </MuiThemeProvider>
     );
@@ -68,11 +86,12 @@ class MainLayout extends Component {
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.userInfoReducer.userInfo,
+  authState: state.userInfoReducer.authState,
 });
 
 MainLayout.propTypes = {
-  userInfo: PropTypes.object
+  authState: PropTypes.bool,
+  dispatch: PropTypes.func,
 }
 
 export default connect(mapStateToProps)(MainLayout);

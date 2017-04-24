@@ -24,6 +24,7 @@ export const SET_CANVAS_ORIENTATION = 'setCanvasOrientation';
 export const SET_CANVAS_OWNER = 'setCanvasOwner';
 
 // User Actions
+export const SET_AUTH_STATE = 'setAuthState';
 export const UPDATE_USER_INFO = 'updateUserInfo';
 
 //Clear Actions

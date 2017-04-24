@@ -2,9 +2,26 @@ import * as firebase from 'firebase';
 import CoMakeServices from 'comake-services';
 
 import * as ClearActions from '../redux/actions/ClearActions';
-import { updateUserInfo } from './../redux/actions/LoginActions';
+import { setAuthState, updateUserInfo } from './../redux/actions/LoginActions';
 import ServiceEndpoint from '../ServiceEndpoint';
 import * as RC from '../redux/reducers/ReducerConstants';
+
+/**
+* Gets user's auth state and updates the state
+* @param  {Function} dispatch The dispatch function for redux
+* @returns {void}
+*/
+export const getAuthState = (dispatch) => {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      dispatch(setAuthState(true));
+    }
+    else {
+      dispatch(setAuthState(false));
+      document.location = "/#/"
+    }
+  });
+}
 
 /**
 * Gets user infos and updates the state
