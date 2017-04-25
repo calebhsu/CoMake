@@ -41,7 +41,6 @@ class CanvasList extends React.Component {
     // Keeps track of whether we have attached listeners yet.
     this.listenersAttached = false;
     this.collectAndListenForCanvases = this.collectAndListenForCanvases.bind(this);
-    this.createClickHandler = this.createClickHandler.bind(this);
     this.fetchCanvasInfo = this.fetchCanvasInfo.bind(this);
   }
 
@@ -139,17 +138,6 @@ class CanvasList extends React.Component {
   }
 
   /**
-   * Creates a click handler to handle the selection of a canvas.
-   * @param {string} canvasId the ID to create the click handler for.
-   * @returns {Function} A click handler for the specified canvasId
-   */
-  createClickHandler(canvasId) {
-    return () => {
-      this.props.dispatch(CanvasActions.setCurrentCanvas(canvasId));
-    };
-  }
-
-  /**
    * Generates HTML for the user canvas list.
    * @returns {canvasList}  The array holding the canvas list HTML.
    */
@@ -165,7 +153,7 @@ class CanvasList extends React.Component {
           style={styles.models}
         >
           <Link to={`/canvas/${canvasId}`}>
-            <Card onTouchTap={this.createClickHandler(canvasId)}>
+            <Card>
               <CardMedia
                 overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
                 overlayContentStyle={styles.overlay}
