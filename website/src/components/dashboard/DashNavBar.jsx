@@ -81,7 +81,7 @@ class DashNavBar extends React.Component {
         titleStyle={styles.title}
         iconStyleRight={styles.userElement}
         iconElementLeft={
-          <Link to="/home">
+          <Link to="/">
             <IconButton><Home color="#e74c49" /></IconButton>
           </Link>
         }

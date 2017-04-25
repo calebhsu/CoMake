@@ -91,6 +91,7 @@ const mapStateToProps = state => ({
 
 MainLayout.propTypes = {
   authState: PropTypes.bool,
+  children: PropTypes.object,
   dispatch: PropTypes.func,
 }
 
