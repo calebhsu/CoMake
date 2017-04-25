@@ -10,12 +10,12 @@ import Sidebar from './sidebar/Sidebar';
 import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';
+import LoadingIndicator from '../LoadingIndicator';
+import CanvasError from './CanvasError';
 import * as ElementActions from '../../redux/actions/ElementActions';
 import * as ActiveElementActions from '../../redux/actions/ActiveElementActions';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
-
 import * as CanvasActions from '../../redux/actions/CanvasActions';
-
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 /**
@@ -107,7 +107,7 @@ class Canvas extends React.Component {
       this.processCanvasInfo(canvasId, canvasSnap);
       this.listenForCanvasInfo(canvasId);
     }).catch((err) => {
-      console.log(err);
+      console.error(err);
       this.setState({
         canvasId: null,
         validId: false,
@@ -228,11 +228,11 @@ class Canvas extends React.Component {
       );
     } else if (this.state.validId === false) {
       return (
-        <h1>{'Invalid Canvas'}</h1>
+        <CanvasError />
       );
     } else {
       return (
-        <h1>{'Loading...'}</h1>
+        <LoadingIndicator />
       );
     }
   }

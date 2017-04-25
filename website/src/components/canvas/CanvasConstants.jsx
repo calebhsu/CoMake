@@ -1,5 +1,8 @@
 export const DEFAULT_SLIDER_POSITION = 0.5;
 
+export const CANVAS_ERROR_MESSAGE = 'Invalid or forbidden canvas'
+export const GO_HOME_BUTTON = 'Go Home';
+
 // Sidebar buttons
 export const ADD_ELEMENT_BUTTON = 'Add Model';
 export const DELETE_ELEMENT_BUTTON = 'Delete Current Model';
