@@ -1,6 +1,6 @@
 {
   "name": "comake-services",
-  "version": "1.0.17",
+  "version": "1.0.20",
   "description": "Client-side service code for CoMake",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,6 @@
     "jest": "^18.1.0"
   },
   "dependencies": {
-    "http": "0.0.0"
+    "https": "^1.0.0"
   }
 }
