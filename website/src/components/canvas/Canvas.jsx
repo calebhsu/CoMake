@@ -31,7 +31,6 @@ class Canvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      canvasId: null,
       validId: null,
     };
 
@@ -46,8 +45,19 @@ class Canvas extends React.Component {
    * @returns {void}
    */
   componentDidMount() {
-    const canvasId = this.getCanvasUrl();
-    this.fetchAndListenForCanvasInfo(canvasId);
+    this.fetchAndListenForCanvasInfo(this.props.params.canvasId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.canvasId !== this.props.params.canvasId) {
+      if(this.state.validId) {
+        firebase.database().ref(`${RC.CANVASES}/${this.props.params.canvasId}`).off();
+      }
+      this.setState({
+        validId: null,
+      });
+      this.fetchAndListenForCanvasInfo(nextProps.params.canvasId);
+    }
   }
 
   /**
@@ -56,23 +66,12 @@ class Canvas extends React.Component {
    */
   componentWillUnmount() {
     if(this.state.validId) {
-      firebase.database().ref(`${RC.CANVASES}/${this.state.canvasId}`).off();
+      firebase.database().ref(`${RC.CANVASES}/${this.props.params.canvasId}`).off();
     }
     this.props.dispatch(ActiveElementActions.targetElement(null));
     this.props.dispatch(ElementActions.initElements({}));
     this.props.dispatch(CodeActions.setCode(''));
     this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
-  }
-
-  /**
-   * Gets the canvasID from the current url.
-   * @returns {String}  The canvas id.
-   */
-  getCanvasUrl() {
-    const url = document.URL;
-    const startIndex = url.lastIndexOf("/");
-    const urlId = url.substring(startIndex + 1);
-    return urlId;
   }
 
   /**
@@ -101,7 +100,6 @@ class Canvas extends React.Component {
     // Call the promise, if successful load in canvas info and start listening.
     checkForExistance.then((canvasSnap) => {
       this.setState({
-        canvasId: canvasId,
         validId: true,
       });
       this.processCanvasInfo(canvasId, canvasSnap);
@@ -109,7 +107,6 @@ class Canvas extends React.Component {
     }).catch((err) => {
       console.error(err);
       this.setState({
-        canvasId: null,
         validId: false,
       });
     });
@@ -197,24 +194,24 @@ class Canvas extends React.Component {
    * @returns {HTML}    The rendered componenet.
    */
   render() {
-    if (this.state.validId && this.state.canvasId in this.props.canvases) {
-      const currentCanvasInfo = this.props.canvases[this.state.canvasId];
+    if (this.state.validId && this.props.params.canvasId in this.props.canvases) {
+      const currentCanvasInfo = this.props.canvases[this.props.params.canvasId];
       return (
         <div>
           <OptionsBar
             canvas={currentCanvasInfo}
-            currentCanvas={this.state.canvasId}
+            currentCanvas={this.props.params.canvasId}
             elements={this.props.elements}
           />
           <CanvasView
-            currentCanvas={this.state.canvasId}
+            currentCanvas={this.props.params.canvasId}
             elements={this.props.elements}
             targetedId={this.props.targetedId}
           />
           <Sidebar
             autoRender={this.props.autoRender}
             canvas={currentCanvasInfo}
-            currentCanvas={this.state.canvasId}
+            currentCanvas={this.props.params.canvasId}
             elements={this.props.elements}
             targetedId={this.props.targetedId}
           />
@@ -254,6 +251,7 @@ Canvas.propTypes = {
   targetedId: PropTypes.string,
   craftmlCode: PropTypes.string,
   autoRender: PropTypes.bool,
+  params: PropTypes.object,
 }
 
 export default connect(mapStateToProps)(Canvas);
