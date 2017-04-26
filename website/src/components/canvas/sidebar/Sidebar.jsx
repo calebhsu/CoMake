@@ -27,6 +27,7 @@ import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
 import * as FBStorageHelper from '../../../helpers/FirebaseStorageHelper';
+import * as RC from '../../../redux/reducers/ReducerConstants';
 
 
 const styles = {
@@ -104,16 +105,14 @@ class Sidebar extends React.Component {
       disableRender: false,
     };
 
-    this.addElement = this.addElement.bind(this);
+    this.duplicateElement = this.duplicateElement.bind(this);
     this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
     this.clearCraftmlCode = this.clearCraftmlCode.bind(this);
     this.toggleAutoRender = this.toggleAutoRender.bind(this);
-    this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.save3DImage = this.save3DImage.bind(this);
     this.createSnackbarHandler = this.createSnackbarHandler.bind(this);
-    this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
   /**
@@ -121,17 +120,24 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   removeElement() {
-    this.props.dispatch(ElementActions.removeElementAndPersist(this.props.targetedId, this.props.currentCanvas));
+    if (this.props.targetedId) {
+      this.props.dispatch(ElementActions.removeElementAndPersist(this.props.targetedId,
+        this.props.currentCanvas));
+    }
   }
 
   /**
    * Handler for adding an element to firebase.
    * @returns {void}
    */
-  addElement() {
-    /* NOTE: leaving this here for ease of testing */
-    /* TODO: remove before deploying */
-    FBHelper.addElement(this.props.currentCanvas, 'abcd', 'http://marcoortiztorres.me/images/craftml.png', CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+  duplicateElement() {
+    if (this.props.targetedId in this.props.elements) {
+      const targetElement = this.props.elements[this.props.targetedId];
+      const module = targetElement[RC.ELEMENT_MODULE];
+      const image = targetElement[RC.ELEMENT_IMAGE];
+      FBHelper.addElement(this.props.currentCanvas, module, image,
+        CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+    }
   }
 
   /**
@@ -217,32 +223,6 @@ class Sidebar extends React.Component {
   }
 
   /**
-   * Maps list item to a div to put in the drawer.
-   * @param {String} item The item name to encapsulate into a ManueItem.
-   * @returns {HTML} A MenuItem tag that holds the name of the item.
-   */
-  mapOptionToDiv(item) {
-    let buttonAction = () => {};
-    switch (item) {
-      case CC.DELETE_ELEMENT_BUTTON:
-        buttonAction = this.removeElement;
-        break;
-      case CC.ADD_ELEMENT_BUTTON:
-        buttonAction = this.addElement;
-        break;
-    }
-    return (
-      <MenuItem
-        key={item.toString()}
-        onClick={buttonAction}
-        style={styles.menuItem}
-      >
-        {item}
-      </MenuItem>
-    );
-  }
-
-  /**
    * Mouse event that toggles sidebar open state
    * @returns {void}
    */
@@ -299,7 +279,19 @@ class Sidebar extends React.Component {
             style={styles.propertiesSpacing}
             disableAutoFocus={true}>
 
-            {this.listItems}
+            <MenuItem
+              onClick={this.duplicateElement}
+              style={this.props.targetedId === null ? styles.disabledMenuItem : styles.menuItem}
+            >
+              {CC.DUPLICATE_ELEMENT_BUTTON}
+            </MenuItem>
+
+            <MenuItem
+              onClick={this.removeElement}
+              style={this.props.targetedId === null ? styles.disabledMenuItem : styles.menuItem}
+            >
+              {CC.DELETE_ELEMENT_BUTTON}
+            </MenuItem>
 
             <Divider />
 
