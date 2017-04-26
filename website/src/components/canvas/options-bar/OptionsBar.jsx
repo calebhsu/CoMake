@@ -5,7 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField'
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
 import ArchiveCanvasBtn from './ArchiveCanvasBtn';
 import CanvasOrientationBtns from './CanvasOrientationBtns';
@@ -30,7 +30,11 @@ const styles = {
   greyDivider: {
     backgroundColor: grey400,
   },
+  leftMargin: {
+    marginLeft: 210,
+  },
   modelName: {
+    fontFamily: 'Open Sans, Roboto, Helvetica, sans-serif',
     marginLeft: 15,
   },
   optionBtnGroup: {
@@ -120,13 +124,7 @@ class OptionsBar extends Component {
     return (
       <div id="options">
         <Toolbar style={styles.toolbar}>
-          <ToolbarGroup>
-            <TextField
-              id="text-field-default"
-              value={canvasName}
-              onChange={this.nameFieldChangeHandler}
-              style={styles.modelName}
-            />
+          <ToolbarGroup style={styles.leftMargin}>
             <ImportModelModal currentCanvas={this.props.currentCanvas} />
             <ExportModal
               canvas={this.props.canvas}
@@ -140,6 +138,12 @@ class OptionsBar extends Component {
             <CanvasOrientationBtns
               canvas={this.props.canvas}
               currentCanvas={this.props.currentCanvas}
+            />
+            <TextField
+              id="text-field-default"
+              value={canvasName}
+              onChange={this.nameFieldChangeHandler}
+              style={styles.modelName}
             />
             <ToolbarSeparator style={styles.greyDivider} />
             <ArchiveCanvasBtn canvasId={this.props.currentCanvas} />
