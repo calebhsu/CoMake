@@ -188,6 +188,7 @@ class Canvas extends React.Component {
       hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
         && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');
     }
+    const hasCode = (this.props.craftmlCode.length > 0);
     return (
       <div>
         <OptionsBar
@@ -207,6 +208,7 @@ class Canvas extends React.Component {
           elements={this.props.elements}
           hasCanvasImage={hasImage}
           targetedId={this.props.targetedId}
+          hasCode={hasCode}
         />
         <Preview3D
           autoRender={this.props.autoRender}

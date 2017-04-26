@@ -54,6 +54,11 @@ const styles = {
   menuItem: {
     color: grey900,
   },
+  disabledMenuItem: {
+    color: grey900,
+    opacity: 0.5,
+    cursor: 'default',
+  },
   renderCheckboxLabel: {
     color: grey900,
     paddingBottom: 10,
@@ -167,7 +172,7 @@ class Sidebar extends React.Component {
       const canvas = renderWrapper.getElementsByTagName('canvas')[0];
       return canvas.toDataURL();
     } else {
-      throw CC.CAPTURE_IMAGE_ERROR;
+      throw CC.CANVAS_MISSING;
     }
   }
 
@@ -262,7 +267,6 @@ class Sidebar extends React.Component {
   render() {
     const translateX = { transform: 'translate(' + this.state.translateX + ', 0px)' };
     const toggleIcon = this.state.isOpen ? <KeyboardArrowLeft color={white} /> : <ModeEdit color={white} />
-
     return (
       <div>
         <Drawer
@@ -329,7 +333,8 @@ class Sidebar extends React.Component {
             <MenuItem
               key={CC.SAVE_3D_IMAGE_BUTTON}
               onClick={this.save3DImage}
-              style={styles.menuItem}
+              style={this.props.hasCode ? styles.menuItem : styles.disabledMenuItem}
+              disabled={!this.props.hasCode}
             >
               {CC.SAVE_3D_IMAGE_BUTTON}
             </MenuItem>
@@ -356,6 +361,7 @@ Sidebar.propTypes = {
   elements: PropTypes.object,
   autoRender: PropTypes.bool,
   hasCanvasImage: PropTypes.bool,
+  hasCode: PropTypes.bool,
 }
 
 export default connect()(Sidebar);
