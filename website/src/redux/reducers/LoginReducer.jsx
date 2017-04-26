@@ -2,14 +2,14 @@
  * @file Reducer for login actions.
  */
 
-import { UPDATE_USER_INFO } from './../actions/ActionConstants';
+import { SET_AUTH_STATE, UPDATE_USER_INFO } from './../actions/ActionConstants';
 import { REHYDRATE } from 'redux-persist/constants';
 
 import * as RC from './ReducerConstants';
 import { insertIntoState } from './ReducerUtil';
 
  /**
-  * Update the position in firebase.
+  * Update the user info in firebase.
   * @param {Object} state The state of the store.
   * @param {Object} action action to be performed.
   * @returns {Object} The new state object.
@@ -23,6 +23,11 @@ export const userInfoReducer = (state = RC.BLANK_STATE_USER_INFO, action) => {
           payload = action.payload[RC.LOGIN_REDUCER][RC.USER_INFO]
         }
       break;
+    case SET_AUTH_STATE:
+      if (typeof(action.payload) !== 'boolean') {
+        throw Error('Expected condition for set auth state to be of type boolean.');
+      }
+      return insertIntoState(state, action.payload, [RC.AUTH_STATE]);
     case UPDATE_USER_INFO:
       payload = action.payload;
       break;

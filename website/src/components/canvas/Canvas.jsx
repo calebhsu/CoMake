@@ -195,15 +195,26 @@ class Canvas extends React.Component {
   }
 
   /**
-   * Renders the component into HTML.
-   * @returns {HTML}    The rendered componenet.
+   * Renders the canvas in HTML.
+   * If user is not logged in, redirects to home page.
+   * If user accesses invalid canvas or one they don't have permissions to,
+   * redirects to error page.
+   * @returns {HTML}    The rendered component.
    */
   render() {
+    if (!this.props.authState) {
+      document.location = '/#/'
+      return (
+        <div></div>
+      );
+    }
+
     if (this.state.validId && this.props.params.canvasId in this.props.canvases) {
       const currentCanvasInfo = this.props.canvases[this.props.params.canvasId];
       const hasCode = (this.props.craftmlCode.length > 0);
       const hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
         && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');
+
       return (
         <div>
           <OptionsBar
@@ -238,9 +249,9 @@ class Canvas extends React.Component {
         <CanvasError />
       );
     } else {
-      return (
-        <LoadingIndicator />
-      );
+        return (
+          <LoadingIndicator />
+        );
     }
   }
 }
@@ -255,6 +266,7 @@ const mapStateToProps = state => ({
 });
 
 Canvas.propTypes = {
+  authState: PropTypes.bool,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
   canvases: PropTypes.object,

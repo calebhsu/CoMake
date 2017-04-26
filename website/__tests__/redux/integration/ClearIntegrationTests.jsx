@@ -21,6 +21,7 @@ describe('ClearIntegrationTests', () => {
   userInfoBranch[RC.USER_PHOTO_URL] = null;
   userInfoBranch[RC.USER_EMAIL] = null;
 
+  blankStoreState[RC.LOGIN_REDUCER][RC.AUTH_STATE] = false;
   blankStoreState[RC.LOGIN_REDUCER][RC.USER_INFO] = userInfoBranch;
   blankStoreState[RC.CANVAS_REDUCER][RC.CANVASES] = {};
   blankStoreState[RC.ELEMENT_REDUCER][RC.ELEMENTS] = {};
@@ -41,6 +42,7 @@ describe('ClearIntegrationTests', () => {
   existingUserInfoBranch[RC.USER_PHOTO_URL] = null;
   existingUserInfoBranch[RC.USER_EMAIL] = null;
 
+  existingState[RC.LOGIN_REDUCER][RC.AUTH_STATE] = true;
   existingState[RC.LOGIN_REDUCER][RC.USER_INFO] = userInfoBranch;
   existingState[RC.CANVAS_REDUCER][RC.CANVASES] = {'test': 'test'};
   existingState[RC.ELEMENT_REDUCER][RC.ELEMENTS] = {'test': 'test'};

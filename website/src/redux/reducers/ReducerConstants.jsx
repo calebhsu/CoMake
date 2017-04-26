@@ -15,11 +15,13 @@
  export const USERNAME = 'name';
  export const USER_PHOTO_URL = 'photo';
  export const USER_EMAIL = 'email';
- export const CANVASES = 'canvases';
- export const ELEMENTS = 'elements';
  export const ACTIVE_ELEMENT = 'activeElement';
- export const CODE = 'code';
+ export const AUTH_STATE = 'authState';
  export const AUTO_GENERATE_CODE = 'autoGenerateCode';
+ export const CANVASES = 'canvases';
+ export const CODE = 'code';
+ export const CURRENT_CANVAS = 'currentCanvas';
+ export const ELEMENTS = 'elements';
 
 // The blank state tree for redux.
 /* Looks like...
@@ -39,11 +41,12 @@
       CANVAS_IMAGE: DEFAULT_IMAGE,
     }
   },
+  ACTIVE_ELEMENT: null,
+  AUTH_STATE: false,
+  AUTO_GENERATE_CODE: false,
+  CODE: '',
   CURRENT_CANVAS: null,
   ELEMENTS: {},
-  CODE: '',
-  AUTO_GENERATE_CODE: false,
-  ACTIVE_ELEMENT: null,
 }
 */
 const userInfoBranch = {};
@@ -91,4 +94,5 @@ export const BLANK_STATE_ELEMENTS = {};
 BLANK_STATE_ELEMENTS[ELEMENTS] = {};
 
 export const BLANK_STATE_USER_INFO = {};
+BLANK_STATE_USER_INFO[AUTH_STATE] = false;
 BLANK_STATE_USER_INFO[USER_INFO] = userInfoBranch;

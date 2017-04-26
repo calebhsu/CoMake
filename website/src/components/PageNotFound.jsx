@@ -53,7 +53,7 @@ const PageNotFound = () => (
       <p style={styles.errorText}>
         {PAGE_NOT_FOUND_TEXT}
       </p>
-      <Link to="/home">
+      <Link to="/">
         <RaisedButton
           backgroundColor={'#e74c49'}
           labelColor={'#ffffff'}
