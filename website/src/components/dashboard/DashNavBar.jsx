@@ -33,6 +33,7 @@ const styles = {
   navUser: {
     backgroundColor: '#a7d2cb',
     color: '#ffffff',
+    cursor: 'default',
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 1,
@@ -87,19 +88,15 @@ class DashNavBar extends React.Component {
         }
         style={styles.appbar}
       >
-        <FlatButton
-          style={styles.navBtn}
+        <ListItem
+          disabled={true}
+          leftAvatar={
+            <Avatar src={photoURL} />
+          }
+          style={styles.navUser}
         >
-          <ListItem
-            disabled={true}
-            leftAvatar={
-              <Avatar src={photoURL} />
-            }
-            style={styles.navUser}
-          >
-            {username}
-          </ListItem>
-        </FlatButton>
+          {username}
+        </ListItem>
         <FlatButton
           label="User Guide"
           labelStyle={styles.navBtnLabel}

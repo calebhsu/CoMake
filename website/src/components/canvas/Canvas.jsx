@@ -196,69 +196,65 @@ class Canvas extends React.Component {
 
   /**
    * Renders the canvas in HTML.
+   * If user is not logged in, redirects to home page.
    * If user accesses invalid canvas or one they don't have permissions to,
    * redirects to error page.
-   * If user is not logged in, redirects to home page.
    * @returns {HTML}    The rendered component.
    */
   render() {
-    if (this.props.authState) {
-      if (this.state.validId && this.props.params.canvasId in this.props.canvases) {
+    if (!this.props.authState) {
+      document.location = '/#/'
+      return (
+        <div></div>
+      );
+    }
 
-        const currentCanvasInfo = this.props.canvases[this.props.params.canvasId];
-        const hasCode = (this.props.craftmlCode.length > 0);
-        const hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
-          && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');
+    if (this.state.validId && this.props.params.canvasId in this.props.canvases) {
+      const currentCanvasInfo = this.props.canvases[this.props.params.canvasId];
+      const hasCode = (this.props.craftmlCode.length > 0);
+      const hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
+        && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');
 
+      return (
+        <div>
+          <OptionsBar
+            canvas={currentCanvasInfo}
+            currentCanvas={this.props.params.canvasId}
+            elements={this.props.elements}
+          />
+          <CanvasView
+            currentCanvas={this.props.params.canvasId}
+            elements={this.props.elements}
+            targetedId={this.props.targetedId}
+          />
+          <Sidebar
+            autoRender={this.props.autoRender}
+            canvas={currentCanvasInfo}
+            currentCanvas={this.props.params.canvasId}
+            elements={this.props.elements}
+            hasCanvasImage={hasImage}
+            targetedId={this.props.targetedId}
+            hasCode={hasCode}
+          />
+          <Preview3D
+            autoRender={this.props.autoRender}
+            canvas={currentCanvasInfo}
+            craftmlCode={this.props.craftmlCode}
+            elements={this.props.elements}
+          />
+        </div>
+      );
+    } else if (this.state.validId === false) {
+      return (
+        <CanvasError />
+      );
+    } else {
         return (
-          <div>
-            <OptionsBar
-              canvas={currentCanvasInfo}
-              currentCanvas={this.props.params.canvasId}
-              elements={this.props.elements}
-            />
-            <CanvasView
-              currentCanvas={this.props.params.canvasId}
-              elements={this.props.elements}
-              targetedId={this.props.targetedId}
-            />
-            <Sidebar
-              autoRender={this.props.autoRender}
-              canvas={currentCanvasInfo}
-              currentCanvas={this.props.params.canvasId}
-              elements={this.props.elements}
-              hasCanvasImage={hasImage}
-              targetedId={this.props.targetedId}
-              hasCode={hasCode}
-            />
-            <Preview3D
-              autoRender={this.props.autoRender}
-              canvas={currentCanvasInfo}
-              craftmlCode={this.props.craftmlCode}
-              elements={this.props.elements}
-            />
-          </div>
+          <LoadingIndicator />
         );
-      }
-      else if (this.state.validId === false) {
-        return (
-          <CanvasError />
-        );
-      }
-      else {
-          return (
-            <LoadingIndicator />
-          );
-        }
-      }
-      else {
-        document.location = '/#/';
-        return (
-          <div></div>
-        );
-      }
     }
   }
+}
 
 const mapStateToProps = state => ({
   elements: (state.updateElementReducer[RC.ELEMENTS]),

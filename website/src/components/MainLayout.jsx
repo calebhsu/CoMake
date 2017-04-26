@@ -78,6 +78,11 @@ class MainLayout extends Component {
       >
         <div>
            {nav}
+
+           {/*
+              Passes this.props.authState from MainLayout --> Home without needing
+              to call getAuthState and mapping props twice in both components.
+           */}
            {React.cloneElement(this.props.children, {authState: this.props.authState})}
         </div>
       </MuiThemeProvider>
