@@ -86,8 +86,9 @@ class Preview3D extends React.Component {
   render() {
     if (this.props.craftmlCode !== '') {
       return (
-        <div style={styles.preview3d}>
-          <ReactCraftMLRenderer code={this.props.craftmlCode} />
+        <div style={styles.preview3d} id={CC.RENDER_WRAPPER_ID} >
+          <ReactCraftMLRenderer
+            code={this.props.craftmlCode} />
         </div>
       );
     } else {
