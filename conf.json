@@ -1,0 +1,15 @@
+{
+    "source": {
+        "include": [ "." ],
+	"exclude": [ 
+		"./node_modules",
+		"./website/node_modules"
+	],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "encoding": "utf8",
+        "recurse": true
+    }
+}

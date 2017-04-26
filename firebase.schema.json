@@ -1,0 +1,90 @@
+{
+    "canvases":[
+        {
+            "elements":[
+                {
+                    "image":"",
+                    "module":"",
+                    "position":{
+                      "x": 0,
+                      "y": 0
+                    },
+                    "rotation": 0,
+                    "size":{
+                      "height":0,
+                      "width":0
+                    }
+                }
+            ],
+            "name":"canvas-name",
+            "owner":"def456",
+            "orientation":"",
+            "users":{
+                "def456":"HanSolo",
+                "ghi789":"KyloRen",
+                "jkl123":"A really uncomfortable person"
+            }
+        }
+    ],
+    "users":[
+        {
+            "admin":false,
+            "canvases":{
+                "canvas-ID":"canvas-name"
+            },
+            "email":"smuggler4lyfe@milfalc.com",
+            "emailVerified": true,
+            "isAnonymous": false,
+            "providerData": {
+              "displayName": "HanSolo",
+              "email": "smuggler4lyfe@milfalc.com",
+              "photoUrl": "https://myspace.kesselrunnr.com/image.jpg",
+              "providerId": "google.com",
+              "uid": "123456789"
+            },
+            "providerID": "firebase",
+            "username":"HanSolo"
+        },
+        {
+            "admin":false,
+            "canvases":{
+                "canvas-ID":"canvas-name"
+            },
+            "email":"ih4t3myp4r3nts@angstyteen.com",
+            "emailVerified": true,
+            "isAnonymous": false,
+            "providerData": {
+              "displayName": "KyloRen",
+              "email": "ih4t3myp4r3nts@angstyteen.com",
+              "photoUrl": "https://myspace.fine-whine.com/image.jpg",
+              "providerId": "google.com",
+              "uid": "123456789"
+            },
+            "providerID": "firebase",
+            "username":"KyloRen"
+        },
+        {
+          "admin":false,
+          "canvases":{
+              "canvas-ID":"canvas-name"
+          },
+          "email":"thisisawkward@iwanttoleave.com",
+          "emailVerified": true,
+          "isAnonymous": false,
+          "providerData": {
+            "displayName": "A really uncomfortable person",
+            "email": "thisisawkward@iwanttoleave.com",
+            "photoUrl": "https://myspace.getmeoutofhere.com/image.jpg",
+            "providerId": "google.com",
+            "uid": "123456789"
+          },
+          "providerID": "firebase",
+          "teacher":false,
+          "username":"A really uncomfortable person"
+        }
+    ],
+    "sysConfig":{
+        "canvas-userLimit":10,
+        "user-canvasLimit":10
+    }
+}
