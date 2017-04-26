@@ -105,7 +105,7 @@ class Sidebar extends React.Component {
       disableRender: false,
     };
 
-    this.duplicateElement = this.duplicateElement.bind(this);
+    this.cloneElement = this.cloneElement.bind(this);
     this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
     this.clearCraftmlCode = this.clearCraftmlCode.bind(this);
     this.toggleAutoRender = this.toggleAutoRender.bind(this);
@@ -127,16 +127,14 @@ class Sidebar extends React.Component {
   }
 
   /**
-   * Handler for adding an element to firebase.
+   * Handler for cloning a targeted element.
    * @returns {void}
    */
-  duplicateElement() {
+  cloneElement() {
     if (this.props.targetedId in this.props.elements) {
       const targetElement = this.props.elements[this.props.targetedId];
-      const module = targetElement[RC.ELEMENT_MODULE];
-      const image = targetElement[RC.ELEMENT_IMAGE];
-      FBHelper.addElement(this.props.currentCanvas, module, image,
-        CC.INIT_POSITION, CC.INIT_SIZE, CC.INIT_ROTATION);
+      FBHelper.cloneElement(this.props.currentCanvas, targetElement,
+        CC.INIT_POSITION);
     }
   }
 
@@ -280,10 +278,10 @@ class Sidebar extends React.Component {
             disableAutoFocus={true}>
 
             <MenuItem
-              onClick={this.duplicateElement}
+              onClick={this.cloneElement}
               style={this.props.targetedId === null ? styles.disabledMenuItem : styles.menuItem}
             >
-              {CC.DUPLICATE_ELEMENT_BUTTON}
+              {CC.CLONE_ELEMENT_BUTTON}
             </MenuItem>
 
             <MenuItem
