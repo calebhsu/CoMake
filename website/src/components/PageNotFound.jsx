@@ -43,7 +43,7 @@ const PAGE_NOT_FOUND_TEXT = '404: Page not Found'
 const GO_HOME_BUTTON = 'Go Home'
 
 /**
- * Gives HTML for displaying canvas error.
+ * Gives HTML for displaying page not found error.
  * @returns {HTML}   The HTML of the loading progress indicator.
  */
 const PageNotFound = () => (

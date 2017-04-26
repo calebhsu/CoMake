@@ -48,6 +48,11 @@ class Canvas extends React.Component {
     this.fetchAndListenForCanvasInfo(this.props.params.canvasId);
   }
 
+  /**
+   * Check the new props to see if the canvasId has changed, if so reload.
+   * @param {Object} nextProps The new props being passed into the function.
+   * @returns {void}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.canvasId !== this.props.params.canvasId) {
       if(this.state.validId) {
@@ -113,7 +118,7 @@ class Canvas extends React.Component {
   }
 
   /**
-   * Processes the fecthed canvas info.
+   * Processes the fetched canvas info.
    * @param {String} canvasId The ID for the canvas.
    * @param {Object} canvasSnap The canvas information received from FB.
    * @returns {void}
