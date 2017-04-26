@@ -69,7 +69,7 @@ class CreateCanvas extends React.Component {
           canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
 
           this.props.dispatch(CanvasActions.addCanvas(resObj.newCanvasId, canvasObj));
-          document.location = '/#/canvas';
+          document.location = `/#/canvas/${resObj.newCanvasId}`;
         });
     });
   }

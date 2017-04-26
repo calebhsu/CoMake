@@ -176,7 +176,7 @@ class CanvasList extends React.Component {
           key={i}
           style={styles.models}
         >
-          <Link to="/canvas">
+          <Link to={`/canvas/${canvasId}`}>
             <Card onTouchTap={this.createClickHandler(canvasId)}>
               <CardMedia
                 overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}

@@ -9,6 +9,7 @@ import CoMakeServices from 'comake-services';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 import { white, grey900 } from 'material-ui/styles/colors';
 
@@ -54,12 +55,14 @@ class ShareCanvasModal extends Component {
     this.state = {
       open: false,
       emailListText: null,
-      usersNotFound: null
+      usersNotFound: null,
+      snackbarOpen: false,
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleSnackbarRequestClose = this.handleSnackbarRequestClose.bind(this);
   }
 
   /**
@@ -99,7 +102,8 @@ class ShareCanvasModal extends Component {
 
          this.setState({usersNotFound: usersNotFoundString});
        } else {
-         this.handleClose();
+         this.handleCloseModal();
+         this.setState({snackbarOpen: true});
        }
      });
    }
@@ -118,7 +122,7 @@ class ShareCanvasModal extends Component {
   * Handler for onTouchTap that sets modal's open state to false.
   * @returns {void}
   */
-  handleClose() {
+  handleCloseModal() {
     this.setState({open: false});
   }
 
@@ -126,8 +130,16 @@ class ShareCanvasModal extends Component {
    * Handler for onTouchTap that sets modal's open state to true.
    * @returns {void}
    */
-  handleOpen() {
+  handleOpenModal() {
     this.setState({open: true});
+  }
+
+  /**
+   * Handler for onRequestClose that sets snackbar's open state to false.
+   * @returns {void}
+   */
+  handleSnackbarRequestClose() {
+      this.setState({snackbarOpen: false});
   }
 
   /**
@@ -140,7 +152,7 @@ class ShareCanvasModal extends Component {
         label="Cancel"
         labelStyle={styles.greyBtn}
         primary={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.handleCloseModal}
       />,
       <FlatButton
         backgroundColor="#e74c49"
@@ -159,7 +171,7 @@ class ShareCanvasModal extends Component {
           hoverColor="#c7270b"
           label="Share"
           labelStyle={styles.shareBtn}
-          onTouchTap={this.handleOpen}
+          onTouchTap={this.handleOpenModal}
         />
         <Dialog
           actions={actions}
@@ -167,7 +179,7 @@ class ShareCanvasModal extends Component {
           bodyStyle={styles.dialogBody}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}
+          onRequestClose={this.handleCloseModal}
           title="Share Canvas with Others"
         >
           <p>Separate multiple emails with a comma.</p>
@@ -180,6 +192,12 @@ class ShareCanvasModal extends Component {
             errorText={this.state.usersNotFound}
           />
         </Dialog>
+        <Snackbar
+          autoHideDuration={1000}
+          message="Canvas shared successfully."
+          onRequestClose={this.handleSnackbarRequestClose}
+          open={this.state.snackbarOpen}
+        />
       </div>
     );
   }
