@@ -10,12 +10,12 @@ import Sidebar from './sidebar/Sidebar';
 import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
 import Preview3D from './Preview3D';
+import LoadingIndicator from '../LoadingIndicator';
+import CanvasError from './CanvasError';
 import * as ElementActions from '../../redux/actions/ElementActions';
 import * as ActiveElementActions from '../../redux/actions/ActiveElementActions';
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
-
 import * as CanvasActions from '../../redux/actions/CanvasActions';
-
 import * as RC from '../../redux/reducers/ReducerConstants';
 
 /**
@@ -30,10 +30,53 @@ class Canvas extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.hasInitialized = false;
+    this.state = {
+      validId: null,
+    };
 
     this.fetchAndListenForCanvasInfo = this.fetchAndListenForCanvasInfo.bind(this);
-    this.fetchCanvasInfo = this.fetchCanvasInfo.bind(this);
+    this.processCanvasInfo = this.processCanvasInfo.bind(this);
+  }
+
+  /**
+   * Function to automatically be performed once the component mount.
+   * Used here to initialize canvas elements if not done and if the new canvas id
+   * is not null
+   * @returns {void}
+   */
+  componentDidMount() {
+    this.fetchAndListenForCanvasInfo(this.props.params.canvasId);
+  }
+
+  /**
+   * Check the new props to see if the canvasId has changed, if so reload.
+   * @param {Object} nextProps The new props being passed into the function.
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.canvasId !== this.props.params.canvasId) {
+      if(this.state.validId) {
+        firebase.database().ref(`${RC.CANVASES}/${this.props.params.canvasId}`).off();
+      }
+      this.setState({
+        validId: null,
+      });
+      this.fetchAndListenForCanvasInfo(nextProps.params.canvasId);
+    }
+  }
+
+  /**
+   * After we unmount the canvas stop listening to the elements and clear redux.
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    if(this.state.validId) {
+      firebase.database().ref(`${RC.CANVASES}/${this.props.params.canvasId}`).off();
+    }
+    this.props.dispatch(ActiveElementActions.targetElement(null));
+    this.props.dispatch(ElementActions.initElements({}));
+    this.props.dispatch(CodeActions.setCode(''));
+    this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
   }
 
   /**
@@ -45,43 +88,65 @@ class Canvas extends React.Component {
    * @returns {void}
    */
   fetchAndListenForCanvasInfo(canvasId) {
-    this.fetchCanvasInfo(canvasId);
-    this.listenForCanvasInfo(canvasId);
+    // Write a promise that first checks if the canvasID in url is valid.
+    // Resolves a CanvasSnap if it is correct.
+    const checkForExistance = new Promise((resolve, reject) => {
+      firebase.database().ref(`/canvases/${canvasId}`).once('value')
+        .then((canvasSnap) => {
+          if (canvasSnap.val() !== null) {
+            resolve(canvasSnap);
+          } else {
+            reject('Canvas does not exist.')
+          }
+        }).catch((err) => {
+          reject(err);
+        })
+    });
+    // Call the promise, if successful load in canvas info and start listening.
+    checkForExistance.then((canvasSnap) => {
+      this.setState({
+        validId: true,
+      });
+      this.processCanvasInfo(canvasId, canvasSnap);
+      this.listenForCanvasInfo(canvasId);
+    }).catch((err) => {
+      console.error(err);
+      this.setState({
+        validId: false,
+      });
+    });
   }
 
   /**
-   * Fetches information in canvas (metadata and elements) and dispatches actions.
+   * Processes the fetched canvas info.
    * @param {String} canvasId The ID for the canvas.
+   * @param {Object} canvasSnap The canvas information received from FB.
    * @returns {void}
    */
-  fetchCanvasInfo(canvasId) {
-    firebase.database().ref(`/canvases/${canvasId}`).once('value')
-      .then((canvasSnap) => {
-        // fetch canvas specific info
-        const canvasObj = {};
-        canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
-        if (canvasSnap.child('orientation').val()) {
-          canvasObj[RC.CANVAS_ORIENTATION] = canvasSnap.child('orientation').val();
-        }
-        canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
+  processCanvasInfo(canvasId, canvasSnap) {
+    const canvasObj = {};
+    canvasObj[RC.CANVAS_NAME] = canvasSnap.child('name').val();
+    if (canvasSnap.child('orientation').val()) {
+      canvasObj[RC.CANVAS_ORIENTATION] = canvasSnap.child('orientation').val();
+    }
+    canvasObj[RC.CANVAS_OWNER] = canvasSnap.child('owner').val();
 
-        let canvasUsersObj = canvasSnap.child('users').val();
-        if(!canvasUsersObj) {
-          canvasUsersObj = {};
-        }
+    let canvasUsersObj = canvasSnap.child('users').val();
+    if(!canvasUsersObj) {
+      canvasUsersObj = {};
+    }
 
-        canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
+    canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
 
-        this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+    this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
 
-        //fetch canvas element info
-        let firebaseElemList = canvasSnap.child(RC.ELEMENTS).val();
-        if(!firebaseElemList) {
-          firebaseElemList = {};
-        }
+    //fetch canvas element info
+    let firebaseElemList = canvasSnap.child(RC.ELEMENTS).val();
+    if(!firebaseElemList) {
+      firebaseElemList = {};
+    }
 
-        this.props.dispatch(ElementActions.initElements(firebaseElemList));
-    });
+    this.props.dispatch(ElementActions.initElements(firebaseElemList));
   }
 
   /**
@@ -130,100 +195,58 @@ class Canvas extends React.Component {
   }
 
   /**
-   * Function to automatically be performed once the component mount.
-   * Used here to initialize canvas elements if not done and if the new canvas id
-   * is not null
-   * @returns {void}
-   */
-  componentDidMount() {
-    if(!this.hasInitialized && this.props.currentCanvas) {
-      this.fetchAndListenForCanvasInfo(this.props.currentCanvas);
-    }
-  }
-
-  /**
-   * Function to automatically be performed once the component receives new props.
-   * Used here to initialize canvas elements if not done and if the new canvas id
-   * is not null
-   * @param {Object} nextProps The new props object to be given to the component
-   * @returns {void}
-   */
-  componentWillReceiveProps(nextProps) {
-    if(!this.hasInitialized && nextProps.currentCanvas) {
-      this.fetchAndListenForCanvasInfo(nextProps.currentCanvas);
-    }
-  }
-
-  /**
-   * After we unmount the canvas stop listening to the elements.
-   * @returns {void}
-   */
-  componentWillUnmount() {
-    if(this.props.currentCanvas) {
-      firebase.database().ref(`${RC.CANVASES}/${this.props.currentCanvas}`).off();
-    }
-
-    this.hasInitialized = false;
-  }
-
-  /**
-   * After we unmount the canvas clear out the appropriate fields of store.
-   * @returns {void}
-   */
-  componentWillUnmount() {
-    this.props.dispatch(ActiveElementActions.targetElement(null));
-    this.props.dispatch(ElementActions.initElements({}));
-    this.props.dispatch(CodeActions.setCode(''));
-    this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
-  }
-
-  /**
    * Renders the component into HTML.
    * @returns {HTML}    The rendered componenet.
    */
   render() {
-    const currentCanvasInfo = this.props.canvases[this.props.currentCanvas];
-    let hasImage = false;
-    if (currentCanvasInfo) {
-      hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
+    if (this.state.validId && this.props.params.canvasId in this.props.canvases) {
+      const currentCanvasInfo = this.props.canvases[this.props.params.canvasId];
+      const hasCode = (this.props.craftmlCode.length > 0);
+      const hasImage = (currentCanvasInfo[RC.CANVAS_IMAGE] !== null
         && typeof(currentCanvasInfo[RC.CANVAS_IMAGE]) !== 'undefined');
+      return (
+        <div>
+          <OptionsBar
+            canvas={currentCanvasInfo}
+            currentCanvas={this.props.params.canvasId}
+            elements={this.props.elements}
+          />
+          <CanvasView
+            currentCanvas={this.props.params.canvasId}
+            elements={this.props.elements}
+            targetedId={this.props.targetedId}
+          />
+          <Sidebar
+            autoRender={this.props.autoRender}
+            canvas={currentCanvasInfo}
+            currentCanvas={this.props.params.canvasId}
+            elements={this.props.elements}
+            hasCanvasImage={hasImage}
+            targetedId={this.props.targetedId}
+            hasCode={hasCode}
+          />
+          <Preview3D
+            autoRender={this.props.autoRender}
+            canvas={currentCanvasInfo}
+            craftmlCode={this.props.craftmlCode}
+            elements={this.props.elements}
+          />
+        </div>
+      );
+    } else if (this.state.validId === false) {
+      return (
+        <CanvasError />
+      );
+    } else {
+      return (
+        <LoadingIndicator />
+      );
     }
-    const hasCode = (this.props.craftmlCode.length > 0);
-    return (
-      <div>
-        <OptionsBar
-          canvas={currentCanvasInfo}
-          currentCanvas={this.props.currentCanvas}
-          elements={this.props.elements}
-        />
-        <CanvasView
-          currentCanvas={this.props.currentCanvas}
-          elements={this.props.elements}
-          targetedId={this.props.targetedId}
-        />
-        <Sidebar
-          autoRender={this.props.autoRender}
-          canvas={currentCanvasInfo}
-          currentCanvas={this.props.currentCanvas}
-          elements={this.props.elements}
-          hasCanvasImage={hasImage}
-          targetedId={this.props.targetedId}
-          hasCode={hasCode}
-        />
-        <Preview3D
-          autoRender={this.props.autoRender}
-          canvas={currentCanvasInfo}
-          craftmlCode={this.props.craftmlCode}
-          elements={this.props.elements}
-        />
-      </div>
-    )
   }
 }
 
 const mapStateToProps = state => ({
   elements: (state.updateElementReducer[RC.ELEMENTS]),
-  currentCanvas: (state.canvasReducer[RC.CURRENT_CANVAS]),
   canvases: (state.canvasReducer[RC.CANVASES]),
   targetedId: (state
     .activeElementReducer[RC.ACTIVE_ELEMENT]),
@@ -234,11 +257,11 @@ const mapStateToProps = state => ({
 Canvas.propTypes = {
   dispatch: PropTypes.func,
   elements: PropTypes.object,
-  currentCanvas: PropTypes.string,
   canvases: PropTypes.object,
   targetedId: PropTypes.string,
   craftmlCode: PropTypes.string,
   autoRender: PropTypes.bool,
+  params: PropTypes.object,
 }
 
 export default connect(mapStateToProps)(Canvas);

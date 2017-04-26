@@ -6,6 +6,7 @@ import Home from './components/home/Home';
 import Landing from './components/landing/Landing';
 import Profile from './components/profile/Profile';
 import MainLayout from './components/MainLayout';
+import PageNotFound from './components/PageNotFound';
 
 /**
  * Defines routes for all application components.
@@ -20,6 +21,7 @@ function Routes() {
         <Route path="/home" component={Home} />
         <Route path="/canvas/:canvasId" component={Canvas} />
         <Route path="/profile" component={Profile} />
+        <Route path='*' component={PageNotFound} />
       </Route>
     </Router>
   );

@@ -84,19 +84,6 @@ describe('CanvasIntegrationTests', () => {
     testStore.dispatch(CA.removeCanvas(testId));
   });
 
-  test('setCurrentCanvas_dispatch', (done) => {
-    const testId = 'testId';
-    const expected = Object.assign({}, RC.BLANK_STATE_CANVAS);
-    expected[RC.CURRENT_CANVAS] = testId;
-
-    testStore.subscribe(() => {
-      expect(testStore.getState().canvasReducer).toEqual(expected);
-      done();
-    });
-
-    testStore.dispatch(CA.setCurrentCanvas(testId));
-  });
-
   test('setCanvasName_dispatch', (done) => {
     const testId = 'testId';
     const testName = 'testName';

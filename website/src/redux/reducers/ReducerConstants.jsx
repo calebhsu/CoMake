@@ -16,7 +16,6 @@
  export const USER_PHOTO_URL = 'photo';
  export const USER_EMAIL = 'email';
  export const CANVASES = 'canvases';
- export const CURRENT_CANVAS = 'currentCanvas';
  export const ELEMENTS = 'elements';
  export const ACTIVE_ELEMENT = 'activeElement';
  export const CODE = 'code';
@@ -55,7 +54,6 @@ userInfoBranch[USER_EMAIL] = null;
 const BLANK_STATE = {};
 BLANK_STATE[USER_INFO] = userInfoBranch;
 BLANK_STATE[CANVASES] = {};
-BLANK_STATE[CURRENT_CANVAS] = null;
 BLANK_STATE[ELEMENTS] = {};
 BLANK_STATE[ACTIVE_ELEMENT] = null;
 BLANK_STATE[CODE] = '';
@@ -84,7 +82,6 @@ BLANK_STATE_ACTIVE_ELEMENT[ACTIVE_ELEMENT] = null;
 
 export const BLANK_STATE_CANVAS = {};
 BLANK_STATE_CANVAS[CANVASES] = {};
-BLANK_STATE_CANVAS[CURRENT_CANVAS] = null;
 
 export const BLANK_STATE_CRAFTML_CODE = {};
 BLANK_STATE_CRAFTML_CODE[CODE] = '';

@@ -1,5 +1,8 @@
 export const DEFAULT_SLIDER_POSITION = 0.5;
 
+export const CANVAS_ERROR_MESSAGE = 'Invalid or forbidden canvas'
+export const GO_HOME_BUTTON = 'Go Home';
+
 // 3D Renderer constants
 export const RENDER_WRAPPER_ID = 'renderwrapper';
 export const CANVAS_MISSING = 'Canvas not present for image capture.';
