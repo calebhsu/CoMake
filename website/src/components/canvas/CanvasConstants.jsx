@@ -2,7 +2,10 @@ export const DEFAULT_SLIDER_POSITION = 0.5;
 
 // 3D Renderer constants
 export const RENDER_WRAPPER_ID = 'renderwrapper';
-export const CAPTURE_IMAGE_ERROR = 'Canvas not present for image capture.';
+export const CAPTURE_MISSING = 'Canvas not present for image capture.';
+export const IMAGE_UPLOAD_PAUSED = 'Canvas image upload paused.';
+export const IMAGE_UPLOAD_ERROR = 'Error uploading canvas image.';
+export const IMAGE_SAVE_MESSAGE = 'Image Saved';
 
 // Sidebar buttons
 export const ADD_ELEMENT_BUTTON = 'Add Model';

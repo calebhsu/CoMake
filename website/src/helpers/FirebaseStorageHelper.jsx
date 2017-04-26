@@ -23,8 +23,7 @@ export const saveRenderedImage = (canvasId, imageURL, onSuccess, onFailure,
   const imagePath = RENDER_IMAGE_PATH + String(canvasId) + '.png';
   const imageRef = firebase.storage().ref().child(imagePath);
   const imageTask = imageRef.putString(imageURL, 'data_url');
-  imageTask.on(firebase.storage.TaskEvent.STATE_CHANGED, processing, onFailure,
-    onSuccess);
+  imageTask.on('state_changed', processing, onFailure, onSuccess);
 }
 
 /**

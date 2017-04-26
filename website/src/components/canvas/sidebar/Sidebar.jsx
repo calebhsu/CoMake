@@ -15,6 +15,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import { black, white, grey900 } from 'material-ui/styles/colors';
+import Snackbar from 'material-ui/Snackbar';
 
 import ResizeTextfields from './ResizeTextfields';
 import RotationSlider from './RotationSlider';
@@ -94,6 +95,7 @@ class Sidebar extends React.Component {
     this.state = {
       isOpen: true,
       translateX: '0px',
+      snackbarOpen: false,
     };
 
     this.addElement = this.addElement.bind(this);
@@ -104,6 +106,7 @@ class Sidebar extends React.Component {
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
     this.save3DImage = this.save3DImage.bind(this);
+    this.createSnackbarHandler = this.createSnackbarHandler.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -173,6 +176,7 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   save3DImage() {
+    const openSnackbarHanlder = this.createSnackbarHandler(true);
     let imageURL = null;
     try {
       imageURL = this.getImageURL();
@@ -183,9 +187,19 @@ class Sidebar extends React.Component {
     if (!this.props.hasCanvasImage) {
       FBHelper.setHasCanvasImage(this.props.currentCanvas);
     }
-    FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL, () => {
-      console.log('Successfully saved to storage.');
-    });
+    const processingUpload = (snapshot) => {
+      if (snapshot.state === 'paused') {
+        console.error(CC.IMAGE_UPLOAD_PAUSED);
+      }
+    };
+    const uploadSuccessful = () => {
+      openSnackbarHanlder();
+    }
+    const uploadError = () => {
+      console.error(CC.IMAGE_UPLOAD_ERROR);
+    }
+    FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL,
+      uploadSuccessful, uploadError, processingUpload);
   }
 
   /**
@@ -224,6 +238,21 @@ class Sidebar extends React.Component {
         translateX: !prevState.isOpen ? '0px' : '-206px'
       })
     );
+  }
+
+  /**
+   * Creates a handler for opening and closing the snackbar.
+   * @param {boolean} toSet Whether the handler sets the snackbar open or closed.
+   * @returns {Function} The hanlder to control the snackbar.
+   */
+  createSnackbarHandler(toSet) {
+    let handler = () => {
+      this.setState({
+        snackbarOpen: toSet,
+      });
+    }
+    handler = handler.bind(this);
+    return handler;
   }
 
   /**
@@ -308,6 +337,12 @@ class Sidebar extends React.Component {
 
           </Menu>
         </Drawer>
+        <Snackbar
+          autoHideDuration={2000}
+          message={CC.IMAGE_SAVE_MESSAGE}
+          onRequestClose={this.createSnackbarHandler(false)}
+          open={this.state.snackbarOpen}
+        />
       </div>
     );
   }
