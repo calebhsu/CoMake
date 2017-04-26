@@ -190,7 +190,7 @@ class Sidebar extends React.Component {
    * @returns {void}
    */
   save3DImage() {
-    const openSnackbarHanlder = this.createSnackbarHandler(true);
+    const openSnackbarHandler = this.createSnackbarHandler(true);
     let imageURL = null;
     try {
       imageURL = this.getImageURL();
@@ -207,7 +207,7 @@ class Sidebar extends React.Component {
       }
     };
     const uploadSuccessful = () => {
-      openSnackbarHanlder();
+      openSnackbarHandler();
     }
     const uploadError = () => {
       console.error(CC.IMAGE_UPLOAD_ERROR);
