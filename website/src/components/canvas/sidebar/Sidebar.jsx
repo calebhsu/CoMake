@@ -177,7 +177,7 @@ class Sidebar extends React.Component {
     try {
       imageURL = this.getImageURL();
     } catch(e) {
-      console.log(e);
+      console.error(e);
       return;
     }
     if (!this.props.hasCanvasImage) {

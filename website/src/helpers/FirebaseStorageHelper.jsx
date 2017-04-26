@@ -28,7 +28,7 @@ export const saveRenderedImage = (canvasId, imageURL, onSuccess, onFailure,
 }
 
 /**
- * Gets the rendered image url and hands it off to urlHanlder.
+ * Gets the rendered image url and hands it off to urlHandler.
  * @param  {String} canvasId   The ID of the canvas.
  * @param  {Function} urlHandler Function that is fed the image url.
  * @return {void}
@@ -42,7 +42,7 @@ export const getRenderedImageUrl = (canvasId, urlHandler) => {
     if (error.code === 'storage/object-not-found') {
       urlHandler(null);
     } else {
-      console.log(error.code);
+      console.error(error.code);
     }
   });
 }
