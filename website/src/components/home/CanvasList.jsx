@@ -10,6 +10,8 @@ import { Card, CardHeader, CardMedia } from 'material-ui/Card';
 import { Link } from 'react-router';
 import * as RC from '../../redux/reducers/ReducerConstants';
 import * as CanvasActions from '../../redux/actions/CanvasActions';
+import * as FBStorageHelper from '../../helpers/FirebaseStorageHelper';
+import placeholderImage from '../../img/placeholder.png';
 
 const styles = {
   models: {
@@ -21,10 +23,6 @@ const styles = {
     margin: 'auto',
   },
 };
-
-const generateCanvasCode = (
-  <img src="https://res.cloudinary.com/craftml/image/upload/w_250,h_250,c_fill/v1440024165/4yUaf.png" className='img-responsive' />
-);
 
 
 /**
@@ -90,7 +88,8 @@ class CanvasList extends React.Component {
       .child(RC.CANVASES).once('value').then((canvasListSnap) => {
         if(canvasListSnap.val()) {
           Object.keys(canvasListSnap.val()).forEach((canvasId) => {
-            if ((Object.keys(this.props.canvases).indexOf(canvasId) < 0) && (canvasListSnap.val()[canvasId])) {
+            if ((Object.keys(this.props.canvases).indexOf(canvasId) < 0)
+                && (canvasListSnap.val()[canvasId])) {
               this.fetchCanvasInfo(canvasId);
             }
           });
@@ -108,7 +107,6 @@ class CanvasList extends React.Component {
     // Listen for any canvases that might be removed.
     firebase.database().ref('/users').child(userId)
       .child(RC.CANVASES).on('child_changed', (canvasSnap) => {
-        console.log(canvasSnap.val());
         if (!canvasSnap.val()) {
           this.props.dispatch(CanvasActions.removeCanvas(canvasSnap.key));
         }
@@ -134,7 +132,16 @@ class CanvasList extends React.Component {
         }
         canvasObj[RC.CANVAS_USERS] = canvasUsersObj;
 
-        this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+
+        if (canvasSnap.child(RC.CANVAS_IMAGE).val()) {
+          FBStorageHelper.getRenderedImageUrl(canvasId, (url) => {
+            canvasObj[RC.CANVAS_IMAGE] = url;
+            this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+          });
+        } else {
+          canvasObj[RC.CANVAS_IMAGE] = null;
+          this.props.dispatch(CanvasActions.addCanvas(canvasId, canvasObj));
+        }
     });
   }
 
@@ -157,6 +164,11 @@ class CanvasList extends React.Component {
     const canvasList = [];
 
     Object.keys(this.props.canvases).forEach((canvasId, i) => {
+      let canvasImage = this.props.canvases[canvasId][RC.CANVAS_IMAGE];
+      if (!canvasImage) {
+        // set to default image.
+        canvasImage = placeholderImage;
+      }
       canvasList.push(
         <Box
           col={12}
@@ -168,9 +180,8 @@ class CanvasList extends React.Component {
             <Card onTouchTap={this.createClickHandler(canvasId)}>
               <CardMedia
                 overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
-                overlayContentStyle={styles.overlay}
-                >
-                {generateCanvasCode}
+                overlayContentStyle={styles.overlay} >
+                <img src={canvasImage} className={'img-responsive'} />
               </CardMedia>
             </Card>
           </Link>
