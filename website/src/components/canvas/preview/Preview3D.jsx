@@ -7,13 +7,16 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import IconButton from 'material-ui/IconButton';
+import Paper from 'material-ui/Paper';
 import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
 
-import { CANVAS_ORIENTATION } from '../../redux/reducers/ReducerConstants';
-import { generateScript } from '../../craftml/ScriptGenerator';
+import PreviewOptions from './PreviewOptions';
+
+import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
+import { generateScript } from '../../../craftml/ScriptGenerator';
 import { ReactCraftMLRenderer } from 'craftml';
-import * as CC from './CanvasConstants';
-import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
+import * as CC from '../CanvasConstants';
+import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 
 import { grey800 } from 'material-ui/styles/colors';
 
@@ -35,9 +38,13 @@ const styles = {
   },
   preview3d: {
     bottom: 28,
+    display: 'flex',
     opacity: 0.9,
     position: 'fixed',
     right: 20,
+    zIndex: 100,
+  },
+  previewOptions: {
     zIndex: 100,
   },
   size: {
@@ -50,7 +57,7 @@ const styles = {
 };
 
 /**
- * @classdesc The component that gives a 3D prreview of the model.
+ * @classdesc The component that gives a 3D preview of the model.
  */
 class Preview3D extends React.Component {
 
@@ -86,9 +93,21 @@ class Preview3D extends React.Component {
   render() {
     if (this.props.craftmlCode !== '') {
       return (
-        <div style={styles.preview3d} id={CC.RENDER_WRAPPER_ID} >
-          <ReactCraftMLRenderer
-            code={this.props.craftmlCode} />
+        <div>
+          <Paper
+            id={CC.RENDER_WRAPPER_ID}
+            style={styles.preview3d}
+            zDepth={2}
+          >
+            <PreviewOptions
+              canvas={this.props.canvas}
+              currentCanvas={this.props.currentCanvas}
+              hasCode={this.props.hasCode}
+              hasCanvasImage={this.props.hasCanvasImage}
+            />
+            <ReactCraftMLRenderer
+              code={this.props.craftmlCode} />
+          </Paper>
         </div>
       );
     } else {
@@ -113,8 +132,11 @@ Preview3D.propTypes = {
   autoRender: PropTypes.bool,
   canvas: PropTypes.object,
   craftmlCode: PropTypes.string,
+  currentCanvas: PropTypes.string,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
+  hasCanvasImage: PropTypes.bool,
+  hasCode: PropTypes.bool,
 };
 
 export default connect()(Preview3D);

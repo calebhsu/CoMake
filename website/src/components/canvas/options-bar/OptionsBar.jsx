@@ -8,7 +8,6 @@ import TextField from 'material-ui/TextField'
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
 import ArchiveCanvasBtn from './ArchiveCanvasBtn';
-import CanvasOrientationBtns from './CanvasOrientationBtns';
 import ExportModal from './ExportModal';
 import ImportModelModal from './ImportModelModal';
 import ShareCanvasModal from './ShareCanvasModal';
@@ -135,10 +134,6 @@ class OptionsBar extends Component {
             { userDivs }
           </ToolbarGroup>
           <ToolbarGroup>
-            <CanvasOrientationBtns
-              canvas={this.props.canvas}
-              currentCanvas={this.props.currentCanvas}
-            />
             <TextField
               id="text-field-default"
               value={canvasName}

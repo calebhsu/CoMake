@@ -30,6 +30,7 @@ const styles = {
     width: 32,
   },
   size: {
+    display: 'block',
     height: 64,
     padding: 16,
     width: 64,
@@ -92,7 +93,7 @@ class CanvasOrientationBtns extends Component {
           onTouchTap={this.handleOrientOverhead}
           style={styles.size}
           tooltip="Overhead View"
-          tooltipPosition="bottom-center"
+          tooltipPosition="bottom-left"
           touch={true}
         >
           <Layers />
@@ -102,7 +103,7 @@ class CanvasOrientationBtns extends Component {
           onTouchTap={this.handleOrientSide}
           style={styles.size}
           tooltip="Side View"
-          tooltipPosition="bottom-center"
+          tooltipPosition="bottom-left"
           touch={true}
         >
           <ViewStream />

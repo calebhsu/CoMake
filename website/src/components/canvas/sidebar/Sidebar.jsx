@@ -330,24 +330,8 @@ class Sidebar extends React.Component {
             >
               {CC.CLEAR_3D_BUTTON}
             </MenuItem>
-            <MenuItem
-              key={CC.SAVE_3D_IMAGE_BUTTON}
-              onClick={this.save3DImage}
-              style={this.props.hasCode ? styles.menuItem : styles.disabledMenuItem}
-              disabled={!this.props.hasCode}
-            >
-              {CC.SAVE_3D_IMAGE_BUTTON}
-            </MenuItem>
-
-
           </Menu>
         </Drawer>
-        <Snackbar
-          autoHideDuration={2000}
-          message={CC.IMAGE_SAVE_MESSAGE}
-          onRequestClose={this.createSnackbarHandler(false)}
-          open={this.state.snackbarOpen}
-        />
       </div>
     );
   }
