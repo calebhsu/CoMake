@@ -52,7 +52,7 @@ const CanvasError = () => (
       <p style={styles.errorText}>
         {CC.CANVAS_ERROR_MESSAGE}
       </p>
-      <Link to="/home">
+      <Link to="/">
         <RaisedButton
           backgroundColor={'#e74c49'}
           labelColor={'#ffffff'}
