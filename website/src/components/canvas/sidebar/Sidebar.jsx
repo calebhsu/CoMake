@@ -100,11 +100,8 @@ class Sidebar extends React.Component {
     this.state = {
       isOpen: true,
       translateX: '0px',
-<<<<<<< HEAD
       snackbarOpen: false,
-=======
       disableRender: false,
->>>>>>> 405cbb9f4a096184e698af687178543b3b7d840e
     };
 
     this.addElement = this.addElement.bind(this);
