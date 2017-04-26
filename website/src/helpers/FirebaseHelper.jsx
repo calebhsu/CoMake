@@ -106,6 +106,16 @@ export const setCanvasName = (canvasId, newCanvasName) => {
 }
 
 /**
+ * Sets notification that canvas has a corresponding image in storage.
+ * @param {String} canvasId The canvas id.
+ * @returns {Promise}   Promise associated with the firebase action.
+ */
+export const setHasCanvasImage = (canvasId) => {
+  const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_IMAGE;
+  return firebase.database().ref(`${canvasPath}`).set(true);
+}
+
+/**
  * Sets a canvas' orientation view.
  * @param {String} canvasId          The canvas id.
  * @param {String} canvasOrientation The new orientation view to be set.

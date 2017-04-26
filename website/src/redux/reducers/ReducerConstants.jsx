@@ -36,6 +36,7 @@
       CANVAS_ORIENTATION: null,
       CANVAS_OWNER: null,
       CANVAS_USERS: null,
+      CANVAS_IMAGE: DEFAULT_IMAGE,
     }
   },
   CURRENT_CANVAS: null,
@@ -73,6 +74,7 @@ export const CANVAS_NAME = 'name';
 export const CANVAS_ORIENTATION = 'orientation';
 export const CANVAS_OWNER = 'owner'
 export const CANVAS_USERS = 'users';
+export const CANVAS_IMAGE = 'canvas_image';
 
 //individual reducer blank states
 export const BLANK_STATE_ACTIVE_ELEMENT = {};

@@ -15,6 +15,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import { black, white, grey900 } from 'material-ui/styles/colors';
+import Snackbar from 'material-ui/Snackbar';
 
 import ResizeTextfields from './ResizeTextfields';
 import RotationSlider from './RotationSlider';
@@ -25,6 +26,8 @@ import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
+import * as FBStorageHelper from '../../../helpers/FirebaseStorageHelper';
+
 
 const styles = {
   appbar: {
@@ -39,9 +42,9 @@ const styles = {
     color: '#e74c49',
     height: 25,
     marginLeft: -13,
-    padding: 12,
     position: 'absolute',
     top: 55,
+    padding: 12,
     width: 25,
     zIndex: 15,
   },
@@ -50,6 +53,11 @@ const styles = {
   },
   menuItem: {
     color: grey900,
+  },
+  disabledMenuItem: {
+    color: grey900,
+    opacity: 0.5,
+    cursor: 'default',
   },
   renderCheckboxLabel: {
     color: grey900,
@@ -92,6 +100,7 @@ class Sidebar extends React.Component {
     this.state = {
       isOpen: true,
       translateX: '0px',
+      snackbarOpen: false,
       disableRender: false,
     };
 
@@ -102,6 +111,8 @@ class Sidebar extends React.Component {
     this.mapOptionToDiv = this.mapOptionToDiv.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
+    this.save3DImage = this.save3DImage.bind(this);
+    this.createSnackbarHandler = this.createSnackbarHandler.bind(this);
     this.listItems = CC.SIDEBAR_BUTTONS.map(this.mapOptionToDiv);
   }
 
@@ -160,6 +171,52 @@ class Sidebar extends React.Component {
   }
 
   /**
+   * Gets the image URL for the 3D render.
+   * @returns {String}  The URL for the image.
+   * @throws Will throw if canvas has not been loaded onto the page yet.
+   */
+  getImageURL() {
+    const renderWrapper = document.getElementById(CC.RENDER_WRAPPER_ID);
+    if (renderWrapper !== null) {
+      const canvas = renderWrapper.getElementsByTagName('canvas')[0];
+      return canvas.toDataURL();
+    } else {
+      throw CC.CANVAS_MISSING;
+    }
+  }
+
+  /**
+   * Saves off an image of the current 3D Renderer to firebase.
+   * @returns {void}
+   */
+  save3DImage() {
+    const openSnackbarHandler = this.createSnackbarHandler(true);
+    let imageURL = null;
+    try {
+      imageURL = this.getImageURL();
+    } catch(e) {
+      console.error(e);
+      return;
+    }
+    if (!this.props.hasCanvasImage) {
+      FBHelper.setHasCanvasImage(this.props.currentCanvas);
+    }
+    const processingUpload = (snapshot) => {
+      if (snapshot.state === 'paused') {
+        console.error(CC.IMAGE_UPLOAD_PAUSED);
+      }
+    };
+    const uploadSuccessful = () => {
+      openSnackbarHandler();
+    }
+    const uploadError = () => {
+      console.error(CC.IMAGE_UPLOAD_ERROR);
+    }
+    FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL,
+      uploadSuccessful, uploadError, processingUpload);
+  }
+
+  /**
    * Maps list item to a div to put in the drawer.
    * @param {String} item The item name to encapsulate into a ManueItem.
    * @returns {HTML} A MenuItem tag that holds the name of the item.
@@ -198,13 +255,27 @@ class Sidebar extends React.Component {
   }
 
   /**
+   * Creates a handler for opening and closing the snackbar.
+   * @param {boolean} toSet Whether the handler sets the snackbar open or closed.
+   * @returns {Function} The hanlder to control the snackbar.
+   */
+  createSnackbarHandler(toSet) {
+    let handler = () => {
+      this.setState({
+        snackbarOpen: toSet,
+      });
+    }
+    handler = handler.bind(this);
+    return handler;
+  }
+
+  /**
    * Renders the HTML for the sidebar.
    * @returns {HTML} The html for the Sidebar.
    */
   render() {
     const translateX = { transform: 'translate(' + this.state.translateX + ', 0px)' };
     const toggleIcon = this.state.isOpen ? <KeyboardArrowLeft color={white} /> : <ModeEdit color={white} />
-
     return (
       <div>
         <Drawer
@@ -269,9 +340,24 @@ class Sidebar extends React.Component {
             >
               {CC.CLEAR_3D_BUTTON}
             </MenuItem>
+            <MenuItem
+              key={CC.SAVE_3D_IMAGE_BUTTON}
+              onClick={this.save3DImage}
+              style={this.props.hasCode ? styles.menuItem : styles.disabledMenuItem}
+              disabled={!this.props.hasCode}
+            >
+              {CC.SAVE_3D_IMAGE_BUTTON}
+            </MenuItem>
+
 
           </Menu>
         </Drawer>
+        <Snackbar
+          autoHideDuration={2000}
+          message={CC.IMAGE_SAVE_MESSAGE}
+          onRequestClose={this.createSnackbarHandler(false)}
+          open={this.state.snackbarOpen}
+        />
       </div>
     );
   }
@@ -284,6 +370,8 @@ Sidebar.propTypes = {
   targetedId: PropTypes.string,
   elements: PropTypes.object,
   autoRender: PropTypes.bool,
+  hasCanvasImage: PropTypes.bool,
+  hasCode: PropTypes.bool,
 }
 
 export default connect()(Sidebar);
