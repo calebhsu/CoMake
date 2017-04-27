@@ -101,7 +101,6 @@ class ResizeTextfields extends React.Component {
     render() {
 
         const disableTextfields = this.props.targetedId === null;
-        console.log("disableTextfields: " + this.props.targetedId);
         return (
             <div>
                 <IconButton
