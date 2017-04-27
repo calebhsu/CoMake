@@ -24,7 +24,7 @@ const handleCorsRequest = (request, response) => {
    }
 
    console.info(
-     'Handling valid request by user %s to create canvas with users',
+     'Handling valid request by user %s to create canvas',
      request.body.creatingUser
    );
 
@@ -37,15 +37,15 @@ const handleCorsRequest = (request, response) => {
          name: newCanvasName,
          owner: request.body.creatingUser,
      }).then(() => {
-
-       const addUserPromises = [];
-
-       // add the creating user to the canvas
-       addUserPromises.concat(
+       admin.Promise.all(
          UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId)
-       );
-
-       admin.Promise.all(addUserPromises).then(() => {
+       ).then(() => {
+         console.info(
+           'Successfully handled request by user %s to create canvas. Created canvas %s',
+           request.body.creatingUser,
+           newCanvasId
+         );
+         
          // send the new canvas id to the requesting user
          response.send({ newCanvasId });
        });

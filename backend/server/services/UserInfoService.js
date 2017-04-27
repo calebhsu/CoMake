@@ -54,6 +54,11 @@ const handleCorsRequest = (request, response) => {
               providerData
             }
           }).then(() => {
+            console.info(
+              'Successfully handled request to save user info for user %s.',
+              request.body.uid
+            );
+            
             response.send({
               savedUserId: request.body.uid,
               message

@@ -68,6 +68,15 @@ const handleCorsRequest = (request, response) => {
           });
 
           admin.Promise.all(addUserPromises).then(() => {
+            console.info(
+              'Successfully handled request by user %s to share canvas %s. ' +
+              'Users added: [%s]. Users not found [%s]',
+              request.body.sharingUser,
+              request.body.canvasId,
+              usersAdded.toString(),
+              usersNotFound.toString()
+            );
+            
             // send the new canvas id to the requesting user
             response.send({
               sharedCanvasId: request.body.canvasId,

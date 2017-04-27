@@ -86,7 +86,7 @@ const addUserToCanvasByUid = (uid, canvasId) => {
     // adding user to canvas
     promises.push(
       userRef.once('value').then((userSnap) => {
-        canvasRef.child('users').transaction((oldValue) => {
+        return canvasRef.child('users').transaction((oldValue) => {
           if(!oldValue)
             oldValue = {};
 
@@ -100,7 +100,7 @@ const addUserToCanvasByUid = (uid, canvasId) => {
     // add canvas to the user's canvas list
     promises.push(
       canvasRef.child('name').once('value').then((canvasNameSnap) => {
-        userRef.child('canvases').transaction((oldValue) => {
+        return userRef.child('canvases').transaction((oldValue) => {
           if(!oldValue)
             oldValue = {};
 
