@@ -3,7 +3,8 @@
  */
 
 const admin = require('firebase-admin');
-const cors = require('cors')({origin: ["http://localhost:8888", "https://comake-95cb7.firebaseapp.com"]});
+const cors = require('cors')({ origin: ["http://localhost:8888",
+  "https://comake-95cb7.firebaseapp.com"] });
 
 const Errors = require('../helpers/Errors');
 const UserHelper = require('../helpers/UserHelper');
@@ -16,36 +17,27 @@ const UserHelper = require('../helpers/UserHelper');
  */
 const handleCorsRequest = (request, response) => {
   cors(request, response, () => {
-    console.info(
-      'CanvasSharingService.handleRequest - handling a new request: %j',
-      request.body);
-
     if(!request.body.canvasId || typeof request.body.canvasId !== "string") {
-      console.error(
-        'CanvasSharingService.handleRequest - invalid canvasId param, must be a String'
-      );
-      response.status(500)
-        .send('Invalid canvasId param.');
+      response.status(500).send({ message: 'Invalid canvasId param.' });
       return;
     }
 
     if(!request.body.sharingUser || typeof request.body.sharingUser !== "string") {
-      console.error(
-        'CanvasSharingService.handleRequest - invalid sharingUser param, must be a String'
-      );
-      response.status(500)
-        .send('Invalid sharingUser param.');
+      response.status(500).send({ message: 'Invalid sharingUser param.' });
       return;
     }
 
     if(!request.body.userList || !(request.body.userList instanceof Array)) {
-      console.error(
-        'CanvasSharingService.handleRequest - invalid userList param, must be an Array'
-      );
-      response.status(500)
-        .send('Invalid userList param.');
+      response.status(500).send({ message: 'Invalid userList param.' });
       return;
     }
+
+    console.info(
+      'Handling valid request by user %s to share canvas %s with users [%s]',
+      request.body.sharingUser,
+      request.body.canvasId,
+      request.body.userList.toString()
+    );
 
     try {
       const canvasUsersRef = admin.database()
@@ -53,74 +45,66 @@ const handleCorsRequest = (request, response) => {
 
       canvasUsersRef.once('value').then((canvasUsersSnap) => {
 
+        const usersAdded = [];
         const usersNotFound = [];
         const addUserPromises = [];
 
-        if(canvasUsersSnap.val() && canvasUsersSnap.val()[request.body.sharingUser]) {
+        const canvasUsersList = canvasUsersSnap.val();
+
+        if(canvasUsersList && canvasUsersList[request.body.sharingUser]) {
           // add the users in the user list to the canvas
           request.body.userList.forEach((userEmail) => {
             addUserPromises.push(
               UserHelper.addUserToCanvasByEmail(userEmail, request.body.canvasId)
-                .catch((error) => {
-                  if(error === Errors.UserNotFound) {
+                .then(() => {
+                  usersAdded.push(userEmail);
+                }).catch((error) => {
+                  if(error === Errors.UserNotFound)
                     usersNotFound.push(userEmail);
-                  }
-                  else {
-                    console.error(
-                      'CanvasSharingService.handleRequest - unknown error in UserHelper.addUserToCanvasByEmail when adding user %s: %s',
-                      userEmail,
-                      error.message
-                    );
-                  }
+                  else
+                    throw error;
                 })
               );
           });
 
           admin.Promise.all(addUserPromises).then(() => {
             console.info(
-              'CanvasSharingService.handleRequest - completed canvas share with users for canvas %s',
-              request.body.canvasId
+              'Successfully handled request by user %s to share canvas %s. ' +
+              'Users added: [%s]. Users not found [%s]',
+              request.body.sharingUser,
+              request.body.canvasId,
+              usersAdded.toString(),
+              usersNotFound.toString()
             );
-
+            
             // send the new canvas id to the requesting user
             response.send({
               sharedCanvasId: request.body.canvasId,
+              usersAdded,
               usersNotFound
             });
           });
         } else {
-          console.error(
-            'CanvasSharingService.handleRequest - user %s is not on canvas %s and cannot share it',
-            request.body.canvasId
-          );
-
           response.status(500)
             .send({ message: 'Users cannot change canvases they are not assigned to.' });
         }
-
-      }).catch((error) => {
-        console.error(
-          'CanvasSharingService.handleRequest - error sharing canvas %s: %s',
-          request.body.canvasId,
-          error.message
-        );
-
-        response.status(500).send({ message: 'Error sharing canvas.' });
       });
    } catch (error) {
+     // catch any errors that might have occurred
      console.error(
-       'CanvasSharingService.handleRequest - error sharing canvas %s: %s',
+       'Error when user %s shared canvas %s with users [%s]: %s',
+       request.body.sharingUser,
        request.body.canvasId,
+       request.body.userList.toString(),
        error.message
      );
-
      response.status(500).send({ message: 'Error sharing canvas.' });
    }
   });
 };
 
 module.exports = {
-handleCorsRequest
+  handleCorsRequest
 };
 
 /*
