@@ -7,6 +7,8 @@ const cors = require('cors')({origin: ["http://localhost:8888", "https://comake-
 
 const UserHelper = require('../helpers/UserHelper');
 
+const newCanvasName = 'Untitled';
+
 /**
  * Creates a new canvas based on a CanvasCreationService request
  * @param {ExpressRequest} request An express request object representing the request
@@ -16,20 +18,15 @@ const UserHelper = require('../helpers/UserHelper');
 const handleCorsRequest = (request, response) => {
   cors(request, response, () => {
 
-   if(typeof request.body.name !== "string") {
-      response.status(500).send({ message: 'Invalid name param.' });
-      return;
-   }
-
    if(typeof request.body.creatingUser !== "string") {
      response.status(500).send({ message: 'Invalid creatingUser param.' });
      return;
    }
 
-   if(!(request.body.userList instanceof Array)) {
-     response.status(500).send({ message: 'Invalid userList param.' });
-     return;
-   }
+   console.info(
+     'Handling valid request by user %s to create canvas with users',
+     request.body.creatingUser
+   );
 
    try {
      const newCanvasRef = admin.database().ref('/canvases').push();
@@ -37,8 +34,7 @@ const handleCorsRequest = (request, response) => {
 
      //configure the relevant fields on the new canvas
      newCanvasRef.set({
-         items: [],
-         name: request.body.name,
+         name: newCanvasName,
          owner: request.body.creatingUser,
      }).then(() => {
 
@@ -49,24 +45,18 @@ const handleCorsRequest = (request, response) => {
          UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId)
        );
 
-       // add the users in the user list to the canvas
-       request.body.userList.forEach((userEmail) => {
-         addUserPromises.push(
-           UserHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
-         );
-       });
-
        admin.Promise.all(addUserPromises).then(() => {
          // send the new canvas id to the requesting user
          response.send({ newCanvasId });
-       }).catch((error) => {
-         throw error;
        });
 
-     }).catch((error) => {
-       throw error;
      });
    } catch (error) {
+     console.error(
+       'Error when creating canvas with owner %s: %s',
+       request.body.creatingUser,
+       error.message
+     );
      response.status(500).send({ message: 'Error creating canvas.' });
    }
  });
@@ -79,8 +69,6 @@ module.exports = {
 /*
 Example CanvasCreationService Request:
 {
-  name: <canvas-name>,
-  creatingUser: <uid>,
-  userList: <object containing a list of emails>
+  creatingUser: <uid>
 }
 */

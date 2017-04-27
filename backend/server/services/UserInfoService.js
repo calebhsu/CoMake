@@ -18,6 +18,11 @@ const handleCorsRequest = (request, response) => {
       return;
     }
 
+    console.info(
+      'Handling valid request to save user info for user %s',
+      request.body.uid
+    );
+
     try {
       admin.auth().getUser(request.body.uid).then((userRecord) => {
         let message = "";
@@ -40,12 +45,11 @@ const handleCorsRequest = (request, response) => {
 
             return {
               admin: false,
-              canvases: null,
-              createdAt: userRecord.metadata.createdAt,
+              createdAt: userRecord.metadata.createdAt ? userRecord.metadata.createdAt : null,
               disabled: userRecord.disabled ? userRecord.disabled : null,
               displayName: userRecord.displayName ? userRecord.displayName : null,
               email: userRecord.email ? userRecord.email : null,
-              emailVerified: userRecord.emailVerified,
+              emailVerified: userRecord.emailVerified ? userRecord.emailVerified : null,
               photoURL: userRecord.photoURL ? userRecord.photoURL : null,
               providerData
             }
@@ -54,13 +58,14 @@ const handleCorsRequest = (request, response) => {
               savedUserId: request.body.uid,
               message
             });
-          }).catch((error) => {
-            throw error;
           });
-        }).catch((error) => {
-          throw error;
         });
     } catch (error) {
+      console.error(
+        'Error saving user info for user %s: %s',
+        request.body.uid,
+        error.message
+      );
       response.status(500).send({ message: 'Error adding user info.' });
     }
   });

@@ -14,9 +14,7 @@
   */
 const getFirebaseUserByEmail = (email) => {
   return admin.database().ref('/users').orderByChild('email')
-    .equalTo(email).limitToFirst(1).once('value').catch((error) => {
-      throw error
-    });
+    .equalTo(email).limitToFirst(1).once('value');
 };
 
 /**
@@ -47,8 +45,6 @@ const addUserToCanvasByEmail = (email, canvasId) => {
           oldValue[userSnap.key] = userSnap.child('email').val();
 
           return oldValue;
-        }).catch((error) => {
-          throw error;
         });
 
         // add canvas to the user's canvas list
@@ -60,8 +56,6 @@ const addUserToCanvasByEmail = (email, canvasId) => {
               oldValue[canvasId] = canvasNameSnap.val();
 
               return oldValue;
-            }).catch((error) => {
-              throw error;
             });
         });
       } catch (error) {
@@ -99,8 +93,6 @@ const addUserToCanvasByUid = (uid, canvasId) => {
           oldValue[userSnap.key] = userSnap.child('email').val();
 
           return oldValue;
-        }).catch((error) => {
-          throw error;
         });
       })
     );
@@ -115,8 +107,6 @@ const addUserToCanvasByUid = (uid, canvasId) => {
           oldValue[canvasId] = canvasNameSnap.val();
 
           return oldValue;
-        }).catch((error) => {
-          throw error;
         });
       })
     );

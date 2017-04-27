@@ -32,12 +32,20 @@ const handleCorsRequest = (request, response) => {
       return;
     }
 
+    console.info(
+      'Handling valid request by user %s to share canvas %s with users [%s]',
+      request.body.sharingUser,
+      request.body.canvasId,
+      request.body.userList.toString()
+    );
+
     try {
       const canvasUsersRef = admin.database()
         .ref('/canvases/' + request.body.canvasId + '/users');
 
       canvasUsersRef.once('value').then((canvasUsersSnap) => {
 
+        const usersAdded = [];
         const usersNotFound = [];
         const addUserPromises = [];
 
@@ -48,7 +56,9 @@ const handleCorsRequest = (request, response) => {
           request.body.userList.forEach((userEmail) => {
             addUserPromises.push(
               UserHelper.addUserToCanvasByEmail(userEmail, request.body.canvasId)
-                .catch((error) => {
+                .then(() => {
+                  usersAdded.push(userEmail);
+                }).catch((error) => {
                   if(error === Errors.UserNotFound)
                     usersNotFound.push(userEmail);
                   else
@@ -61,19 +71,24 @@ const handleCorsRequest = (request, response) => {
             // send the new canvas id to the requesting user
             response.send({
               sharedCanvasId: request.body.canvasId,
+              usersAdded,
               usersNotFound
             });
-          }).catch((error) => {
-            throw error;
           });
         } else {
           response.status(500)
             .send({ message: 'Users cannot change canvases they are not assigned to.' });
         }
-      }).catch((error) => {
-        throw error;
       });
    } catch (error) {
+     // catch any errors that might have occurred
+     console.error(
+       'Error when user %s shared canvas %s with users [%s]: %s',
+       request.body.sharingUser,
+       request.body.canvasId,
+       request.body.userList.toString(),
+       error.message
+     );
      response.status(500).send({ message: 'Error sharing canvas.' });
    }
   });
