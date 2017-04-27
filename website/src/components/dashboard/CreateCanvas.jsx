@@ -54,8 +54,6 @@ class CreateCanvas extends React.Component {
     );
 
     CanvasCreationService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
-      this.props.dispatch(CanvasActions.setCurrentCanvas(resObj.newCanvasId));
-
       firebase.database().ref(`/canvases/${resObj.newCanvasId}`).once('value')
         .then((canvasSnap) => {
           const canvasObj = {};
