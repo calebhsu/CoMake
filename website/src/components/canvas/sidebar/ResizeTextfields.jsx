@@ -46,11 +46,50 @@ class ResizeTextfields extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+          disableTextfields: true,
+         };
         this.generateButtonHandler = this.generateButtonHandler.bind(this);
         this.handlerTextfieldHeight = this.handlerTextfieldHeight.bind(this);
         this.handlerTextfieldWidth = this.handlerTextfieldWidth.bind(this);
     }
-
+    /**
+     * Function to automatically be performed once the component mount.
+     * Used here to initialize canvas elements if not done and if the new canvas id
+     * is not null
+     * @returns {void}
+     */
+    componentDidMount() {
+      if(this.props.targetedId !== null) {
+        this.setState({
+          disableTextfields: false,
+        });
+      }
+      else{
+        this.setState({
+          disableTextfields: true,
+        });
+      }
+    }
+    /**
+     * Function to automatically be performed once the component receives new props.
+     * Used here to see if user has clicked on an item in the canvas (targetedId) else
+     * it will disable the sidebar items here
+     * @param {Object} nextProps The new props object to be given to the component
+     * @returns {void}
+     */
+    componentWillReceiveProps(nextProps) {
+      if(nextProps.targetedId !== null) {
+        this.setState({
+          disableTextfields: false,
+        });
+      }
+      else{
+        this.setState({
+          disableTextfields: true,
+        });
+      }
+    }
     /**
      * Generic button handler for when the height field is changed.
      * @param {value} changeAmount numerical value for width/height change
@@ -104,6 +143,7 @@ class ResizeTextfields extends React.Component {
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, HEIGHT)}
+                  disabled={this.state.disableTextfields}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -111,11 +151,13 @@ class ResizeTextfields extends React.Component {
                   onChange={this.handlerTextfieldHeight}
                   floatingLabelText="Height"
                   style={styles.field}
+                  disabled={this.state.disableTextfields}
                 />
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(ONE_UNIT, HEIGHT)}
+                  disabled={this.state.disableTextfields}
                 >
                     <AddCircle/>
                 </IconButton>
@@ -123,6 +165,7 @@ class ResizeTextfields extends React.Component {
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, WIDTH)}
+                  disabled={this.state.disableTextfields}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -130,11 +173,13 @@ class ResizeTextfields extends React.Component {
                   onChange={this.handlerTextfieldWidth}
                   floatingLabelText="Width"
                   style={styles.field}
+                  disabled={this.state.disableTextfields}
                 />
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(ONE_UNIT, WIDTH)}
+                  disabled={this.state.disableTextfields}
                 >
                     <AddCircle/>
                 </IconButton>
