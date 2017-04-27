@@ -7,6 +7,8 @@ const cors = require('cors')({origin: ["http://localhost:8888", "https://comake-
 
 const UserHelper = require('../helpers/UserHelper');
 
+const newCanvasName = 'Untitled';
+
 /**
  * Creates a new canvas based on a CanvasCreationService request
  * @param {ExpressRequest} request An express request object representing the request
@@ -15,114 +17,58 @@ const UserHelper = require('../helpers/UserHelper');
  */
 const handleCorsRequest = (request, response) => {
   cors(request, response, () => {
-    console.info(
-      'CanvasCreationService.handleRequest - handling a new request: %j',
-      request.body
-    );
-
-   if(typeof request.body.name !== "string") {
-      console.error('CanvasCreationService.handleRequest - invalid name param, must be a String');
-      response.status(500)
-        .send('Invalid name param.');
-      return;
-   }
 
    if(typeof request.body.creatingUser !== "string") {
-     console.error(
-       'CanvasCreationService.handleRequest - invalid creatingUser param, must be a String'
-     );
-     response.status(500)
-       .send('Invalid creatingUser param.');
+     response.status(500).send({ message: 'Invalid creatingUser param.' });
      return;
    }
 
-   if(!(request.body.userList instanceof Array)) {
-     console.error(
-       'CanvasCreationService.handleRequest - invalid userList param, must be an Array'
-     );
-     response.status(500)
-       .send('Invalid userList param.');
-     return;
-   }
-
-   let newCanvasId = null;
+   console.info(
+     'Handling valid request by user %s to create canvas',
+     request.body.creatingUser
+   );
 
    try {
      const newCanvasRef = admin.database().ref('/canvases').push();
-     newCanvasId = newCanvasRef.key;
-
-     console.info(
-       'CanvasCreationService.handleRequest - creating a new canvas with id %s',
-       newCanvasId
-     );
+     const newCanvasId = newCanvasRef.key;
 
      //configure the relevant fields on the new canvas
      newCanvasRef.set({
-         items: [],
-         name: request.body.name,
+         name: newCanvasName,
          owner: request.body.creatingUser,
      }).then(() => {
-       console.info(
-         'CanvasCreationService.handleRequest - adding users to new canvas %s',
-         newCanvasId
-       );
-
-       const addUserPromises = [];
-
-       // add the creating user to the canvas
-       const addUserUidPromises = UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId);
-
-       addUserUidPromises.forEach((promise) => {
-         addUserPromises.push(promise);
-       });
-
-       // add the users in the user list to the canvas
-       request.body.userList.forEach((userEmail) => {
-         addUserPromises.push(
-           UserHelper.addUserToCanvasByEmail(userEmail, newCanvasId)
+       admin.Promise.all(
+         UserHelper.addUserToCanvasByUid(request.body.creatingUser, newCanvasId)
+       ).then(() => {
+         console.info(
+           'Successfully handled request by user %s to create canvas. Created canvas %s',
+           request.body.creatingUser,
+           newCanvasId
          );
-       });
-
-       console.info(
-         'CanvasCreationService.handleRequest - successfully created canvas %s, sending response to client',
-         newCanvasId
-       );
-
-       admin.Promise.all(addUserPromises).then(() => {
+         
          // send the new canvas id to the requesting user
          response.send({ newCanvasId });
        });
 
-     }).catch((error) => {
-       console.error(
-         'CanvasCreationService.handleRequest - error creating canvas %s: %s',
-         newCanvasId,
-         error.message
-       );
-
-       response.status(500).send({ message: 'Error creating canvas.' });
      });
    } catch (error) {
      console.error(
-       'CanvasCreationService.handleRequest - error creating canvas %s: %s',
-       newCanvasId,
+       'Error when creating canvas with owner %s: %s',
+       request.body.creatingUser,
        error.message
      );
-
      response.status(500).send({ message: 'Error creating canvas.' });
    }
  });
 };
 
 module.exports = {
-handleCorsRequest
+  handleCorsRequest
 };
 
 /*
 Example CanvasCreationService Request:
 {
-  name: <canvas-name>,
-  creatingUser: <uid>,
-  userList: <object containing a list of emails>
+  creatingUser: <uid>
 }
 */
