@@ -29,9 +29,6 @@ export const canvasReducer = (state = RC.BLANK_STATE_CANVAS, action) => {
       pathToChange.push(RC.CANVASES);
       pathToChange.push(action.canvasId);
       return removeField(state, pathToChange);
-    case AC.SET_CURRENT_CANVAS:
-      pathToChange.push(RC.CURRENT_CANVAS);
-      break;
     case AC.SET_CANVAS_NAME:
       pathToChange.push(RC.CANVASES);
       pathToChange.push(action.canvasId);

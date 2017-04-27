@@ -68,17 +68,6 @@ describe('CanvasReducerUnitTests', () => {
       [RC.CANVASES, testId]);
   });
 
-  test('canvasReducer_SetCurrentCanvas', () => {
-    const testId = 'testId';
-    const testAction = {
-      type: AC.SET_CURRENT_CANVAS,
-      payload: testId,
-    }
-    canvasReducer(RC.BLANK_STATE, testAction);
-    expect(ReducerUtil.insertIntoState).toHaveBeenCalledWith(RC.BLANK_STATE,
-      testId, [RC.CURRENT_CANVAS]);
-  });
-
   test('canvasReducer_SetCanvasName', () => {
     const testId = 'testId';
     const testName = 'testName';

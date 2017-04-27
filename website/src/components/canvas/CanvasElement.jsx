@@ -12,6 +12,8 @@ import {
 import { updateAndPersist } from '../../redux/actions/ElementActions';
 import { targetElement } from '../../redux/actions/ActiveElementActions';
 
+const min_dim = 20;
+
 const styles = {
   selected: {
     border: '4px solid rgba(39, 179, 198, 0.78)',
@@ -70,6 +72,11 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
+    if(clientSize.width < min_dim)
+      clientSize.width = min_dim;
+    if(clientSize.height < min_dim)
+      clientSize.height = min_dim;
+
     this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
       clientSize, this.props.currentCanvas));
   }

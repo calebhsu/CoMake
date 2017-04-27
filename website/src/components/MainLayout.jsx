@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { white, grey900, grey700 } from 'material-ui/styles/colors';
 
-import NavBar from './NavBar';
+import DashNavBar from './dashboard/DashNavBar';
+import LandingNavBar from './landing/LandingNavBar';
+
+import { getAuthState } from '../helpers/LoginHelper';
 
 import '../scss/main.scss';
 
@@ -45,21 +49,55 @@ const muiTheme = getMuiTheme({
  */
 class MainLayout extends Component {
   /**
+   * Constructor for the class
+   * @param {Object} props The props to be passed in.
+   * @returns {void}
+   */
+  constructor(props) {
+    super(props);
+  }
+
+  /**
+   * Checks whether user is logged in before component mounts.
+   * @returns {void}
+   */
+  componentWillMount() {
+    getAuthState(this.props.dispatch);
+  }
+
+  /**
    * @method MainLayout#render
    * @returns {HTML} Rendered layout
    */
   render() {
+    const nav = this.props.authState ? <DashNavBar /> : <LandingNavBar />;
+
     return (
       <MuiThemeProvider
        muiTheme={muiTheme}
       >
         <div>
-           <NavBar />
-           {this.props.children}
+           {nav}
+
+           {/*
+              Passes this.props.authState from MainLayout --> Home without needing
+              to call getAuthState and mapping props twice in both components.
+           */}
+           {React.cloneElement(this.props.children, {authState: this.props.authState})}
         </div>
       </MuiThemeProvider>
     );
   }
 }
 
-export default MainLayout;
+const mapStateToProps = state => ({
+  authState: state.userInfoReducer.authState,
+});
+
+MainLayout.propTypes = {
+  authState: PropTypes.bool,
+  children: PropTypes.object,
+  dispatch: PropTypes.func,
+}
+
+export default connect(mapStateToProps)(MainLayout);
