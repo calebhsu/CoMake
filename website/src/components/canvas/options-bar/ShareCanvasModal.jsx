@@ -73,7 +73,7 @@ class ShareCanvasModal extends Component {
   shareCanvas() {
     this.setState({usersNotFound: null});
 
-    if(!this.props.userId || !this.props.currentCanvasId) {
+    if(!this.props.userId || !this.props.currentCanvas) {
      return;
     }
 
@@ -81,13 +81,13 @@ class ShareCanvasModal extends Component {
        return email.trim();
      });
 
-     const reqBody = CanvasSharingService.formRequestBody(
-       this.props.currentCanvasId,
+     const reqBody = CanvasSharingService.formPostBody(
+       this.props.currentCanvas,
        this.props.userId,
        emailList
      );
 
-     CanvasSharingService.sendRequest(reqBody, ServiceEndpoint, (resObj) => {
+     CanvasSharingService.postRequest(reqBody, ServiceEndpoint, (resObj) => {
        if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
 
          var usersNotFoundString =
@@ -210,8 +210,6 @@ ShareCanvasModal.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  canvases: state.canvasReducer[RC.CANVASES],
-  currentCanvasId: state.canvasReducer[RC.CURRENT_CANVAS],
   userId: state.userInfoReducer[RC.USER_INFO][RC.USER_ID],
 });
 

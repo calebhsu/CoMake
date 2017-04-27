@@ -91,7 +91,7 @@
         'height': 160,
       }
 
-      ModelImportService.sendRequest(this.state.modelIdText, (resObj) => {
+      ModelImportService.getRequest(this.state.modelIdText, (resObj) => {
           FBHelper.addElement(this.props.currentCanvas, this.state.modelIdText, resObj,
             CC.INIT_POSITION, INIT_SIZE, CC.INIT_ROTATION);
       });
