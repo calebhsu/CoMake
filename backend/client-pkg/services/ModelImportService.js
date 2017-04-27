@@ -7,64 +7,54 @@ const https = require('https');
 /**
 * Constructs and sends a request to the ModelImportService
 * @param {string} modelId An modelId string for the ModelImportService
-* @param {function} responseCallback A function that will be passed the server's response
+* @param {function} resCallback A function that will be passed the server's response
+* @throws Exceptions on invalid parameter types
 * @returns {void}
 */
-const sendRequest = (modelId, responseCallback) => {
+const getRequest = (modelId, resCallback) => {
   if (typeof modelId !== 'string')
-    throw 'ModelImportService.sendRequest - invalid modelId param, must be a string';
+    throw 'Error forming request to import model ID. Invalid modelId param, must be a String.';
 
-  const path = '/docs/' + modelId + '/images/default.json';
-
-  // header is updated in the server side code
-  const request = https.request({
+  const req = https.request({
     host: 'craftml-io.firebaseio.com',
-    path: path,
+    path: '/docs/' + modelId + '/images/default.json',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
     withCredentials: false
   }, (res) => {
-    var response = null;
+    var resObj = null;
 
-    res.on('data', (bodyChunk) => {
-      if(!response)
-        response = bodyChunk;
+    res.on('data', (bodyPiece) => {
+      if(!resObj)
+        resObj = bodyPiece;
       else
-        response += bodyChunk;
+        resObj += bodyPiece;
     });
 
     res.on('end', () => {
-      try {
-        if (res.statusCode === 200) {
-          responseCallback(response);
-        }
-        else {
-          console.log(
-            'ModelImportService.sendRequest - error handling ModelImportService response: Status Code '
-            + res.statusCode
-          )
-        }
-      } catch (error) {
-        console.log(
-          'ModelImportService.sendRequest - error handling ModelImportService response: '
-            + error.message
+      if (res.statusCode === 200) {
+        resCallback(resObj);
+      }
+      else {
+        console.error('Error code returned from ModelImportService. Code: %d',
+          res.statusCode
         );
-        throw error;
+        throw { message: 'Error code returned from ModelImportService' };
       }
     });
   });
 
-  request.on('error', (error) => {
-    console.log(
-      'ModelImportService.sendRequest - error sending ModelImportService request: '
-        + error.message
-    );
+  req.on('error', (error) => {
+    console.error('Error sending request for model %s. Error is below.', modelId);
+    console.log(error);
     throw error;
   });
 
-  request.end();
+  req.end();
 };
 
-module.exports = { sendRequest };
+module.exports = {
+  getRequest
+};
