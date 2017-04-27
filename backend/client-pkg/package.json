@@ -1,6 +1,6 @@
 {
   "name": "comake-services",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "Client-side service code for CoMake",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,6 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1",
-    "firebase": "^3.6.9",
     "jest": "^18.1.0"
   },
   "dependencies": {
