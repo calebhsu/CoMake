@@ -45,7 +45,8 @@ const postRequest = (reqBody, endpoint, path, resCallback) => {
         console.log(resObj);
       }
 
-      resCallback(jsonRes);
+      if(jsonRes)
+        resCallback(jsonRes);
     });
 
   });
