@@ -2,8 +2,8 @@
 * @file Defines a function that creates and sends a request to the CanvasCreationService
 */
 
-const CNVS_CRTN_SVC_ROUTE = require('../common/Constants.js').CNVS_CRTN_SVC_ROUTE;
-const PostRequestHelper = require('../common/PostRequestHelper.js');
+const CNVS_CRTN_SVC_ROUTE = require('../common/Constants').CNVS_CRTN_SVC_ROUTE;
+const PostRequestHelper = require('../common/PostRequestHelper');
 
 /**
 * Forms the body of a POST request  to the CanvasCreationService

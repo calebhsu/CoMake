@@ -56,10 +56,10 @@ export const performAndDispatchLogin = (dispatch) => {
         .then((userSnap) => {
           if (userSnap.val() === null) {
             const reqBody = CoMakeServices.UserInfoService
-              .formRequestBody(result.user.uid);
+              .formPostBody(result.user.uid);
 
             CoMakeServices.UserInfoService
-              .sendRequest(reqBody, ServiceEndpoint, () => {
+              .postRequest(reqBody, ServiceEndpoint, () => {
               });
           }
         });

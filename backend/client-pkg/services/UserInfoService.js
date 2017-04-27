@@ -2,8 +2,8 @@
 * @file Defines a function that creates and sends a request to the UserInfoService
 */
 
-const USR_INFO_SVC_ROUTE = require('../common/Constants.js').USR_INFO_SVC_ROUTE;
-const PostRequestHelper = require('../common/PostRequestHelper.js');
+const USR_INFO_SVC_ROUTE = require('../common/Constants').USR_INFO_SVC_ROUTE;
+const PostRequestHelper = require('../common/PostRequestHelper');
 
 /**
 * Forms the body of a POST request  to the UserInfoService
