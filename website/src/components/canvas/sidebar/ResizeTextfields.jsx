@@ -13,9 +13,8 @@ import TextField from 'material-ui/TextField';
 import * as AC from '../../../redux/actions/ActionConstants';
 import * as EA from '../../../redux/actions/ElementActions';
 
-
-const ONE_UNIT = 1;
 const HEIGHT = 'height';
+const ONE_UNIT = 10;
 const WIDTH = 'width';
 const styles = {
     field: {
@@ -46,11 +45,13 @@ class ResizeTextfields extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+          disableTextfields: true,
+         };
         this.generateButtonHandler = this.generateButtonHandler.bind(this);
         this.handlerTextfieldHeight = this.handlerTextfieldHeight.bind(this);
         this.handlerTextfieldWidth = this.handlerTextfieldWidth.bind(this);
     }
-
     /**
      * Generic button handler for when the height field is changed.
      * @param {value} changeAmount numerical value for width/height change
@@ -98,12 +99,15 @@ class ResizeTextfields extends React.Component {
         this.props.targetedId, newFieldSize, this.props.currentCanvas));
     }
     render() {
+
+        const disableTextfields = this.props.targetedId === null;
         return (
             <div>
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, HEIGHT)}
+                  disabled={disableTextfields}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -111,11 +115,13 @@ class ResizeTextfields extends React.Component {
                   onChange={this.handlerTextfieldHeight}
                   floatingLabelText="Height"
                   style={styles.field}
+                  disabled={disableTextfields}
                 />
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(ONE_UNIT, HEIGHT)}
+                  disabled={disableTextfields}
                 >
                     <AddCircle/>
                 </IconButton>
@@ -123,6 +129,7 @@ class ResizeTextfields extends React.Component {
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, WIDTH)}
+                  disabled={disableTextfields}
                 >
                     <RemoveCircle/>
                 </IconButton>
@@ -130,11 +137,13 @@ class ResizeTextfields extends React.Component {
                   onChange={this.handlerTextfieldWidth}
                   floatingLabelText="Width"
                   style={styles.field}
+                  disabled={disableTextfields}
                 />
                 <IconButton
                   iconStyle={styles.smallIcon}
                   style={styles.small}
                   onTouchTap={this.generateButtonHandler(ONE_UNIT, WIDTH)}
+                  disabled={disableTextfields}
                 >
                     <AddCircle/>
                 </IconButton>
