@@ -55,16 +55,6 @@ export const removeCanvasUser = (canvasId, userId) => ({
 });
 
 /**
- * Action for setting the current canvas.
- * @param   {String} canvasId Id for the canvas to be set as current.
- * @returns {Object} 		  The object detailing the action.
- */
-export const setCurrentCanvas = (canvasId) => ({
-  type: AC.SET_CURRENT_CANVAS,
-  payload: canvasId,
-});
-
-/**
  * Action for setting a canvas name.
  * @param   {String} canvasId   Id for the canvas to have its name changed.
  * @param   {String} canvasName Name that the canvas will be given from now on.
