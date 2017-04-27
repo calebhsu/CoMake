@@ -2,7 +2,17 @@
  * @file Actions pertaining to login.
  */
 
-import { UPDATE_USER_INFO } from './ActionConstants';
+import { SET_AUTH_STATE, UPDATE_USER_INFO } from './ActionConstants';
+
+/**
+ * Action for setting auth state of user
+ * @param  {Boolean} authState Boolean Whether user is logged in.
+ * @return {Object}          Action for determining pages shown to user.
+ */
+ export const setAuthState = (authState) => ({
+   type: SET_AUTH_STATE,
+   payload: authState,
+ });
 
 /**
  * Action to update the user information.

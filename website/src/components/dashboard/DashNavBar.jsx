@@ -9,7 +9,7 @@ import Home from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import ListItem from 'material-ui/List/ListItem';
 
-import { signOut } from '../helpers/LoginHelper';
+import { signOut } from '../../helpers/LoginHelper';
 
 const styles = {
   appbar: {
@@ -33,6 +33,7 @@ const styles = {
   navUser: {
     backgroundColor: '#a7d2cb',
     color: '#ffffff',
+    cursor: 'default',
     fontSize: 14,
     fontWeight: 600,
     letterSpacing: 1,
@@ -44,9 +45,9 @@ const styles = {
 };
 
 /**
- * @classdesc The nav bar for the page.
+ * @classdesc The nav bar for the authenticated pages.
  */
-class NavBar extends React.Component {
+class DashNavBar extends React.Component {
   /**
    * Constructor for the class.
    * @param {Object} props The props to be passed in.
@@ -81,27 +82,21 @@ class NavBar extends React.Component {
         titleStyle={styles.title}
         iconStyleRight={styles.userElement}
         iconElementLeft={
-          <Link to="/home">
+          <Link to="/">
             <IconButton><Home color="#e74c49" /></IconButton>
           </Link>
         }
         style={styles.appbar}
       >
-        <Link to="/profile">
-          <FlatButton
-            style={styles.navBtn}
-          >
-            <ListItem
-              disabled={true}
-              leftAvatar={
-                <Avatar src={photoURL} />
-              }
-              style={styles.navUser}
-            >
-              {username}
-            </ListItem>
-          </FlatButton>
-        </Link>
+        <ListItem
+          disabled={true}
+          leftAvatar={
+            <Avatar src={photoURL} />
+          }
+          style={styles.navUser}
+        >
+          {username}
+        </ListItem>
         <FlatButton
           label="User Guide"
           labelStyle={styles.navBtnLabel}
@@ -122,9 +117,9 @@ const mapStateToProps = state => ({
   userInfo: state.userInfoReducer.userInfo,
 });
 
-NavBar.propTypes = {
+DashNavBar.propTypes = {
   dispatch: PropTypes.func,
   userInfo: PropTypes.object
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps)(DashNavBar);

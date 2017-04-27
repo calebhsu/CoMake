@@ -2,9 +2,44 @@ import * as firebase from 'firebase';
 import CoMakeServices from 'comake-services';
 
 import * as ClearActions from '../redux/actions/ClearActions';
-import { updateUserInfo } from './../redux/actions/LoginActions';
+import { setAuthState, updateUserInfo } from './../redux/actions/LoginActions';
 import ServiceEndpoint from '../ServiceEndpoint';
 import * as RC from '../redux/reducers/ReducerConstants';
+
+/**
+* Gets user's auth state and updates the state
+* @param  {Function} dispatch The dispatch function for redux
+* @returns {void}
+*/
+export const getAuthState = (dispatch) => {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      dispatch(setAuthState(true));
+    }
+    else {
+      dispatch(setAuthState(false));
+      document.location = "/#/"
+    }
+  });
+}
+
+/**
+* Gets user infos and updates the state
+* @param  {Function} dispatch The dispatch function for redux
+* @returns {void}
+*/
+export const getUserInfo = (dispatch) => {
+  const currentUser = firebase.auth().currentUser;
+
+  if(currentUser) {
+    const actionPayload = {};
+    actionPayload[RC.USER_ID] = currentUser.uid;
+    actionPayload[RC.USERNAME] = currentUser.displayName;
+    actionPayload[RC.USER_PHOTO_URL] = currentUser.photoURL;
+    actionPayload[RC.USER_EMAIL] = currentUser.email;
+    dispatch(updateUserInfo(actionPayload));
+  }
+}
 
 /**
  * Opens login prompt for user and redirects them to the home page if successful.
@@ -35,8 +70,6 @@ export const performAndDispatchLogin = (dispatch) => {
       actionPayload[RC.USER_PHOTO_URL] = result.user.photoURL;
       actionPayload[RC.USER_EMAIL] = result.user.email;
       dispatch(updateUserInfo(actionPayload));
-
-      document.location = "/#/home";
     });
   }
 }
@@ -49,7 +82,5 @@ export const performAndDispatchLogin = (dispatch) => {
 export const signOut = (dispatch) => {
   firebase.auth().signOut().then(() => {
     dispatch(ClearActions.clear());
-
-    document.location = "/#/login";
   });
 }
