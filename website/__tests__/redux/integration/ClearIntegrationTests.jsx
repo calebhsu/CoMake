@@ -21,9 +21,9 @@ describe('ClearIntegrationTests', () => {
   userInfoBranch[RC.USER_PHOTO_URL] = null;
   userInfoBranch[RC.USER_EMAIL] = null;
 
+  blankStoreState[RC.LOGIN_REDUCER][RC.AUTH_STATE] = false;
   blankStoreState[RC.LOGIN_REDUCER][RC.USER_INFO] = userInfoBranch;
   blankStoreState[RC.CANVAS_REDUCER][RC.CANVASES] = {};
-  blankStoreState[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS] = null;
   blankStoreState[RC.ELEMENT_REDUCER][RC.ELEMENTS] = {};
   blankStoreState[RC.ACTIVE_ELEMENT_REDUCER][RC.ACTIVE_ELEMENT] = null;
   blankStoreState[RC.CRAFTML_CODE_REDUCER][RC.CODE] = '';
@@ -42,9 +42,9 @@ describe('ClearIntegrationTests', () => {
   existingUserInfoBranch[RC.USER_PHOTO_URL] = null;
   existingUserInfoBranch[RC.USER_EMAIL] = null;
 
+  existingState[RC.LOGIN_REDUCER][RC.AUTH_STATE] = true;
   existingState[RC.LOGIN_REDUCER][RC.USER_INFO] = userInfoBranch;
   existingState[RC.CANVAS_REDUCER][RC.CANVASES] = {'test': 'test'};
-  existingState[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS] = 'test';
   existingState[RC.ELEMENT_REDUCER][RC.ELEMENTS] = {'test': 'test'};
   existingState[RC.ACTIVE_ELEMENT_REDUCER][RC.ACTIVE_ELEMENT] = 'test';
   existingState[RC.CRAFTML_CODE_REDUCER][RC.CODE] = 'test';

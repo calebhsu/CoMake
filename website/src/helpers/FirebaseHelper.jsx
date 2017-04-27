@@ -95,6 +95,20 @@ export const addElement = (canvasId, module, image, initPosition, initSize, init
 }
 
 /**
+ * Clones the given element in the canvas.
+ * @param  {String} canvasId        The canvas id.
+ * @param  {Object} originalElement Object detailing the element to be cloned.
+ * @param  {Object} initPosition    The initial position for the clone.
+ * @return {Promise}                 Promise associated with the firebase action.
+ */
+export const cloneElement = (canvasId, originalElement, initPosition) => {
+  const canvasPath = '/canvases/' + canvasId + '/elements';
+  const toPush = Object.assign({}, originalElement);
+  toPush[RC.ELEMENT_POSITION] = initPosition;
+  return firebase.database().ref(`${canvasPath}`).push(toPush);
+}
+
+/**
  * Sets a canvas' name.
  * @param {String} canvasId      The canvas id.
  * @param {String} newCanvasName The new canvas name to be set.
@@ -103,6 +117,16 @@ export const addElement = (canvasId, module, image, initPosition, initSize, init
 export const setCanvasName = (canvasId, newCanvasName) => {
   const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_NAME;
   return firebase.database().ref(`${canvasPath}`).set(newCanvasName);
+}
+
+/**
+ * Sets notification that canvas has a corresponding image in storage.
+ * @param {String} canvasId The canvas id.
+ * @returns {Promise}   Promise associated with the firebase action.
+ */
+export const setHasCanvasImage = (canvasId) => {
+  const canvasPath = '/canvases/' + canvasId + '/' + RC.CANVAS_IMAGE;
+  return firebase.database().ref(`${canvasPath}`).set(true);
 }
 
 /**

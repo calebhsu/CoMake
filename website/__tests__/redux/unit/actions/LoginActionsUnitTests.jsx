@@ -8,6 +8,15 @@ import * as RC from '../../../../src/redux/reducers/ReducerConstants';
 
 
 describe('LoginActionsUnitTests', () => {
+  test('SetAuthState', () => {
+    const testAuthState = true;
+    const expected = {
+      type: AC.SET_AUTH_STATE,
+      payload: testAuthState,
+    }
+    expect(LoginActions.setAuthState(testAuthState)).toEqual(expected);
+  });
+
   test('UpdateUserInfo', () => {
     const testId = 'uid';
     const testName = 'First Last';

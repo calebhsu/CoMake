@@ -2,10 +2,9 @@ import React from 'react';
 import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 import Canvas from './components/canvas/Canvas';
-import Home from './components/home/Home';
-import Landing from './components/landing/Landing';
-import Profile from './components/profile/Profile';
+import Home from './components/Home';
 import MainLayout from './components/MainLayout';
+import PageNotFound from './components/PageNotFound';
 
 /**
  * Defines routes for all application components.
@@ -14,12 +13,10 @@ import MainLayout from './components/MainLayout';
 function Routes() {
   return (
     <Router history={hashHistory}>
-      <Route path="/login" component={Landing} />
       <Route path="/" component={MainLayout}>
         <IndexRoute component={Home} />
-        <Route path="/home" component={Home} />
-        <Route path="/canvas" component={Canvas} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/canvas/:canvasId" component={Canvas} />
+        <Route path='*' component={PageNotFound} />
       </Route>
     </Router>
   );

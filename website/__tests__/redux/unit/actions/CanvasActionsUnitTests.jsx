@@ -41,15 +41,6 @@ describe('CanvasActionsUnitTests', () => {
     expect(CA.removeCanvas(testId)).toEqual(expected);
   });
 
-  test('setCurrentCanvas', () => {
-    const testId = 'testId';
-    const expected = {
-      type: AC.SET_CURRENT_CANVAS,
-      payload: testId,
-    }
-    expect(CA.setCurrentCanvas(testId)).toEqual(expected);
-  });
-
   test('setCanvasName', () => {
     const testId = 'testId';
     const testName = 'testName';
