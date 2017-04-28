@@ -17,6 +17,8 @@ import * as ActiveElementActions from '../../redux/actions/ActiveElementActions'
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 import * as CanvasActions from '../../redux/actions/CanvasActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
+import * as FBHelper from '../../helpers/FirebaseHelper';
+import * as CC from './CanvasConstants';
 
 /**
  * @classdesc The component encapsulating the whole Canvas page.
@@ -205,15 +207,22 @@ class Canvas extends React.Component {
   */
   handleKeyPress(event) {
     console.log(event);
-    if(event.code === "Delete"){
-      console.log("DELETING MODEL!")
+    if(this.props.targetedId){
+      if(event.code === "Delete"){
+        this.props.dispatch(ElementActions.removeElementAndPersist(
+          this.props.targetedId, this.props.params.canvasId));
+      }
+      else if(event.ctrlKey === true && event.code === "KeyC") {
+        const targetElement = this.props.elements[this.props.targetedId];
+        FBHelper.cloneElement(this.props.params.canvasId, targetElement,
+          CC.INIT_POSITION);
+      }
+      else if(event.ctrlKey === true && event.code === "KeyV") {
+        const targetElement = this.props.elements[this.props.targetedId];
+        FBHelper.cloneElement(this.props.params.canvasId, targetElement,
+          CC.INIT_POSITION);
+      }
     }
-    if(event.ctrlKey === true && event.code === "KeyC"){
-        console.log("Copying!")
-      }
-    if(event.ctrlKey === true && event.code === "KeyV"){
-        console.log("Pasting!")
-      }
   }
 
   /**
