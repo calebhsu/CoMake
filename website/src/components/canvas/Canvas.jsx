@@ -198,6 +198,11 @@ class Canvas extends React.Component {
   }
 
 
+  /**
+  * Key press handler
+  * @param {Object} event is the event listener for the window
+  * @returns {void}
+  */
   handleKeyPress(event) {
     console.log(event);
     if(event.code === "Delete"){
@@ -209,7 +214,6 @@ class Canvas extends React.Component {
     if(event.ctrlKey === true && event.code === "KeyV"){
         console.log("Pasting!")
       }
-
   }
 
   /**
