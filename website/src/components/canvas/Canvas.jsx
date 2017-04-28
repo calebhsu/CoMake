@@ -199,8 +199,17 @@ class Canvas extends React.Component {
 
 
   handleKeyPress(event) {
-    console.log("KEY PRESSED!");
     console.log(event);
+    if(event.code === "Delete"){
+      console.log("DELETING MODEL!")
+    }
+    if(event.ctrlKey === true && event.code === "KeyC"){
+        console.log("Copying!")
+      }
+    if(event.ctrlKey === true && event.code === "KeyV"){
+        console.log("Pasting!")
+      }
+
   }
 
   /**
