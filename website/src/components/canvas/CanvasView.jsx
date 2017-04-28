@@ -35,6 +35,7 @@ class CanvasView extends React.Component {
    * @param {Object} props The props for the CanvasElement.
    */
   constructor(props) {
+    console.log(props);
     super(props);
   }
 

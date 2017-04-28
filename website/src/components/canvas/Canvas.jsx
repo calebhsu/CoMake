@@ -36,6 +36,7 @@ class Canvas extends React.Component {
 
     this.fetchAndListenForCanvasInfo = this.fetchAndListenForCanvasInfo.bind(this);
     this.processCanvasInfo = this.processCanvasInfo.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   /**
@@ -46,6 +47,7 @@ class Canvas extends React.Component {
    */
   componentDidMount() {
     this.fetchAndListenForCanvasInfo(this.props.params.canvasId);
+    document.addEventListener("keydown", this.handleKeyPress, false);
   }
 
   /**
@@ -77,6 +79,7 @@ class Canvas extends React.Component {
     this.props.dispatch(ElementActions.initElements({}));
     this.props.dispatch(CodeActions.setCode(''));
     this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
+    document.removeEventListener("keydown", this.handleKeyPress, false);
   }
 
   /**
@@ -194,6 +197,12 @@ class Canvas extends React.Component {
     this.hasInitialized = true;
   }
 
+
+  handleKeyPress(event) {
+    console.log("KEY PRESSED!");
+    console.log(event);
+  }
+
   /**
    * Renders the canvas in HTML.
    * If user is not logged in, redirects to home page.
@@ -226,6 +235,7 @@ class Canvas extends React.Component {
             currentCanvas={this.props.params.canvasId}
             elements={this.props.elements}
             targetedId={this.props.targetedId}
+            keydown={this.handleKeyPress}
           />
           <Sidebar
             autoRender={this.props.autoRender}
