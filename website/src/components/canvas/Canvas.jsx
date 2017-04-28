@@ -206,7 +206,6 @@ class Canvas extends React.Component {
   * @returns {void}
   */
   handleKeyPress(event) {
-    console.log(event);
     if(this.props.targetedId){
       if(event.code === "Delete"){
         this.props.dispatch(ElementActions.removeElementAndPersist(
