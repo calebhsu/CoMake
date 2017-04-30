@@ -2,19 +2,18 @@
 * @file Defines a function that creates and sends a request to the UserInfoService
 */
 
-const https = require('https');
-
-const USR_INFO_SVC_ROUTE = require('../Constants.js').USR_INFO_SVC_ROUTE;
+const USR_INFO_SVC_ROUTE = require('../common/Constants').USR_INFO_SVC_ROUTE;
+const PostRequestHelper = require('../common/PostRequestHelper');
 
 /**
-* Forms the body of a proper request  to the UserInfoService
+* Forms the body of a POST request  to the UserInfoService
 * @param {string} uid The uid of the user to add
 * @throws Exceptions on invalid parameter types
-* @returns {object} An object that can be sent as the body of a request to the UserInfoService
+* @returns {object} A POST request body that can be sent to the UserInfoService
 */
-const formRequestBody = (uid) => {
-  if(typeof uid !== "string")
-    throw 'UserInfoService.formRequestBody - invalid uid param, must be a String'
+const formPostBody = (uid) => {
+  if(typeof uid !== 'string')
+    throw 'Error forming request to create user. Invalid uid param, must be a String.'
 
   return {
     uid,
@@ -23,58 +22,16 @@ const formRequestBody = (uid) => {
 
 /**
 * Constructs and sends a request to the UserInfoService
-* @param {object} requestBody An object containing a properly formatted request for the UserInfoService (see formRequestBody)
-* @param {object} endpoint An object containing information about the endpoint to send the request to
-* @param {function} responseCallback A function that will be passed the JSON object of the server's response
+* @param {object} reqBody An object containing the POST request body
+* @param {object} endpoint An object containing the endpoint to send the req to
+* @param {function} resCallback A callback that will be passed the JSON object of the request response
 * @returns {void}
 */
-const sendRequest = (requestBody, endpoint, responseCallback) => {
-  // TODO: can remove withCredentials: false once the access control allow origin
-  // header is updated in the server side code
-  const request = https.request({
-    host: endpoint.host,
-    path: USR_INFO_SVC_ROUTE,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: false
-  }, (res) => {
-    let responseObject = null;
-
-    res.on('data', (bodyChunk) => {
-    if(!responseObject)
-      responseObject = bodyChunk;
-    else
-      responseObject += bodyChunk;
-    });
-
-    res.on('end', () => {
-      try {
-        responseCallback(JSON.parse(responseObject));
-      } catch (error) {
-        console.log(
-          'UserInfoService.sendRequest - error handling UserInfoService response: '
-            + error.message
-        );
-        throw error;
-      }
-    });
-  });
-
-  request.on('error', (error) => {
-    console.log(
-      'UserInfoService.sendRequest - error sending UserInfoService request: '
-        + error.message
-    );
-    throw error;
-  });
-
-  request.write(JSON.stringify(requestBody));
-  request.end();
+const postRequest = (reqBody, endpoint, resCallback) => {
+  PostRequestHelper.postRequest(reqBody, endpoint, USR_INFO_SVC_ROUTE, resCallback);
 };
 
 module.exports = {
-  formRequestBody,
-  sendRequest,
+  formPostBody,
+  postRequest,
 };

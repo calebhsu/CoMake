@@ -129,7 +129,9 @@ class OptionsBar extends Component {
               canvas={this.props.canvas}
               elements={this.props.elements}
             />
-            <ShareCanvasModal />
+            <ShareCanvasModal
+              currentCanvas={this.props.currentCanvas}
+            />
             <ToolbarSeparator style={styles.greyDivider} />
             { userDivs }
           </ToolbarGroup>

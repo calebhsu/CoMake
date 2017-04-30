@@ -11,7 +11,7 @@ describe('UserInfoServiceUnitTests', () => {
        uid,
     }
 
-    const actualRequest = UserInfoService.formRequestBody(uid);
+    const actualRequest = UserInfoService.formPostBody(uid);
 
     expect(actualRequest).toEqual(expectedRequest);
   });
@@ -20,9 +20,9 @@ describe('UserInfoServiceUnitTests', () => {
     const uid = 2;
 
     try {
-      UserInfoService.formRequestBody(uid);
+      UserInfoService.formPostBody(uid);
     } catch(err) {
-      expect(err).toEqual('UserInfoService.formRequestBody - invalid uid param, must be a String');
+      expect(err).toEqual('Error forming request to create user. Invalid uid param, must be a String.');
     }
   });
 });
