@@ -34,7 +34,7 @@ const addUserToCanvasByEmail = (email, canvasId) => {
 
     queryResultSnap.forEach((userSnap) => {
 
-      const userCanvasesRef = admin.database().ref('/users/' + userSnap.key);
+      const userCanvasesRef = admin.database().ref('/users/' + userSnap.key + '/canvases');
 
       try {
         // add user to the canvas's user list
