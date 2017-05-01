@@ -6,6 +6,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
+import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -13,7 +14,6 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
-import Toggle from 'material-ui/Toggle';
 import { black, white, grey900 } from 'material-ui/styles/colors';
 
 import ResizeTextfields from './ResizeTextfields';
@@ -46,20 +46,14 @@ const styles = {
     opacity: 0.5,
     cursor: 'default',
   },
+  propertiesSpacing: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
   renderCheckboxLabel: {
     color: grey900,
     paddingBottom: 10,
     paddingLeft: 16,
-  },
-  off: {
-    fill: grey900,
-  },
-  on: {
-    fill: '#e74c49',
-  },
-  propertiesSpacing: {
-    marginLeft: 20,
-    marginRight: 20,
   },
   sidebar: {
     backgroundColor: '#EFEFEF',
@@ -136,14 +130,6 @@ class Sidebar extends React.Component {
   toggleAutoRender() {
     if (!this.props.autoRender) {
       this.updateCraftmlCode();
-      this.setState( {
-          disableRender: true
-        });
-    }
-    else{
-      this.setState( {
-          disableRender: false
-        });
     }
     this.props.dispatch(CodeActions.setAutoCodeUpdate(!this.props.autoRender));
   }
@@ -220,12 +206,11 @@ class Sidebar extends React.Component {
             <Divider />
 
             <h3>3D Previewer</h3>
-            <Toggle
+            <Checkbox
               label={CC.AUTO_RENDER_CHECKBOX}
-              toggled={this.props.autoRender}
-              onToggle={this.toggleAutoRender}
+              checked={this.props.autoRender}
+              onCheck={this.toggleAutoRender}
               labelStyle={styles.renderCheckboxLabel}
-              iconStyle={this.props.autoRender ? styles.on : styles.off}
               labelPosition={CC.AUTO_RENDER_LABEL_POSITION}
             />
           </Menu>

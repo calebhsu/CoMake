@@ -41,10 +41,9 @@ const muiTheme = getMuiTheme({
     focusColor: '#42aeb5',
     textColor: grey900,
   },
-  toggle: {
-    thumbOnColor: '#42aeb5',
-    thumbOffColor: grey400,
-    trackOnColor: '#a7d2cb',
+  checkbox: {
+    boxColor: grey900,
+    checkedColor: '#e74c49',
   }
 });
 
