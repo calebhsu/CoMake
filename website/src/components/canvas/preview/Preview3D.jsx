@@ -73,6 +73,7 @@ class Preview3D extends React.Component {
             zDepth={2}
           >
             <PreviewOptions
+              autoRender={this.props.autoRender}
               canvas={this.props.canvas}
               currentCanvas={this.props.currentCanvas}
               elements={this.props.elements}
@@ -96,6 +97,7 @@ class Preview3D extends React.Component {
           zDepth={2}
         >
           <PreviewOptions
+            autoRender={this.props.autoRender}
             canvas={this.props.canvas}
             currentCanvas={this.props.currentCanvas}
             elements={this.props.elements}

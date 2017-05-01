@@ -3,9 +3,10 @@
  */
 
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-import IconButton from 'material-ui/IconButton';
 import Clear from 'material-ui/svg-icons/content/clear';
+import IconButton from 'material-ui/IconButton';
 
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 
@@ -63,7 +64,7 @@ class ClearPreviewBtn extends React.Component {
           iconStyle={styles.iconSize}
           onClick={this.clearCraftmlCode}
           style={styles.size}
-          tooltip="Reset Canvas"
+          tooltip="Reset Preview"
           tooltipPosition="top-center"
           touch={true}
         >
@@ -77,4 +78,4 @@ ClearPreviewBtn.propTypes = {
   dispatch: PropTypes.func,
 };
 
-export default ClearPreviewBtn;
+export default connect()(ClearPreviewBtn);

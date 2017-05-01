@@ -6,7 +6,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import AppBar from 'material-ui/AppBar';
-import Checkbox from 'material-ui/Checkbox';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -14,6 +13,7 @@ import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-lef
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Toggle from 'material-ui/Toggle';
 import { black, white, grey900 } from 'material-ui/styles/colors';
 
 import ResizeTextfields from './ResizeTextfields';
@@ -25,8 +25,6 @@ import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
-import * as RC from '../../../redux/reducers/ReducerConstants';
-
 
 const styles = {
   appbar: {
@@ -36,16 +34,6 @@ const styles = {
   toggleEditMenu: {
     marginTop: -1,
     paddingLeft: 5,
-  },
-  editBtn: {
-    color: '#e74c49',
-    height: 25,
-    marginLeft: -13,
-    position: 'absolute',
-    top: 55,
-    padding: 12,
-    width: 25,
-    zIndex: 15,
   },
   listItems: {
     marginTop: 20
@@ -63,10 +51,10 @@ const styles = {
     paddingBottom: 10,
     paddingLeft: 16,
   },
-  unchecked: {
+  off: {
     fill: grey900,
   },
-  checked: {
+  on: {
     fill: '#e74c49',
   },
   propertiesSpacing: {
@@ -99,7 +87,6 @@ class Sidebar extends React.Component {
     this.state = {
       isOpen: true,
       translateX: '0px',
-      snackbarOpen: false,
       disableRender: false,
     };
 
@@ -108,7 +95,6 @@ class Sidebar extends React.Component {
     this.toggleAutoRender = this.toggleAutoRender.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
-    this.createSnackbarHandler = this.createSnackbarHandler.bind(this);
   }
 
   /**
@@ -175,21 +161,6 @@ class Sidebar extends React.Component {
   }
 
   /**
-   * Creates a handler for opening and closing the snackbar.
-   * @param {boolean} toSet Whether the handler sets the snackbar open or closed.
-   * @returns {Function} The hanlder to control the snackbar.
-   */
-  createSnackbarHandler(toSet) {
-    let handler = () => {
-      this.setState({
-        snackbarOpen: toSet,
-      });
-    }
-    handler = handler.bind(this);
-    return handler;
-  }
-
-  /**
    * Renders the HTML for the sidebar.
    * @returns {HTML} The html for the Sidebar.
    */
@@ -248,23 +219,15 @@ class Sidebar extends React.Component {
             />
             <Divider />
 
-            <h3>Rendering</h3>
-            <Checkbox
+            <h3>3D Previewer</h3>
+            <Toggle
               label={CC.AUTO_RENDER_CHECKBOX}
-              checked={this.props.autoRender}
-              onCheck={this.toggleAutoRender}
+              toggled={this.props.autoRender}
+              onToggle={this.toggleAutoRender}
               labelStyle={styles.renderCheckboxLabel}
-              iconStyle={this.props.autoRender ? styles.checked : styles.unchecked}
+              iconStyle={this.props.autoRender ? styles.on : styles.off}
               labelPosition={CC.AUTO_RENDER_LABEL_POSITION}
             />
-            <MenuItem
-              key={CC.RENDER_BUTTON}
-              onClick={this.updateCraftmlCode}
-              style={styles.menuItem}
-              disabled={this.state.disableRender}
-            >
-              {CC.RENDER_BUTTON}
-            </MenuItem>
           </Menu>
         </Drawer>
       </div>

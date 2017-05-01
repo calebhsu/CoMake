@@ -41,6 +41,11 @@ const muiTheme = getMuiTheme({
     focusColor: '#42aeb5',
     textColor: grey900,
   },
+  toggle: {
+    thumbOnColor: '#42aeb5',
+    thumbOffColor: grey400,
+    trackOnColor: '#a7d2cb',
+  }
 });
 
 /**

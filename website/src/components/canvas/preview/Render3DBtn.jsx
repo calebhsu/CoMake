@@ -59,18 +59,17 @@ class Render3DBtn extends React.Component {
    */
   render() {
     return (
-        <IconButton
-          key={CC.RENDER_BUTTON}
-          iconStyle={styles.iconSize}
-          onClick={this.updateCraftmlCode}
-          style={styles.size}
-          tooltip="3D Preview"
-          tooltipPosition="bottom-left"
-          touch={true}
-        >
-          <ThreeDRotation />
-        </IconButton>
-    )
+      <IconButton
+        iconStyle={styles.iconSize}
+        onClick={this.updateCraftmlCode}
+        style={styles.size}
+        tooltip="3D Preview"
+        tooltipPosition="bottom-left"
+        touch={true}
+      >
+        <ThreeDRotation />
+      </IconButton>
+    );
   }
 }
 
