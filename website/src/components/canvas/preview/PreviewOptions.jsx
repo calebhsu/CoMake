@@ -43,7 +43,6 @@ class PreviewOptions extends Component {
  PreviewOptions.propTypes = {
    canvas: PropTypes.object,
    currentCanvas: PropTypes.string,
-   dispatch: PropTypes.func,
    elements: PropTypes.object,
    hasCanvasImage: PropTypes.bool,
    hasCode: PropTypes.bool,

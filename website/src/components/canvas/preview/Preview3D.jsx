@@ -77,6 +77,17 @@ class Preview3D extends React.Component {
     * @returns {HTML}   The HTML of the 3D preview.
    */
   render() {
+    const previewOptions = (
+      <PreviewOptions
+        autoRender={this.props.autoRender}
+        canvas={this.props.canvas}
+        currentCanvas={this.props.currentCanvas}
+        elements={this.props.elements}
+        hasCode={this.props.hasCode}
+        hasCanvasImage={this.props.hasCanvasImage}
+      />
+    );
+
     if (this.props.craftmlCode !== '') {
       return (
           <Paper
@@ -84,14 +95,7 @@ class Preview3D extends React.Component {
             style={styles.preview3d}
             zDepth={2}
           >
-            <PreviewOptions
-              autoRender={this.props.autoRender}
-              canvas={this.props.canvas}
-              currentCanvas={this.props.currentCanvas}
-              elements={this.props.elements}
-              hasCode={this.props.hasCode}
-              hasCanvasImage={this.props.hasCanvasImage}
-            />
+            {previewOptions}
             <SaveImgBtn
               currentCanvas={this.props.currentCanvas}
               hasCode={this.props.hasCode}
@@ -108,14 +112,7 @@ class Preview3D extends React.Component {
           style={styles.preview3dPlaceholder}
           zDepth={2}
         >
-          <PreviewOptions
-            autoRender={this.props.autoRender}
-            canvas={this.props.canvas}
-            currentCanvas={this.props.currentCanvas}
-            elements={this.props.elements}
-            hasCode={this.props.hasCode}
-            hasCanvasImage={this.props.hasCanvasImage}
-          />
+          {previewOptions}
           <div style={styles.placeholderText}>
             <p>Click <ThreeDRotation color={grey800} style={styles.iconPadding} /> to Preview</p>
           </div>
