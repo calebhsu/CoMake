@@ -228,7 +228,7 @@ class ShareCanvasModal extends Component {
 
 ShareCanvasModal.propTypes = {
   canvases: PropTypes.object,
-  currentCanvasId: PropTypes.string,
+  currentCanvas: PropTypes.string,
   userId: PropTypes.string,
 };
 

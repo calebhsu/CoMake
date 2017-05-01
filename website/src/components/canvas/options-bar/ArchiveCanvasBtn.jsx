@@ -81,7 +81,7 @@ class ArchiveCanvas extends React.Component {
     firebase.database().ref(`/users/${userId}/canvases/${canvasId}`).set(false);
     this.props.dispatch(CanvasActions.removeCanvas(canvasId));
 
-    document.location = '/#/home';
+    document.location = '/#/';
   };
 
   /**
