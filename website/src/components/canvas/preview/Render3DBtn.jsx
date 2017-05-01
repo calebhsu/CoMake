@@ -10,7 +10,6 @@ import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
 
 import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
 import { generateScript } from '../../../craftml/ScriptGenerator';
-import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 
 import { grey800 } from 'material-ui/styles/colors';
@@ -60,6 +59,7 @@ class Render3DBtn extends React.Component {
   render() {
     return (
       <IconButton
+        disabled={this.props.autoRender}
         iconStyle={styles.iconSize}
         onClick={this.updateCraftmlCode}
         style={styles.size}
@@ -74,6 +74,7 @@ class Render3DBtn extends React.Component {
 }
 
 Render3DBtn.propTypes = {
+  autoRender: PropTypes.bool,
   canvas: PropTypes.object,
   dispatch: PropTypes.func,
   elements: PropTypes.object,

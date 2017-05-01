@@ -25,6 +25,7 @@ class PreviewOptions extends Component {
    return (
      <div style={styles.previewOptions}>
        <Render3DBtn
+         autoRender={this.props.autoRender}
          canvas={this.props.canvas}
          currentCanvas={this.props.currentCanvas}
          elements={this.props.elements}
@@ -41,6 +42,7 @@ class PreviewOptions extends Component {
 }
 
  PreviewOptions.propTypes = {
+   autoRender: PropTypes.bool,
    canvas: PropTypes.object,
    currentCanvas: PropTypes.string,
    elements: PropTypes.object,
