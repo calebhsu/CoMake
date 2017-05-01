@@ -11,6 +11,7 @@ import Paper from 'material-ui/Paper';
 import ClearPreviewBtn from './ClearPreviewBtn';
 import PreviewOptions from './PreviewOptions';
 import SaveImgBtn from './SaveImgBtn';
+import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
 
 import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
 import { generateScript } from '../../../craftml/ScriptGenerator';
@@ -18,7 +19,18 @@ import { ReactCraftMLRenderer } from 'craftml';
 import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 
+import { grey800 } from 'material-ui/styles/colors';
+
 const styles = {
+  iconPadding: {
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  placeholderText: {
+    color: grey800,
+    height: 50,
+    margin: '95px auto',
+  },
   preview3d: {
     bottom: 28,
     display: 'flex',
@@ -104,6 +116,9 @@ class Preview3D extends React.Component {
             hasCode={this.props.hasCode}
             hasCanvasImage={this.props.hasCanvasImage}
           />
+          <div style={styles.placeholderText}>
+            <p>Click <ThreeDRotation color={grey800} style={styles.iconPadding} /> to Preview</p>
+          </div>
         </Paper>
       )
     }

@@ -43,7 +43,7 @@ const muiTheme = getMuiTheme({
   },
   checkbox: {
     boxColor: grey900,
-    checkedColor: '#e74c49',
+    checkedColor: '#42aeb5',
   }
 });
 
