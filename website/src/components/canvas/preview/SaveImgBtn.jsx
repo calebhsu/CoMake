@@ -121,7 +121,7 @@
            onClick={this.save3DImage}
            style={styles.size}
            tooltip="Capture Image"
-           tooltipPosition="top-left"
+           tooltipPosition="bottom-left"
            touch={true}
          >
            <PhotoCamera color={grey800} />

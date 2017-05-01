@@ -24,12 +24,18 @@ const styles = {
     padding: 3,
     width: 32,
   },
+  activeSize: {
+    display: 'block',
+    height: 64,
+    padding: 13,
+    width: 64,
+  },
   inactiveIcon: {
     color: grey800,
     height: 32,
     width: 32,
   },
-  size: {
+  inactiveSize: {
     display: 'block',
     height: 64,
     padding: 16,
@@ -91,9 +97,9 @@ class CanvasOrientationBtns extends Component {
         <IconButton
           iconStyle={canvasOrientation === CC.OVERHEAD_VIEW ? styles.activeIcon : styles.inactiveIcon}
           onTouchTap={this.handleOrientOverhead}
-          style={styles.size}
+          style={canvasOrientation === CC.OVERHEAD_VIEW  ? styles.activeSize : styles.inactiveSize}
           tooltip="Overhead View"
-          tooltipPosition="top-left"
+          tooltipPosition="bottom-left"
           touch={true}
         >
           <Layers />
@@ -101,9 +107,9 @@ class CanvasOrientationBtns extends Component {
         <IconButton
           iconStyle={canvasOrientation === CC.SIDE_VIEW ? styles.activeIcon : styles.inactiveIcon}
           onTouchTap={this.handleOrientSide}
-          style={styles.size}
+          style={canvasOrientation === CC.SIDE_VIEW ? styles.activeSize : styles.inactiveSize}
           tooltip="Side View"
-          tooltipPosition="top-left"
+          tooltipPosition="bottom-left"
           touch={true}
         >
           <ViewStream />

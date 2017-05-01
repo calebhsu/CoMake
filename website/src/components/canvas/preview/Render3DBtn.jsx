@@ -83,7 +83,7 @@ class Render3DBtn extends React.Component {
           onClick={this.updateCraftmlCode}
           style={styles.size}
           tooltip="3D Preview"
-          tooltipPosition="top-right"
+          tooltipPosition="bottom-left"
           touch={true}
         >
           <ThreeDRotation />
