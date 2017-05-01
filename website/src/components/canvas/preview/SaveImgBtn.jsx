@@ -141,10 +141,8 @@
  }
 
  SaveImgBtn.propTypes = {
-   canvas: PropTypes.object,
    currentCanvas: PropTypes.string,
    dispatch: PropTypes.func,
-   targetedId: PropTypes.string,
    hasCanvasImage: PropTypes.bool,
    hasCode: PropTypes.bool,
  }

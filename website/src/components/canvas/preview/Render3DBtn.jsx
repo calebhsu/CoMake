@@ -31,12 +31,12 @@ const styles = {
 };
 
 /**
- * @classdesc The component that gives a 3D preview of the model.
+ * @classdesc The button component that renders a 3D preview of the model.
  */
 class Render3DBtn extends React.Component {
 
   /**
-   * constructor for the Sidebar.
+   * Constructor for the Render3DBtn.
    * @param {Object} props The props to be passed in.
    */
   constructor(props) {
@@ -53,10 +53,9 @@ class Render3DBtn extends React.Component {
     this.props.dispatch(CodeActions.setCode(newCode));
   }
 
-
   /**
-    * Gives HTML for 3D preview component.
-    * @returns {HTML}   The HTML of the 3D preview.
+    * Gives HTML for 3D render preview button.
+    * @returns {HTML}   The HTML of the 3D render preview button.
    */
   render() {
     return (
@@ -76,11 +75,9 @@ class Render3DBtn extends React.Component {
 }
 
 Render3DBtn.propTypes = {
-  autoRender: PropTypes.bool,
   canvas: PropTypes.object,
   dispatch: PropTypes.func,
   elements: PropTypes.object,
-  hasCode: PropTypes.bool,
 };
 
 export default connect()(Render3DBtn);

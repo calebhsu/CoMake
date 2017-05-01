@@ -43,15 +43,6 @@ const styles = {
  * @classdesc The component that gives a 3D preview of the model.
  */
 class Preview3D extends React.Component {
-
-  /**
-   * constructor for the Sidebar.
-   * @param {Object} props The props to be passed in.
-   */
-  constructor(props) {
-    super(props);
-  }
-
   /**
    * If the elements or canvas orientation have changed and auto-render is on then update code.
    * @param {Object} nextProps  The next props to be recieved by the component.

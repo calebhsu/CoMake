@@ -31,12 +31,12 @@ const styles = {
 };
 
 /**
- * @classdesc The component that gives a 3D preview of the model.
+ * @classdesc The button that clears the 3D preview of the model.
  */
 class ClearPreviewBtn extends React.Component {
 
   /**
-   * constructor for the Sidebar.
+   * Constructor for the clear preview button.
    * @param {Object} props The props to be passed in.
    */
   constructor(props) {
@@ -44,7 +44,6 @@ class ClearPreviewBtn extends React.Component {
 
     this.clearCraftmlCode = this.clearCraftmlCode.bind(this);
   }
-
 
   /**
    * Handler for clearing the 3D model i.e. clearing the CraftML code.
@@ -54,10 +53,9 @@ class ClearPreviewBtn extends React.Component {
     this.props.dispatch(CodeActions.setCode(''));
   }
 
-
   /**
-    * Gives HTML for 3D preview component.
-    * @returns {HTML}   The HTML of the 3D preview.
+    * Gives HTML for ClearPreviewBtn.
+    * @returns {HTML}   The HTML of the clear 3D preview button.
    */
   render() {
     return (

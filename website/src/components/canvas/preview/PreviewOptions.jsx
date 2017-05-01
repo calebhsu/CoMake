@@ -6,7 +6,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import CanvasOrientationBtns from './CanvasOrientationBtns';
-import ClearPreviewBtn from './ClearPreviewBtn';
 import Render3DBtn from './Render3DBtn';
 
 const styles = {
