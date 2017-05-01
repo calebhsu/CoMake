@@ -6,8 +6,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import CanvasOrientationBtns from './CanvasOrientationBtns';
+import ClearPreviewBtn from './ClearPreviewBtn';
 import Render3DBtn from './Render3DBtn';
-import SaveImgBtn from './SaveImgBtn';
 
 const styles = {
   previewOptions: {
@@ -35,11 +35,6 @@ class PreviewOptions extends Component {
        <CanvasOrientationBtns
          canvas={this.props.canvas}
          currentCanvas={this.props.currentCanvas}
-       />
-       <SaveImgBtn
-         currentCanvas={this.props.currentCanvas}
-         hasCode={this.props.hasCode}
-         hasCanvasImage={this.props.hasCanvasImage}
        />
      </div>
    );

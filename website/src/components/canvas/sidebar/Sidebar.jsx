@@ -15,7 +15,6 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import { black, white, grey900 } from 'material-ui/styles/colors';
-import Snackbar from 'material-ui/Snackbar';
 
 import ResizeTextfields from './ResizeTextfields';
 import RotationSlider from './RotationSlider';
@@ -26,7 +25,6 @@ import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 import * as ElementActions from '../../../redux/actions/ElementActions';
 import * as FBHelper from '../../../helpers/FirebaseHelper';
-import * as FBStorageHelper from '../../../helpers/FirebaseStorageHelper';
 import * as RC from '../../../redux/reducers/ReducerConstants';
 
 
@@ -107,7 +105,6 @@ class Sidebar extends React.Component {
 
     this.cloneElement = this.cloneElement.bind(this);
     this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
-    this.clearCraftmlCode = this.clearCraftmlCode.bind(this);
     this.toggleAutoRender = this.toggleAutoRender.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
@@ -144,14 +141,6 @@ class Sidebar extends React.Component {
   updateCraftmlCode() {
     const newCode = generateScript(this.props.elements, this.props.canvas[CANVAS_ORIENTATION]);
     this.props.dispatch(CodeActions.setCode(newCode));
-  }
-
-  /**
-   * Handler for clearing the 3D model i.e. clearing the craftml code.
-   * @returns {void}
-   */
-  clearCraftmlCode() {
-    this.props.dispatch(CodeActions.setCode(''));
   }
 
   /**
@@ -275,13 +264,6 @@ class Sidebar extends React.Component {
               disabled={this.state.disableRender}
             >
               {CC.RENDER_BUTTON}
-            </MenuItem>
-            <MenuItem
-              key={CC.CLEAR_3D_BUTTON}
-              onClick={this.clearCraftmlCode}
-              style={styles.menuItem}
-            >
-              {CC.CLEAR_3D_BUTTON}
             </MenuItem>
           </Menu>
         </Drawer>

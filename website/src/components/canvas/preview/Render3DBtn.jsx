@@ -44,23 +44,6 @@ class Render3DBtn extends React.Component {
     this.updateCraftmlCode = this.updateCraftmlCode.bind(this);
   }
 
-  // /**
-  //  * If the elements or canvas orientation have changed and auto-render is on then update code.
-  //  * @param {Object} nextProps  The next props to be recieved by the component.
-  //  * @returns {void}
-  //  */
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.autoRender) {
-  //     if (! _.isEqual(this.props.elements, nextProps.elements) ||
-  //         this.props.canvas[CANVAS_ORIENTATION] !== nextProps.canvas[CANVAS_ORIENTATION]) {
-  //           const canvasOrientation = nextProps.canvas ? nextProps.canvas[CANVAS_ORIENTATION] : CC.OVERHEAD_VIEW;
-  //           const newCode = generateScript(nextProps.elements, canvasOrientation);
-  //
-  //           this.props.dispatch(CodeActions.setCode(newCode));
-  //     }
-  //   }
-  // }
-
   /**
    * Handler for updating craftml code (triggers 3D rerender).
    * @returns {void}

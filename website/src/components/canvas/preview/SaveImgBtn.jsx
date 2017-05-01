@@ -22,10 +22,13 @@
      width: 32,
    },
    size: {
-     display: 'block',
      height: 64,
-     padding: 16,
+     padding: 10,
+     position: 'absolute',
+     right: 0,
+     top: -2,
      width: 64,
+     zIndex: 200,
    },
  };
 
@@ -121,7 +124,7 @@
            onClick={this.save3DImage}
            style={styles.size}
            tooltip="Capture Image"
-           tooltipPosition="bottom-left"
+           tooltipPosition="top-center"
            touch={true}
          >
            <PhotoCamera color={grey800} />

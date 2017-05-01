@@ -8,7 +8,7 @@ export const RENDER_WRAPPER_ID = 'renderwrapper';
 export const CANVAS_MISSING = 'Canvas not present for image capture.';
 export const IMAGE_UPLOAD_PAUSED = 'Canvas image upload paused.';
 export const IMAGE_UPLOAD_ERROR = 'Error uploading canvas image.';
-export const IMAGE_SAVE_MESSAGE = 'Image Saved';
+export const IMAGE_SAVE_MESSAGE = 'Image saved!';
 
 // Sidebar buttons
 export const CLONE_ELEMENT_BUTTON = 'Clone Current Model';

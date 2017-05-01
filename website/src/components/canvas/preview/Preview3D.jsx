@@ -8,7 +8,9 @@ import _ from 'lodash';
 
 import Paper from 'material-ui/Paper';
 
+import ClearPreviewBtn from './ClearPreviewBtn';
 import PreviewOptions from './PreviewOptions';
+import SaveImgBtn from './SaveImgBtn';
 
 import { CANVAS_ORIENTATION } from '../../../redux/reducers/ReducerConstants';
 import { generateScript } from '../../../craftml/ScriptGenerator';
@@ -86,6 +88,12 @@ class Preview3D extends React.Component {
               hasCode={this.props.hasCode}
               hasCanvasImage={this.props.hasCanvasImage}
             />
+            <SaveImgBtn
+              currentCanvas={this.props.currentCanvas}
+              hasCode={this.props.hasCode}
+              hasCanvasImage={this.props.hasCanvasImage}
+            />
+            <ClearPreviewBtn />
             <ReactCraftMLRenderer
               code={this.props.craftmlCode} />
           </Paper>
