@@ -6,9 +6,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
-import ThreeDRotation from 'material-ui/svg-icons/action/three-d-rotation';
 
 import PreviewOptions from './PreviewOptions';
 
@@ -18,24 +16,7 @@ import { ReactCraftMLRenderer } from 'craftml';
 import * as CC from '../CanvasConstants';
 import * as CodeActions from '../../../redux/actions/CraftmlCodeActions';
 
-import { grey800 } from 'material-ui/styles/colors';
-
 const styles = {
-  iconSize: {
-    color: grey800,
-    height: 48,
-    width: 48,
-  },
-  img: {
-    padding: '5px 5px 1px',
-    width: 95,
-  },
-  paper: {
-    display: 'inline-block',
-    height: 90,
-    textAlign: 'center',
-    width: 100,
-  },
   preview3d: {
     bottom: 28,
     display: 'flex',
@@ -44,15 +25,15 @@ const styles = {
     right: 20,
     zIndex: 100,
   },
-  previewOptions: {
+  preview3dPlaceholder: {
+    bottom: 28,
+    height: 280,
+    display: 'flex',
+    opacity: 0.9,
+    position: 'fixed',
+    right: 20,
+    width: 320,
     zIndex: 100,
-  },
-  size: {
-    height: 96,
-    marginBottom: -10,
-    marginRight: 6,
-    padding: 24,
-    width: 96,
   },
 };
 
@@ -93,7 +74,6 @@ class Preview3D extends React.Component {
   render() {
     if (this.props.craftmlCode !== '') {
       return (
-        <div>
           <Paper
             id={CC.RENDER_WRAPPER_ID}
             style={styles.preview3d}
@@ -102,27 +82,28 @@ class Preview3D extends React.Component {
             <PreviewOptions
               canvas={this.props.canvas}
               currentCanvas={this.props.currentCanvas}
+              elements={this.props.elements}
               hasCode={this.props.hasCode}
               hasCanvasImage={this.props.hasCanvasImage}
             />
             <ReactCraftMLRenderer
               code={this.props.craftmlCode} />
           </Paper>
-        </div>
       );
     } else {
       return (
-        <div style={styles.preview3d}>
-          <IconButton
-            iconStyle={styles.iconSize}
-            style={styles.size}
-            tooltip="3D Preview"
-            tooltipPosition="top-center"
-            touch={true}
-          >
-            <ThreeDRotation />
-          </IconButton>
-        </div>
+        <Paper
+          style={styles.preview3dPlaceholder}
+          zDepth={2}
+        >
+          <PreviewOptions
+            canvas={this.props.canvas}
+            currentCanvas={this.props.currentCanvas}
+            elements={this.props.elements}
+            hasCode={this.props.hasCode}
+            hasCanvasImage={this.props.hasCanvasImage}
+          />
+        </Paper>
       )
     }
   }

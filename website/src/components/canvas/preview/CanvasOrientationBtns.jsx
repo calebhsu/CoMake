@@ -93,7 +93,7 @@ class CanvasOrientationBtns extends Component {
           onTouchTap={this.handleOrientOverhead}
           style={styles.size}
           tooltip="Overhead View"
-          tooltipPosition="bottom-left"
+          tooltipPosition="top-left"
           touch={true}
         >
           <Layers />
@@ -103,7 +103,7 @@ class CanvasOrientationBtns extends Component {
           onTouchTap={this.handleOrientSide}
           style={styles.size}
           tooltip="Side View"
-          tooltipPosition="bottom-left"
+          tooltipPosition="top-left"
           touch={true}
         >
           <ViewStream />

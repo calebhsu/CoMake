@@ -8,22 +8,17 @@
  import IconButton from 'material-ui/IconButton';
  import PhotoCamera from 'material-ui/svg-icons/image/photo-camera';
  import Snackbar from 'material-ui/Snackbar';
- import { grey400, grey800 } from 'material-ui/styles/colors';
 
  import * as CC from '../CanvasConstants';
  import * as FBHelper from '../../../helpers/FirebaseHelper';
  import * as FBStorageHelper from '../../../helpers/FirebaseStorageHelper';
 
+ import { grey800 } from 'material-ui/styles/colors';
+
  const styles = {
-   activeIcon: {
-     color: grey800,
+   icon: {
      height: 32,
      padding: 3,
-     width: 32,
-   },
-   inactiveIcon: {
-     color: grey400,
-     height: 32,
      width: 32,
    },
    size: {
@@ -39,16 +34,13 @@
    */
  class SaveImgBtn extends Component {
    /**
-    * constructor for the Sidebar.
+    * Constructor for the save image button.
     * @param {Object} props The props to be passed in.
     */
    constructor(props) {
      super(props);
      this.state = {
-       isOpen: true,
-       translateX: '0px',
        snackbarOpen: false,
-       disableRender: false,
      };
 
      this.save3DImage = this.save3DImage.bind(this);
@@ -125,15 +117,14 @@
        <div>
          <IconButton
            disabled={!this.props.hasCode}
-           iconStyle={this.props.hasCode ? styles.activeIcon : styles.inactiveIcon}
            key={CC.SAVE_3D_IMAGE_BUTTON}
            onClick={this.save3DImage}
            style={styles.size}
            tooltip="Capture Image"
-           tooltipPosition="bottom-left"
+           tooltipPosition="top-left"
            touch={true}
          >
-           <PhotoCamera />
+           <PhotoCamera color={grey800} />
          </IconButton>
          <Snackbar
            autoHideDuration={2000}

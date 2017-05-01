@@ -111,7 +111,6 @@ class Sidebar extends React.Component {
     this.toggleAutoRender = this.toggleAutoRender.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
     this.removeElement = this.removeElement.bind(this);
-    this.save3DImage = this.save3DImage.bind(this);
     this.createSnackbarHandler = this.createSnackbarHandler.bind(this);
   }
 
@@ -172,52 +171,6 @@ class Sidebar extends React.Component {
         });
     }
     this.props.dispatch(CodeActions.setAutoCodeUpdate(!this.props.autoRender));
-  }
-
-  /**
-   * Gets the image URL for the 3D render.
-   * @returns {String}  The URL for the image.
-   * @throws Will throw if canvas has not been loaded onto the page yet.
-   */
-  getImageURL() {
-    const renderWrapper = document.getElementById(CC.RENDER_WRAPPER_ID);
-    if (renderWrapper !== null) {
-      const canvas = renderWrapper.getElementsByTagName('canvas')[0];
-      return canvas.toDataURL();
-    } else {
-      throw CC.CANVAS_MISSING;
-    }
-  }
-
-  /**
-   * Saves off an image of the current 3D Renderer to firebase.
-   * @returns {void}
-   */
-  save3DImage() {
-    const openSnackbarHandler = this.createSnackbarHandler(true);
-    let imageURL = null;
-    try {
-      imageURL = this.getImageURL();
-    } catch(e) {
-      console.error(e);
-      return;
-    }
-    if (!this.props.hasCanvasImage) {
-      FBHelper.setHasCanvasImage(this.props.currentCanvas);
-    }
-    const processingUpload = (snapshot) => {
-      if (snapshot.state === 'paused') {
-        console.error(CC.IMAGE_UPLOAD_PAUSED);
-      }
-    };
-    const uploadSuccessful = () => {
-      openSnackbarHandler();
-    }
-    const uploadError = () => {
-      console.error(CC.IMAGE_UPLOAD_ERROR);
-    }
-    FBStorageHelper.saveRenderedImage(this.props.currentCanvas, imageURL,
-      uploadSuccessful, uploadError, processingUpload);
   }
 
   /**
