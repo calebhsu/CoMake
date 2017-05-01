@@ -11,7 +11,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
-import { white, grey900 } from 'material-ui/styles/colors';
+import { white, grey900, red900 } from 'material-ui/styles/colors';
 
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import ServiceEndpoint from '../../../ServiceEndpoint';
@@ -35,6 +35,12 @@ const styles = {
     color: white,
     fontWeight: 700,
   },
+  sbSuccess: {
+    backgroundColor: grey900
+  },
+  sbError: {
+    backgroundColor: red900
+  },
   wrapper: {
     display: 'inline-block',
   },
@@ -55,8 +61,10 @@ class ShareCanvasModal extends Component {
     this.state = {
       open: false,
       emailListText: null,
-      usersNotFound: null,
+      shareMsg: '',
+      shareSnackTime: 2000,
       snackbarOpen: false,
+      snackbarStyle: styles.sbSuccess
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
@@ -71,7 +79,11 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   shareCanvas() {
-    this.setState({usersNotFound: null});
+    this.setState({
+      shareMsg: '',
+      shareSnackTime: 2000,
+      snackbarStyle: styles.sbSuccess
+    });
 
     if(!this.props.userId || !this.props.currentCanvas) {
      return;
@@ -87,6 +99,8 @@ class ShareCanvasModal extends Component {
        emailList
      );
 
+     this.handleCloseModal();
+
      CanvasSharingService.postRequest(reqBody, ServiceEndpoint, (resObj) => {
        if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
 
@@ -95,15 +109,24 @@ class ShareCanvasModal extends Component {
             (notFoundEmailList, userEmail) => {
               if(notFoundEmailList)
                 return notFoundEmailList + ', ' + userEmail
-              return 'User(s) were not found: ' + userEmail
+              return 'Error sharing canvas. User(s) were not found: ' + userEmail
                },
               null
             );
 
-         this.setState({usersNotFound: usersNotFoundString});
+         this.setState({
+           shareMsg: usersNotFoundString,
+           shareSnackTime: 5000,
+           snackbarOpen: true,
+           snackbarStyle: styles.sbError
+         });
        } else {
-         this.handleCloseModal();
-         this.setState({snackbarOpen: true});
+         this.setState({
+           shareMsg: 'Canvas shared successfully.',
+           shareSnackTime: 2000,
+           snackbarOpen: true,
+           snackbarStyle: styles.sbSuccess
+         });
        }
      });
    }
@@ -189,12 +212,12 @@ class ShareCanvasModal extends Component {
             fullWidth={true}
             hintText="abc123@email.com"
             onBlur={this.updateEmailListText}
-            errorText={this.state.usersNotFound}
           />
         </Dialog>
         <Snackbar
-          autoHideDuration={1000}
-          message="Canvas shared successfully."
+          autoHideDuration={this.state.shareSnackTime}
+          bodyStyle={this.state.snackbarStyle}
+          message={this.state.shareMsg}
           onRequestClose={this.handleSnackbarRequestClose}
           open={this.state.snackbarOpen}
         />
