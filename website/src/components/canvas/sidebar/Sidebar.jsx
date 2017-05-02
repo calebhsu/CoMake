@@ -46,7 +46,7 @@ const styles = {
     opacity: 0.5,
     cursor: 'default',
   },
-  propertiesSpacing: {
+  menu: {
     marginLeft: 20,
     marginRight: 20,
   },
@@ -54,14 +54,15 @@ const styles = {
     color: grey900,
     paddingBottom: 10,
     paddingLeft: 16,
+    width: 'calc(100% - 90px)',
   },
   sidebar: {
     backgroundColor: '#EFEFEF',
     color: black,
-    height: '92vh',
     marginTop: 56,
-    overflow: 'hidden',
-    position: 'fixed'
+    overflowY: 'auto',
+    paddingBottom: 56,
+    position: 'fixed',
   },
   toggleButton: {
     marginRight: -5,
@@ -173,9 +174,9 @@ class Sidebar extends React.Component {
             style={styles.appbar}
           />
           <Menu
-            style={styles.propertiesSpacing}
-            disableAutoFocus={true}>
-
+            style={styles.menu}
+            disableAutoFocus={true}
+          >
             <MenuItem
               onClick={this.cloneElement}
               style={this.props.targetedId === null ? styles.disabledMenuItem : styles.menuItem}
@@ -207,11 +208,11 @@ class Sidebar extends React.Component {
 
             <h3>3D Previewer</h3>
             <Checkbox
-              label={CC.AUTO_RENDER_CHECKBOX}
               checked={this.props.autoRender}
-              onCheck={this.toggleAutoRender}
-              labelStyle={styles.renderCheckboxLabel}
+              label={CC.AUTO_RENDER_CHECKBOX}
               labelPosition={CC.AUTO_RENDER_LABEL_POSITION}
+              labelStyle={styles.renderCheckboxLabel}
+              onCheck={this.toggleAutoRender}
             />
           </Menu>
         </Drawer>
