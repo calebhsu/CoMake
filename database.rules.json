@@ -19,8 +19,8 @@
             },
             "rotation": { ".validate": "!newData.exists() || newData.isNumber()" }, // rotation field is a number
             "size":{
-              "height":{ ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 20)" }, // height field is a number
-              "width":{ ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 20)" } // width field is a number
+              "height":{ ".validate": "!newData.exists() || (newData.isNumber() && newData.val() > 0)" }, // height field is a number
+              "width":{ ".validate": "!newData.exists() || (newData.isNumber() && newData.val() > 0)" } // width field is a number
             }
           }
         },
