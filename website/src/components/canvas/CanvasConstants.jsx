@@ -8,14 +8,11 @@ export const RENDER_WRAPPER_ID = 'renderwrapper';
 export const CANVAS_MISSING = 'Canvas not present for image capture.';
 export const IMAGE_UPLOAD_PAUSED = 'Canvas image upload paused.';
 export const IMAGE_UPLOAD_ERROR = 'Error uploading canvas image.';
-export const IMAGE_SAVE_MESSAGE = 'Image Saved';
+export const IMAGE_SAVE_MESSAGE = 'Image saved!';
 
 // Sidebar buttons
 export const CLONE_ELEMENT_BUTTON = 'Clone Current Model';
 export const DELETE_ELEMENT_BUTTON = 'Delete Current Model';
-export const RENDER_BUTTON = 'Render';
-export const CLEAR_3D_BUTTON = 'Clear 3D Preview';
-export const SAVE_3D_IMAGE_BUTTON = 'Save Rendered Image';
 export const SIDEBAR_BUTTONS = [CLONE_ELEMENT_BUTTON, DELETE_ELEMENT_BUTTON];
 export const AUTO_RENDER_CHECKBOX = 'Auto Render';
 export const AUTO_RENDER_LABEL_POSITION = 'left';

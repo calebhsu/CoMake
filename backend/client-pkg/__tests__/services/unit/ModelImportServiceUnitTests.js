@@ -8,9 +8,9 @@ describe('ModelImportServiceUnitTests', () => {
     const modelId = 92315;
 
     try {
-      ModelImportService.sendRequest(modelId);
+      ModelImportService.getRequest(modelId);
     } catch(err) {
-      expect(err).toEqual('ModelImportService.sendRequest - invalid modelId param, must be a string');
+      expect(err).toEqual('Error forming request to import model ID. Invalid modelId param, must be a String.');
     }
   });
 });

@@ -13,25 +13,24 @@ import TextField from 'material-ui/TextField';
 import * as AC from '../../../redux/actions/ActionConstants';
 import * as EA from '../../../redux/actions/ElementActions';
 
-
-const ONE_UNIT = 1;
 const HEIGHT = 'height';
+const ONE_UNIT = 10;
 const WIDTH = 'width';
 const styles = {
     field: {
-        width: '25%'
+        width: '45%'
     },
     smallIcon: {
-        height: 36,
-        width: 36
+        height: 24,
+        width: 24
     },
     small: {
         display: 'inline-block',
-        height: 60,
+        height: 48,
         paddingLeft: 2,
         paddingRight: 2,
         paddingBottom: 0,
-        width: 60
+        width: 48
     }
 };
 
@@ -46,11 +45,11 @@ class ResizeTextfields extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.generateButtonHandler = this.generateButtonHandler.bind(this);
         this.handlerTextfieldHeight = this.handlerTextfieldHeight.bind(this);
         this.handlerTextfieldWidth = this.handlerTextfieldWidth.bind(this);
     }
-
     /**
      * Generic button handler for when the height field is changed.
      * @param {value} changeAmount numerical value for width/height change
@@ -98,43 +97,62 @@ class ResizeTextfields extends React.Component {
         this.props.targetedId, newFieldSize, this.props.currentCanvas));
     }
     render() {
+        const disableTextfields = this.props.targetedId === null;
+
+        let elementHeight = '';
+        let elementWidth = '';
+        if (this.props.elements &&
+            this.props.elements[this.props.targetedId]) {
+              elementHeight = this.props.elements[this.props.targetedId].size.height;
+              elementWidth = this.props.elements[this.props.targetedId].size.width;
+        }
+
         return (
             <div>
                 <IconButton
+                  disabled={disableTextfields}
                   iconStyle={styles.smallIcon}
-                  style={styles.small}
                   onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, HEIGHT)}
+                  style={styles.small}
                 >
                     <RemoveCircle/>
                 </IconButton>
                 <TextField
-                  onChange={this.handlerTextfieldHeight}
+                  value={elementHeight}
+                  disabled={disableTextfields}
                   floatingLabelText="Height"
+                  onChange={this.handlerTextfieldHeight}
                   style={styles.field}
                 />
                 <IconButton
+                  disabled={disableTextfields}
                   iconStyle={styles.smallIcon}
-                  style={styles.small}
                   onTouchTap={this.generateButtonHandler(ONE_UNIT, HEIGHT)}
+                  style={styles.small}
                 >
                     <AddCircle/>
                 </IconButton>
+                <br />
                 <IconButton
+                  disabled={disableTextfields}
                   iconStyle={styles.smallIcon}
-                  style={styles.small}
                   onTouchTap={this.generateButtonHandler(-1 * ONE_UNIT, WIDTH)}
+                  style={styles.small}
                 >
                     <RemoveCircle/>
                 </IconButton>
                 <TextField
-                  onChange={this.handlerTextfieldWidth}
+                  value={elementWidth}
+                  disabled={disableTextfields}
                   floatingLabelText="Width"
+                  onChange={this.handlerTextfieldWidth}
                   style={styles.field}
                 />
                 <IconButton
+                  disabled={disableTextfields}
                   iconStyle={styles.smallIcon}
-                  style={styles.small}
                   onTouchTap={this.generateButtonHandler(ONE_UNIT, WIDTH)}
+                  style={styles.small}
                 >
                     <AddCircle/>
                 </IconButton>
