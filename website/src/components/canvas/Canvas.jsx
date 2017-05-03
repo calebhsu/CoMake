@@ -211,11 +211,6 @@ class Canvas extends React.Component {
         this.props.dispatch(ElementActions.removeElementAndPersist(
           this.props.targetedId, this.props.params.canvasId));
       }
-      else if(event.ctrlKey === true && event.code === "KeyC") {
-        const targetElement = this.props.elements[this.props.targetedId];
-        FBHelper.cloneElement(this.props.params.canvasId, targetElement,
-          CC.INIT_POSITION);
-      }
       else if(event.ctrlKey === true && event.code === "KeyV") {
         const targetElement = this.props.elements[this.props.targetedId];
         FBHelper.cloneElement(this.props.params.canvasId, targetElement,
