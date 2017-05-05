@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Box, Grid } from 'reflexbox';
+import { Box } from 'reflexbox';
 
 import CreateCanvas from './CreateCanvas';
 

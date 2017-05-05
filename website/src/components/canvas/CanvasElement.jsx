@@ -1,4 +1,4 @@
-MAX_WIDTH/**
+/**
  * @file Component representing a draggable, resizable element on the Canvas.
  */
 
