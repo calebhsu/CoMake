@@ -17,6 +17,8 @@ import * as ActiveElementActions from '../../redux/actions/ActiveElementActions'
 import * as CodeActions from '../../redux/actions/CraftmlCodeActions';
 import * as CanvasActions from '../../redux/actions/CanvasActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
+import * as FBHelper from '../../helpers/FirebaseHelper';
+import * as CC from './CanvasConstants';
 
 /**
  * @classdesc The component encapsulating the whole Canvas page.
@@ -36,6 +38,7 @@ class Canvas extends React.Component {
 
     this.fetchAndListenForCanvasInfo = this.fetchAndListenForCanvasInfo.bind(this);
     this.processCanvasInfo = this.processCanvasInfo.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   /**
@@ -46,6 +49,7 @@ class Canvas extends React.Component {
    */
   componentDidMount() {
     this.fetchAndListenForCanvasInfo(this.props.params.canvasId);
+    document.addEventListener("keydown", this.handleKeyPress, false);
   }
 
   /**
@@ -77,6 +81,7 @@ class Canvas extends React.Component {
     this.props.dispatch(ElementActions.initElements({}));
     this.props.dispatch(CodeActions.setCode(''));
     this.props.dispatch(CodeActions.setAutoCodeUpdate(false));
+    document.removeEventListener("keydown", this.handleKeyPress, false);
   }
 
   /**
@@ -194,6 +199,26 @@ class Canvas extends React.Component {
     this.hasInitialized = true;
   }
 
+
+  /**
+  * Key press handler
+  * @param {Object} event is the event listener for the window
+  * @returns {void}
+  */
+  handleKeyPress(event) {
+    if(this.props.targetedId){
+      if(event.code === "Delete"){
+        this.props.dispatch(ElementActions.removeElementAndPersist(
+          this.props.targetedId, this.props.params.canvasId));
+      }
+      else if(event.ctrlKey === true && event.code === "KeyV") {
+        const targetElement = this.props.elements[this.props.targetedId];
+        FBHelper.cloneElement(this.props.params.canvasId, targetElement,
+          CC.INIT_POSITION);
+      }
+    }
+  }
+
   /**
    * Renders the canvas in HTML.
    * If user is not logged in, redirects to home page.
@@ -226,6 +251,7 @@ class Canvas extends React.Component {
             currentCanvas={this.props.params.canvasId}
             elements={this.props.elements}
             targetedId={this.props.targetedId}
+            keydown={this.handleKeyPress}
           />
           <Sidebar
             autoRender={this.props.autoRender}

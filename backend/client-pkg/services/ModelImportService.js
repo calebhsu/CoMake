@@ -11,7 +11,7 @@ const https = require('https');
 * @throws Exceptions on invalid parameter types
 * @returns {void}
 */
-const getRequest = (modelId, resCallback) => {
+const getRequest = (modelId, resCallback, errCallback) => {
   if (typeof modelId !== 'string')
     throw 'Error forming request to import model ID. Invalid modelId param, must be a String.';
 
@@ -49,7 +49,9 @@ const getRequest = (modelId, resCallback) => {
   req.on('error', (error) => {
     console.error('Error sending request for model %s. Error is below.', modelId);
     console.log(error);
-    throw error;
+    if(errCallback) {
+      errCallback(error);
+    }
   });
 
   req.end();
