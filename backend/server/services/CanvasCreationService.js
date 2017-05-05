@@ -8,6 +8,7 @@ const cors = require('cors')({origin: ["http://localhost:8888", "https://comake-
 const UserHelper = require('../helpers/UserHelper');
 
 const newCanvasName = 'Untitled';
+const newCanvasOrientation = 'overhead';
 
 /**
  * Creates a new canvas based on a CanvasCreationService request
@@ -35,6 +36,7 @@ const handleCorsRequest = (request, response) => {
      //configure the relevant fields on the new canvas
      newCanvasRef.set({
          name: newCanvasName,
+         orientation: newCanvasOrientation,
          owner: request.body.creatingUser,
      }).then(() => {
        admin.Promise.all(
@@ -45,7 +47,7 @@ const handleCorsRequest = (request, response) => {
            request.body.creatingUser,
            newCanvasId
          );
-         
+
          // send the new canvas id to the requesting user
          response.send({ newCanvasId });
        });
