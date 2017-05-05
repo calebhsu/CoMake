@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { white, grey900, grey700 } from 'material-ui/styles/colors';
+import { white, grey900, grey400 } from 'material-ui/styles/colors';
 
 import DashNavBar from './dashboard/DashNavBar';
 import LandingNavBar from './landing/LandingNavBar';
@@ -16,7 +16,7 @@ const muiTheme = getMuiTheme({
   palette: {
     accent1Color: '#e74c49',
     alternateTextColor: grey900,
-    disabledColor: grey700,
+    disabledColor: grey400,
     primary1Color: white,
     primary2Color: '#a7d2cb',
     primary3Color: white,
@@ -41,6 +41,10 @@ const muiTheme = getMuiTheme({
     focusColor: '#42aeb5',
     textColor: grey900,
   },
+  checkbox: {
+    boxColor: grey900,
+    checkedColor: '#42aeb5',
+  }
 });
 
 /**

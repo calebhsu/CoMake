@@ -72,10 +72,12 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
-    if(clientSize.width < min_dim)
+    if(clientSize.width < min_dim) {
       clientSize.width = min_dim;
-    if(clientSize.height < min_dim)
+    }
+    if(clientSize.height < min_dim) {
       clientSize.height = min_dim;
+    }
 
     this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,
       clientSize, this.props.currentCanvas));

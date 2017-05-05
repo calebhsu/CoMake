@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
 import Sidebar from './sidebar/Sidebar';
 import CanvasView from './CanvasView';
 import OptionsBar from './options-bar/OptionsBar';
-import Preview3D from './Preview3D';
+import Preview3D from './preview/Preview3D';
 import LoadingIndicator from '../LoadingIndicator';
 import CanvasError from './CanvasError';
 import * as ElementActions from '../../redux/actions/ElementActions';
@@ -266,7 +266,10 @@ class Canvas extends React.Component {
             autoRender={this.props.autoRender}
             canvas={currentCanvasInfo}
             craftmlCode={this.props.craftmlCode}
+            currentCanvas={this.props.params.canvasId}
             elements={this.props.elements}
+            hasCanvasImage={hasImage}
+            hasCode={hasCode}
           />
         </div>
       );
