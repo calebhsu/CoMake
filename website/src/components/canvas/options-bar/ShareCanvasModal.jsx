@@ -55,7 +55,8 @@ class ShareCanvasModal extends Component {
     this.state = {
       open: false,
       emailListText: null,
-      usersNotFound: null,
+      errorText: null,
+      loadingText: '',
       snackbarOpen: false,
     };
     this.shareCanvas = this.shareCanvas.bind(this);
@@ -71,40 +72,49 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   shareCanvas() {
-    this.setState({usersNotFound: null});
-
-    if(!this.props.userId || !this.props.currentCanvas) {
-     return;
+    if(!this.props.userId || !this.props.currentCanvas
+      || !this.state.emailListText)
+    {
+      return;
     }
 
-     const emailList = this.state.emailListText.split(',').map((email) => {
-       return email.trim();
-     });
+    this.setState({errorText: null, loadingText: 'Sharing canvas...'});
 
-     const reqBody = CanvasSharingService.formPostBody(
+    const emailList = this.state.emailListText.split(',').map((email) => {
+      return email.trim();
+    });
+
+    const reqBody = CanvasSharingService.formPostBody(
        this.props.currentCanvas,
        this.props.userId,
        emailList
-     );
+    );
 
-     CanvasSharingService.postRequest(reqBody, ServiceEndpoint, (resObj) => {
-       if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
+    CanvasSharingService.postRequest(reqBody, ServiceEndpoint, (resObj) => {
+      if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
 
-         var usersNotFoundString =
-           resObj.usersNotFound.reduce(
+        var usersNotFoundString =
+          resObj.usersNotFound.reduce(
             (notFoundEmailList, userEmail) => {
-              if(notFoundEmailList)
-                return notFoundEmailList + ', ' + userEmail
+              if(notFoundEmailList) {
+                return notFoundEmailList + ', ' + userEmail;
+              }
               return 'User(s) were not found: ' + userEmail
-               },
+            },
               null
-            );
+          );
 
-         this.setState({usersNotFound: usersNotFoundString});
+         this.setState({errorText: usersNotFoundString, loadingText: ''});
        } else {
          this.handleCloseModal();
-         this.setState({snackbarOpen: true});
+         this.setState({loadingText: '', snackbarOpen: true});
        }
+     }, () => {
+       this.setState({
+         errorText: 'There was an error attempting to share the canvas. '
+           + 'Try again later.',
+         loadingText: ''
+       });
      });
    }
 
@@ -123,7 +133,11 @@ class ShareCanvasModal extends Component {
   * @returns {void}
   */
   handleCloseModal() {
-    this.setState({open: false});
+    this.setState({
+      emailListText: '',
+      errorText: '',
+      open: false
+    });
   }
 
   /**
@@ -189,8 +203,9 @@ class ShareCanvasModal extends Component {
             fullWidth={true}
             hintText="abc123@email.com"
             onBlur={this.updateEmailListText}
-            errorText={this.state.usersNotFound}
+            errorText={this.state.errorText}
           />
+        <p>{this.state.loadingText}</p>
         </Dialog>
         <Snackbar
           autoHideDuration={1000}
@@ -205,7 +220,7 @@ class ShareCanvasModal extends Component {
 
 ShareCanvasModal.propTypes = {
   canvases: PropTypes.object,
-  currentCanvasId: PropTypes.string,
+  currentCanvas: PropTypes.string,
   userId: PropTypes.string,
 };
 

@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import CoMakeServices from 'comake-services';
 import LoadingIndicator from '../LoadingIndicator';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
+import { red900 } from 'material-ui/styles/colors';
 
 import * as CanvasActions from '../../redux/actions/CanvasActions';
 import * as RC from '../../redux/reducers/ReducerConstants';
@@ -18,6 +20,9 @@ const CanvasCreationService = CoMakeServices.CanvasCreationService;
 const styles = {
   createBtn: {
     marginTop: 15,
+  },
+  snackBarStyle: {
+    backgroundColor: red900
   }
 };
 
@@ -30,10 +35,12 @@ class CreateCanvas extends React.Component {
     super(props);
     this.state = {
       loading: false,
+      snackBarOpen: false
     };
 
     this.createNewCanvas = this.createNewCanvas.bind(this);
     this.handleLoadingShow = this.handleLoadingShow.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   /**
@@ -67,6 +74,8 @@ class CreateCanvas extends React.Component {
           this.props.dispatch(CanvasActions.addCanvas(resObj.newCanvasId, canvasObj));
           document.location = `/#/canvas/${resObj.newCanvasId}`;
         });
+    }, () => {
+      this.setState({snackBarOpen: true, loading: false});
     });
   }
 
@@ -78,6 +87,14 @@ class CreateCanvas extends React.Component {
     this.setState({loading: true});
   }
 
+  /**
+   * Handles closing the snackbar
+   * @returns {void}
+   */
+  handleRequestClose() {
+    this.setState({snackBarOpen: false});
+  }
+
   render() {
     return(
       <div>
@@ -87,6 +104,13 @@ class CreateCanvas extends React.Component {
           onClick={this.createNewCanvas}
           secondary={true}
           style={styles.createBtn}
+        />
+        <Snackbar
+          autoHideDuration={3000}
+          bodyStyle={styles.snackBarStyle}
+          message='There was an error creating a new canvas. Try again later.'
+          onRequestClose={this.handleRequestClose}
+          open={this.state.snackBarOpen}
         />
       </div>
     )
