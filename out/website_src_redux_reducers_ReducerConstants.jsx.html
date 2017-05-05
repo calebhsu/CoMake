@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: website/src/redux/reducers/ReducerConstants.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: website/src/redux/reducers/ReducerConstants.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Constants needed for the Redux reducers.
+ */
+
+ // Reducer names
+ export const ACTIVE_ELEMENT_REDUCER = 'activeElementReducer';
+ export const CANVAS_REDUCER = 'canvasReducer';
+ export const CRAFTML_CODE_REDUCER = 'craftmlCodeReducer';
+ export const ELEMENT_REDUCER = 'updateElementReducer';
+ export const LOGIN_REDUCER = 'userInfoReducer';
+
+ // Fields in the state tree..
+ export const USER_INFO = 'userInfo';
+ export const USER_ID = 'userId';
+ export const USERNAME = 'name';
+ export const USER_PHOTO_URL = 'photo';
+ export const USER_EMAIL = 'email';
+ export const ACTIVE_ELEMENT = 'activeElement';
+ export const AUTH_STATE = 'authState';
+ export const AUTO_GENERATE_CODE = 'autoGenerateCode';
+ export const CANVASES = 'canvases';
+ export const CODE = 'code';
+ export const CURRENT_CANVAS = 'currentCanvas';
+ export const ELEMENTS = 'elements';
+
+// The blank state tree for redux.
+/* Looks like...
+{
+  USER_INFO: {
+    USER_ID: null,
+    USERNAME: null,
+    USER_PHOTO_URL: null,
+    USER_EMAIL: null,
+  },
+  CANVASES: {
+    &lt;canvasID>: {
+      CANVAS_NAME: null,
+      CANVAS_ORIENTATION: null,
+      CANVAS_OWNER: null,
+      CANVAS_USERS: null,
+      CANVAS_IMAGE: DEFAULT_IMAGE,
+    }
+  },
+  ACTIVE_ELEMENT: null,
+  AUTH_STATE: false,
+  AUTO_GENERATE_CODE: false,
+  CODE: '',
+  CURRENT_CANVAS: null,
+  ELEMENTS: {},
+}
+*/
+const userInfoBranch = {};
+userInfoBranch[USER_ID] = null;
+userInfoBranch[USERNAME] = null;
+userInfoBranch[USER_PHOTO_URL] = null;
+userInfoBranch[USER_EMAIL] = null;
+const BLANK_STATE = {};
+BLANK_STATE[USER_INFO] = userInfoBranch;
+BLANK_STATE[CANVASES] = {};
+BLANK_STATE[ELEMENTS] = {};
+BLANK_STATE[ACTIVE_ELEMENT] = null;
+BLANK_STATE[CODE] = '';
+BLANK_STATE[AUTO_GENERATE_CODE] = false;
+export { BLANK_STATE };
+
+// Fields for elements.
+export const ELEMENT_POSITION = 'position';
+export const ELEMENT_SIZE = 'size';
+export const ELEMENT_ROTATION = 'rotation';
+export const ELEMENT_MODULE = 'module';
+export const ELEMENT_IMAGE = 'image';
+export const ELEMENT_ATTRS = [ELEMENT_POSITION, ELEMENT_SIZE, ELEMENT_ROTATION,
+  ELEMENT_MODULE, ELEMENT_IMAGE];
+
+// Fields for canvas.
+export const CANVAS_NAME = 'name';
+export const CANVAS_ORIENTATION = 'orientation';
+export const CANVAS_OWNER = 'owner'
+export const CANVAS_USERS = 'users';
+export const CANVAS_IMAGE = 'canvas_image';
+
+//individual reducer blank states
+export const BLANK_STATE_ACTIVE_ELEMENT = {};
+BLANK_STATE_ACTIVE_ELEMENT[ACTIVE_ELEMENT] = null;
+
+export const BLANK_STATE_CANVAS = {};
+BLANK_STATE_CANVAS[CANVASES] = {};
+
+export const BLANK_STATE_CRAFTML_CODE = {};
+BLANK_STATE_CRAFTML_CODE[CODE] = '';
+BLANK_STATE_CRAFTML_CODE[AUTO_GENERATE_CODE] = false;
+
+export const BLANK_STATE_ELEMENTS = {};
+BLANK_STATE_ELEMENTS[ELEMENTS] = {};
+
+export const BLANK_STATE_USER_INFO = {};
+BLANK_STATE_USER_INFO[AUTH_STATE] = false;
+BLANK_STATE_USER_INFO[USER_INFO] = userInfoBranch;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Canvas.html">Canvas</a></li><li><a href="CanvasElement.html">CanvasElement</a></li><li><a href="CanvasList.html">CanvasList</a></li><li><a href="CanvasOrientationBtns.html">CanvasOrientationBtns</a></li><li><a href="CanvasView.html">CanvasView</a></li><li><a href="ClearPreviewBtn.html">ClearPreviewBtn</a></li><li><a href="CreateCanvas.html">CreateCanvas</a></li><li><a href="DashNavBar.html">DashNavBar</a></li><li><a href="ExportModal.html">ExportModal</a></li><li><a href="ImportModelModal.html">ImportModelModal</a></li><li><a href="Landing.html">Landing</a></li><li><a href="MainLayout.html">MainLayout</a></li><li><a href="OptionsBar.html">OptionsBar</a></li><li><a href="Preview3D.html">Preview3D</a></li><li><a href="Render3DBtn.html">Render3DBtn</a></li><li><a href="ResizeTextfields.html">ResizeTextfields</a></li><li><a href="RotationSlider.html">RotationSlider</a></li><li><a href="SaveImgBtn.html">SaveImgBtn</a></li><li><a href="ShareCanvasModal.html">ShareCanvasModal</a></li><li><a href="Sidebar.html">Sidebar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#activeElementReducer">activeElementReducer</a></li><li><a href="global.html#addCanvas">addCanvas</a></li><li><a href="global.html#addCanvasUser">addCanvasUser</a></li><li><a href="global.html#addElement">addElement</a></li><li><a href="global.html#addUserToCanvasByEmail">addUserToCanvasByEmail</a></li><li><a href="global.html#addUserToCanvasByUid">addUserToCanvasByUid</a></li><li><a href="global.html#CanvasError">CanvasError</a></li><li><a href="global.html#canvasReducer">canvasReducer</a></li><li><a href="global.html#clear">clear</a></li><li><a href="global.html#cloneElement">cloneElement</a></li><li><a href="global.html#craftmlCodeReducer">craftmlCodeReducer</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#deleteElement">deleteElement</a></li><li><a href="global.html#formPostBody">formPostBody</a></li><li><a href="global.html#generateScript">generateScript</a></li><li><a href="global.html#getAuthState">getAuthState</a></li><li><a href="global.html#getFirebaseUserByEmail">getFirebaseUserByEmail</a></li><li><a href="global.html#getRenderedImageUrl">getRenderedImageUrl</a></li><li><a href="global.html#getRequest">getRequest</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#handleCorsRequest">handleCorsRequest</a></li><li><a href="global.html#initElements">initElements</a></li><li><a href="global.html#initFirebase">initFirebase</a></li><li><a href="global.html#insertIntoState">insertIntoState</a></li><li><a href="global.html#LandingContent">LandingContent</a></li><li><a href="global.html#LandingNavBar">LandingNavBar</a></li><li><a href="global.html#LoadingIndicator">LoadingIndicator</a></li><li><a href="global.html#mainReducers">mainReducers</a></li><li><a href="global.html#PageNotFound">PageNotFound</a></li><li><a href="global.html#performAndDispatchLogin">performAndDispatchLogin</a></li><li><a href="global.html#postRequest">postRequest</a></li><li><a href="global.html#removeCanvas">removeCanvas</a></li><li><a href="global.html#removeCanvasUser">removeCanvasUser</a></li><li><a href="global.html#removeElement">removeElement</a></li><li><a href="global.html#removeElementAndPersist">removeElementAndPersist</a></li><li><a href="global.html#removeField">removeField</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#saveRenderedImage">saveRenderedImage</a></li><li><a href="global.html#setAuthState">setAuthState</a></li><li><a href="global.html#setAutoCodeUpdate">setAutoCodeUpdate</a></li><li><a href="global.html#setCanvasName">setCanvasName</a></li><li><a href="global.html#setCanvasNameAndPersist">setCanvasNameAndPersist</a></li><li><a href="global.html#setCanvasOrientation">setCanvasOrientation</a></li><li><a href="global.html#setCanvasOrientationAndPersist">setCanvasOrientationAndPersist</a></li><li><a href="global.html#setCanvasOwner">setCanvasOwner</a></li><li><a href="global.html#setCode">setCode</a></li><li><a href="global.html#setElementLocation">setElementLocation</a></li><li><a href="global.html#setElementRotation">setElementRotation</a></li><li><a href="global.html#setElementSize">setElementSize</a></li><li><a href="global.html#setHasCanvasImage">setHasCanvasImage</a></li><li><a href="global.html#SideBar">SideBar</a></li><li><a href="global.html#signOut">signOut</a></li><li><a href="global.html#storeConstructor">storeConstructor</a></li><li><a href="global.html#targetElement">targetElement</a></li><li><a href="global.html#updateAndPersist">updateAndPersist</a></li><li><a href="global.html#updateElement">updateElement</a></li><li><a href="global.html#updateElementReducer">updateElementReducer</a></li><li><a href="global.html#updateUserInfo">updateUserInfo</a></li><li><a href="global.html#userInfoReducer">userInfoReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.0-dev</a> on Fri May 05 2017 07:15:03 GMT-0600 (Mountain Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
