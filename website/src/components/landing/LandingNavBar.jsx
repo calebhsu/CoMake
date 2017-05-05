@@ -29,6 +29,7 @@ function LandingNavBar() {
         style={styles.navBtn}
       />
       <FlatButton
+        href="https://calebhsu.gitbooks.io/comake/"
         label="User Guide"
         labelStyle={styles.navBtnLabel}
         style={styles.navBtn}
