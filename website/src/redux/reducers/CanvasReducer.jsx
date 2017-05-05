@@ -2,6 +2,8 @@
  * @file Reducers for canvas actions.
  */
 
+ import { REHYDRATE } from 'redux-persist/constants';
+
  import * as AC from './../actions/ActionConstants';
  import * as RC from './ReducerConstants';
  import { insertIntoState, removeField } from './ReducerUtil';
@@ -15,6 +17,13 @@
 export const canvasReducer = (state = RC.BLANK_STATE_CANVAS, action) => {
   const pathToChange = [];
   switch (action.type) {
+    case REHYDRATE:
+      if(!(action.payload[RC.CANVAS_REDUCER] && action.payload[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS])) {
+          return state;
+      }
+      action.payload = action.payload[RC.CANVAS_REDUCER][RC.CURRENT_CANVAS]
+      pathToChange.push(RC.CURRENT_CANVAS);
+      break;
     case AC.ADD_CANVAS:
       pathToChange.push(RC.CANVASES);
       pathToChange.push(action.canvasId);
