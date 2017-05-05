@@ -30,6 +30,9 @@
    dialogBody: {
      padding: '0 32px 24px',
    },
+   help: {
+     color: grey900,
+   },
    importModalBtn: {
      color: white,
      fontWeight: 700,
@@ -147,6 +150,10 @@
            onRequestClose={this.handleClose}
            title="Import a Model from CraftML"
          >
+           <span style={styles.help}>
+             Head over to <a href="https://craftml.io/">CraftML</a>, choose a model, and copy
+             the 5-character ID from the URL to the field below.
+           </span>
            <TextField
              floatingLabelText="Model ID"
              floatingLabelFixed={true}

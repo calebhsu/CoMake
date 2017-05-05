@@ -16,7 +16,7 @@ const styles = {
     backgroundImage: backgroundImageString,
     borderBottom: '1px solid #dddddd',
     borderRight: '1px solid #dddddd',
-    height: '83vh',
+    height: 1000,
     margin: '13px 0 0 60px',
     overFlowY: 'scroll',
     position: 'absolute',

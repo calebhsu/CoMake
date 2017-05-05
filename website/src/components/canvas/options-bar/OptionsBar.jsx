@@ -48,7 +48,7 @@ const styles = {
     textAlign: 'center',
     top: 55,
     width: '100%',
-    zIndex: 10,
+    zIndex: 200,
   },
 };
 
