@@ -136,6 +136,7 @@ class ShareCanvasModal extends Component {
     this.setState({
       emailListText: '',
       errorText: '',
+      loadingText: '',
       open: false
     });
   }
@@ -145,7 +146,12 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   handleOpenModal() {
-    this.setState({open: true});
+    this.setState({
+      emailListText: '',
+      errorText: '',
+      loadingText: '',
+      open: true
+    });
   }
 
   /**
