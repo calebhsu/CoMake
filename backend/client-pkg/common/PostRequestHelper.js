@@ -12,7 +12,7 @@ const https = require('https');
 * @param {function} resCallback A callback that will be passed the JSON object of the request response
 * @returns {void}
 */
-const postRequest = (reqBody, endpoint, path, resCallback) => {
+const postRequest = (reqBody, endpoint, path, resCallback, errCallback) => {
   const req = https.request({
     host: endpoint.host,
     path: path,
@@ -54,7 +54,9 @@ const postRequest = (reqBody, endpoint, path, resCallback) => {
   req.on('error', (error) => {
     console.error('Error sending request to path %s. Error is below.', path);
     console.log(error);
-    throw error;
+    if(errCallback) {
+      errCallback(error);
+    }
   });
 
   req.write(JSON.stringify(reqBody));

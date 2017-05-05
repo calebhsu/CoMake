@@ -44,9 +44,10 @@ export const getUserInfo = (dispatch) => {
 /**
  * Opens login prompt for user and redirects them to the home page if successful.
  * @param {Function} dispatch The function to dispatch an action to a redux store
+ * @param {Function} errCallback The function to run if an error occurs in the svc req
  * @returns {void}
  */
-export const performAndDispatchLogin = (dispatch) => {
+export const performAndDispatchLogin = (dispatch, errCallback) => {
   if(!(firebase.auth().currentUser))
   {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -54,22 +55,25 @@ export const performAndDispatchLogin = (dispatch) => {
       // check if account already exists, if not, add an entry.
       firebase.database().ref('users/' + result.user.uid).once("value")
         .then((userSnap) => {
+          const actionPayload = {};
+          actionPayload[RC.USER_ID] = result.user.uid;
+          actionPayload[RC.USERNAME] = result.user.displayName;
+          actionPayload[RC.USER_PHOTO_URL] = result.user.photoURL;
+          actionPayload[RC.USER_EMAIL] = result.user.email;
+
           if (userSnap.val() === null) {
             const reqBody = CoMakeServices.UserInfoService
               .formPostBody(result.user.uid);
 
             CoMakeServices.UserInfoService
-              .postRequest(reqBody, ServiceEndpoint, () => {
-              });
+            .postRequest(reqBody, ServiceEndpoint, () => {
+              dispatch(updateUserInfo(actionPayload));
+            }, errCallback);
+          }
+          else {
+            dispatch(updateUserInfo(actionPayload));
           }
         });
-
-      const actionPayload = {};
-      actionPayload[RC.USER_ID] = result.user.uid;
-      actionPayload[RC.USERNAME] = result.user.displayName;
-      actionPayload[RC.USER_PHOTO_URL] = result.user.photoURL;
-      actionPayload[RC.USER_EMAIL] = result.user.email;
-      dispatch(updateUserInfo(actionPayload));
     });
   }
 }
