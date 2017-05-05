@@ -27,8 +27,9 @@ const formPostBody = (creatingUser) => {
 * @param {function} resCallback A callback that will be passed the JSON object of the request response
 * @returns {void}
 */
-const postRequest = (reqBody, endpoint, resCallback) => {
-  PostRequestHelper.postRequest(reqBody, endpoint, CNVS_CRTN_SVC_ROUTE, resCallback);
+const postRequest = (reqBody, endpoint, resCallback, errCallback) => {
+  PostRequestHelper.postRequest(reqBody, endpoint,
+    CNVS_CRTN_SVC_ROUTE, resCallback, errCallback);
 };
 
 module.exports = {

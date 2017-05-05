@@ -1,7 +1,10 @@
+import * as firebase from 'firebase';
+
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 import { grey700 } from 'material-ui/styles/colors';
 
 import LandingContent from './LandingContent';
@@ -49,7 +52,11 @@ class Landing extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      snackBarOpen: false,
+    };
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   /**
@@ -57,7 +64,19 @@ class Landing extends React.Component {
    * @returns {void}
    */
   handleLogin() {
-    performAndDispatchLogin(this.props.dispatch);
+    performAndDispatchLogin(this.props.dispatch, () => {
+      firebase.auth().signOut().then(() => {
+        alert('Error saving user info in firebase. Try again later.')
+      });
+    });
+  }
+
+  /**
+   * Handles closing the snackbar
+   * @returns {void}
+   */
+  handleRequestClose() {
+    this.setState({snackBarOpen: false});
   }
 
  /**
@@ -79,6 +98,12 @@ class Landing extends React.Component {
           />
         </div>
         <LandingContent />
+        <Snackbar
+          autoHideDuration={3000}
+          message='There was an error saving user info. Try again later.'
+          onRequestClose={this.handleRequestClose}
+          open={this.state.snackBarOpen}
+        />
       </div>
     );
   }

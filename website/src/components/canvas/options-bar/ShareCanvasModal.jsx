@@ -11,7 +11,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
-import { white, grey900, red900 } from 'material-ui/styles/colors';
+import { white, grey900 } from 'material-ui/styles/colors';
 
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import ServiceEndpoint from '../../../ServiceEndpoint';
@@ -35,12 +35,6 @@ const styles = {
     color: white,
     fontWeight: 700,
   },
-  sbSuccess: {
-    backgroundColor: grey900
-  },
-  sbError: {
-    backgroundColor: red900
-  },
   wrapper: {
     display: 'inline-block',
   },
@@ -61,10 +55,9 @@ class ShareCanvasModal extends Component {
     this.state = {
       open: false,
       emailListText: null,
-      shareMsg: '',
-      shareSnackTime: 2000,
+      errorText: null,
+      loadingText: '',
       snackbarOpen: false,
-      snackbarStyle: styles.sbSuccess
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
@@ -79,55 +72,49 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   shareCanvas() {
-    this.setState({
-      shareMsg: '',
-      shareSnackTime: 2000,
-      snackbarStyle: styles.sbSuccess
-    });
-
-    if(!this.props.userId || !this.props.currentCanvas) {
-     return;
+    if(!this.props.userId || !this.props.currentCanvas
+      || !this.state.emailListText)
+    {
+      return;
     }
 
-     const emailList = this.state.emailListText.split(',').map((email) => {
-       return email.trim();
-     });
+    this.setState({errorText: null, loadingText: 'Sharing canvas...'});
 
-     const reqBody = CanvasSharingService.formPostBody(
+    const emailList = this.state.emailListText.split(',').map((email) => {
+      return email.trim();
+    });
+
+    const reqBody = CanvasSharingService.formPostBody(
        this.props.currentCanvas,
        this.props.userId,
        emailList
-     );
+    );
 
-     this.handleCloseModal();
+    CanvasSharingService.postRequest(reqBody, ServiceEndpoint, (resObj) => {
+      if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
 
-     CanvasSharingService.postRequest(reqBody, ServiceEndpoint, (resObj) => {
-       if(resObj.usersNotFound && resObj.usersNotFound.length > 0) {
-
-         var usersNotFoundString =
-           resObj.usersNotFound.reduce(
+        var usersNotFoundString =
+          resObj.usersNotFound.reduce(
             (notFoundEmailList, userEmail) => {
-              if(notFoundEmailList)
-                return notFoundEmailList + ', ' + userEmail
-              return 'Error sharing canvas. User(s) were not found: ' + userEmail
-               },
+              if(notFoundEmailList) {
+                return notFoundEmailList + ', ' + userEmail;
+              }
+              return 'User(s) were not found: ' + userEmail
+            },
               null
-            );
+          );
 
-         this.setState({
-           shareMsg: usersNotFoundString,
-           shareSnackTime: 5000,
-           snackbarOpen: true,
-           snackbarStyle: styles.sbError
-         });
+         this.setState({errorText: usersNotFoundString, loadingText: ''});
        } else {
-         this.setState({
-           shareMsg: 'Canvas shared successfully.',
-           shareSnackTime: 2000,
-           snackbarOpen: true,
-           snackbarStyle: styles.sbSuccess
-         });
+         this.handleCloseModal();
+         this.setState({loadingText: '', snackbarOpen: true});
        }
+     }, () => {
+       this.setState({
+         errorText: 'There was an error attempting to share the canvas. '
+           + 'Try again later.',
+         loadingText: ''
+       });
      });
    }
 
@@ -146,7 +133,12 @@ class ShareCanvasModal extends Component {
   * @returns {void}
   */
   handleCloseModal() {
-    this.setState({open: false});
+    this.setState({
+      emailListText: '',
+      errorText: '',
+      loadingText: '',
+      open: false
+    });
   }
 
   /**
@@ -154,7 +146,12 @@ class ShareCanvasModal extends Component {
    * @returns {void}
    */
   handleOpenModal() {
-    this.setState({open: true});
+    this.setState({
+      emailListText: '',
+      errorText: '',
+      loadingText: '',
+      open: true
+    });
   }
 
   /**
@@ -212,12 +209,13 @@ class ShareCanvasModal extends Component {
             fullWidth={true}
             hintText="abc123@email.com"
             onBlur={this.updateEmailListText}
+            errorText={this.state.errorText}
           />
+        <p>{this.state.loadingText}</p>
         </Dialog>
         <Snackbar
-          autoHideDuration={this.state.shareSnackTime}
-          bodyStyle={this.state.snackbarStyle}
-          message={this.state.shareMsg}
+          autoHideDuration={2000}
+          message='Canvas shared successfully.'
           onRequestClose={this.handleSnackbarRequestClose}
           open={this.state.snackbarOpen}
         />
