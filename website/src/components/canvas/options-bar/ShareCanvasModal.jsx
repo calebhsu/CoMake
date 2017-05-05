@@ -11,7 +11,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
-import { white, grey900, red900 } from 'material-ui/styles/colors';
+import { white, grey900 } from 'material-ui/styles/colors';
 
 import * as RC from '../../../redux/reducers/ReducerConstants';
 import ServiceEndpoint from '../../../ServiceEndpoint';
@@ -35,12 +35,6 @@ const styles = {
     color: white,
     fontWeight: 700,
   },
-  sbSuccess: {
-    backgroundColor: grey900
-  },
-  sbError: {
-    backgroundColor: red900
-  },
   wrapper: {
     display: 'inline-block',
   },
@@ -63,10 +57,7 @@ class ShareCanvasModal extends Component {
       emailListText: null,
       errorText: null,
       loadingText: '',
-      shareMsg: '',
-      shareSnackTime: 2000,
       snackbarOpen: false,
-      snackbarStyle: styles.sbSuccess
     };
     this.shareCanvas = this.shareCanvas.bind(this);
     this.updateEmailListText = this.updateEmailListText.bind(this);
@@ -217,9 +208,8 @@ class ShareCanvasModal extends Component {
         <p>{this.state.loadingText}</p>
         </Dialog>
         <Snackbar
-          autoHideDuration={this.state.shareSnackTime}
-          bodyStyle={this.state.snackbarStyle}
-          message={this.state.shareMsg}
+          autoHideDuration={2000}
+          message='Canvas shared successfully.'
           onRequestClose={this.handleSnackbarRequestClose}
           open={this.state.snackbarOpen}
         />
