@@ -9,10 +9,12 @@ import Rnd from 'react-rnd';
 import {
   UPDATE_POSITION, UPDATE_SIZE
 } from '../../redux/actions/ActionConstants';
+import {
+  MIN_DIM, MAX_WIDTH, MAX_HEIGHT
+} from './CanvasConstants';
+
 import { updateAndPersist } from '../../redux/actions/ElementActions';
 import { targetElement } from '../../redux/actions/ActiveElementActions';
-
-const min_dim = 20;
 
 const styles = {
   selected: {
@@ -72,11 +74,17 @@ class CanvasElement extends React.Component {
    * @returns {void}
    */
   endResize(direction, styleSize, clientSize) {
-    if(clientSize.width < min_dim) {
-      clientSize.width = min_dim;
+    if(clientSize.width < MIN_DIM) {
+      clientSize.width = MIN_DIM;
     }
-    if(clientSize.height < min_dim) {
-      clientSize.height = min_dim;
+    if(clientSize.height < MIN_DIM) {
+      clientSize.height = MIN_DIM;
+    }
+    if(clientSize.width > MAX_WIDTH) {
+      clientSize.width = MAX_WIDTH;
+    }
+    if(clientSize.height > MAX_HEIGHT) {
+      clientSize.height = MAX_HEIGHT;
     }
 
     this.props.dispatch(updateAndPersist(UPDATE_SIZE, this.props.elementId,

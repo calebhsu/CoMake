@@ -14,13 +14,22 @@ import * as FBStorageHelper from '../../helpers/FirebaseStorageHelper';
 import placeholderImage from '../../img/placeholder.png';
 
 const styles = {
+  header: {
+    padding: 10,
+  },
   models: {
     display: 'inline-block',
     margin: 10,
   },
   overlay: {
+    margin: '0 auto',
     padding: 0,
-    margin: 'auto',
+  },
+  text: {
+    padding: 0,
+  },
+  title: {
+    fontSize: 13,
   },
 };
 
@@ -159,16 +168,25 @@ class CanvasList extends React.Component {
       }
       canvasList.push(
         <Box
-          col={12}
-          sm={3}
+          col={6}
+          md={3}
+          sm={4}
           key={i}
           style={styles.models}
         >
           <Link to={`/canvas/${canvasId}`}>
             <Card>
               <CardMedia
-                overlay={<CardHeader title={this.props.canvases[canvasId][RC.CANVAS_NAME]} />}
-                overlayContentStyle={styles.overlay} >
+                overlay={
+                  <CardHeader
+                    textStyle={styles.text}
+                    title={this.props.canvases[canvasId][RC.CANVAS_NAME]}
+                    titleStyle={styles.title}
+                    style={styles.header}
+                  />
+                }
+                overlayContentStyle={styles.overlay}
+              >
                 <img src={canvasImage} className={'img-responsive'} />
               </CardMedia>
             </Card>
@@ -178,7 +196,7 @@ class CanvasList extends React.Component {
     });
 
     return (
-      <Grid col={10} mt={3}>
+      <Grid col={10} mt={3} ml={6}>
         <Flex
           mt={3}
           mb={2}

@@ -10,6 +10,10 @@ import IconButton from 'material-ui/IconButton';
 import RemoveCircle from 'material-ui/svg-icons/content/remove-circle';
 import TextField from 'material-ui/TextField';
 
+import {
+  MIN_DIM, MAX_WIDTH, MAX_HEIGHT
+} from '../CanvasConstants';
+
 import * as AC from '../../../redux/actions/ActionConstants';
 import * as EA from '../../../redux/actions/ElementActions';
 
@@ -73,6 +77,12 @@ class ResizeTextfields extends React.Component {
      * @returns {void}
      */
     handlerTextfieldHeight(e, newHeight) {
+      if(newHeight < MIN_DIM) {
+        newHeight = MIN_DIM;
+      }
+      if(newHeight > MAX_HEIGHT) {
+        newHeight = MAX_HEIGHT;
+      }
       const newFieldSize = {
           height: parseInt(newHeight),
           width: this.props.elements[this.props.targetedId].size.width
@@ -88,6 +98,13 @@ class ResizeTextfields extends React.Component {
      * @returns {void}
      */
     handlerTextfieldWidth(e, newWidth) {
+      if(newWidth < MIN_DIM) {
+        newWidth = MIN_DIM;
+      }
+      if(newWidth > MAX_WIDTH) {
+        newWidth = MAX_WIDTH;
+      }
+
       const newFieldSize = {
           height: this.props.elements[this.props.targetedId].size.height,
           width: parseInt(newWidth)

@@ -26,6 +26,10 @@ const styles = {
   navBtn: {
     height: 55,
   },
+  navBtnLink: {
+    height: 55,
+    lineHeight: '55px',
+  },
   navBtnLabel: {
     fontWeight: 600,
     letterSpacing: 1,
@@ -98,9 +102,10 @@ class DashNavBar extends React.Component {
           {username}
         </ListItem>
         <FlatButton
+          href="https://calebhsu.gitbooks.io/comake/"
           label="User Guide"
           labelStyle={styles.navBtnLabel}
-          style={styles.navBtn}
+          style={styles.navBtnLink}
         />
         <FlatButton
           label="Log Out"

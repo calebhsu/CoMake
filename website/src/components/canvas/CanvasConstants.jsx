@@ -28,6 +28,11 @@ export const INIT_SIZE = {
 }
 export const INIT_ROTATION = 0;
 
+// Max element conditions
+export const MIN_DIM = 20;
+export const MAX_WIDTH = 1820;
+export const MAX_HEIGHT = 1240;
+
 // Initial canvas settings
 export const OVERHEAD_VIEW = 'overhead';
 export const SIDE_VIEW = 'side';

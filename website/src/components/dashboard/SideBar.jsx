@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Grid } from 'reflexbox';
+import { Box } from 'reflexbox';
 
 import CreateCanvas from './CreateCanvas';
 
@@ -29,14 +29,14 @@ const styles = {
  */
 function SideBar() {
   return (
-    <Grid
+    <Box
       col={2}
-      mr={1}
+      mr={2}
       style={styles.sidebar}
     >
       <h2 className={globalStyles.subtitle}>Welcome!</h2>
       <CreateCanvas />
-    </Grid>
+    </Box>
   )
 }
 
